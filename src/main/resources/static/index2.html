@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+
+    <title>Programação Entrega</title>
+</head>
+<body>
+<form action="">
+<input type="hidden" id="tabelaprogramacaoEntregahidden" >
+
+<span>Programação Entrega</span>
+<div class="input-group mb-3">
+	  <label for="mesano" class="form-label">MÊS/ANO: OUTUBRO/2022</label>
+</div>	
+<div class="input-group mb-3">
+	  <label for="matriculaColaborador" class="form-label">Colaborador: CARINE FRAGA DE SANTANA SANTOS  </label>
+	  <input type="hidden" value="7352" class="form-control" id="matriculaColaborador">			  
+</div>
+<div class="input-group mb-3">
+	  <label for="ua" class="form-label">UA De Origem: UAC  </label>
+	  <input type="hidden" value="1" class="form-control" id="ua">			  
+</div>
+
+
+<table id="tabelaProgramacao" data-toggle="table" data-sort-stable="true">
+    <thead>
+    <tr>
+        <th data-sortable="true">Dia</th>
+        <th data-sortable="true">Dia da Semana</th>
+        <th data-sortable="true">Data Especial</th>
+        <th data-sortable="false">Local da Entrega</th>
+    </tr>
+    </thead>
+   <tbody>
+        <tr>
+            <td>1</td>
+            <td>Segunda-Feira</td>
+            <td><input type="checkbox"></td>
+            <td><select>
+                <option val="CABULA">CABULA</option>
+                <option val="BROTAS" >BROTAS</option>
+            </select>
+            </td>
+         <!--   <td><input type="date" value="2018-07-22"></td>
+            <td><input type="checkbox"></td> -->
+        </tr>
+         <tr>
+            <td>2</td>
+            <td>Terça-Feira</td>
+            <td><input type="checkbox"></td>
+            <td><select>
+                <option val="CABULA">CABULA</option>
+                <option val="BROTAS" >BROTAS</option>
+            </select>
+            </td>
+         <!--   <td><input type="date" value="2018-07-22"></td>
+            <td><input type="checkbox"></td> -->
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Quarta-Feira</td>
+            <td><input type="checkbox"></td>
+            <td><select>
+                <option val="CABULA">CABULA</option>
+                <option val="BROTAS" selected>BROTAS</option>
+            </select>
+            </td>
+         <!--   <td><input type="date" value="2018-07-22"></td>
+            <td><input type="checkbox"></td> -->
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Quinta-Feira</td>
+            <td><input type="checkbox"></td>
+            <td><select>
+                <option val="CABULA">CABULA</option>
+                <option val="BROTAS" selected>BROTAS</option>
+            </select>
+            </td>
+         <!--   <td><input type="date" value="2018-07-22"></td>
+            <td><input type="checkbox"></td> -->
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Sexta-Feira</td>
+            <td><input type="checkbox"></td>
+            <td><select>
+                <option val="CABULA">CABULA</option>
+                <option val="BROTAS" selected>BROTAS</option>
+            </select>
+            </td>
+         <!--   <td><input type="date" value="2018-07-22"></td>
+            <td><input type="checkbox"></td> -->
+        </tr>
+     </tbody>
+</table>
+</form>
+<button type="button" id="btn-salvar" class="btn btn-primary">Salvar</button>
+
+ <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+ <!--   <script type="text/javascript">
+        $(document).ready(function() {
+          console.log('ready');
+          $('#my_table_1').find('input[type="date"]').change(function() {
+            console.log('Table 1.Date was changed. Need to check if table is sorted by column C.If so - call the table sort.');
+          });
+          $('#my_table_1').find('select').change(function() {
+            console.log('Table 1.Selection was changed. Need to check if table is sorted by column B.If so - call the table sort.');
+          });
+         });
+    </script> 
+    
+     <script text="text/javascript">
+       
+         function salvarProgramacao(){
+	           
+		         var id = $("#id").val();    
+		         var matriculaColaborador = $("#matriculaColaborador").val();
+		         
+		         alert(" matricula = " + matriculaColaborador);
+		         
+		         let dia = "";
+		         let diaDaSemana = "";
+		         let diaEspecial = "";
+		         let localEntrega = "";
+		         
+		        // let dataInicio = document.getElementById('dataInicio').value ;
+		         
+		         //Percorre tabela com centralizadores adicionados.	
+				for (let row of tabelaProgramacao.rows) 
+				{
+					
+					let colunas = row.cells;
+					
+					alert("antes");
+					if (colunas[0].innerText != null){
+						dia 	= colunas[0].innerText;
+					}
+					
+					alert("depois");
+					//localEntrega = colunas[3].innerText;
+					//localEntrega = "";
+					
+					alert("dia = " + dia );
+				 	
+				} 
+	         
+	         alert("depois");
+	         
+			    $.ajax({
+				  method: "POST",
+				  url: "programacoes-entregas/salva-lotes",
+				  data: JSON.stringify({matriculaColaborador: matriculaColaborador }),
+				  contentType: "application/json; charset=utf-8",
+				  success: function(response){
+					alert("Salvo com sucesso!");
+				  } 
+				}).fail(function( xhr, status, errorThrown ) {
+				    alert( "Erro ao salvar: " + xhr.responseText );
+				});
+	        
+	
+         }
+       
+       </script> -->
+
+    <script type="module" src='http://localhost:8080/sisben/js/programacaoentrega.js'></script>
+
+</body>
+</html>
