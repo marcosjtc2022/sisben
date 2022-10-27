@@ -3,6 +3,7 @@ package com.bahiana.sisben.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -43,7 +44,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
 	
 		if ((programacaoEntregaDto.getId() != null)) {
-			programacaoEntrega.setIdProgEntrega(programacaoEntregaDto.getId());
+			programacaoEntrega.setId(programacaoEntregaDto.getId());
 		}
 		programacaoEntrega.setIdJustificativa(programacaoEntregaDto.getIdJustificativa());
 		programacaoEntrega.setUaPrevista(programacaoEntregaDto.getUaPrevista());
@@ -68,10 +69,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	}
 
 	@Override
-	public ProgramacaoEntrega salvarLote(ProgramacaoEntregaDTO programacaoEntregaDto) {
+	public ProgramacaoEntrega salvarLote(ProgramacaoEntregaDTO programacaoEntregaDto, char operacao) {
 		
 		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
-		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega);
+		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
 		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
 				//validaEPersisteInclusao(centro);	
 				this.programacaoEntregaRepository.save(programacaoEntregaLinha);
@@ -81,13 +82,14 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@SuppressWarnings("removal")
 	@Override
-	public List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega) {
+	public List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega, char operacao) {
 		
 		List<ProgramacaoEntrega> listaProgramacaoEntrega = new ArrayList<>();
 		
 		//Recupera as Strings preenchidas a partir dos campos das linhas das programações entrega.
 		String[] tabelaProgramacaoEntrega = programacaoEntrega.getTabelaProgramacaoEntrega().split(",");
 		String[] linha		= null;
+		Long id = null;
 		Long matriculaColaborador = null;
 		String uaPrevista = null;
 		String uaRealizada = null;
@@ -112,19 +114,39 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			//Separando a linha da tabela.
 			linha 			= linhaTabProgEntrega.split("=");
 			//Separando os campos da linha.
-			matriculaColaborador =  new Long(linha[0]);
-			uaPrevista = linha[1];
-			uaRealizada = linha[2];
-			dataEntrega = utilDataHora.trataDatas(linha[3]);   //linha[3];
-			dataSolicitacao = utilDataHora.trataDatas(linha[4]);  
-			idUa = new Long(linha[5]);
-			idJustificativa = new Long(linha[6]);
-			idUsuario = new Long(linha[7]);
-			idValor = new Long(linha[8]);
-			solicExtra = true; //linha[9];
-			stAprov = true; //linha[10];
+			
+			if (operacao == 'I') {
+				matriculaColaborador =  new Long(linha[0]);
+				uaPrevista = linha[1];
+				uaRealizada = linha[2];
+				dataEntrega = utilDataHora.trataDatas(linha[3]);   //linha[3];
+				dataSolicitacao = utilDataHora.trataDatas(linha[4]);  
+				idUa = new Long(linha[5]);
+				idJustificativa = new Long(linha[6]);
+				idUsuario = new Long(linha[7]);
+				idValor = new Long(linha[8]);
+				solicExtra = true; //linha[9];
+				stAprov = true; //linha[10];
+			} else {
+				id = new Long(linha[0]);
+				matriculaColaborador =  new Long(linha[1]);
+				uaPrevista = linha[2];
+				uaRealizada = linha[3];
+				dataEntrega = utilDataHora.trataDatas(linha[4]);   //linha[3];
+				dataSolicitacao = utilDataHora.trataDatas(linha[5]);  
+				idUa = new Long(linha[6]);
+				idJustificativa = new Long(linha[7]);
+				idUsuario = new Long(linha[8]);
+				idValor = new Long(linha[9]);
+				solicExtra = true; //linha[9];
+				stAprov = true; //linha[10];
+			}
 			
 			programacaoEntrega = new ProgramacaoEntrega();
+			
+			if (id != null) {
+				programacaoEntrega.setId(id);
+			}
 			programacaoEntrega.setMatriculaColaborador(matriculaColaborador);
 			programacaoEntrega.setUaPrevista(uaPrevista);
 			programacaoEntrega.setUaRealizada(uaRealizada);
@@ -186,6 +208,24 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 						  programacaoEntregaDTO.getUaPrevista(),
 						  programacaoEntregaDTO.getCodSetor());
 		return ProgramacaoEntregaLista;
+	}
+
+	@Override
+	public ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDTO programacaoEntregaDto, char operacao) {
+		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
+		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
+		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
+				//validaEPersisteInclusao(centro);	
+				this.programacaoEntregaRepository.save(programacaoEntregaLinha);
+		 }
+		 return programacaoEntrega;
+	}
+
+	@Override
+	public Optional<ProgramacaoEntrega> obterPorId(Long id) {
+		// TODO Auto-generated method stub
+		//Optional<ProgramacaoEntrega> usuario = this.programacaoEntregaRepository.obterPorId(id);
+		return this.programacaoEntregaRepository.findById(id);
 	}
 	
 //	@DeleteMapping("{id}")

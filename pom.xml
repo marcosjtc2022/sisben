@@ -76,8 +76,11 @@
 		    <groupId>wsdl4j</groupId>
 		    <artifactId>wsdl4j</artifactId>
 		</dependency>
-		
-		
+		<dependency>
+		  <groupId>com.sun.xml.bind</groupId>
+		  <artifactId>jaxb-xjc</artifactId>
+		  <version>2.1.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -87,24 +90,32 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
-	<!-- 		<plugin>
+			<plugin>
+			<!-- -  <groupId>maven-jaxb2-plugin</groupId>  -->
 			  <groupId>org.codehaus.mojo</groupId>
 			  <artifactId>jaxb2-maven-plugin</artifactId>
 			  <version>1.6</version>
+		<!-- 	  <executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
 			  <executions>
 			    <execution>
 			      <id>xjc</id>
 			      <goals>
 			        <goal>xjc</goal>
 			      </goals>
-			    </execution>
-			  </executions>
+			    </execution>  
+			  </executions> --> 
 			  <configuration>
-			    <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory>
+			    <schemaDirectory>${project.basedir}/src/main/resources</schemaDirectory>
 			    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
 			    <clearOutputDir>false</clearOutputDir>
 			  </configuration>
-			</plugin>  -->
+			</plugin>  
 			 
 			
 		</plugins>

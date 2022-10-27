@@ -88,7 +88,7 @@ public class ProgramacaoEntregaController {
 	public ResponseEntity salvarLote(@RequestBody ProgramacaoEntregaDTO programacaoEntregaDto) {
 	  try {
 			ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
-			programacaoEntrega = programacaoEntregaService.salvarLote(programacaoEntregaDto);
+			programacaoEntrega = programacaoEntregaService.salvarLote(programacaoEntregaDto,'I');
 			
 			return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
 	     } catch (RegraNegocioException e) {
@@ -110,19 +110,18 @@ public class ProgramacaoEntregaController {
 	     }
     }
 	
-//	//Usado para recuperar recurso no servidor.
-//		//Quando o "id" é passado na url o valor é colocado na variável "id".
-//		@PutMapping("atualiza-lotes")
-//		public ResponseEntity atualizarLote(@PathVariable("id") Long id, @RequestBody ProgramacaoEntregaDTO programacaoEntregaDto) {
-//		  try {
-//				ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
-//				programacaoEntregaDto.setId(id);			
-//				programacaoEntrega = programacaoEntregaService.alterar(programacaoEntregaDto);
-//				return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
-//		     } catch (RegraNegocioException e) {
-//			    return ResponseEntity.badRequest().body(e.getMessage());
-//		     }
-//	    }
+	//Usado para recuperar recurso no servidor.
+		//Quando o "id" é passado na url o valor é colocado na variável "id".
+		@PutMapping("atualiza-lotes")
+		public ResponseEntity atualizarLote(@RequestBody ProgramacaoEntregaDTO programacaoEntregaDto) {
+		  try {
+				ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
+				programacaoEntrega = programacaoEntregaService.atualizarLote(programacaoEntregaDto,'A');
+				return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
+		     } catch (RegraNegocioException e) {
+			    return ResponseEntity.badRequest().body(e.getMessage());
+		     }
+	    }
 	
 	
   

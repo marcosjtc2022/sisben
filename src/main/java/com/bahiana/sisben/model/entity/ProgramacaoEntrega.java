@@ -142,7 +142,7 @@ public class ProgramacaoEntrega implements Serializable{
 		return id;
 	}
 
-	public void setIdProgEntrega(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
