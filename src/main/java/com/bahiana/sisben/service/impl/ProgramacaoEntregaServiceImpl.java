@@ -22,7 +22,7 @@ import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
-import com.bahiana.sisben.util.UtilDataHora;
+//import com.bahiana.sisben.util.UtilDataHora;
 
 @Service
 public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService   {
@@ -103,7 +103,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		Boolean stAprov = null;
 		Long usuarioModificacao = programacaoEntrega.getIdUsuario();
 		LocalDateTime dataModificacao = LocalDateTime.now();
-		UtilDataHora utilDataHora = new UtilDataHora() ;
+		//UtilDataHora utilDataHora = new UtilDataHora() ;
 		String dataEntrega2 = null;
 		String dataSolicitacao2 = null;
 		
@@ -119,8 +119,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				matriculaColaborador =  new Long(linha[0]);
 				uaPrevista = linha[1];
 				uaRealizada = linha[2];
-				dataEntrega = utilDataHora.trataDatas(linha[3]);   //linha[3];
-				dataSolicitacao = utilDataHora.trataDatas(linha[4]);  
+				//dataEntrega = utilDataHora.trataDatas(linha[3]);   //linha[3];
+				//dataSolicitacao = utilDataHora.trataDatas(linha[4]);  
 				idUa = new Long(linha[5]);
 				idJustificativa = new Long(linha[6]);
 				idUsuario = new Long(linha[7]);
@@ -132,8 +132,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				matriculaColaborador =  new Long(linha[1]);
 				uaPrevista = linha[2];
 				uaRealizada = linha[3];
-				dataEntrega = utilDataHora.trataDatas(linha[4]);   //linha[3];
-				dataSolicitacao = utilDataHora.trataDatas(linha[5]);  
+				//dataEntrega = utilDataHora.trataDatas(linha[4]);   //linha[3];
+				//dataSolicitacao = utilDataHora.trataDatas(linha[5]);  
 				idUa = new Long(linha[6]);
 				idJustificativa = new Long(linha[7]);
 				idUsuario = new Long(linha[8]);
