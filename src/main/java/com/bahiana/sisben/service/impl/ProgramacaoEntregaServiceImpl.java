@@ -1,6 +1,7 @@
 package com.bahiana.sisben.service.impl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
-//import com.bahiana.sisben.util.UtilDataHora;
+
 
 @Service
 public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService   {
@@ -107,6 +108,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		String dataEntrega2 = null;
 		String dataSolicitacao2 = null;
 		
+		DateTimeFormatter formatadorComHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm");
+		//String dateInString = "Mon, 05 May 1980";
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy", Locale.ENGLISH);
+//		LocalDate dateTime = LocalDate.parse(dateInString, formatter);
+		
 		
 		for (String linhaTabProgEntrega : tabelaProgramacaoEntrega) 
 			{
@@ -120,7 +126,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				uaPrevista = linha[1];
 				uaRealizada = linha[2];
 				//dataEntrega = utilDataHora.trataDatas(linha[3]);   //linha[3];
-				//dataSolicitacao = utilDataHora.trataDatas(linha[4]);  
+				//dataSolicitacao = utilDataHora.trataDatas(linha[4]);
+				//LocalDateTime dateTime = LocalDateTime.parse("2018-05-05T11:50:55");
+//				dataEntrega2 = linha[3];
+				dataEntrega = LocalDateTime.parse(linha[3]+ "T11:00:00");
+				dataSolicitacao = LocalDateTime.parse(linha[4]+ "T11:00:00");
 				idUa = new Long(linha[5]);
 				idJustificativa = new Long(linha[6]);
 				idUsuario = new Long(linha[7]);
@@ -133,7 +143,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				uaPrevista = linha[2];
 				uaRealizada = linha[3];
 				//dataEntrega = utilDataHora.trataDatas(linha[4]);   //linha[3];
-				//dataSolicitacao = utilDataHora.trataDatas(linha[5]);  
+				//dataSolicitacao = utilDataHora.trataDatas(linha[5]);
+//				dataEntrega = LocalDateTime.parse(linha[4]);   //linha[3];
+//				dataSolicitacao = LocalDateTime.parse(linha[5]);
+				dataEntrega = LocalDateTime.parse(linha[4]+ "T11:00:00");
+				dataSolicitacao = LocalDateTime.parse(linha[5]+ "T11:00:00");
 				idUa = new Long(linha[6]);
 				idJustificativa = new Long(linha[7]);
 				idUsuario = new Long(linha[8]);
@@ -199,9 +213,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 	@Override
 	public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable , ProgramacaoEntregaDTO programacaoEntregaDTO) {
-		
-		//BigDecimal receitas = repository.obterSaldoPorTipoLancamentoEUsuarioEStatus(usuario, TipoLancamento.RECEITA, StatusLancamento.EFETIVADO);
-		//BigDecimal despesas = repository.obterSaldoPorTipoLancamentoEUsuarioEStatus(usuario, TipoLancamento.DESPESA, StatusLancamento.EFETIVADO);
 		
 		Page<ProgramacaoEntrega> ProgramacaoEntregaLista =  this.programacaoEntregaRepository.programacaoPorPeriodo
 				(pageable,programacaoEntregaDTO.getMatriculaColaborador(),
