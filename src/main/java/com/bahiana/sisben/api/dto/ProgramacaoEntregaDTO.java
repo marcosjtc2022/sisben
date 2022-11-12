@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+
+import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 
 //import lombok.AllArgsConstructor;
 //import lombok.Builder;
@@ -210,7 +211,7 @@ public class ProgramacaoEntregaDTO {
 	public ProgramacaoEntregaDTO() {
 		
 	}
-
+	
 	@Override
 	public String toString() {
 		return "ProgramacaoEntregaDTO [id=" + id + ", matriculaColaborador=" + matriculaColaborador + ", uaPrevista="

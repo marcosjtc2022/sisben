@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	@Override
 	@Transactional //Abre uma transação. Ao final se ocorrer tudo bem faz commit. No caso de erro faz rollback.
 	public ProgramacaoEntrega salvar(ProgramacaoEntregaDTO programacaoEntregaDto) {
-		ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
+		//ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
+		 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
 		 return programacaoEntregaRepository.save(programacaoEntrega);
 	}
 	
@@ -43,7 +45,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	public ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDTO programacaoEntregaDto) {
 		
 		ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
-	
+		
+		//gerar com método construtor.
 		if ((programacaoEntregaDto.getId() != null)) {
 			programacaoEntrega.setId(programacaoEntregaDto.getId());
 		}
@@ -238,6 +241,16 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		//Optional<ProgramacaoEntrega> usuario = this.programacaoEntregaRepository.obterPorId(id);
 		return this.programacaoEntregaRepository.findById(id);
 	}
+	
+	
+	
+	// 944 - Método para conversão de classe.
+		public static ProgramacaoEntrega from(ProgramacaoEntregaDTO programacaoEntregaDTO) {
+			ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
+			BeanUtils.copyProperties(programacaoEntregaDTO, programacaoEntrega);
+			
+			return programacaoEntrega;
+		}
 	
 //	@DeleteMapping("{id}")
 //	public ResponseEntity deletar(@PathVariable("id") Long id) {

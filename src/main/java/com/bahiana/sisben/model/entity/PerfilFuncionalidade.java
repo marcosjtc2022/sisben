@@ -17,16 +17,11 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@Builder
+
+
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Table(name = "perfil_funcionalidade" , schema="dbo")
 public class PerfilFuncionalidade implements Serializable {
 	
