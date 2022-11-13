@@ -1,5 +1,7 @@
 package com.bahiana.sisben.service;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,5 +15,11 @@ public interface PerfilService {
 	Page<Perfil> listarPaginadoSimples( );
 	
 	Perfil salvar(PerfilDTO perfilDto);
+	
+	Perfil alterar(PerfilDTO perfilDto);
+	
+	void deletar(Perfil perfil);
+	
+	Optional<Perfil> obterPorId(Long id);
 	
 }

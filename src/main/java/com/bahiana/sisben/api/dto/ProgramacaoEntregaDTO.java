@@ -2,6 +2,7 @@ package com.bahiana.sisben.api.dto;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -60,11 +61,34 @@ public class ProgramacaoEntregaDTO {
 //	@Column(name = "status_aprov", columnDefinition="BIT")
 	private Boolean stAprov;
 	
+	@Column(name = "data_ultima_modificacao")
+	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+	private LocalDateTime dataUltimaModificacao;
+	
 	//@Transient
 	String tabelaProgramacaoEntrega;
 	
-	private String codSetor; 
+	private String codSetor;
+		
+	private Long idUsuarioUltimaModificacao;
 	
+	
+	public Long getIdUsuarioUltimaModificacao() {
+		return idUsuarioUltimaModificacao;
+	}
+
+	public void setIdUsuarioUltimaModificacao(Long idUsuarioUltimaModificacao) {
+		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+	}
+
+	public LocalDateTime getDataUltimaModificacao() {
+		return dataUltimaModificacao;
+	}
+
+	public void setDataUltimaModificacao(LocalDateTime dataUltimaModificacao) {
+		this.dataUltimaModificacao = dataUltimaModificacao;
+	}
+
 	public String getCodSetor() {
 		return codSetor;
 	}

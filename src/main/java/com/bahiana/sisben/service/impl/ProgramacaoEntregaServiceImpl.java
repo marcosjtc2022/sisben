@@ -188,7 +188,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	@Transactional
 	public ProgramacaoEntrega alterar(ProgramacaoEntregaDTO programacaoEntregaDto) {
 		
-		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
+		 //ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
+		 LocalDateTime dataModificacao = LocalDateTime.now();
+		 programacaoEntregaDto.setDataUltimaModificacao(dataModificacao);
+		 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
 		 return programacaoEntregaRepository.save(programacaoEntrega);
 		
 	}

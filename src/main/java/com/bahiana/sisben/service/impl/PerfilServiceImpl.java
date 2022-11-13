@@ -1,21 +1,19 @@
 package com.bahiana.sisben.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import com.bahiana.sisben.api.dto.PerfilDTO;
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaDTO;
-import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Perfil;
-import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.repository.PerfilRepository;
 import com.bahiana.sisben.service.PerfilService;
 
@@ -42,8 +40,30 @@ public class PerfilServiceImpl implements PerfilService {
 		 return perfilRepository.save(perfil);
 	}
 	
+	@Override
+	@Transactional
+	public void deletar(Perfil perfil) {
+		perfilRepository.delete(perfil);
+	}
+	
+	@Override
+	@Transactional
+	public Perfil alterar(PerfilDTO perfilDto) {
+		
+		 Perfil perfil = from(perfilDto);
+		 return perfilRepository.save(perfil);
+		
+	}
+	
+	@Override
+	public Optional<Perfil> obterPorId(Long id) {
+		return perfilRepository.findById(id);
+	}
+	
 	public static Perfil from(PerfilDTO perfilDto) {
 		Perfil perfil = new Perfil();
+		LocalDateTime dataModificacao = LocalDateTime.now();
+		perfilDto.setDataUltimaModificacao(dataModificacao);
 		BeanUtils.copyProperties(perfilDto, perfil);
 		
 		return perfil;

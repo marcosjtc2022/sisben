@@ -12,6 +12,5 @@ import com.bahiana.sisben.model.entity.Perfil;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 
 public interface PerfilRepository extends PagingAndSortingRepository<Perfil, Long>, JpaSpecificationExecutor<Perfil> {
-	
 
 }
