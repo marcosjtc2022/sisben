@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaDTO;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
@@ -35,14 +35,14 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Override
 	@Transactional //Abre uma transação. Ao final se ocorrer tudo bem faz commit. No caso de erro faz rollback.
-	public ProgramacaoEntrega salvar(ProgramacaoEntregaDTO programacaoEntregaDto) {
+	public ProgramacaoEntrega salvar(ProgramacaoEntregaDto programacaoEntregaDto) {
 		//ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
 		 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
 		 return programacaoEntregaRepository.save(programacaoEntrega);
 	}
 	
 	@Override
-	public ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDTO programacaoEntregaDto) {
+	public ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
 		
 		ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
 		
@@ -73,7 +73,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	}
 
 	@Override
-	public ProgramacaoEntrega salvarLote(ProgramacaoEntregaDTO programacaoEntregaDto, char operacao) {
+	public ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao) {
 		
 		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
 		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
@@ -186,7 +186,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 	@Override
 	@Transactional
-	public ProgramacaoEntrega alterar(ProgramacaoEntregaDTO programacaoEntregaDto) {
+	public ProgramacaoEntrega alterar(ProgramacaoEntregaDto programacaoEntregaDto) {
 		
 		 //ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
 		 LocalDateTime dataModificacao = LocalDateTime.now();
@@ -218,7 +218,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	}
 
 	@Override
-	public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable , ProgramacaoEntregaDTO programacaoEntregaDTO) {
+	public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable , ProgramacaoEntregaDto programacaoEntregaDTO) {
 		
 		Page<ProgramacaoEntrega> ProgramacaoEntregaLista =  this.programacaoEntregaRepository.programacaoPorPeriodo
 				(pageable,programacaoEntregaDTO.getMatriculaColaborador(),
@@ -228,7 +228,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	}
 
 	@Override
-	public ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDTO programacaoEntregaDto, char operacao) {
+	public ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao) {
 		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
 		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
 		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
@@ -248,7 +248,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	
 	// 944 - Método para conversão de classe.
-		public static ProgramacaoEntrega from(ProgramacaoEntregaDTO programacaoEntregaDTO) {
+		public static ProgramacaoEntrega from(ProgramacaoEntregaDto programacaoEntregaDTO) {
 			ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
 			BeanUtils.copyProperties(programacaoEntregaDTO, programacaoEntrega);
 			

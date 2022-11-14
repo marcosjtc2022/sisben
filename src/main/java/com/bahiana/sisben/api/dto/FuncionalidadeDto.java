@@ -1,24 +1,16 @@
 package com.bahiana.sisben.api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-
-public class PerfilDto {
+public class FuncionalidadeDto {
 	
-	
-	private Long id; 
+	private Long id;
 	
 	private String descricao;
 	
 	private LocalDateTime dataUltimaModificacao;
-		
+	
 	private Long idUsuarioUltimaModificacao;
 
 	public Long getId() {
@@ -53,21 +45,18 @@ public class PerfilDto {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public PerfilDto(Long id, String descricao, LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
+	public FuncionalidadeDto(Long id, String descricao, LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
-	}
+	}	
 	
-	public PerfilDto() {
+	public FuncionalidadeDto() {
 		
-	}
+	}	
 	
-	
-	
-	
-	
+
 
 }

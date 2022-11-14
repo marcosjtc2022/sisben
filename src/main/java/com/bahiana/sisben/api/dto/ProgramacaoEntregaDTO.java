@@ -18,7 +18,7 @@ import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 @Entity
 //@NoArgsConstructor
 //@AllArgsConstructor
-public class ProgramacaoEntregaDTO {
+public class ProgramacaoEntregaDto {
 	
 	@Id
     private Long id;	
@@ -212,7 +212,7 @@ public class ProgramacaoEntregaDTO {
 	
 	
 	
-	public ProgramacaoEntregaDTO(Long id, Long matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
+	public ProgramacaoEntregaDto(Long id, Long matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDateTime dataEntrega,
 			LocalDateTime dataSolicitacao, Boolean solicExtra, Boolean stAprov, String tabelaProgramacaoEntrega) {
 		super();
@@ -232,7 +232,7 @@ public class ProgramacaoEntregaDTO {
 		this.tabelaProgramacaoEntrega = tabelaProgramacaoEntrega;
 	}
 
-	public ProgramacaoEntregaDTO() {
+	public ProgramacaoEntregaDto() {
 		
 	}
 	

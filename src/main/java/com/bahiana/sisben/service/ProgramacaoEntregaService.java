@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaDTO;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
@@ -20,21 +20,21 @@ public interface ProgramacaoEntregaService {
 	
 	Page<ProgramacaoEntrega> listarPaginadoSimples( );
 	
-    Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable, ProgramacaoEntregaDTO programacaoEntregaDTO );
+    Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable, ProgramacaoEntregaDto programacaoEntregaDTO );
 	
-	ProgramacaoEntrega salvar(ProgramacaoEntregaDTO programacaoEntregaDto);
+	ProgramacaoEntrega salvar(ProgramacaoEntregaDto programacaoEntregaDto);
 	
-	ProgramacaoEntrega alterar(ProgramacaoEntregaDTO programacaoEntregaDto);
+	ProgramacaoEntrega alterar(ProgramacaoEntregaDto programacaoEntregaDto);
 	
-	ProgramacaoEntrega salvarLote(ProgramacaoEntregaDTO programacaoEntregaDto, char operacao);
+	ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
 	
-	ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDTO programacaoEntregaDto, char operacao);
+	ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
 	
 	Optional<ProgramacaoEntrega> obterPorId(Long id);	
 	
 	//ProgramacaoEntrega alterarLote(ProgramacaoEntregaDTO programacaoEntregaDto);
 	
-	ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDTO programacaoEntregaDto);
+	ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDto programacaoEntregaDto);
 	
 	List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega, char operacao);
 

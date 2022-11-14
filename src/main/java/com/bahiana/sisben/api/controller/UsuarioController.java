@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.UsuarioDTO;
+import com.bahiana.sisben.api.dto.UsuarioDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.service.UsuarioService;
@@ -20,7 +20,7 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 	
 	@PostMapping("/autenticar")
-	public ResponseEntity autenticar(@RequestBody UsuarioDTO dto ) {
+	public ResponseEntity autenticar(@RequestBody UsuarioDto dto ) {
 		
 		try {
 			Usuario usuarioAutenticado = usuarioService.autenticar(dto.getEmailUsuario(),dto.getSenhaUsuario());

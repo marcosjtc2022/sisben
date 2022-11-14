@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.PerfilDTO;
+import com.bahiana.sisben.api.dto.PerfilDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Perfil;
 import com.bahiana.sisben.service.PerfilService;
@@ -41,7 +41,7 @@ public class PerfilController {
     }
 	
 	@PostMapping
-	public ResponseEntity salvar(@RequestBody PerfilDTO perfilDTO) {
+	public ResponseEntity salvar(@RequestBody PerfilDto perfilDTO) {
 	  try {
 			Perfil perfil = new Perfil() ;
 			perfil = perfilService.salvar(perfilDTO);
@@ -54,7 +54,7 @@ public class PerfilController {
 	//Usado para recuperar recurso no servidor.
 		//Quando o "id" é passado na url o valor é colocado na variável "id".
 		@PutMapping("{id}")
-		public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PerfilDTO perfilDTO) {
+		public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PerfilDto perfilDTO) {
 		  try {
 				Perfil perfil = new Perfil() ;
 				perfilDTO.setId(id);			
@@ -65,20 +65,6 @@ public class PerfilController {
 		     }
 	    }
 		
-//		@DeleteMapping("{id}")
-//		public ResponseEntity deletar(@PathVariable("id") Long id) {
-//			
-//			 try {
-//					//Perfil perfil = new Perfil() ;
-//					Optional<Perfil> perfil = perfilService.obterPorId(id);
-//					perfilService.deletar(perfil);
-//					//perfil = perfilService.alterar(perfilDTO);
-//					return new ResponseEntity(perfil, HttpStatus.CREATED);
-//			     } catch (RegraNegocioException e) {
-//				    return ResponseEntity.badRequest().body(e.getMessage());
-//			     }
-//			
-//		}
 		
 		@DeleteMapping("{id}")
 		public ResponseEntity deletar(@PathVariable("id") Long id) {

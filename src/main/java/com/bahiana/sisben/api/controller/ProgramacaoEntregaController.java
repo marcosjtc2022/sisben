@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaDTO;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
@@ -62,7 +62,7 @@ public class ProgramacaoEntregaController {
     
     @GetMapping(value =  "/programacao-por-periodo" )
     @ResponseBody
-    public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable,ProgramacaoEntregaDTO  programacaoEntregaDTO  ) {
+    public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable,ProgramacaoEntregaDto  programacaoEntregaDTO  ) {
     	return this.programacaoEntregaService.listarProgramacaoPorPeriodo(pageable,programacaoEntregaDTO);   	  
     }
     
@@ -74,7 +74,7 @@ public class ProgramacaoEntregaController {
    
 	
 	@PostMapping
-	public ResponseEntity salvar(@RequestBody ProgramacaoEntregaDTO programacaoEntregaDto) {
+	public ResponseEntity salvar(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 	  try {
 			ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 			programacaoEntrega = programacaoEntregaService.salvar(programacaoEntregaDto);
@@ -85,7 +85,7 @@ public class ProgramacaoEntregaController {
     }
 	
 	@PostMapping("/salva-lotes")
-	public ResponseEntity salvarLote(@RequestBody ProgramacaoEntregaDTO programacaoEntregaDto) {
+	public ResponseEntity salvarLote(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 	  try {
 			ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 			programacaoEntrega = programacaoEntregaService.salvarLote(programacaoEntregaDto,'I');
@@ -99,7 +99,7 @@ public class ProgramacaoEntregaController {
 	//Usado para recuperar recurso no servidor.
 	//Quando o "id" é passado na url o valor é colocado na variável "id".
 	@PutMapping("{id}")
-	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ProgramacaoEntregaDTO programacaoEntregaDto) {
+	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 	  try {
 			ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 			programacaoEntregaDto.setId(id);			
@@ -113,7 +113,7 @@ public class ProgramacaoEntregaController {
 	//Usado para recuperar recurso no servidor.
 		//Quando o "id" é passado na url o valor é colocado na variável "id".
 		@PutMapping("atualiza-lotes")
-		public ResponseEntity atualizarLote(@RequestBody ProgramacaoEntregaDTO programacaoEntregaDto) {
+		public ResponseEntity atualizarLote(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 		  try {
 				ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 				programacaoEntrega = programacaoEntregaService.atualizarLote(programacaoEntregaDto,'A');

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.bahiana.sisben.api.dto.PerfilDTO;
+import com.bahiana.sisben.api.dto.PerfilDto;
 import com.bahiana.sisben.model.entity.Perfil;
 
 public interface PerfilService {
@@ -14,9 +14,9 @@ public interface PerfilService {
 	
 	Page<Perfil> listarPaginadoSimples( );
 	
-	Perfil salvar(PerfilDTO perfilDto);
+	Perfil salvar(PerfilDto perfilDto);
 	
-	Perfil alterar(PerfilDTO perfilDto);
+	Perfil alterar(PerfilDto perfilDto);
 	
 	void deletar(Perfil perfil);
 	

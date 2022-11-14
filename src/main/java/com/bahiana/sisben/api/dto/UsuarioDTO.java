@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Id;
 
-public class UsuarioDTO {
+public class UsuarioDto {
 	
 	@Id
     private Long id;
@@ -117,7 +117,7 @@ public class UsuarioDTO {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public UsuarioDTO(Long id, Long idPerfil, Long idUa, Long idFornecedor, Long matriculaColaborador,
+	public UsuarioDto(Long id, Long idPerfil, Long idUa, Long idFornecedor, Long matriculaColaborador,
 			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
@@ -134,7 +134,7 @@ public class UsuarioDTO {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 	
-	public UsuarioDTO() {
+	public UsuarioDto() {
 		
 	}
 	

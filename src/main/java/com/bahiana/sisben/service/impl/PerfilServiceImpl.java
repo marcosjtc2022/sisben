@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.bahiana.sisben.api.dto.PerfilDTO;
+import com.bahiana.sisben.api.dto.PerfilDto;
 import com.bahiana.sisben.model.entity.Perfil;
 import com.bahiana.sisben.model.entity.repository.PerfilRepository;
 import com.bahiana.sisben.service.PerfilService;
@@ -33,7 +33,7 @@ public class PerfilServiceImpl implements PerfilService {
 	}
 
 	@Override
-	public Perfil salvar(PerfilDTO perfilDto) {
+	public Perfil salvar(PerfilDto perfilDto) {
 		 Perfil perfil = PerfilServiceImpl.from(perfilDto);
 		 LocalDateTime dataModificacao = LocalDateTime.now();
 		 perfil.setDataUltimaModificacao(dataModificacao);
@@ -48,7 +48,7 @@ public class PerfilServiceImpl implements PerfilService {
 	
 	@Override
 	@Transactional
-	public Perfil alterar(PerfilDTO perfilDto) {
+	public Perfil alterar(PerfilDto perfilDto) {
 		
 		 Perfil perfil = from(perfilDto);
 		 return perfilRepository.save(perfil);
@@ -60,7 +60,7 @@ public class PerfilServiceImpl implements PerfilService {
 		return perfilRepository.findById(id);
 	}
 	
-	public static Perfil from(PerfilDTO perfilDto) {
+	public static Perfil from(PerfilDto perfilDto) {
 		Perfil perfil = new Perfil();
 		LocalDateTime dataModificacao = LocalDateTime.now();
 		perfilDto.setDataUltimaModificacao(dataModificacao);
