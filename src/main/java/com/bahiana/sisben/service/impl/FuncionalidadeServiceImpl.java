@@ -41,20 +41,20 @@ public class FuncionalidadeServiceImpl implements FuncionalidadeService {
 
 	@Override
 	public Funcionalidade alterar(FuncionalidadeDto funcionalidadeDto) {
-		// TODO Auto-generated method stub
-		return null;
+		 Funcionalidade funcionalidade = FuncionalidadeServiceImpl.from(funcionalidadeDto);
+		 LocalDateTime dataModificacao = LocalDateTime.now();
+		 funcionalidade.setDataUltimaModificacao(dataModificacao);
+		 return funcionalidadeRepository.save(funcionalidade);
 	}
 
 	@Override
 	public void deletar(Funcionalidade funcionalidade) {
-		// TODO Auto-generated method stub
-		
+		funcionalidadeRepository.delete(funcionalidade);
 	}
 
 	@Override
 	public Optional<Funcionalidade> obterPorId(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return funcionalidadeRepository.findById(id);
 	}
 	
 	public static Funcionalidade from(FuncionalidadeDto funcionalidadeDto) {

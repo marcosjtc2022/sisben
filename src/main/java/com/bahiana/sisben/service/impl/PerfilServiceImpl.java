@@ -51,6 +51,8 @@ public class PerfilServiceImpl implements PerfilService {
 	public Perfil alterar(PerfilDto perfilDto) {
 		
 		 Perfil perfil = from(perfilDto);
+		 LocalDateTime dataModificacao = LocalDateTime.now();
+		 perfil.setDataUltimaModificacao(dataModificacao);
 		 return perfilRepository.save(perfil);
 		
 	}
