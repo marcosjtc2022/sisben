@@ -1,53 +1,24 @@
-package com.bahiana.sisben.model.entity;
+package com.bahiana.sisben.api.dto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
-
-
-
-@Entity
-
-@Table(name = "perfil_funcionalidade" , schema="dbo")
-public class PerfilFuncionalidade implements Serializable {
+public class PerfilFuncionalidadeDto {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_perfil_funcionalidade")
+	
     private Long id; 
 	
-	@Column(name="id_perfil")
 	private String idPerfil;
 	
-	@Column(name="id_funcionalidade")
 	private String idFuncionalidade;
 	
-	@Column(name = "data_ultima_modificacao")
 	private LocalDateTime dataUltimaModificacao;
-	
-	@Column(name="id_usuario_ultima_modificacao")
+		
 	private Long idUsuarioUltimaModificacao;
-	
-	//mapeando a classe funcionalidade
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
-    @JoinColumn(updatable=false,insertable=false,name = "id_funcionalidade")
-    Funcionalidade funcionalidade;
- 
-    //mapeando a classe perfil 
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
-    @JoinColumn(updatable=false,insertable=false,name = "id_perfil")
-    Perfil perfil;
 
 	public Long getId() {
 		return id;
@@ -89,8 +60,8 @@ public class PerfilFuncionalidade implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public PerfilFuncionalidade(Long id, String idPerfil, String idFuncionalidade, LocalDateTime dataUltimaModificacao,
-			Long idUsuarioUltimaModificacao) {
+	public PerfilFuncionalidadeDto(Long id, String idPerfil, String idFuncionalidade,
+			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
 		this.idPerfil = idPerfil;
@@ -99,19 +70,13 @@ public class PerfilFuncionalidade implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 	
-	public PerfilFuncionalidade() {
+	public PerfilFuncionalidadeDto() {
 		
 	}
-    
-    
-    
-
-   
 	
 	
 
-		
+	
 	
 
-	
 }
