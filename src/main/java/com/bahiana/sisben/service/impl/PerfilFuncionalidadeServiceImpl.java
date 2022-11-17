@@ -1,7 +1,9 @@
 package com.bahiana.sisben.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,11 +28,13 @@ public class PerfilFuncionalidadeServiceImpl implements PerfilFuncionalidadeServ
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public PerfilFuncionalidade salvar(PerfilFuncionalidadeDto perfilFuncionalidadeDto) {
-		// TODO Auto-generated method stub
-		return null;
+		 PerfilFuncionalidade perfilFuncionalidade = PerfilFuncionalidadeServiceImpl.from(perfilFuncionalidadeDto);
+		 LocalDateTime dataModificacao = LocalDateTime.now();
+		 perfilFuncionalidade.setDataUltimaModificacao(dataModificacao);
+		 return perfilFuncionalidadeRepository.save(perfilFuncionalidade);
 	}
 
 	@Override
@@ -49,6 +53,15 @@ public class PerfilFuncionalidadeServiceImpl implements PerfilFuncionalidadeServ
 	public Optional<PerfilFuncionalidade> obterPorId(Long id) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
+	}
+	
+	public static PerfilFuncionalidade from(PerfilFuncionalidadeDto perfilFuncionalidadeDto) {
+		PerfilFuncionalidade perfilFuncionalidade = new PerfilFuncionalidade();
+		LocalDateTime dataModificacao = LocalDateTime.now();
+		perfilFuncionalidadeDto.setDataUltimaModificacao(dataModificacao);
+		BeanUtils.copyProperties(perfilFuncionalidadeDto, perfilFuncionalidade);
+		
+		return perfilFuncionalidade;
 	}
 
 }
