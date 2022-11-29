@@ -12,9 +12,9 @@ public class PerfilFuncionalidadeDto {
 	
     private Long id; 
 	
-	private String idPerfil;
+	private Long idPerfil;
 	
-	private String idFuncionalidade;
+	private Long idFuncionalidade;
 	
 	private LocalDateTime dataUltimaModificacao;
 		
@@ -28,19 +28,19 @@ public class PerfilFuncionalidadeDto {
 		this.id = id;
 	}
 
-	public String getIdPerfil() {
+	public Long getIdPerfil() {
 		return idPerfil;
 	}
 
-	public void setIdPerfil(String idPerfil) {
+	public void setIdPerfil(Long idPerfil) {
 		this.idPerfil = idPerfil;
 	}
 
-	public String getIdFuncionalidade() {
+	public Long getIdFuncionalidade() {
 		return idFuncionalidade;
 	}
 
-	public void setIdFuncionalidade(String idFuncionalidade) {
+	public void setIdFuncionalidade(Long idFuncionalidade) {
 		this.idFuncionalidade = idFuncionalidade;
 	}
 
@@ -60,7 +60,7 @@ public class PerfilFuncionalidadeDto {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public PerfilFuncionalidadeDto(Long id, String idPerfil, String idFuncionalidade,
+	public PerfilFuncionalidadeDto(Long id, Long idPerfil, Long idFuncionalidade,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;

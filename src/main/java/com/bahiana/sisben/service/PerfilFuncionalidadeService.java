@@ -22,6 +22,14 @@ Page<PerfilFuncionalidade> listarPaginado(Pageable pageable);
 	
 	void deletar(PerfilFuncionalidade perfilFuncionalidade);
 	
-	Optional<PerfilFuncionalidade> obterPorId(Long id);
+	Optional<PerfilFuncionalidade> obterPorId(Long id);	
+	
+	Optional<PerfilFuncionalidade> obterPorIdPerfil(Long idPerfil);
+	
+	Optional<PerfilFuncionalidade> obterPorIdFuncionalidade(Long idFuncionalidade);
+	
+	
+	
+	
 
 }

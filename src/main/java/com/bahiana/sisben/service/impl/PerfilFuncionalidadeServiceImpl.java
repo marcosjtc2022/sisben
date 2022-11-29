@@ -45,8 +45,7 @@ public class PerfilFuncionalidadeServiceImpl implements PerfilFuncionalidadeServ
 
 	@Override
 	public void deletar(PerfilFuncionalidade perfilFuncionalidade) {
-		// TODO Auto-generated method stub
-		
+		perfilFuncionalidadeRepository.delete(perfilFuncionalidade);
 	}
 
 	@Override
@@ -62,6 +61,18 @@ public class PerfilFuncionalidadeServiceImpl implements PerfilFuncionalidadeServ
 		BeanUtils.copyProperties(perfilFuncionalidadeDto, perfilFuncionalidade);
 		
 		return perfilFuncionalidade;
+	}
+
+	@Override
+	public Optional<PerfilFuncionalidade> obterPorIdPerfil(Long idPerfil) {
+		// TODO Auto-generated method stub
+		return perfilFuncionalidadeRepository.findByIdPerfil(idPerfil);
+	}
+
+	@Override
+	public Optional<PerfilFuncionalidade> obterPorIdFuncionalidade(Long idFuncionalidade) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
 	}
 
 }

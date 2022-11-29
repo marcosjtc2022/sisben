@@ -1,11 +1,15 @@
 package com.bahiana.sisben.api.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,5 +45,20 @@ public class PerfilFuncionalidadeController {
 		    return ResponseEntity.badRequest().body(e.getMessage());
 	     }
     }
+	
+	@DeleteMapping("{idPerfil}/{idFuncionalidade}")
+	public ResponseEntity deletar(@PathVariable("idPerfil") Long idPerfil,
+			                      @PathVariable("idFuncionalidade") Long idFuncionalidade) {
+		
+		Optional<PerfilFuncionalidade> perfilFuncionalidade =  perfilFuncionalidadeService.obterPorIdPerfil(idPerfil);
+		
+		
+		//entity é o que retorna de ObterPorId
+				return perfilFuncionalidadeService.obterPorIdPerfil(idPerfil).map(entity -> {					
+					perfilFuncionalidadeService.deletar(entity);
+					return new ResponseEntity(HttpStatus.NO_CONTENT);
+				}).orElseGet(() -> 
+				    new ResponseEntity("Perfil Funcionalidade não encontrada na base de dados.", HttpStatus.BAD_REQUEST));
+	}
 
 }

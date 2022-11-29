@@ -70,6 +70,12 @@ public class PerfilServiceImpl implements PerfilService {
 		
 		return perfil;
 	}
+
+//	@Override
+//	public Optional<Perfil> obterPorIdPerfileIdFuncionalidade(Long idPerfil, Long idFuncionalidade) {
+//		// TODO Auto-generated method stub
+//		return Optional.empty();
+//	}
 	
 
 }

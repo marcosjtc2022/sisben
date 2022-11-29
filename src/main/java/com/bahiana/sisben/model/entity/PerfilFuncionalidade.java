@@ -28,10 +28,10 @@ public class PerfilFuncionalidade implements Serializable {
     private Long id; 
 	
 	@Column(name="id_perfil")
-	private String idPerfil;
+	private Long idPerfil;
 	
 	@Column(name="id_funcionalidade")
-	private String idFuncionalidade;
+	private Long idFuncionalidade;
 	
 	@Column(name = "data_ultima_modificacao")
 	private LocalDateTime dataUltimaModificacao;
@@ -57,19 +57,19 @@ public class PerfilFuncionalidade implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdPerfil() {
+	public Long getIdPerfil() {
 		return idPerfil;
 	}
 
-	public void setIdPerfil(String idPerfil) {
+	public void setIdPerfil(Long idPerfil) {
 		this.idPerfil = idPerfil;
 	}
 
-	public String getIdFuncionalidade() {
+	public Long getIdFuncionalidade() {
 		return idFuncionalidade;
 	}
 
-	public void setIdFuncionalidade(String idFuncionalidade) {
+	public void setIdFuncionalidade(Long idFuncionalidade) {
 		this.idFuncionalidade = idFuncionalidade;
 	}
 
@@ -89,7 +89,7 @@ public class PerfilFuncionalidade implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public PerfilFuncionalidade(Long id, String idPerfil, String idFuncionalidade, LocalDateTime dataUltimaModificacao,
+	public PerfilFuncionalidade(Long id, Long idPerfil, Long idFuncionalidade, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
