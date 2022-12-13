@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.bahiana.sisben.api.dto.PerfilFuncionalidadeDto;
 import com.bahiana.sisben.model.entity.PerfilFuncionalidade;
+import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.repository.PerfilFuncionalidadeRepository;
 import com.bahiana.sisben.service.PerfilFuncionalidadeService;
 
@@ -50,8 +51,7 @@ public class PerfilFuncionalidadeServiceImpl implements PerfilFuncionalidadeServ
 
 	@Override
 	public Optional<PerfilFuncionalidade> obterPorId(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return perfilFuncionalidadeRepository.findById(id);
 	}
 	
 	public static PerfilFuncionalidade from(PerfilFuncionalidadeDto perfilFuncionalidadeDto) {
@@ -73,6 +73,16 @@ public class PerfilFuncionalidadeServiceImpl implements PerfilFuncionalidadeServ
 	public Optional<PerfilFuncionalidade> obterPorIdFuncionalidade(Long idFuncionalidade) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
+	}
+
+	@Override
+	public void excluirPerfilFuncionalidade(PerfilFuncionalidade perfilFuncionalidade) {
+		perfilFuncionalidadeRepository.excluirPerfilFuncionalidade(perfilFuncionalidade.getId());
+	}
+
+	@Override
+	public Optional<PerfilFuncionalidade> buscarPerfilFuncionalidade(Long idPerfil,Long idFuncionalidade) {
+		return	perfilFuncionalidadeRepository.findByIdPerfilAndIdFuncionalidade(idPerfil, idFuncionalidade);
 	}
 
 }

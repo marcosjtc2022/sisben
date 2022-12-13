@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import com.bahiana.sisben.api.dto.FuncionalidadeDto;
 import com.bahiana.sisben.api.dto.PerfilFuncionalidadeDto;
@@ -27,6 +28,10 @@ Page<PerfilFuncionalidade> listarPaginado(Pageable pageable);
 	Optional<PerfilFuncionalidade> obterPorIdPerfil(Long idPerfil);
 	
 	Optional<PerfilFuncionalidade> obterPorIdFuncionalidade(Long idFuncionalidade);
+	
+	void excluirPerfilFuncionalidade(PerfilFuncionalidade perfilFuncionalidade);
+	
+	Optional<PerfilFuncionalidade> buscarPerfilFuncionalidade(Long idPerfil,Long idFuncionalidade);
 	
 	
 	

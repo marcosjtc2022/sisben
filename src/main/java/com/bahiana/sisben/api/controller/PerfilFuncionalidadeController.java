@@ -19,6 +19,7 @@ import com.bahiana.sisben.api.dto.PerfilFuncionalidadeDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Perfil;
 import com.bahiana.sisben.model.entity.PerfilFuncionalidade;
+import com.bahiana.sisben.model.entity.repository.PerfilFuncionalidadeRepository;
 import com.bahiana.sisben.service.PerfilFuncionalidadeService;
 
 @RestController
@@ -27,6 +28,9 @@ public class PerfilFuncionalidadeController {
 	
 	@Autowired
 	private PerfilFuncionalidadeService perfilFuncionalidadeService;
+	
+	@Autowired
+	PerfilFuncionalidadeRepository perfilFuncionalidadeRepository;
 	
 	
 	@GetMapping(value =  "/listarPaginado" )
@@ -46,15 +50,13 @@ public class PerfilFuncionalidadeController {
 	     }
     }
 	
-	@DeleteMapping("{idPerfil}/{idFuncionalidade}")
+	@DeleteMapping("{idPerfil}/{idFuncionalidade}") 
 	public ResponseEntity deletar(@PathVariable("idPerfil") Long idPerfil,
 			                      @PathVariable("idFuncionalidade") Long idFuncionalidade) {
 		
-		Optional<PerfilFuncionalidade> perfilFuncionalidade =  perfilFuncionalidadeService.obterPorIdPerfil(idPerfil);
 		
-		
-		//entity é o que retorna de ObterPorId
-				return perfilFuncionalidadeService.obterPorIdPerfil(idPerfil).map(entity -> {					
+		        //entity é o que retorna de ObterPorId
+				return perfilFuncionalidadeService.buscarPerfilFuncionalidade(idPerfil, idFuncionalidade).map(entity -> {					
 					perfilFuncionalidadeService.deletar(entity);
 					return new ResponseEntity(HttpStatus.NO_CONTENT);
 				}).orElseGet(() -> 
