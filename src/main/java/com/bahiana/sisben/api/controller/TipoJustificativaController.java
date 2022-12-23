@@ -41,11 +41,11 @@ public class TipoJustificativaController {
     }
 	
 	@PostMapping
-	public ResponseEntity salvar(@RequestBody TipoJustificativaDto TipoJustificativaDTO) {
+	public ResponseEntity salvar(@RequestBody TipoJustificativaDto tipoJustificativaDTO) {
 	  try {
-			TipoJustificativa TipoJustificativa = new TipoJustificativa() ;
-			TipoJustificativa = tipoJustificativaService.salvar(TipoJustificativaDTO);
-			return new ResponseEntity(TipoJustificativa, HttpStatus.CREATED);
+			TipoJustificativa tipoJustificativa = new TipoJustificativa() ;
+			tipoJustificativa = tipoJustificativaService.salvar(tipoJustificativaDTO);
+			return new ResponseEntity(tipoJustificativa, HttpStatus.CREATED);
 	     } catch (RegraNegocioException e) {
 		    return ResponseEntity.badRequest().body(e.getMessage());
 	     }
@@ -54,12 +54,12 @@ public class TipoJustificativaController {
 	//Usado para recuperar recurso no servidor.
 		//Quando o "id" é passado na url o valor é colocado na variável "id".
 		@PutMapping("{id}")
-		public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody TipoJustificativaDto TipoJustificativaDTO) {
+		public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody TipoJustificativaDto tipoJustificativaDTO) {
 		  try {
-				TipoJustificativa TipoJustificativa = new TipoJustificativa() ;
-				TipoJustificativaDTO.setId(id);			
-				TipoJustificativa = tipoJustificativaService.alterar(TipoJustificativaDTO);
-				return new ResponseEntity(TipoJustificativa, HttpStatus.CREATED);
+				TipoJustificativa tipoJustificativa = new TipoJustificativa() ;
+				tipoJustificativaDTO.setId(id);			
+				tipoJustificativa = tipoJustificativaService.alterar(tipoJustificativaDTO);
+				return new ResponseEntity(tipoJustificativa, HttpStatus.CREATED);
 		     } catch (RegraNegocioException e) {
 			    return ResponseEntity.badRequest().body(e.getMessage());
 		     }
