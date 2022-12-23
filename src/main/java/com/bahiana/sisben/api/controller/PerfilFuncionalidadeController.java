@@ -1,6 +1,6 @@
 package com.bahiana.sisben.api.controller;
 
-import java.util.Optional;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.PerfilFuncionalidadeDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
-import com.bahiana.sisben.model.entity.Perfil;
 import com.bahiana.sisben.model.entity.PerfilFuncionalidade;
-import com.bahiana.sisben.model.entity.repository.PerfilFuncionalidadeRepository;
+//import com.bahiana.sisben.model.entity.repository.PerfilFuncionalidadeRepository;
 import com.bahiana.sisben.service.PerfilFuncionalidadeService;
 
 @RestController
@@ -29,8 +28,8 @@ public class PerfilFuncionalidadeController {
 	@Autowired
 	private PerfilFuncionalidadeService perfilFuncionalidadeService;
 	
-	@Autowired
-	PerfilFuncionalidadeRepository perfilFuncionalidadeRepository;
+	//@Autowired
+	//PerfilFuncionalidadeRepository perfilFuncionalidadeRepository;
 	
 	
 	@GetMapping(value =  "/listarPaginado" )
@@ -40,6 +39,7 @@ public class PerfilFuncionalidadeController {
     }
 	
 	@PostMapping
+	@Transactional
 	public ResponseEntity salvar(@RequestBody PerfilFuncionalidadeDto perfilFuncionalidadeDto) {
 	  try {
 			PerfilFuncionalidade perfilFuncionalidade = new PerfilFuncionalidade();
@@ -50,10 +50,14 @@ public class PerfilFuncionalidadeController {
 	     }
     }
 	
-	@DeleteMapping("{idPerfil}/{idFuncionalidade}") 
+	@DeleteMapping("{idPerfil}/{idFuncionalidade}")
+	@Transactional
 	public ResponseEntity deletar(@PathVariable("idPerfil") Long idPerfil,
 			                      @PathVariable("idFuncionalidade") Long idFuncionalidade) {
 		
+		       
+//		perfilFuncionalidadeRepository.deleteById(23L);
+//		return new ResponseEntity(HttpStatus.NO_CONTENT);
 		
 		        //entity é o que retorna de ObterPorId
 				return perfilFuncionalidadeService.buscarPerfilFuncionalidade(idPerfil, idFuncionalidade).map(entity -> {					
@@ -62,5 +66,19 @@ public class PerfilFuncionalidadeController {
 				}).orElseGet(() -> 
 				    new ResponseEntity("Perfil Funcionalidade não encontrada na base de dados.", HttpStatus.BAD_REQUEST));
 	}
+	
+	@GetMapping(value =  "/listarPaginadoDataTable" )
+    //@ResponseBody
+    public Page<PerfilFuncionalidade> listarPaginadoDataTable(Pageable pageable) {
+    	return this.perfilFuncionalidadeService.listarPaginado(pageable);
+    	
+    	//Page<PerfilFuncionalidade> responseData = new Page<PerfilFuncionalidade>;
+    			//this.perfilFuncionalidadeService.listarPaginado(pageable);
+    	
+    	//DataTable dataTable = new DataTable();
+    	
+    }
+	
+	
 
 }

@@ -254,6 +254,30 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			return programacaoEntrega;
 		}
+		
+
+		@Override
+		public Iterable<ProgramacaoEntrega> findAll() {
+			// TODO Auto-generated method stub
+			return programacaoEntregaRepository.findAll();
+		}
+
+		@Override
+		public Iterable<ProgramacaoEntrega> programacaoDataTable(ProgramacaoEntregaDto programacaoEntregaDTO) {
+			Iterable<ProgramacaoEntrega> ProgramacaoEntregaLista =  this.programacaoEntregaRepository.programacaoDataTable
+					(programacaoEntregaDTO.getMatriculaColaborador(),
+							  programacaoEntregaDTO.getUaPrevista(),
+							  programacaoEntregaDTO.getCodSetor());
+			return ProgramacaoEntregaLista;
+		}
+
+		@Override
+		public Iterable<ProgramacaoEntrega> findBymatriculaColaborador(ProgramacaoEntregaDto programacaoEntregaDTO) {
+			Iterable<ProgramacaoEntrega> ProgramacaoEntregaLista =  this.programacaoEntregaRepository.findBymatriculaColaboradorAndUaPrevista(
+					programacaoEntregaDTO.getMatriculaColaborador(), programacaoEntregaDTO.getUaPrevista());
+			
+		   return  ProgramacaoEntregaLista;
+		}
 	
 //	@DeleteMapping("{id}")
 //	public ResponseEntity deletar(@PathVariable("id") Long id) {

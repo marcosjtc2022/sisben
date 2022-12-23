@@ -15,11 +15,13 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 //	Page<ProgramacaoEntrega> findAll(ProgramacaoEntregaSpecification programacaoEntregaSpecification, Pageable pageable);
 	
-	@Query(value =	"select el.gestor1,pe.matriculaColaborador,"
+	@Query(value =	"select el.gestor1 as gestor,pe.matriculaColaborador,"
                    + " el.nomeColaborador, pe.uaPrevista , "
-                   + " pe.uaRealizada,s.descricao "
-                   + " from Elegibilidade el, ProgramacaoEntrega pe, Setor s "
+                   + " pe.uaRealizada,s.descricao, ua.descricao "
+                   + " from Elegibilidade el, ProgramacaoEntrega pe, Setor s, "
+                   + " UnidadeAcademica ua"
 	               + " where pe.matriculaColaborador = el.matriculaColaborador and "
+	               + "       pe.idUa = ua.id and "
 	               + "       pe.matriculaColaborador =:matriculaColaborador and "
 	               + "       pe.uaPrevista =:uaPrevista and "
 	               + "       s.codSetor =:codSetor and "
@@ -29,14 +31,24 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			                                       @Param("uaPrevista") String uaPrevista,
 			                                       @Param("codSetor") String codSetor);
 	
-//	@Query(value = " select sum(l.valor) from Lancamento l"
-//			+ " where l.usuario =:idUsuario and l.tipo =:tipo and  "
-//			+ " l.status =:status  "
-//			+ "group by l.usuario ")
-//	//BigDecimal obterSaldoPorTipoLancamentoEUsuario(@Param("idUsuario") Long idUsuario, @Param("tipo") String tipo);
-//	BigDecimal obterSaldoPorTipoLancamentoEUsuarioEStatus(
-//			@Param("idUsuario") Usuario idUsuario,
-//			@Param("tipo") TipoLancamento tipo,
-//			@Param("status") StatusLancamento status);
+	
+	@Query(value =	"select el.gestor1 as gestor,pe.matriculaColaborador,"
+            + " el.nomeColaborador, pe.uaPrevista , "
+            + " pe.uaRealizada,s.descricao, ua.descricao "
+            + " from Elegibilidade el, ProgramacaoEntrega pe, Setor s, "
+            + " UnidadeAcademica ua"
+            + " where pe.matriculaColaborador = el.matriculaColaborador and "
+            + "       pe.idUa = ua.id and "
+            + "       pe.matriculaColaborador =:matriculaColaborador and "
+            + "       pe.uaPrevista =:uaPrevista and "
+            + "       s.codSetor =:codSetor and "
+            + " el.codSetor = s.codSetor ")
+	Iterable<ProgramacaoEntrega>  programacaoDataTable(@Param("matriculaColaborador")Long matriculaColaborador ,
+		                                       @Param("uaPrevista") String uaPrevista,
+		                                       @Param("codSetor") String codSetor);
+	
+	
+	public Iterable<ProgramacaoEntrega> findBymatriculaColaboradorAndUaPrevista(Long matriculaColaborador,String uaPrevista );
+	
 
 }

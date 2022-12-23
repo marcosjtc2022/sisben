@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -39,9 +41,15 @@ public class Justificativa implements Serializable {
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
 	
-	//Mapenado classe JusitificativaTipoJustificativa 
-	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	Set<JustificativaTipoJustificativa> tiposJustificativa;
+//	//Mapenado classe JusitificativaTipoJustificativa Antes
+//	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	Set<JustificativaTipoJustificativa> tiposJustificativa;
+	
+	
+	//Mapeando a classe justificativa
+	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+	@JoinColumn(updatable=false,insertable=false,name = "id_tipo_justificativa")
+	TipoJustificativa tipoJustificativa;
 		
 	//Mapenado classe ProgramacaoEntrega 
 	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)

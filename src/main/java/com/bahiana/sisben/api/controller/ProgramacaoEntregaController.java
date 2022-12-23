@@ -1,7 +1,5 @@
 package com.bahiana.sisben.api.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
+//import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepositoryDataTable;
+//import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepositoryDataTable;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
@@ -28,6 +28,10 @@ public class ProgramacaoEntregaController {
 	
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
+	
+//	@Autowired
+//	ProgramacaoEntregaRepositoryDataTable programacaoEntregaRepositoryDataTable;
+
 	
     @GetMapping(value =  "/teste" )
     @ResponseBody
@@ -57,7 +61,11 @@ public class ProgramacaoEntregaController {
     @GetMapping(value =  "/paginacao-query-dinamica" )
     @ResponseBody
     public Page<ProgramacaoEntrega> listarPaginadoQueryDinamica(ProgramacaoEntregaSpecification programacaoEntregaSpecification , Pageable pageable  ) {
-    	return this.programacaoEntregaService.listarPaginadoQueryDinamica(programacaoEntregaSpecification, pageable);   	  
+    	
+    	
+    	return this.programacaoEntregaService.listarPaginadoQueryDinamica(programacaoEntregaSpecification, pageable);
+    	
+    	
     }
     
     @GetMapping(value =  "/programacao-por-periodo" )
@@ -122,7 +130,33 @@ public class ProgramacaoEntregaController {
 			    return ResponseEntity.badRequest().body(e.getMessage());
 		     }
 	    }
-	
+		
+		
+		
+		 @GetMapping(value =  "/lista-data-table" )
+		    @ResponseBody
+		  public ResponseEntity<Iterable<ProgramacaoEntrega>> listarProgramacaoDataTable() {
+			 try {
+					
+					return new ResponseEntity(programacaoEntregaService.findAll(), HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return new ResponseEntity<Iterable<ProgramacaoEntrega>>(HttpStatus.BAD_REQUEST);
+			     }
+		  }
+		 
+		 
+		 @GetMapping(value =  "/lista-filtro-matricula" )
+		    @ResponseBody
+		  public ResponseEntity<Iterable<ProgramacaoEntrega>> listarPorMatricula(ProgramacaoEntregaDto  programacaoEntregaDTO) {
+			 try {
+					
+					return new ResponseEntity(programacaoEntregaService.findBymatriculaColaborador(programacaoEntregaDTO), HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return new ResponseEntity<Iterable<ProgramacaoEntrega>>(HttpStatus.BAD_REQUEST);
+			     }
+		  }
+		  
+		
 	
   
 

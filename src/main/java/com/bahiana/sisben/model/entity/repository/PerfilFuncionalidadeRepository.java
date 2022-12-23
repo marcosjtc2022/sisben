@@ -22,6 +22,10 @@ public interface PerfilFuncionalidadeRepository extends PagingAndSortingReposito
 	
 	@Query(value =	"delete from PerfilFuncionalidade pf where pf.id =: id")
     void excluirPerfilFuncionalidade(@Param("id")Long id);
+	
+	@Query(value =	"delete from PerfilFuncionalidade pf where pf.idPerfil =: Perfil")
+    void excluirPerfilFuncionalidade2(@Param("Perfil")Long Perfil,@Param("idFuncionalidade")Long Funcionalidade );
+	
 //	
 //	@Query(value =	"select pf from PerfilFuncionalidade pf where pf.idPerfil=: idPerfil"
 //			+ "and idFuncionalidade =: idFuncionalidade " )

@@ -47,6 +47,7 @@ public class PerfilFuncionalidadeServiceImpl implements PerfilFuncionalidadeServ
 	@Override
 	public void deletar(PerfilFuncionalidade perfilFuncionalidade) {
 		perfilFuncionalidadeRepository.delete(perfilFuncionalidade);
+		
 	}
 
 	@Override

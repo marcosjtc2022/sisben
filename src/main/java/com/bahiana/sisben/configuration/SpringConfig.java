@@ -6,10 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import com.bahiana.sisben.service.FuncionalidadeService;
 import com.bahiana.sisben.service.PerfilFuncionalidadeService;
 import com.bahiana.sisben.service.PerfilService;
+import com.bahiana.sisben.service.TipoJustificativaService;
+import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.UsuarioService;
 import com.bahiana.sisben.service.impl.FuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilFuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilServiceImpl;
+import com.bahiana.sisben.service.impl.TipoJustificativaServiceImpl;
+import com.bahiana.sisben.service.impl.UnidadeAcademicaServiceImpl;
 import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
 
 @Configuration
@@ -33,6 +37,16 @@ public class SpringConfig {
 	@Bean
 	public PerfilFuncionalidadeService getPerfilFuncionalidadeService() {
 	    return new  PerfilFuncionalidadeServiceImpl();
+	}
+	
+	@Bean
+	public UnidadeAcademicaService getUnidadeAcademicaService() {
+	    return new  UnidadeAcademicaServiceImpl();
+	}
+	
+	@Bean
+	public TipoJustificativaService getTipoJustificativaService() {
+	    return new  TipoJustificativaServiceImpl();
 	}
 	
 	
