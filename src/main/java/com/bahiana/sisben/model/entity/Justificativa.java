@@ -75,6 +75,14 @@ public class Justificativa implements Serializable {
 		this.dataUltimaModificacao = dataUltimaModificacao;
 	}
 	
+	public Long getIdTipoJustificativa() {
+		return idTipoJustificativa;
+	}
+
+	public void setIdTipoJustificativa(Long idTipoJustificativa) {
+		this.idTipoJustificativa = idTipoJustificativa;
+	}
+	
 	
 	
 //	//Mapenado classe JusitificativaTipoJustificativa Antes
@@ -83,6 +91,12 @@ public class Justificativa implements Serializable {
 	
 	
 	
+
+
+
+	
+
+
 
 
 
@@ -96,8 +110,19 @@ public class Justificativa implements Serializable {
 	Set<ProgramacaoEntrega> programacaojustificativas;
 
 	
+	
 
 	
+
+	public Justificativa(Long id, String descricao, Long idTipoJustificativa, LocalDateTime dataUltimaModificacao,
+			Long idUsuarioUltimaModificacao) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.idTipoJustificativa = idTipoJustificativa;
+		this.dataUltimaModificacao = dataUltimaModificacao;
+		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+	}
 
 	public Justificativa() {
 	}

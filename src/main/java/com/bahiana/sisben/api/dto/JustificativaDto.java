@@ -33,6 +33,9 @@ public class JustificativaDto {
 	
 	
 	private Long idUsuarioUltimaModificacao;
+	
+	
+	private Long idTipoJustificativa;
 
 
 	public Long getId() {
@@ -75,16 +78,30 @@ public class JustificativaDto {
 	}
 
 
+	public Long getIdTipoJustificativa() {
+		return idTipoJustificativa;
+	}
+
+
+	public void setIdTipoJustificativa(Long idTipoJustificativa) {
+		this.idTipoJustificativa = idTipoJustificativa;
+	}
+
+
+	
+	
+	
 	public JustificativaDto(Long id, String descricao, LocalDateTime dataUltimaModificacao,
-			Long idUsuarioUltimaModificacao) {
+			Long idUsuarioUltimaModificacao, Long idTipoJustificativa) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+		this.idTipoJustificativa = idTipoJustificativa;
 	}
-	
-	
+
+
 	public JustificativaDto() {
 		
 	}
