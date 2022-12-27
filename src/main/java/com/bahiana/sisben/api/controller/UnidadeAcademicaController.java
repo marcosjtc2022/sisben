@@ -77,6 +77,11 @@ public class UnidadeAcademicaController {
     	return this.unidadeAcademicaService.listarPaginadoSimples(pageable);  	  
     }
 	
+	@GetMapping(value =  "/listarOrdenadoDescricao" )
+    public List<UnidadeAcademica> listarOrdenadoDescricao() {
+    	return this.unidadeAcademicaService.listarSimplesOrdenadoDescricao();  	  
+    }
+	
 	
 
 }

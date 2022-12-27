@@ -1,5 +1,8 @@
 package com.bahiana.sisben.api.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.JustificativaDto;
-import com.bahiana.sisben.api.dto.TipoJustificativaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
-import com.bahiana.sisben.model.entity.TipoJustificativa;
 import com.bahiana.sisben.service.JustificativaService;
+
 
 @RestController
 @RequestMapping(value = "/justificativas")
@@ -27,6 +29,9 @@ public class JustificativaController {
 	
 	@Autowired
 	private JustificativaService justificativaService;
+	
+//	@Autowired
+//	private TipoJustificativaService tipoJustificativaService;
 	
 	
 	@GetMapping(value =  "/paginacao-simples" )
@@ -50,9 +55,9 @@ public class JustificativaController {
 	     }
     }
 	
-	//Usado para recuperar recurso no servidor.
-			//Quando o "id" é passado na url o valor é colocado na variável "id".
-			@PutMapping("{id}")
+	 //Usado para recuperar recurso no servidor.
+	 //Quando o "id" é passado na url o valor é colocado na variável "id".
+	 @PutMapping("{id}")
 	 public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody JustificativaDto justificativaDTO) {
 		try {
 			 Justificativa justificativa = new Justificativa() ;
@@ -66,6 +71,17 @@ public class JustificativaController {
 			
 	@DeleteMapping("{id}")
 	public ResponseEntity deletar(@PathVariable("id") Long id) {
+		
+		
+//			Optional<Justificativa> justificativa = justificativaService.obterPorId(id);		
+//			
+//			if (justificativa.isPresent()) {
+//				Optional<TipoJustificativa> tipoJustificativa =	tipoJustificativaService.obterPorId(justificativa.get().getIdTipoJustificativa());
+//				if (tipoJustificativa.isPresent()) {
+//					return new ResponseEntity("Justificativa já está vinculada a um tipo de justificativa.", HttpStatus.BAD_REQUEST);
+//				}
+//			}
+		   
 				
 			//entity é o que retorna de ObterPorId
 			return justificativaService.obterPorId(id).map(entity -> {					
@@ -73,7 +89,15 @@ public class JustificativaController {
 		   return new ResponseEntity(HttpStatus.NO_CONTENT);
 				}).orElseGet(() -> 
 		   new ResponseEntity("Justificativa não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
-	}		
+	}	
+	
+	@GetMapping(value =  "/listarOrdenadoDescricao" )
+    public List<Justificativa> listarOrdenadoDescricao() {
+    	return this.justificativaService.listarSimplesOrdenadoDescricao();  	  
+    }
+	
+	
+	
 			
 	
 	

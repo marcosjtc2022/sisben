@@ -25,5 +25,7 @@ public interface UnidadeAcademicaService {
 	
 	Page<UnidadeAcademica> listarPaginadoSimples(Pageable pageable);
 	
+	List<UnidadeAcademica> listarSimplesOrdenadoDescricao();
+	
 
 }

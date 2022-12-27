@@ -1,6 +1,7 @@
 package com.bahiana.sisben.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -39,16 +40,13 @@ public class JustificativaServiceImpl implements JustificativaService {
 
 	@Override
 	public Justificativa alterar(JustificativaDto justificativaDto) {
-		Justificativa justificativa = JustificativaServiceImpl.from(justificativaDto);
-		 //LocalDateTime dataModificacao = LocalDateTime.now();
-		 //tipoJustificativa.setDataUltimaModificacao(dataModificacao);
+		 Justificativa justificativa = JustificativaServiceImpl.from(justificativaDto);
 		 return justificativaRepository.save(justificativa);
 	}
 
 	@Override
 	public void deletar(Justificativa justificativa) {
 		justificativaRepository.delete(justificativa);
-		
 	}
 
 	@Override
@@ -63,6 +61,11 @@ public class JustificativaServiceImpl implements JustificativaService {
 		BeanUtils.copyProperties(justificativaDto, justificativa);
 		
 		return justificativa;
+	}
+
+	@Override
+	public List<Justificativa> listarSimplesOrdenadoDescricao() {
+		return this.justificativaRepository.findByOrderByDescricaoAsc();
 	}
 
 }

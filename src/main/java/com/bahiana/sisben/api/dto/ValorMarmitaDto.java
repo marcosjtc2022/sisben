@@ -1,55 +1,23 @@
-package com.bahiana.sisben.model.entity;
+package com.bahiana.sisben.api.dto;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-
-
-
-
-@Entity
-
-@Table(name = "valor_marmita" , schema="dbo")
-public class ValorMarmita implements Serializable {
+public class ValorMarmitaDto {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_valor")
+	
     private Long id; 
-	
-	@Column(name = "valor")
+
 	private BigDecimal vlMarmita;	
 	
-	@Column(name = "data_inicial")
 	private LocalDateTime dataInicial;
 		
-	@Column(name = "data_final")
 	private LocalDateTime dataFinal;
 	
-	@Column(name = "data_ultima_modificacao")
 	private LocalDateTime dataUltimaModificacao;
-	
-	@Column(name="id_usuario_ultima_modificacao")
+
 	private Long idUsuarioUltimaModificacao;
-	
-	//Mapenado classe ProgramacaoEntrega 
-	@OneToMany(mappedBy = "valorMarmita",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	Set<ProgramacaoEntrega> programacaoValores;
 
 	public Long getId() {
 		return id;
@@ -99,7 +67,7 @@ public class ValorMarmita implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public ValorMarmita(Long id, BigDecimal vlMarmita, LocalDateTime dataInicial, LocalDateTime dataFinal,
+	public ValorMarmitaDto(Long id, BigDecimal vlMarmita, LocalDateTime dataInicial, LocalDateTime dataFinal,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
@@ -110,10 +78,11 @@ public class ValorMarmita implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 	
-	public ValorMarmita() {
+	public ValorMarmitaDto() {
 		
 	}
 	
 	
- 
+
+
 }

@@ -1,6 +1,7 @@
 package com.bahiana.sisben.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -67,6 +68,11 @@ public class TipoJustificativaServiceImpl implements TipoJustificativaService {
 		BeanUtils.copyProperties(tipoJustificativaDto, tipoJustificativa);
 		
 		return tipoJustificativa;
+	}
+
+	@Override
+	public List<TipoJustificativa> listarSimplesOrdenadoDescricao() {
+		return this.tipoJustificativaRepository.findByOrderByDescricaoAsc();
 	}
 	
 

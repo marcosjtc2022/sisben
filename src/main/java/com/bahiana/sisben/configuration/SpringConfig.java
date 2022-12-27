@@ -10,6 +10,7 @@ import com.bahiana.sisben.service.PerfilService;
 import com.bahiana.sisben.service.TipoJustificativaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.UsuarioService;
+import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.impl.FuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.JustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilFuncionalidadeServiceImpl;
@@ -17,6 +18,7 @@ import com.bahiana.sisben.service.impl.PerfilServiceImpl;
 import com.bahiana.sisben.service.impl.TipoJustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.UnidadeAcademicaServiceImpl;
 import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
+import com.bahiana.sisben.service.impl.ValorMarmitaServiceImpl;
 
 @Configuration
 public class SpringConfig {
@@ -54,6 +56,11 @@ public class SpringConfig {
 	@Bean
 	public JustificativaService getJustificativaService() {
 	    return new  JustificativaServiceImpl();
+	}
+	
+	@Bean
+	public ValorMarmitaService getValorMarmitaService() {
+	    return new  ValorMarmitaServiceImpl();
 	}
 	
 	

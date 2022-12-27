@@ -2,6 +2,8 @@ package com.bahiana.sisben.api.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.TipoJustificativaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.TipoJustificativa;
+import com.bahiana.sisben.model.entity.UnidadeAcademica;
 import com.bahiana.sisben.service.TipoJustificativaService;
 
 @RestController
@@ -69,6 +72,7 @@ public class TipoJustificativaController {
 		@DeleteMapping("{id}")
 		public ResponseEntity deletar(@PathVariable("id") Long id) {
 			
+			
 			//entity é o que retorna de ObterPorId
 					return tipoJustificativaService.obterPorId(id).map(entity -> {					
 						tipoJustificativaService.deletar(entity);
@@ -76,6 +80,11 @@ public class TipoJustificativaController {
 					}).orElseGet(() -> 
 					    new ResponseEntity("TipoJustificativa não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
 		}
+		
+		@GetMapping(value =  "/listarOrdenadoDescricao" )
+	    public List<TipoJustificativa> listarOrdenadoDescricao() {
+	    	return this.tipoJustificativaService.listarSimplesOrdenadoDescricao();  	  
+	    }
 		
 
 

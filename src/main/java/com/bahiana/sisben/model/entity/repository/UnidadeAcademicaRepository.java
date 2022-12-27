@@ -13,5 +13,7 @@ import com.bahiana.sisben.model.entity.UnidadeAcademica;
 
 
 public interface UnidadeAcademicaRepository extends PagingAndSortingRepository<UnidadeAcademica, Long>, JpaRepository<UnidadeAcademica,Long> {
+	
+	List<UnidadeAcademica> findByOrderByDescricaoAsc();
 
 }

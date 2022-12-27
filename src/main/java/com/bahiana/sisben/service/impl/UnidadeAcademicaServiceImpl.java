@@ -67,6 +67,11 @@ public class UnidadeAcademicaServiceImpl implements UnidadeAcademicaService  {
 		return this.unidadeAcademicaRepository.findAll(pageable);
 	}
 
+	@Override
+	public List<UnidadeAcademica> listarSimplesOrdenadoDescricao() {
+		return this.unidadeAcademicaRepository.findByOrderByDescricaoAsc();
+	}
+
 	
 
 }
