@@ -3,6 +3,7 @@ package com.bahiana.sisben.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.bahiana.sisben.service.FornecedorService;
 import com.bahiana.sisben.service.FuncionalidadeService;
 import com.bahiana.sisben.service.JustificativaService;
 import com.bahiana.sisben.service.PerfilFuncionalidadeService;
@@ -11,6 +12,7 @@ import com.bahiana.sisben.service.TipoJustificativaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.UsuarioService;
 import com.bahiana.sisben.service.ValorMarmitaService;
+import com.bahiana.sisben.service.impl.FornecedorServiceImpl;
 import com.bahiana.sisben.service.impl.FuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.JustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilFuncionalidadeServiceImpl;
@@ -61,6 +63,11 @@ public class SpringConfig {
 	@Bean
 	public ValorMarmitaService getValorMarmitaService() {
 	    return new  ValorMarmitaServiceImpl();
+	}
+	
+	@Bean
+	public FornecedorService getFornecedorService() {
+	    return new  FornecedorServiceImpl();
 	}
 	
 	

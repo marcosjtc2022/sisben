@@ -20,6 +20,8 @@ Usuario autenticar(String email, String senha);
 	Optional<Usuario> obterPorId(Long id);
 	
 	long pesquisaPerfil(Long idPerfil);
+	
+	long pesquisaFornecedor(Long id);
 
 
 }

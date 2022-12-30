@@ -54,9 +54,16 @@ public class UsuarioServiceImpl implements UsuarioService  {
 
 	@Override
 	public long pesquisaPerfil(Long idPerfil) {
-         Long countPerfil =  this.usuarioRepository.pesquisaPerfil(idPerfil);
+        Long countPerfil =  this.usuarioRepository.pesquisaPerfil(idPerfil);
 		
 	    return  countPerfil;
+	}
+
+	@Override
+	public long pesquisaFornecedor(Long id) {
+        Long countFornecedor =  this.usuarioRepository.pesquisaFornecedor(id);
+		
+	    return  countFornecedor;
 	}
 
 }

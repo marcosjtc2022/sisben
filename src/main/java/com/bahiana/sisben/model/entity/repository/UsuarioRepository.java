@@ -18,5 +18,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 	
 	@Query("SELECT COUNT(u) FROM Usuario u WHERE u.idPerfil=:idPerfil")
 	long pesquisaPerfil(@Param("idPerfil") Long idPerfil);
+	
+	@Query("SELECT COUNT(u) FROM Usuario u WHERE u.idFornecedor=:id")
+	long pesquisaFornecedor(@Param("id") Long id);
 
 }
