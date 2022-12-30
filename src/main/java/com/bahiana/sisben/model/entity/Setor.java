@@ -39,11 +39,11 @@ public class Setor implements Serializable {
 
 			
 	//Mapenado classe UsuarioSetor 
-	@OneToMany(mappedBy = "setor",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
 	Set<UsuarioSetor> perfisSetores;
 	
 	//Mapenado classe Elegibilidade 
-	@OneToMany(mappedBy = "setor",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
 	Set<Elegibilidade> elegiveisSetores;
 	
 	

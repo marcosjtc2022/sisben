@@ -48,8 +48,8 @@ public class SuspensaoEligibilidade implements Serializable {
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
 	
-//	//Mapenado classe ProgramacaoEntrega
-//	@OneToMany(mappedBy = "suspensaoEligibilidade", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	//Mapenado classe ProgramacaoEntrega não tem zero to many
+//	@OneToMany(mappedBy = "suspensaoEligibilidade", fetch = FetchType.EAGER)
 //	private Set<ProgramacaoEntrega> programacaoElegiveis;
 	
 

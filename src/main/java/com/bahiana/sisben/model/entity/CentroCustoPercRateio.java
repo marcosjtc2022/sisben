@@ -49,12 +49,12 @@ public class CentroCustoPercRateio implements Serializable {
 	ProgramacaoEntrega programacaoEntrega; */
 	
 	//Mapeando a classe ProgramacaoEntrega
-	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(updatable=false,insertable=false,name = "id_programacao_entrega")
 	ProgramacaoEntrega programacaoEntrega;
 	
 	//Mapeando a classe Elegibilidade
-	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(updatable=false,insertable=false,name = "matricula_colaborador")
 	Elegibilidade elegibilidade;
 	

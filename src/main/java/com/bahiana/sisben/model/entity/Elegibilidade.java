@@ -53,19 +53,19 @@ public class Elegibilidade implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 		
 	//Mapenado classe Ferias.
-	@OneToMany(mappedBy = "elegibilidade", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "elegibilidade", fetch = FetchType.EAGER)
 	private Set<Ferias> feriasElegiveis;
 	
 	//Mapenado classe ProgramacaoEntrega.
-	@OneToMany(mappedBy = "elegibilidade", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "elegibilidade", fetch = FetchType.EAGER)
 	private Set<ProgramacaoEntrega> programacaoElegiveis;
 	
 	//Mapenado classe CentroCustoPercRateio
-	@OneToMany(mappedBy = "elegibilidade", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "elegibilidade", fetch = FetchType.EAGER)
 	private Set<CentroCustoPercRateio> centrosCusto;
 	
 	//Mapeando a classe setor 
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "cod_setor")
     Setor setor;
 	

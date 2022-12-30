@@ -2,6 +2,7 @@ package com.bahiana.sisben.service;
 
 import java.util.Optional;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.bahiana.sisben.model.entity.Usuario;
@@ -17,6 +18,8 @@ Usuario autenticar(String email, String senha);
 	
 	//Retorna um optiona vazio caso não exista.
 	Optional<Usuario> obterPorId(Long id);
+	
+	long pesquisaPerfil(Long idPerfil);
 
 
 }

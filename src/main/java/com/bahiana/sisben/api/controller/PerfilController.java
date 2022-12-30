@@ -22,6 +22,7 @@ import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.Perfil;
 import com.bahiana.sisben.service.PerfilService;
+import com.bahiana.sisben.service.UsuarioService;
 
 @RestController
 @RequestMapping(value = "/perfis")
@@ -29,6 +30,10 @@ public class PerfilController {
 	
 	@Autowired
 	private PerfilService perfilService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+
 	
 	@GetMapping(value =  "/paginacao-simples" )
     //@ResponseBody
@@ -70,6 +75,13 @@ public class PerfilController {
 		
 		@DeleteMapping("{id}")
 		public ResponseEntity deletar(@PathVariable("id") Long id) {
+			
+			
+			Long countPerfil = usuarioService.pesquisaPerfil(id);
+			
+			if ((countPerfil > 0) && (countPerfil != null)) {
+				return new ResponseEntity("Perfil está vinculada a um usuário!", HttpStatus.BAD_REQUEST);
+			}
 			
 			//entity é o que retorna de ObterPorId
 					return perfilService.obterPorId(id).map(entity -> {					

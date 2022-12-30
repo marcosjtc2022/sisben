@@ -22,9 +22,6 @@ public class JustificativaDto {
 	
 	private TipoJustificativa tipoJustificativa;
 	
-	
-
-
 	public Long getId() {
 		return id;
 	}

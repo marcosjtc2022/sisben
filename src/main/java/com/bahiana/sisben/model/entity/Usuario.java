@@ -82,7 +82,7 @@ public class Usuario implements Serializable {
 	Fornecedor fornecedor;	
 	
 	//Mapenado classe ProgramacaoEntrega 
-	@OneToMany(mappedBy = "usuarioEntrega",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "usuarioEntrega", fetch = FetchType.EAGER)
 	Set<ProgramacaoEntrega> usuarioProgEntregas;
 
 	public Long getId() {

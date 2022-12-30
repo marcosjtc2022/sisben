@@ -104,7 +104,7 @@ public class ProgramacaoEntrega implements Serializable{
     Elegibilidade elegibilidade;
     
 //    //mapeando a classe SuspensaoElegibilidade.
-//    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+//    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(updatable=false,insertable=false, name = "matricula_colaborador" )
 //    SuspensaoEligibilidade suspensaoEligibilidade;
     

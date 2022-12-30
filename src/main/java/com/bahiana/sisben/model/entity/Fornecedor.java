@@ -31,46 +31,46 @@ public class Fornecedor implements Serializable {
 	private String descricao;
 	
 	@Column(name = "data_inico_vigencia_contrato")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDate dataInicioVigenciaContrato;
 	
 	@Column(name="data_fim_vigencia_contrato")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+//	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private Long dataFimVigenciaContrato;
 	
 	@Column(name="cnpj")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+//	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private String cnpj;
 	
 	@Column(name="endereco")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+//	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private String endereco;
 	
 	@Column(name="telefone")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+//	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private String telefone;
 	
 	@Column(name="email")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+//	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private String email;
 	
 	@Column(name="inscricao_estadual")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+//	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private String inscricaoEstadual;
 	
 	@Column(name="inscricao_municipal")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+//	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private String inscricaoMunicipal;
 	
 	@Column(name = "data_ultima_modificacao")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+//	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDate dataUltimaModificacao;
 	
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
 	
 	//Mapenado classe Usuario 
-	@OneToMany(mappedBy = "fornecedor",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "fornecedor", fetch = FetchType.EAGER)
 	Set<Usuario> usuarios;
 	
 }

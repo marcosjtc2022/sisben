@@ -52,4 +52,11 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		return Optional.empty();
 	}
 
+	@Override
+	public long pesquisaPerfil(Long idPerfil) {
+         Long countPerfil =  this.usuarioRepository.pesquisaPerfil(idPerfil);
+		
+	    return  countPerfil;
+	}
+
 }

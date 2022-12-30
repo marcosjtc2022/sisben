@@ -23,6 +23,11 @@ import javax.persistence.Table;
 @Table(name = "justificativa" , schema="dbo")
 public class Justificativa implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_justificativa")
@@ -106,7 +111,6 @@ public class Justificativa implements Serializable {
 	//Mapenado classe ProgramacaoEntrega 
 	 @OneToMany(mappedBy = "justificativa",fetch = FetchType.EAGER)
 	 Set<ProgramacaoEntrega> programacaojustificativas;
-
 	
 
 	public Justificativa(Long id, String descricao, Long idTipoJustificativa, LocalDateTime dataUltimaModificacao,

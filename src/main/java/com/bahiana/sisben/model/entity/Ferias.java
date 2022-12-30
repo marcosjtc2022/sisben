@@ -25,15 +25,15 @@ public class Ferias implements Serializable {
 	private String matriculaColaborador;
 	
 	@Column(name = "data_inicial_ferias")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDate dataInicialFerias;
 		
 	@Column(name = "data_final_ferias")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDate dataFinalFerias;
 	
 	//Mapeando classe Elegibilidade 
-	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(updatable=false,insertable=false,name="matricula_colaborador")
 	private Elegibilidade elegibilidade;	
 	
