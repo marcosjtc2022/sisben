@@ -20,7 +20,9 @@ import com.bahiana.sisben.api.dto.JustificativaDto;
 import com.bahiana.sisben.api.dto.ValorMarmitaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
+import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.ValorMarmita;
+import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.ValorMarmitaService;
 
 @RestController
@@ -29,6 +31,9 @@ public class ValorMarmitaController {
 	
 	@Autowired
 	private ValorMarmitaService valorMarmitaService;
+	
+	@Autowired
+	private ProgramacaoEntregaService programacaoEntregaService;
 	
 	
 
@@ -71,6 +76,14 @@ public class ValorMarmitaController {
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity deletar(@PathVariable("id") Long id) {
+		
+       // ProgramacaoEntrega programacaoEntrega = programacaoEntregaService.BuscaPorIdValor(id);
+		
+        Long countValorMarmita = programacaoEntregaService.pesquisaValorMarmita(id);
+		
+		if ((countValorMarmita > 0) && (countValorMarmita != null)) {
+			return new ResponseEntity("Valor marmita está vinculado a uma programação entrega!", HttpStatus.BAD_REQUEST);
+		} 
 				
 			//entity é o que retorna de ObterPorId
 			return valorMarmitaService.obterPorId(id).map(entity -> {					
@@ -81,7 +94,7 @@ public class ValorMarmitaController {
 	}	
 	
 	@GetMapping(value =  "/listarOrdenadoValor" )
-    public List<ValorMarmita> listarOrdenadoDescricao() {
+    public List<ValorMarmita> listarOrdenadoValor() {
     	return this.valorMarmitaService.listarSimplesOrdenadoValor();  	  
     }
 	

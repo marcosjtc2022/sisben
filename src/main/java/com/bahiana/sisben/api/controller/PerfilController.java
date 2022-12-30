@@ -1,5 +1,6 @@
 package com.bahiana.sisben.api.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.PerfilDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
+import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.Perfil;
 import com.bahiana.sisben.service.PerfilService;
 
@@ -76,6 +78,13 @@ public class PerfilController {
 					}).orElseGet(() -> 
 					    new ResponseEntity("Perfil não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
 		}
+		
+		@GetMapping(value =  "/listarOrdenadoDescricao" )
+	    public List<Perfil> listarOrdenadoDescricao() {
+	    	return this.perfilService.listarSimplesOrdenadoDescricao();  	  
+	    }
+		
+		
 		
 	
 }

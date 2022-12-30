@@ -48,7 +48,7 @@ public class ValorMarmita implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 	
 	//Mapenado classe ProgramacaoEntrega 
-	@OneToMany(mappedBy = "valorMarmita",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "valorMarmita", fetch = FetchType.EAGER)
 	Set<ProgramacaoEntrega> programacaoValores;
 
 	public Long getId() {

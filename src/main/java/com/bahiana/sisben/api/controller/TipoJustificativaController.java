@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.TipoJustificativaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.TipoJustificativa;
-import com.bahiana.sisben.model.entity.UnidadeAcademica;
+import com.bahiana.sisben.service.JustificativaService;
 import com.bahiana.sisben.service.TipoJustificativaService;
 
 @RestController
@@ -30,6 +30,9 @@ public class TipoJustificativaController {
 	
 	@Autowired
 	private TipoJustificativaService tipoJustificativaService;
+	
+	@Autowired
+	private JustificativaService justificativaService;
 	
 	@GetMapping(value =  "/paginacao-simples" )
     //@ResponseBody
@@ -71,6 +74,13 @@ public class TipoJustificativaController {
 		
 		@DeleteMapping("{id}")
 		public ResponseEntity deletar(@PathVariable("id") Long id) {
+			
+			Long countTipoJustificativa = justificativaService.pesquisaTipoJustificativa(id);
+			
+			if ((countTipoJustificativa > 0) && (countTipoJustificativa != null)) {
+				return new ResponseEntity("Tipo de justificativa está vinculada a uma justificativa !", HttpStatus.BAD_REQUEST);
+			}
+			
 			
 			
 			//entity é o que retorna de ObterPorId

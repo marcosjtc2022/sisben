@@ -1,7 +1,6 @@
 package com.bahiana.sisben.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.JustificativaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
+import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.JustificativaService;
+import com.bahiana.sisben.service.ProgramacaoEntregaService;
 
 
 @RestController
@@ -29,6 +30,9 @@ public class JustificativaController {
 	
 	@Autowired
 	private JustificativaService justificativaService;
+	
+	@Autowired
+	private ProgramacaoEntregaService programacaoEntregaService;
 	
 //	@Autowired
 //	private TipoJustificativaService tipoJustificativaService;
@@ -72,6 +76,13 @@ public class JustificativaController {
 	@DeleteMapping("{id}")
 	public ResponseEntity deletar(@PathVariable("id") Long id) {
 		
+		 
+		
+		Long countJustificativa = programacaoEntregaService.pesquisaJustificativa(id);
+		
+		if ((countJustificativa > 0) && (countJustificativa != null)) {
+			return new ResponseEntity("Justificativa está vinculada a uma programação entrega!", HttpStatus.BAD_REQUEST);
+		}
 		
 //			Optional<Justificativa> justificativa = justificativaService.obterPorId(id);		
 //			

@@ -1,21 +1,7 @@
 package com.bahiana.sisben.api.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.TipoJustificativa;
@@ -28,14 +14,15 @@ public class JustificativaDto {
 	
 	private String descricao;
 	
-	
 	private LocalDateTime dataUltimaModificacao;
-	
 	
 	private Long idUsuarioUltimaModificacao;
 	
-	
 	private Long idTipoJustificativa;
+	
+	private TipoJustificativa tipoJustificativa;
+	
+	
 
 
 	public Long getId() {
@@ -85,12 +72,18 @@ public class JustificativaDto {
 
 	public void setIdTipoJustificativa(Long idTipoJustificativa) {
 		this.idTipoJustificativa = idTipoJustificativa;
+	}	
+	
+	public TipoJustificativa getTipoJustificativa() {
+		return tipoJustificativa;
 	}
 
 
-	
-	
-	
+	public void setTipoJustificativa(TipoJustificativa tipoJustificativa) {
+		this.tipoJustificativa = tipoJustificativa;
+	}
+
+
 	public JustificativaDto(Long id, String descricao, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao, Long idTipoJustificativa) {
 		super();

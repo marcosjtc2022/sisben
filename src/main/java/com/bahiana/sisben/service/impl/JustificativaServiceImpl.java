@@ -68,4 +68,11 @@ public class JustificativaServiceImpl implements JustificativaService {
 		return this.justificativaRepository.findByOrderByDescricaoAsc();
 	}
 
+	@Override
+	public long pesquisaTipoJustificativa(Long idTipoJustificativa) {
+		Long countTipoJustificativa =  this.justificativaRepository.pesquisaTipoJustificativa(idTipoJustificativa);
+		
+	    return  countTipoJustificativa;
+	}
+
 }

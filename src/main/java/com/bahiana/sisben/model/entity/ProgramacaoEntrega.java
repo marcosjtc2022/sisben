@@ -94,12 +94,12 @@ public class ProgramacaoEntrega implements Serializable{
 	}
 	
 	//mapeando a classe Calendario
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "id_data")
     Calendario calendario;
     
     //mapeando a classe Elegibilidade.
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "matricula_colaborador")
     Elegibilidade elegibilidade;
     
@@ -109,27 +109,32 @@ public class ProgramacaoEntrega implements Serializable{
 //    SuspensaoEligibilidade suspensaoEligibilidade;
     
     //mapeando a classe UnidadeAcademica.
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "id_ua")
     UnidadeAcademica unidadeAcademica;
     
-    //mapeando a classe Justificativa.
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+//    //mapeando a classe Justificativa. voltar
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(updatable=false,insertable=false,name = "id_justificativa")
+//    Justificativa justificativa;
+    
+  //mapeando a classe Justificativa.
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "id_justificativa")
     Justificativa justificativa;
     
     //mapeando a classe ValorMarmita.
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "id_valor")
     ValorMarmita valorMarmita;
     
     //mapeando a classe Usuario (Usuario da entrega).
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "id_usuario_entrega")
     Usuario usuarioEntrega;
     
     //Mapenado classe CentroCusto. 
-  	@OneToMany(mappedBy = "programacaoEntrega",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  	@OneToMany(mappedBy = "programacaoEntrega", fetch = FetchType.EAGER)
   	Set<CentroCustoPercRateio> centroCusto;
 
 	public Long getId() {

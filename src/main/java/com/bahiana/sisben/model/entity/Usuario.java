@@ -68,16 +68,16 @@ public class Usuario implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 	
 	//Mapenado classe UsuarioSetor 
-	@OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER)
 	Set<UsuarioSetor> Usuariosetores;	
 	
 	//Mapeando a classe perfil
-	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(updatable=false,insertable=false,name = "id_perfil")
 	Perfil perfil;	
 	
 	//Mapeando a classe fornecedor
-	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(updatable=false,insertable=false,name = "id_fornecedor")
 	Fornecedor fornecedor;	
 	

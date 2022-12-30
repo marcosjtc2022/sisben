@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import com.bahiana.sisben.api.dto.JustificativaDto;
 import com.bahiana.sisben.model.entity.Justificativa;
@@ -26,5 +27,7 @@ public interface JustificativaService {
 		Optional<Justificativa> obterPorId(Long id);
 		
 		List<Justificativa> listarSimplesOrdenadoDescricao();
+		
+		long pesquisaTipoJustificativa(Long idTipoJustificativa);
 
 }

@@ -17,6 +17,18 @@ public class PerfilDto {
 	
 	private String descricao;
 	
+	private Boolean funcEscala;
+	
+	private Boolean funcUsuario;
+	
+	private Boolean funcCalendario;
+		
+	private Boolean funcCardapio;
+	
+	private Boolean funcBeneficio;
+	
+	private Boolean funcEntrega;
+	
 	private LocalDateTime dataUltimaModificacao;
 		
 	private Long idUsuarioUltimaModificacao;
@@ -52,15 +64,72 @@ public class PerfilDto {
 	public void setIdUsuarioUltimaModificacao(Long idUsuarioUltimaModificacao) {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
+	
+	public Boolean getFuncEscala() {
+		return funcEscala;
+	}
 
-	public PerfilDto(Long id, String descricao, LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
+	public void setFuncEscala(Boolean funcEscala) {
+		this.funcEscala = funcEscala;
+	}
+
+	public Boolean getFuncUsuario() {
+		return funcUsuario;
+	}
+
+	public void setFuncUsuario(Boolean funcUsuario) {
+		this.funcUsuario = funcUsuario;
+	}
+
+	public Boolean getFuncCalendario() {
+		return funcCalendario;
+	}
+
+	public void setFuncCalendario(Boolean funcCalendario) {
+		this.funcCalendario = funcCalendario;
+	}
+
+	public Boolean getFuncCardapio() {
+		return funcCardapio;
+	}
+
+	public void setFuncCardapio(Boolean funcCardapio) {
+		this.funcCardapio = funcCardapio;
+	}
+
+	public Boolean getFuncBeneficio() {
+		return funcBeneficio;
+	}
+
+	public void setFuncBeneficio(Boolean funcBeneficio) {
+		this.funcBeneficio = funcBeneficio;
+	}
+	
+	public Boolean getFuncEntrega() {
+		return funcEntrega;
+	}
+
+	public void setFuncEntrega(Boolean funcEntrega) {
+		this.funcEntrega = funcEntrega;
+	}
+	
+
+	public PerfilDto(Long id, String descricao, Boolean funcEscala, Boolean funcUsuario, Boolean funcCalendario,
+			Boolean funcCardapio, Boolean funcBeneficio, Boolean funcEntrega, LocalDateTime dataUltimaModificacao,
+			Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
+		this.funcEscala = funcEscala;
+		this.funcUsuario = funcUsuario;
+		this.funcCalendario = funcCalendario;
+		this.funcCardapio = funcCardapio;
+		this.funcBeneficio = funcBeneficio;
+		this.funcEntrega = funcEntrega;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
-	
+
 	public PerfilDto() {
 		
 	}

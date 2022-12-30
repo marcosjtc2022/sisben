@@ -2,9 +2,9 @@ package com.bahiana.sisben.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 
 
@@ -83,34 +82,30 @@ public class Justificativa implements Serializable {
 		this.idTipoJustificativa = idTipoJustificativa;
 	}
 	
-	
-	
 //	//Mapenado classe JusitificativaTipoJustificativa Antes
 //	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	Set<JustificativaTipoJustificativa> tiposJustificativa;
+
+	public TipoJustificativa getTipoJustificativa() {
+		return tipoJustificativa;
+	}
+
+	public void setTipoJustificativa(TipoJustificativa tipoJustificativa) {
+		this.tipoJustificativa = tipoJustificativa;
+	}
 	
-	
-	
-
-
-
-	
-
-
-
-
-
 	//Mapeando a classe Tipo justificativa
 	@ManyToOne(fetch = FetchType.EAGER  )
 	@JoinColumn(updatable=false,insertable=false,name = "id_tipo_justificativa")
 	TipoJustificativa tipoJustificativa;
 		
+//	//Mapenado classe ProgramacaoEntrega retirada do CascadeType.ALL
+//	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	Set<ProgramacaoEntrega> programacaojustificativas;
+//	
 	//Mapenado classe ProgramacaoEntrega 
-	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	Set<ProgramacaoEntrega> programacaojustificativas;
-
-	
-	
+	 @OneToMany(mappedBy = "justificativa",fetch = FetchType.EAGER)
+	 Set<ProgramacaoEntrega> programacaojustificativas;
 
 	
 

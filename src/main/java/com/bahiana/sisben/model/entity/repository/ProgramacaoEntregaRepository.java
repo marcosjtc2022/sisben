@@ -50,5 +50,12 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 	public Iterable<ProgramacaoEntrega> findBymatriculaColaboradorAndUaPrevista(Long matriculaColaborador,String uaPrevista );
 	
+	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE pe.idJustificativa=:idJustificativa")
+	long pesquisaJustificativa(@Param("idJustificativa")Long idJustificativa);
+	
+	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE pe.idValor=:idValor")
+	long pesquisaValorMarmita(@Param("idValor") Long idValor);
+	 
+	
 
 }

@@ -34,17 +34,33 @@ public class Perfil implements Serializable {
 	@Column(name="descricao")
 	private String descricao;
 	
+	@Column(name = "func_in_escala", columnDefinition="BIT")
+	private Boolean funcEscala;
+	
+	@Column(name = "func_in_usuario", columnDefinition="BIT")
+	private Boolean funcUsuario;
+	
+	@Column(name = "func_in_calendario", columnDefinition="BIT")
+	private Boolean funcCalendario;
+	
+	@Column(name = "func_in_cardapio", columnDefinition="BIT")
+	private Boolean funcCardapio;
+	
+	@Column(name = "func_in_beneficio", columnDefinition="BIT")
+	private Boolean funcBeneficio;
+	
+	@Column(name = "func_in_entrega", columnDefinition="BIT")
+	private Boolean funcEntrega;
+	
 	@Column(name = "data_ultima_modificacao")
-	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDateTime dataUltimaModificacao;
 	
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
 	
-	//Mapenado classe PerfilFuncionalidade 
-	@OneToMany(mappedBy = "perfil", fetch = FetchType.EAGER)
-	Set<PerfilFuncionalidade> perfis;
-	
+//	//Mapenado classe PerfilFuncionalidade 
+//	@OneToMany(mappedBy = "perfil", fetch = FetchType.EAGER)
+//	Set<PerfilFuncionalidade> perfis;	
 	
 	//Mapenado classe usuario 
 	@OneToMany(mappedBy = "perfil", fetch = FetchType.EAGER)
@@ -89,16 +105,85 @@ public class Perfil implements Serializable {
 	public void setIdUsuarioUltimaModificacao(Long idUsuarioUltimaModificacao) {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
+	
+	public Boolean getFuncEscala() {
+		return funcEscala;
+	}
 
 
-	public Perfil(Long id, String descricao, LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
+	public void setFuncEscala(Boolean funcEscala) {
+		this.funcEscala = funcEscala;
+	}
+
+
+	public Boolean getFuncUsuario() {
+		return funcUsuario;
+	}
+
+
+	public void setFuncUsuario(Boolean funcUsuario) {
+		this.funcUsuario = funcUsuario;
+	}
+
+
+	public Boolean getFuncCalendario() {
+		return funcCalendario;
+	}
+
+
+	public void setFuncCalendario(Boolean funcCalendario) {
+		this.funcCalendario = funcCalendario;
+	}
+
+
+	public Boolean getFuncCardapio() {
+		return funcCardapio;
+	}
+
+
+	public void setFuncCardapio(Boolean funcCardapio) {
+		this.funcCardapio = funcCardapio;
+	}
+
+
+	public Boolean getFuncBeneficio() {
+		return funcBeneficio;
+	}
+
+
+	public void setFuncBeneficio(Boolean funcBeneficio) {
+		this.funcBeneficio = funcBeneficio;
+	}
+	
+	
+	
+	public Boolean getFuncEntrega() {
+		return funcEntrega;
+	}
+
+
+	public void setFuncEntrega(Boolean funcEntrega) {
+		this.funcEntrega = funcEntrega;
+	}
+
+
+	public Perfil(Long id, String descricao, Boolean funcEscala, Boolean funcUsuario, Boolean funcCalendario,
+			Boolean funcCardapio, Boolean funcBeneficio, Boolean funcEntrega, LocalDateTime dataUltimaModificacao,
+			Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
+		this.funcEscala = funcEscala;
+		this.funcUsuario = funcUsuario;
+		this.funcCalendario = funcCalendario;
+		this.funcCardapio = funcCardapio;
+		this.funcBeneficio = funcBeneficio;
+		this.funcEntrega = funcEntrega;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
-	
+
+
 	public Perfil() {
 		
 	}

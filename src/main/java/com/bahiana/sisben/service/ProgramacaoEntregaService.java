@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -43,5 +45,9 @@ public interface ProgramacaoEntregaService {
 	Iterable<ProgramacaoEntrega> programacaoDataTable(ProgramacaoEntregaDto programacaoEntregaDTO );
 	
 	public Iterable<ProgramacaoEntrega> findBymatriculaColaborador(ProgramacaoEntregaDto programacaoEntregaDTO );
+	
+	long pesquisaJustificativa(Long idJustificativa);
+	
+	long pesquisaValorMarmita(Long idValor);
 
 }

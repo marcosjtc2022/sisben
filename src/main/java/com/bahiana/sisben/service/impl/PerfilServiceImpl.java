@@ -1,6 +1,7 @@
 package com.bahiana.sisben.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -35,8 +36,8 @@ public class PerfilServiceImpl implements PerfilService {
 	@Override
 	public Perfil salvar(PerfilDto perfilDto) {
 		 Perfil perfil = PerfilServiceImpl.from(perfilDto);
-		 LocalDateTime dataModificacao = LocalDateTime.now();
-		 perfil.setDataUltimaModificacao(dataModificacao);
+//		 LocalDateTime dataModificacao = LocalDateTime.now();
+//		 perfil.setDataUltimaModificacao(dataModificacao);
 		 return perfilRepository.save(perfil);
 	}
 	
@@ -51,8 +52,8 @@ public class PerfilServiceImpl implements PerfilService {
 	public Perfil alterar(PerfilDto perfilDto) {
 		
 		 Perfil perfil = from(perfilDto);
-		 LocalDateTime dataModificacao = LocalDateTime.now();
-		 perfil.setDataUltimaModificacao(dataModificacao);
+//		 LocalDateTime dataModificacao = LocalDateTime.now();
+//		 perfil.setDataUltimaModificacao(dataModificacao);
 		 return perfilRepository.save(perfil);
 		
 	}
@@ -69,6 +70,11 @@ public class PerfilServiceImpl implements PerfilService {
 		BeanUtils.copyProperties(perfilDto, perfil);
 		
 		return perfil;
+	}
+
+	@Override
+	public List<Perfil> listarSimplesOrdenadoDescricao() {
+		return this.perfilRepository.findByOrderByDescricaoAsc();
 	}
 	
 

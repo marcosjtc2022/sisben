@@ -278,6 +278,22 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 		   return  ProgramacaoEntregaLista;
 		}
+
+		@Override
+		public long pesquisaJustificativa(Long idJustificativa) {
+			Long countJustificativa =  this.programacaoEntregaRepository.pesquisaJustificativa(idJustificativa);
+			
+		    return  countJustificativa;
+		}
+
+		@Override
+		public long pesquisaValorMarmita(Long idValor) {
+			Long countValorMarmita =  this.programacaoEntregaRepository.pesquisaValorMarmita(idValor);
+			
+		    return  countValorMarmita;
+		}
+
+		
 	
 //	@DeleteMapping("{id}")
 //	public ResponseEntity deletar(@PathVariable("id") Long id) {

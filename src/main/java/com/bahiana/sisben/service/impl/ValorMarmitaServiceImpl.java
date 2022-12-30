@@ -64,6 +64,13 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 		ValorMarmita valorMarmita = new ValorMarmita();
 		LocalDateTime dataModificacao = LocalDateTime.now();
 		valorMarmitaDto.setDataUltimaModificacao(dataModificacao);
+//		String dataInicial = new String(valorMarmitaDto.getDataInicial().toString());
+//		String dataFinal = null;
+		LocalDateTime dataInicial = LocalDateTime.parse(valorMarmitaDto.getDataInicial().toString());
+		valorMarmitaDto.setDataInicial(dataInicial);
+		LocalDateTime dataFinal = LocalDateTime.parse(valorMarmitaDto.getDataFinal().toString());
+		valorMarmitaDto.setDataFinal(dataFinal);
+		
 		BeanUtils.copyProperties(valorMarmitaDto, valorMarmita);
 		
 		return valorMarmita;

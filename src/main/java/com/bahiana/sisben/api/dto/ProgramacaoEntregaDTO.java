@@ -61,7 +61,7 @@ public class ProgramacaoEntregaDto {
 //	@Column(name = "status_aprov", columnDefinition="BIT")
 	private Boolean stAprov;
 	
-	@Column(name = "data_ultima_modificacao")
+	//@Column(name = "data_ultima_modificacao")
 	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDateTime dataUltimaModificacao;
 	
