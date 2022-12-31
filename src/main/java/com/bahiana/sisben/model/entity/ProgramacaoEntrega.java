@@ -104,6 +104,8 @@ public class ProgramacaoEntrega implements Serializable{
     Elegibilidade elegibilidade;
     
 //    //mapeando a classe SuspensaoElegibilidade.
+      //Não tem esta relação. Se estiver uma, não pode estar na outra.
+      //JPA não tem relacionamento 0 x n.
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(updatable=false,insertable=false, name = "matricula_colaborador" )
 //    SuspensaoEligibilidade suspensaoEligibilidade;

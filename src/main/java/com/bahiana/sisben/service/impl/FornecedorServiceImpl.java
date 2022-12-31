@@ -47,7 +47,6 @@ public class FornecedorServiceImpl implements FornecedorService  {
 	@Override
 	public void deletar(Fornecedor fornecedor) {
 		fornecedorRepository.delete(fornecedor);
-		
 	}
 
 	@Override
