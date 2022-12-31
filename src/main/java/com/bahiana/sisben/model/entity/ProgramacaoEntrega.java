@@ -93,10 +93,10 @@ public class ProgramacaoEntrega implements Serializable{
 		this.tabelaProgramacaoEntrega = tabelaProgramacaoEntrega;
 	}
 	
-	//mapeando a classe Calendario
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(updatable=false,insertable=false,name = "id_data")
-    Calendario calendario;
+//	//mapeando a classe Calendario
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(updatable=false,insertable=false,name = "id_data")
+//    Calendario calendario;
     
     //mapeando a classe Elegibilidade.
     @ManyToOne(fetch = FetchType.EAGER)
@@ -259,13 +259,13 @@ public class ProgramacaoEntrega implements Serializable{
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public Calendario getCalendario() {
-		return calendario;
-	}
-
-	public void setCalendario(Calendario calendario) {
-		this.calendario = calendario;
-	}
+//	public Calendario getCalendario() {
+//		return calendario;
+//	}
+//
+//	public void setCalendario(Calendario calendario) {
+//		this.calendario = calendario;
+//	}
 
 	public Elegibilidade getElegibilidade() {
 		return elegibilidade;

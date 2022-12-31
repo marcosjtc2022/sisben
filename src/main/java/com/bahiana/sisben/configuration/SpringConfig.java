@@ -3,6 +3,7 @@ package com.bahiana.sisben.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.FornecedorService;
 import com.bahiana.sisben.service.FuncionalidadeService;
 import com.bahiana.sisben.service.JustificativaService;
@@ -13,6 +14,7 @@ import com.bahiana.sisben.service.TipoJustificativaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.UsuarioService;
 import com.bahiana.sisben.service.ValorMarmitaService;
+import com.bahiana.sisben.service.impl.CalendarioServiceImpl;
 import com.bahiana.sisben.service.impl.FornecedorServiceImpl;
 import com.bahiana.sisben.service.impl.FuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.JustificativaServiceImpl;
@@ -75,6 +77,11 @@ public class SpringConfig {
 	@Bean
 	public SuspensaoElegibilidadeService getSuspensaoElegibilidadeService() {
 	    return new  SuspensaoElegibilidadeServiceImpl();
+	}
+	
+	@Bean
+	public CalendarioService getCalendarioService() {
+	    return new  CalendarioServiceImpl();
 	}
 	
 	

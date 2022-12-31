@@ -1,47 +1,23 @@
-package com.bahiana.sisben.model.entity;
+package com.bahiana.sisben.api.dto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-
-
-
-@Entity
-@Table(name = "calendario" , schema="dbo")
-public class Calendario implements Serializable {
+public class CalendarioDto {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_data")
     private Long id; 
-	
-	@Column(name="data_especial")
+
 	private LocalDateTime dataEspecial;
 	
-	@Column(name="descricao")
 	private String descricao;
 	
-	@Column(name = "data_ultima_modificacao")
 	private LocalDateTime dataUltimaModificacao;
 	
-	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
-	
-//	//Mapenado classe programacao entrega. 
-//	@OneToMany(mappedBy = "calendario", fetch = FetchType.EAGER)
-//	Set<ProgramacaoEntrega> programcaoEntregas;
 
 	public Long getId() {
 		return id;
@@ -83,7 +59,7 @@ public class Calendario implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public Calendario(Long id, LocalDateTime dataEspecial, String descricao, LocalDateTime dataUltimaModificacao,
+	public CalendarioDto(Long id, LocalDateTime dataEspecial, String descricao, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
@@ -93,11 +69,12 @@ public class Calendario implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 	
-	public Calendario() {
+	public CalendarioDto() {
 		
 	}
 	
 	
+	
+	
 
 }
-
