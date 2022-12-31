@@ -67,7 +67,7 @@ public class SuspensaoElegibilidadeServiceImpl implements SuspensaoElegibilidade
 		
         List<SuspensaoElegibilidade> suspensaoElegibilidadeLista =  
         this.suspensaoElegibilidadeRepository.
-        findByNomeColaboradorContainingOrderByNomeColaborador(suspensaoElegibilidadeDto.getNomeColaborador());
+        findByNomeColaboradorContainingOrderByNomeColaboradorAsc(suspensaoElegibilidadeDto.getNomeColaborador());
         
 		return suspensaoElegibilidadeLista;
 	}

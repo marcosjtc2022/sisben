@@ -10,10 +10,10 @@ import com.bahiana.sisben.model.entity.SuspensaoElegibilidade;
 public interface SuspensaoElegibilidadeRepository extends PagingAndSortingRepository<SuspensaoElegibilidade, Long>, JpaRepository<SuspensaoElegibilidade, Long> {
 	
 	
-    List<SuspensaoElegibilidade> findByNomeColaboradorContainingOrderByNomeColaborador(String nomeColaborador);
+    List<SuspensaoElegibilidade> findByNomeColaboradorContainingOrderByNomeColaboradorAsc(String nomeColaborador);
 	
     List<SuspensaoElegibilidade> findByMatriculaColaboradorOrderByNomeColaborador(Long matriculaColaborador); 	
-	
-	List<SuspensaoElegibilidade> findByOrderByNomeColaboradorAsc();
+   
+    List<SuspensaoElegibilidade> findByOrderByNomeColaboradorAsc();
 
 }

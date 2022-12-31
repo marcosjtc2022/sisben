@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,6 +22,10 @@ import javax.persistence.Table;
 public class SuspensaoElegibilidade implements Serializable {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_suspensao_elegibilidade")
+    private Long id;
+	
 	@Column(name = "matricula_colaborador")
     private Long matriculaColaborador;
 	
@@ -47,6 +53,14 @@ public class SuspensaoElegibilidade implements Serializable {
 //	//Mapenado classe ProgramacaoEntrega não tem zero to many
 //	@OneToMany(mappedBy = "suspensaoEligibilidade", fetch = FetchType.EAGER)
 //	private Set<ProgramacaoEntrega> programacaoElegiveis;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}	
 
 	public Long getMatriculaColaborador() {
 		return matriculaColaborador;
@@ -106,10 +120,13 @@ public class SuspensaoElegibilidade implements Serializable {
 
 	
 	
-	public SuspensaoElegibilidade(Long matriculaColaborador, String nomeColaborador, LocalDateTime dataInicial,
+	
+
+	public SuspensaoElegibilidade(Long id, Long matriculaColaborador, String nomeColaborador, LocalDateTime dataInicial,
 			LocalDateTime dataFinal, String justificativaSuspensao, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {
 		super();
+		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
 		this.nomeColaborador = nomeColaborador;
 		this.dataInicial = dataInicial;

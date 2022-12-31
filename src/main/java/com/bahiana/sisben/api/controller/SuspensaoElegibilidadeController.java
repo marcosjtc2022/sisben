@@ -30,8 +30,8 @@ public class SuspensaoElegibilidadeController {
 	@Autowired
 	private SuspensaoElegibilidadeService suspensaoElegibilidadeService;
 	
-	@GetMapping(value =  "/listarSimplesPorNome" )
-	public ResponseEntity<List<SuspensaoElegibilidade>> listarSimplesPorNome() {
+	@GetMapping(value =  "/listarOrdenadoPorNome" )
+	public ResponseEntity<List<SuspensaoElegibilidade>> listarOrdenadoPorNome() {
 		 try {
 				
 			 //return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);
@@ -42,11 +42,11 @@ public class SuspensaoElegibilidadeController {
 	}
 	
 	@GetMapping(value =  "/listarPorFiltroNome" )
-	public ResponseEntity<List<SuspensaoElegibilidade>> listarPorFiltroNome() {
+	public ResponseEntity<List<SuspensaoElegibilidade>> listarPorFiltroNome(SuspensaoElegibilidadeDto suspensaoElegibilidadeDto) {
 		 try {
 				
 			 //return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);
-				return new ResponseEntity(suspensaoElegibilidadeService.listarSimplesOrdenadoNomeColaborador(), HttpStatus.CREATED);
+				return new ResponseEntity(suspensaoElegibilidadeService.listarPorNomeOrdenadoNome(suspensaoElegibilidadeDto), HttpStatus.CREATED);
 		     } catch (RegraNegocioException e) {
 			    return new ResponseEntity<List<SuspensaoElegibilidade>>(HttpStatus.BAD_REQUEST);
 		     }
@@ -90,7 +90,7 @@ public class SuspensaoElegibilidadeController {
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody SuspensaoElegibilidadeDto suspensaoElegibilidadeDto) {
 	    try {
 	    	  SuspensaoElegibilidade suspensaoElegibilidade = new SuspensaoElegibilidade() ;
-			  //suspensaoElegibilidadeDto.setId(id);			
+			  suspensaoElegibilidadeDto.setId(id);			
 			  suspensaoElegibilidade = suspensaoElegibilidadeService.alterar(suspensaoElegibilidadeDto);
 			  return new ResponseEntity(suspensaoElegibilidade, HttpStatus.CREATED);
 		  } catch (RegraNegocioException e) {
@@ -98,23 +98,23 @@ public class SuspensaoElegibilidadeController {
 		 }
 	}
 	
-//	@DeleteMapping("{id}")
-//	public ResponseEntity deletar(@PathVariable("id") Long id) {
-//		
-//		
-//		Long countFornecedor = usuarioService.pesquisaFornecedor(id);
+	@DeleteMapping("{id}")
+	public ResponseEntity deletar(@PathVariable("id") Long id) {
+		
+		
+//		Long countFornecedor = suspensaoElegibilidadeService.pesquisaFornecedor(id);
 //		
 //		if ((countFornecedor > 0) && (countFornecedor != null)) {
 //			return new ResponseEntity("Fornecedor está vinculado a um usuário!", HttpStatus.BAD_REQUEST);
 //		}
-//		
-//		//entity é o que retorna de ObterPorId
-//				return fornecedorService.obterPorId(id).map(entity -> {					
-//					fornecedorService.deletar(entity);
-//					return new ResponseEntity(HttpStatus.NO_CONTENT);
-//				}).orElseGet(() -> 
-//				    new ResponseEntity("Fornecedor não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
-//	}
+		
+		//entity é o que retorna de ObterPorId
+				return suspensaoElegibilidadeService.obterPorId(id).map(entity -> {					
+					suspensaoElegibilidadeService.deletar(entity);
+					return new ResponseEntity(HttpStatus.NO_CONTENT);
+				}).orElseGet(() -> 
+				    new ResponseEntity("Suspensão elegibilidade não encontrada na base de dados.", HttpStatus.BAD_REQUEST));
+	}
 	
 
 }

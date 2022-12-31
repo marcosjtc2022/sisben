@@ -9,10 +9,10 @@ import javax.persistence.Convert;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 public class SuspensaoElegibilidadeDto {
-	
+
+	private Long id;
 	
     private Long matriculaColaborador;
-	
 	
 	private String nomeColaborador;
 	
@@ -25,6 +25,16 @@ public class SuspensaoElegibilidadeDto {
 	private LocalDateTime dataUltimaModificacao;
 	
 	private Long idUsuarioUltimaModificacao;
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Long getMatriculaColaborador() {
 		return matriculaColaborador;
@@ -81,11 +91,13 @@ public class SuspensaoElegibilidadeDto {
 	public void setIdUsuarioUltimaModificacao(Long idUsuarioUltimaModificacao) {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
-
-	public SuspensaoElegibilidadeDto(Long matriculaColaborador, String nomeColaborador, LocalDateTime dataInicial,
-			LocalDateTime dataFinal, String justificativaSuspensao, LocalDateTime dataUltimaModificacao,
-			Long idUsuarioUltimaModificacao) {
+	
+	
+	public SuspensaoElegibilidadeDto(Long id, Long matriculaColaborador, String nomeColaborador,
+			LocalDateTime dataInicial, LocalDateTime dataFinal, String justificativaSuspensao,
+			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
+		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
 		this.nomeColaborador = nomeColaborador;
 		this.dataInicial = dataInicial;
@@ -94,8 +106,7 @@ public class SuspensaoElegibilidadeDto {
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
-	
-	
+
 	public SuspensaoElegibilidadeDto() {
 		
 	}
