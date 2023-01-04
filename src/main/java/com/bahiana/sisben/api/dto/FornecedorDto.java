@@ -1,8 +1,7 @@
 package com.bahiana.sisben.api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
 
 public class FornecedorDto {
 	
@@ -10,9 +9,9 @@ public class FornecedorDto {
 		
 		private String descricao;
 		
-		private LocalDateTime dataInicioVigenciaContrato;
+		private LocalDate dataInicioVigenciaContrato;
 		
-		private LocalDateTime dataFimVigenciaContrato;
+		private LocalDate dataFimVigenciaContrato;
 		
 		private String cnpj;
 		
@@ -46,19 +45,19 @@ public class FornecedorDto {
 			this.descricao = descricao;
 		}
 
-		public LocalDateTime getDataInicioVigenciaContrato() {
+		public LocalDate getDataInicioVigenciaContrato() {
 			return dataInicioVigenciaContrato;
 		}
 
-		public void setDataInicioVigenciaContrato(LocalDateTime dataInicioVigenciaContrato) {
+		public void setDataInicioVigenciaContrato(LocalDate dataInicioVigenciaContrato) {
 			this.dataInicioVigenciaContrato = dataInicioVigenciaContrato;
 		}
 
-		public LocalDateTime getDataFimVigenciaContrato() {
+		public LocalDate getDataFimVigenciaContrato() {
 			return dataFimVigenciaContrato;
 		}
 
-		public void setDataFimVigenciaContrato(LocalDateTime dataFimVigenciaContrato) {
+		public void setDataFimVigenciaContrato(LocalDate dataFimVigenciaContrato) {
 			this.dataFimVigenciaContrato = dataFimVigenciaContrato;
 		}
 
@@ -126,8 +125,8 @@ public class FornecedorDto {
 			this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 		}
 
-		public FornecedorDto(Long id, String descricao, LocalDateTime dataInicioVigenciaContrato,
-				LocalDateTime dataFimVigenciaContrato, String cnpj, String endereco, String telefone, String email,
+		public FornecedorDto(Long id, String descricao, LocalDate dataInicioVigenciaContrato,
+				LocalDate dataFimVigenciaContrato, String cnpj, String endereco, String telefone, String email,
 				String inscricaoEstadual, String inscricaoMunicipal, LocalDateTime dataUltimaModificacao,
 				Long idUsuarioUltimaModificacao) {
 			super();

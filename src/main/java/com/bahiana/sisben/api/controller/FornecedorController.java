@@ -1,6 +1,9 @@
 package com.bahiana.sisben.api.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +23,7 @@ import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.Perfil;
+import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.service.FornecedorService;
 import com.bahiana.sisben.service.UsuarioService;
 
@@ -58,6 +62,7 @@ public class FornecedorController {
 	    	return this.fornecedorService.listarSimplesOrdenadoDescricao();  	  
 	    }
 		
+		@Transactional
 		@PostMapping
 		public ResponseEntity salvar(@RequestBody FornecedorDto fornecedorDTO) {
 		  try {
@@ -71,6 +76,7 @@ public class FornecedorController {
 		
 		//Usado para recuperar recurso no servidor.
 		//Quando o "id" é passado na url o valor é colocado na variável "id".
+		@Transactional
 		@PutMapping("{id}")
 		public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FornecedorDto fornecedorDTO) {
 		     try {
@@ -83,6 +89,7 @@ public class FornecedorController {
 			     }
 		}
 		
+		@Transactional
 		@DeleteMapping("{id}")
 		public ResponseEntity deletar(@PathVariable("id") Long id) {
 			
@@ -99,6 +106,14 @@ public class FornecedorController {
 						return new ResponseEntity(HttpStatus.NO_CONTENT);
 					}).orElseGet(() -> 
 					    new ResponseEntity("Fornecedor não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
+		}
+		
+		@GetMapping("/obterPorId/{id}")
+		public Fornecedor obterPorId(@PathVariable("id") Long id) {
+			
+			Optional<Fornecedor> fornecedor = fornecedorService.obterPorId(id);
+			return  fornecedor.get();	
+					
 		}
 		
 

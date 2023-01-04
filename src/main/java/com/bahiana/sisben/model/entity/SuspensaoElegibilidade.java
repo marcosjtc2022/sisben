@@ -1,16 +1,14 @@
 package com.bahiana.sisben.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -33,10 +31,10 @@ public class SuspensaoElegibilidade implements Serializable {
 	private String nomeColaborador;
 	
 	@Column(name = "data_inicial")
-	private LocalDateTime dataInicial;
+	private LocalDate dataInicial;
 		
 	@Column(name = "data_final")
-	private LocalDateTime dataFinal;
+	private LocalDate dataFinal;
 	
 	@Column(name="justificativa")
 	private String justificativaSuspensao;
@@ -78,19 +76,19 @@ public class SuspensaoElegibilidade implements Serializable {
 		this.nomeColaborador = nomeColaborador;
 	}
 
-	public LocalDateTime getDataInicial() {
+	public LocalDate getDataInicial() {
 		return dataInicial;
 	}
 
-	public void setDataInicial(LocalDateTime dataInicial) {
+	public void setDataInicial(LocalDate dataInicial) {
 		this.dataInicial = dataInicial;
 	}
 
-	public LocalDateTime getDataFinal() {
+	public LocalDate getDataFinal() {
 		return dataFinal;
 	}
 
-	public void setDataFinal(LocalDateTime dataFinal) {
+	public void setDataFinal(LocalDate dataFinal) {
 		this.dataFinal = dataFinal;
 	}
 
@@ -122,8 +120,8 @@ public class SuspensaoElegibilidade implements Serializable {
 	
 	
 
-	public SuspensaoElegibilidade(Long id, Long matriculaColaborador, String nomeColaborador, LocalDateTime dataInicial,
-			LocalDateTime dataFinal, String justificativaSuspensao, LocalDateTime dataUltimaModificacao,
+	public SuspensaoElegibilidade(Long id, Long matriculaColaborador, String nomeColaborador, LocalDate dataInicial,
+			LocalDate dataFinal, String justificativaSuspensao, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;

@@ -27,11 +27,11 @@ public class Fornecedor implements Serializable {
 	@Column(name="descricao")
 	private String descricao;
 	
-	@Column(name = "data_inico_vigencia_contrato")
-	private LocalDateTime dataInicioVigenciaContrato;
+	@Column(name = "data_inicio_vigencia_contrato")
+	private LocalDate dataInicioVigenciaContrato;
 	
 	@Column(name="data_fim_vigencia_contrato")
-	private LocalDateTime dataFimVigenciaContrato;
+	private LocalDate dataFimVigenciaContrato;
 	
 	@Column(name="cnpj")
 	private String cnpj;
@@ -77,19 +77,19 @@ public class Fornecedor implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public LocalDateTime getDataInicioVigenciaContrato() {
+	public LocalDate getDataInicioVigenciaContrato() {
 		return dataInicioVigenciaContrato;
 	}
 
-	public void setDataInicioVigenciaContrato(LocalDateTime dataInicioVigenciaContrato) {
+	public void setDataInicioVigenciaContrato(LocalDate dataInicioVigenciaContrato) {
 		this.dataInicioVigenciaContrato = dataInicioVigenciaContrato;
 	}
 
-	public LocalDateTime getDataFimVigenciaContrato() {
+	public LocalDate getDataFimVigenciaContrato() {
 		return dataFimVigenciaContrato;
 	}
 
-	public void setDataFimVigenciaContrato(LocalDateTime dataFimVigenciaContrato) {
+	public void setDataFimVigenciaContrato(LocalDate dataFimVigenciaContrato) {
 		this.dataFimVigenciaContrato = dataFimVigenciaContrato;
 	}
 
@@ -157,8 +157,8 @@ public class Fornecedor implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public Fornecedor(Long id, String descricao, LocalDateTime dataInicioVigenciaContrato,
-			LocalDateTime dataFimVigenciaContrato, String cnpj, String endereco, String telefone, String email,
+	public Fornecedor(Long id, String descricao, LocalDate dataInicioVigenciaContrato,
+			LocalDate dataFimVigenciaContrato, String cnpj, String endereco, String telefone, String email,
 			String inscricaoEstadual, String inscricaoMunicipal, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {
 		super();

@@ -1,17 +1,13 @@
 package com.bahiana.sisben.api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 public class CalendarioDto {
 	
     private Long id; 
 
-	private LocalDateTime dataEspecial;
+	private LocalDate dataEspecial;
 	
 	private String descricao;
 	
@@ -27,11 +23,11 @@ public class CalendarioDto {
 		this.id = id;
 	}
 
-	public LocalDateTime getDataEspecial() {
+	public LocalDate getDataEspecial() {
 		return dataEspecial;
 	}
 
-	public void setDataEspecial(LocalDateTime dataEspecial) {
+	public void setDataEspecial(LocalDate dataEspecial) {
 		this.dataEspecial = dataEspecial;
 	}
 
@@ -59,7 +55,7 @@ public class CalendarioDto {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public CalendarioDto(Long id, LocalDateTime dataEspecial, String descricao, LocalDateTime dataUltimaModificacao,
+	public CalendarioDto(Long id, LocalDate dataEspecial, String descricao, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;

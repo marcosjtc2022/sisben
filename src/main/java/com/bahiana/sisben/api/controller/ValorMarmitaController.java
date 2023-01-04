@@ -1,6 +1,9 @@
 package com.bahiana.sisben.api.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ import com.bahiana.sisben.api.dto.ValorMarmitaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
+import com.bahiana.sisben.model.entity.TipoJustificativa;
 import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.ValorMarmitaService;
@@ -48,6 +52,7 @@ public class ValorMarmitaController {
     	return this.valorMarmitaService.listarPaginado(pageable);  	  
     }
 	
+	@Transactional
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody ValorMarmitaDto valorMarmitaDto) {
 	  try {
@@ -61,6 +66,7 @@ public class ValorMarmitaController {
 	
 	//Usado para recuperar recurso no servidor.
 	//Quando o "id" é passado na url o valor é colocado na variável "id".
+	@Transactional
 	@PutMapping("{id}")
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ValorMarmitaDto valorMarmitaDto) {
 	try {
@@ -73,7 +79,7 @@ public class ValorMarmitaController {
 		}
 	}
 	
-	
+	@Transactional
 	@DeleteMapping("{id}")
 	public ResponseEntity deletar(@PathVariable("id") Long id) {
 		
@@ -97,6 +103,14 @@ public class ValorMarmitaController {
     public List<ValorMarmita> listarOrdenadoValor() {
     	return this.valorMarmitaService.listarSimplesOrdenadoValor();  	  
     }
+	
+	@GetMapping("/obterPorId/{id}")
+	public ValorMarmita obterPorId(@PathVariable("id") Long id) {
+		
+		Optional<ValorMarmita> valorMarmita = valorMarmitaService.obterPorId(id);
+		return  valorMarmita.get();	
+				
+	}
 	
 	
 	

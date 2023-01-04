@@ -1,6 +1,9 @@
 package com.bahiana.sisben.api.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.UnidadeAcademicaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
-import com.bahiana.sisben.model.entity.Perfil;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 
@@ -30,6 +32,7 @@ public class UnidadeAcademicaController {
 	@Autowired
 	private UnidadeAcademicaService unidadeAcademicaService;
 	
+	@Transactional
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody UnidadeAcademicaDto unidadeAcademicaForm) {
 	  try {
@@ -43,6 +46,7 @@ public class UnidadeAcademicaController {
 	
 	 //Usado para recuperar recurso no servidor.
 	//Quando o "id" é passado na url o valor é colocado na variável "id".
+	@Transactional
 	@PutMapping("{id}")
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody UnidadeAcademicaDto unidadeAcademicaForm) {
 		  try {
@@ -55,7 +59,7 @@ public class UnidadeAcademicaController {
 		     }
 	}
 	
-	
+	@Transactional
 	@DeleteMapping("{id}")
 	public ResponseEntity deletar(@PathVariable("id") Long id) {
 		
@@ -81,6 +85,14 @@ public class UnidadeAcademicaController {
     public List<UnidadeAcademica> listarOrdenadoDescricao() {
     	return this.unidadeAcademicaService.listarSimplesOrdenadoDescricao();  	  
     }
+	
+	@GetMapping("/obterPorId/{id}")
+	public UnidadeAcademica obterPorId(@PathVariable("id") Long id) {
+		
+		Optional<UnidadeAcademica> unidadeAcademica = unidadeAcademicaService.obterPorId(id);
+		return  unidadeAcademica.get();	
+				
+	}
 	
 	
 

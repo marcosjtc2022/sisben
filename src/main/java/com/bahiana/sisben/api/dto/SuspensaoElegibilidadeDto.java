@@ -16,9 +16,9 @@ public class SuspensaoElegibilidadeDto {
 	
 	private String nomeColaborador;
 	
-	private LocalDateTime dataInicial;
+	private LocalDate dataInicial;
 	
-	private LocalDateTime dataFinal;
+	private LocalDate dataFinal;
 	
 	private String justificativaSuspensao;
 	
@@ -52,19 +52,19 @@ public class SuspensaoElegibilidadeDto {
 		this.nomeColaborador = nomeColaborador;
 	}
 
-	public LocalDateTime getDataInicial() {
+	public LocalDate getDataInicial() {
 		return dataInicial;
 	}
 
-	public void setDataInicial(LocalDateTime dataInicial) {
+	public void setDataInicial(LocalDate dataInicial) {
 		this.dataInicial = dataInicial;
 	}
 
-	public LocalDateTime getDataFinal() {
+	public LocalDate getDataFinal() {
 		return dataFinal;
 	}
 
-	public void setDataFinal(LocalDateTime dataFinal) {
+	public void setDataFinal(LocalDate dataFinal) {
 		this.dataFinal = dataFinal;
 	}
 
@@ -94,7 +94,7 @@ public class SuspensaoElegibilidadeDto {
 	
 	
 	public SuspensaoElegibilidadeDto(Long id, Long matriculaColaborador, String nomeColaborador,
-			LocalDateTime dataInicial, LocalDateTime dataFinal, String justificativaSuspensao,
+			LocalDate dataInicial, LocalDate dataFinal, String justificativaSuspensao,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;

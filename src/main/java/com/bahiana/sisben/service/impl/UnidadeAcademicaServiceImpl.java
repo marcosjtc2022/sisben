@@ -71,6 +71,8 @@ public class UnidadeAcademicaServiceImpl implements UnidadeAcademicaService  {
 	public List<UnidadeAcademica> listarSimplesOrdenadoDescricao() {
 		return this.unidadeAcademicaRepository.findByOrderByDescricaoAsc();
 	}
+	
+	
 
 	
 

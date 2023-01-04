@@ -1,6 +1,9 @@
 package com.bahiana.sisben.api.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.SuspensaoElegibilidadeDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
+import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.SuspensaoElegibilidade;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
@@ -73,6 +77,7 @@ public class SuspensaoElegibilidadeController {
     	return this.suspensaoElegibilidadeService.listarPaginado(pageable);  	  
     }
 	
+	@Transactional
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody SuspensaoElegibilidadeDto suspensaoElegibilidadeDto) {
 	  try {
@@ -86,6 +91,7 @@ public class SuspensaoElegibilidadeController {
 	
 	//Usado para recuperar recurso no servidor.
 	//Quando o "id" é passado na url o valor é colocado na variável "id".
+	@Transactional
 	@PutMapping("{id}")
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody SuspensaoElegibilidadeDto suspensaoElegibilidadeDto) {
 	    try {
@@ -98,6 +104,7 @@ public class SuspensaoElegibilidadeController {
 		 }
 	}
 	
+	@Transactional
 	@DeleteMapping("{id}")
 	public ResponseEntity deletar(@PathVariable("id") Long id) {
 		
@@ -114,6 +121,14 @@ public class SuspensaoElegibilidadeController {
 					return new ResponseEntity(HttpStatus.NO_CONTENT);
 				}).orElseGet(() -> 
 				    new ResponseEntity("Suspensão elegibilidade não encontrada na base de dados.", HttpStatus.BAD_REQUEST));
+	}
+	
+	@GetMapping("/obterPorId/{id}")
+	public SuspensaoElegibilidade obterPorId(@PathVariable("id") Long id) {
+			
+			Optional<SuspensaoElegibilidade> suspensaoElegibilidade = suspensaoElegibilidadeService.obterPorId(id);
+			return  suspensaoElegibilidade.get();	
+					
 	}
 	
 

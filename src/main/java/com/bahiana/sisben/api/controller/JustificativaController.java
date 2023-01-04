@@ -1,6 +1,9 @@
 package com.bahiana.sisben.api.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +23,7 @@ import com.bahiana.sisben.api.dto.JustificativaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
+import com.bahiana.sisben.model.entity.TipoJustificativa;
 import com.bahiana.sisben.service.JustificativaService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 
@@ -48,6 +52,7 @@ public class JustificativaController {
     	return this.justificativaService.listarPaginado(pageable);  	  
     }
 	
+	@Transactional
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody JustificativaDto justificativaDTO) {
 	  try {
@@ -61,6 +66,7 @@ public class JustificativaController {
 	
 	 //Usado para recuperar recurso no servidor.
 	 //Quando o "id" é passado na url o valor é colocado na variável "id".
+	 @Transactional
 	 @PutMapping("{id}")
 	 public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody JustificativaDto justificativaDTO) {
 		try {
@@ -72,7 +78,8 @@ public class JustificativaController {
 			 return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-			
+	 
+	@Transactional		
 	@DeleteMapping("{id}")
 	public ResponseEntity deletar(@PathVariable("id") Long id) {
 		
@@ -106,6 +113,14 @@ public class JustificativaController {
     public List<Justificativa> listarOrdenadoDescricao() {
     	return this.justificativaService.listarSimplesOrdenadoDescricao();  	  
     }
+	
+	@GetMapping("/obterPorId/{id}")
+	public Justificativa obterPorId(@PathVariable("id") Long id) {
+		
+		Optional<Justificativa> justificativa = justificativaService.obterPorId(id);
+		return  justificativa.get();	
+				
+	}
 	
 	
 	

@@ -11,9 +11,9 @@ public class ValorMarmitaDto {
 
 	private BigDecimal vlMarmita;	
 	
-	private LocalDateTime dataInicial;
+	private LocalDate dataInicial;
 		
-	private LocalDateTime dataFinal;
+	private LocalDate dataFinal;
 	
 	private LocalDateTime dataUltimaModificacao;
 
@@ -35,19 +35,19 @@ public class ValorMarmitaDto {
 		this.vlMarmita = vlMarmita;
 	}
 
-	public LocalDateTime getDataInicial() {
+	public LocalDate getDataInicial() {
 		return dataInicial;
 	}
 
-	public void setDataInicial(LocalDateTime dataInicial) {
+	public void setDataInicial(LocalDate dataInicial) {
 		this.dataInicial = dataInicial;
 	}
 
-	public LocalDateTime getDataFinal() {
+	public LocalDate getDataFinal() {
 		return dataFinal;
 	}
 
-	public void setDataFinal(LocalDateTime dataFinal) {
+	public void setDataFinal(LocalDate dataFinal) {
 		this.dataFinal = dataFinal;
 	}
 
@@ -67,7 +67,7 @@ public class ValorMarmitaDto {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public ValorMarmitaDto(Long id, BigDecimal vlMarmita, LocalDateTime dataInicial, LocalDateTime dataFinal,
+	public ValorMarmitaDto(Long id, BigDecimal vlMarmita, LocalDate dataInicial, LocalDate dataFinal,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;

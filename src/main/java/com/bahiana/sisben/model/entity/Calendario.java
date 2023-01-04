@@ -1,20 +1,15 @@
 package com.bahiana.sisben.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 
 
@@ -28,7 +23,7 @@ public class Calendario implements Serializable {
     private Long id; 
 	
 	@Column(name="data_especial")
-	private LocalDateTime dataEspecial;
+	private LocalDate dataEspecial;
 	
 	@Column(name="descricao")
 	private String descricao;
@@ -51,11 +46,11 @@ public class Calendario implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDateTime getDataEspecial() {
+	public LocalDate getDataEspecial() {
 		return dataEspecial;
 	}
 
-	public void setDataEspecial(LocalDateTime dataEspecial) {
+	public void setDataEspecial(LocalDate dataEspecial) {
 		this.dataEspecial = dataEspecial;
 	}
 
@@ -83,7 +78,7 @@ public class Calendario implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public Calendario(Long id, LocalDateTime dataEspecial, String descricao, LocalDateTime dataUltimaModificacao,
+	public Calendario(Long id, LocalDate dataEspecial, String descricao, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;

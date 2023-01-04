@@ -36,10 +36,10 @@ public class ValorMarmita implements Serializable {
 	private BigDecimal vlMarmita;	
 	
 	@Column(name = "data_inicial")
-	private LocalDateTime dataInicial;
+	private LocalDate dataInicial;
 		
 	@Column(name = "data_final")
-	private LocalDateTime dataFinal;
+	private LocalDate dataFinal;
 	
 	@Column(name = "data_ultima_modificacao")
 	private LocalDateTime dataUltimaModificacao;
@@ -67,19 +67,19 @@ public class ValorMarmita implements Serializable {
 		this.vlMarmita = vlMarmita;
 	}
 
-	public LocalDateTime getDataInicial() {
+	public LocalDate getDataInicial() {
 		return dataInicial;
 	}
 
-	public void setDataInicial(LocalDateTime dataInicial) {
+	public void setDataInicial(LocalDate dataInicial) {
 		this.dataInicial = dataInicial;
 	}
 
-	public LocalDateTime getDataFinal() {
+	public LocalDate getDataFinal() {
 		return dataFinal;
 	}
 
-	public void setDataFinal(LocalDateTime dataFinal) {
+	public void setDataFinal(LocalDate dataFinal) {
 		this.dataFinal = dataFinal;
 	}
 
@@ -99,7 +99,7 @@ public class ValorMarmita implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public ValorMarmita(Long id, BigDecimal vlMarmita, LocalDateTime dataInicial, LocalDateTime dataFinal,
+	public ValorMarmita(Long id, BigDecimal vlMarmita, LocalDate dataInicial, LocalDate dataFinal,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;

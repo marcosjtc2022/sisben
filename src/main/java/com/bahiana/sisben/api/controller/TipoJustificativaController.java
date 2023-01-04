@@ -3,6 +3,9 @@ package com.bahiana.sisben.api.controller;
 
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.TipoJustificativaDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.TipoJustificativa;
+import com.bahiana.sisben.model.entity.UnidadeAcademica;
 import com.bahiana.sisben.service.JustificativaService;
 import com.bahiana.sisben.service.TipoJustificativaService;
 
@@ -46,6 +50,7 @@ public class TipoJustificativaController {
     	return this.tipoJustificativaService.listarPaginado(pageable);  	  
     }
 	
+	@Transactional
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody TipoJustificativaDto tipoJustificativaDTO) {
 	  try {
@@ -57,8 +62,9 @@ public class TipoJustificativaController {
 	     }
     }
 	
-	//Usado para recuperar recurso no servidor.
+	    //Usado para recuperar recurso no servidor.
 		//Quando o "id" é passado na url o valor é colocado na variável "id".
+	    @Transactional
 		@PutMapping("{id}")
 		public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody TipoJustificativaDto tipoJustificativaDTO) {
 		  try {
@@ -71,7 +77,7 @@ public class TipoJustificativaController {
 		     }
 	    }
 		
-		
+	    @Transactional
 		@DeleteMapping("{id}")
 		public ResponseEntity deletar(@PathVariable("id") Long id) {
 			
@@ -95,6 +101,14 @@ public class TipoJustificativaController {
 	    public List<TipoJustificativa> listarOrdenadoDescricao() {
 	    	return this.tipoJustificativaService.listarSimplesOrdenadoDescricao();  	  
 	    }
+		
+		@GetMapping("/obterPorId/{id}")
+		public TipoJustificativa obterPorId(@PathVariable("id") Long id) {
+			
+			Optional<TipoJustificativa> tipoJustificativa = tipoJustificativaService.obterPorId(id);
+			return  tipoJustificativa.get();	
+					
+		}
 		
 
 

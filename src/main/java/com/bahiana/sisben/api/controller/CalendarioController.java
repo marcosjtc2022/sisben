@@ -1,6 +1,9 @@
 package com.bahiana.sisben.api.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.CalendarioDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Calendario;
+import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.service.CalendarioService;
 
 @RestController
@@ -44,6 +48,7 @@ public class CalendarioController {
     	return this.calendarioService.listarSimplesOrdenadoData();
     }
 	
+	@Transactional
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody CalendarioDto calendarioDto) {
 	  try {
@@ -57,6 +62,7 @@ public class CalendarioController {
 	
 	 //Usado para recuperar recurso no servidor.
 	 //Quando o "id" é passado na url o valor é colocado na variável "id".
+	 @Transactional
 	 @PutMapping("{id}")
 	 public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody CalendarioDto calendarioDto) {
 		try {
@@ -68,7 +74,7 @@ public class CalendarioController {
 			 return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	 
+	 @Transactional
 	 @DeleteMapping("{id}")
 		public ResponseEntity deletar(@PathVariable("id") Long id) {
 			
@@ -87,7 +93,15 @@ public class CalendarioController {
 			   return new ResponseEntity(HttpStatus.NO_CONTENT);
 					}).orElseGet(() -> 
 			   new ResponseEntity("Data não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
-		}	
+		}
+	 
+	 @GetMapping("/obterPorId/{id}")
+	 public Calendario obterPorId(@PathVariable("id") Long id) {
+			
+			Optional<Calendario> calendario = calendarioService.obterPorId(id);
+			return  calendario.get();	
+					
+	 }
 		 
 	 
 

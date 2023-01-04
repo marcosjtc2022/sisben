@@ -1,5 +1,6 @@
 package com.bahiana.sisben.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.bahiana.sisben.api.dto.ValorMarmitaDto;
-import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.model.entity.repository.ValorMarmitaRepository;
 import com.bahiana.sisben.service.ValorMarmitaService;
@@ -66,9 +66,9 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 		valorMarmitaDto.setDataUltimaModificacao(dataModificacao);
 //		String dataInicial = new String(valorMarmitaDto.getDataInicial().toString());
 //		String dataFinal = null;
-		LocalDateTime dataInicial = LocalDateTime.parse(valorMarmitaDto.getDataInicial().toString());
+		LocalDate dataInicial =  LocalDate.parse(valorMarmitaDto.getDataFinal().toString());
 		valorMarmitaDto.setDataInicial(dataInicial);
-		LocalDateTime dataFinal = LocalDateTime.parse(valorMarmitaDto.getDataFinal().toString());
+		LocalDate dataFinal = LocalDate.parse(valorMarmitaDto.getDataFinal().toString());
 		valorMarmitaDto.setDataFinal(dataFinal);
 		
 		BeanUtils.copyProperties(valorMarmitaDto, valorMarmita);
