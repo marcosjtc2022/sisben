@@ -49,5 +49,9 @@ public interface ProgramacaoEntregaService {
 	long pesquisaJustificativa(Long idJustificativa);
 	
 	long pesquisaValorMarmita(Long idValor);
+	
+	long pesquisaUsuarioEntrega(Long idUsuario);
+		
+	
 
 }

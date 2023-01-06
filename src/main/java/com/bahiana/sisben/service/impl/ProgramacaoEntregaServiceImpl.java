@@ -293,6 +293,13 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		    return  countValorMarmita;
 		}
 
+		@Override
+		public long pesquisaUsuarioEntrega(Long idUsuario) {
+            Long countUsuarioEntrega =  this.programacaoEntregaRepository.pesquisaUsuarioEntrega(idUsuario);
+			
+		    return  countUsuarioEntrega;
+		}
+
 		
 	
 //	@DeleteMapping("{id}")

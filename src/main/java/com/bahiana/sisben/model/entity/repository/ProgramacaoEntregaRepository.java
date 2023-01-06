@@ -55,6 +55,9 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE pe.idValor=:idValor")
 	long pesquisaValorMarmita(@Param("idValor") Long idValor);
+	
+	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE pe.idUsuario=:idUsuario")
+	long pesquisaUsuarioEntrega(@Param("idUsuario") Long idUsuario);
 	 
 	
 

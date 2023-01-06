@@ -1,20 +1,21 @@
 package com.bahiana.sisben.service;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import com.bahiana.sisben.api.dto.FornecedorDto;
+import com.bahiana.sisben.api.dto.UsuarioDto;
+import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.Usuario;
 
 @Service
 public interface UsuarioService {
 	
-Usuario autenticar(String email, String senha);
+    Usuario autenticar(String email, String senha);
 	
-	Usuario salvarUsuario(Usuario usuario);
-	
-	void validarEmailUsuario(String emailUsuario);
+	Usuario salvar(UsuarioDto usuarioDto);
 	
 	//Retorna um optiona vazio caso não exista.
 	Optional<Usuario> obterPorId(Long id);
@@ -22,6 +23,14 @@ Usuario autenticar(String email, String senha);
 	long pesquisaPerfil(Long idPerfil);
 	
 	long pesquisaFornecedor(Long id);
+	
+	Usuario alterar(UsuarioDto usuarioDto);
+	
+	void deletar(Usuario usuario);
+	
+	List<Usuario> listarSimplesOrdenadoNome();
+	
+	List<Usuario> listarPorNomeOrdenadoNome(UsuarioDto usuarioDto);
 
 
 }

@@ -25,6 +25,8 @@ public class UsuarioDto {
 	
 	private Boolean stUsuarioExterno;
 	
+	private Boolean externo;
+	
 	private LocalDateTime dataUltimaModificacao;
 	
 	private Long idUsuarioUltimaModificacao;
@@ -117,8 +119,16 @@ public class UsuarioDto {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
+	public Boolean getExterno() {
+		return externo;
+	}
+
+	public void setExterno(Boolean externo) {
+		this.externo = externo;
+	}
+	
 	public UsuarioDto(Long id, Long idPerfil, Long idUa, Long idFornecedor, Long matriculaColaborador,
-			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno,
+			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno, Boolean externo,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
@@ -130,10 +140,11 @@ public class UsuarioDto {
 		this.emailUsuario = emailUsuario;
 		this.senhaUsuario = senhaUsuario;
 		this.stUsuarioExterno = stUsuarioExterno;
+		this.externo = externo;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
-	
+
 	public UsuarioDto() {
 		
 	}

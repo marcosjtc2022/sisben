@@ -2,12 +2,11 @@ package com.bahiana.sisben.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,8 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 
 
@@ -60,9 +57,12 @@ public class Usuario implements Serializable {
 	@Column(name = "status_usuario_externo", columnDefinition="BIT")
 	private Boolean stUsuarioExterno;
 	
+	@Column(name = "externo", columnDefinition="BIT")
+	private Boolean externo;
+	
 	@Column(name = "data_ultima_modificacao")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDate dataUltimaModificacao;
+	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+	private LocalDateTime dataUltimaModificacao;
 	
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
@@ -157,11 +157,11 @@ public class Usuario implements Serializable {
 		this.stUsuarioExterno = stUsuarioExterno;
 	}
 
-	public LocalDate getDataUltimaModificacao() {
+	public LocalDateTime getDataUltimaModificacao() {
 		return dataUltimaModificacao;
 	}
 
-	public void setDataUltimaModificacao(LocalDate dataUltimaModificacao) {
+	public void setDataUltimaModificacao(LocalDateTime dataUltimaModificacao) {
 		this.dataUltimaModificacao = dataUltimaModificacao;
 	}
 
@@ -173,13 +173,23 @@ public class Usuario implements Serializable {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 	
+	public Boolean getExterno() {
+		return externo;
+	}
+
+	public void setExterno(Boolean externo) {
+		this.externo = externo;
+	}
+
 	public Usuario() {
 		
 	}
 
+	
+	
 	public Usuario(Long id, Long idPerfil, Long idUa, Long idFornecedor, Long matriculaColaborador,
-			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno,
-			LocalDate dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
+			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno, Boolean externo,
+			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
 		this.idPerfil = idPerfil;
@@ -190,6 +200,7 @@ public class Usuario implements Serializable {
 		this.emailUsuario = emailUsuario;
 		this.senhaUsuario = senhaUsuario;
 		this.stUsuarioExterno = stUsuarioExterno;
+		this.externo = externo;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
