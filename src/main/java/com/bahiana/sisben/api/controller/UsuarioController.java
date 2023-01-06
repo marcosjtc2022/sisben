@@ -17,12 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.FornecedorDto;
-import com.bahiana.sisben.api.dto.SuspensaoElegibilidadeDto;
+import com.bahiana.sisben.api.dto.FuncionarioDto;
 import com.bahiana.sisben.api.dto.UsuarioDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
-import com.bahiana.sisben.model.entity.Fornecedor;
-import com.bahiana.sisben.model.entity.SuspensaoElegibilidade;
 import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.UsuarioService;
@@ -120,6 +117,11 @@ public class UsuarioController {
 		return  usuario.get();	
 				
 	}
+	
+//	@GetMapping(value =  "/listarQueryNativa" )
+//    public List<Usuario> listarQueryNativa() {
+//    	return this.usuarioService.listarQueryNativa()	;  
+//    }
 	
 
 }

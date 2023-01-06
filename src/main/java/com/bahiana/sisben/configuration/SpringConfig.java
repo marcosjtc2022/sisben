@@ -3,6 +3,7 @@ package com.bahiana.sisben.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.FornecedorService;
 import com.bahiana.sisben.service.FuncionalidadeService;
@@ -27,6 +28,7 @@ import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
 import com.bahiana.sisben.service.impl.ValorMarmitaServiceImpl;
 
 @Configuration
+//@ComponentScan("com.bahiana.sisben.model.entity.repository.FuncionarioInternoRepository")
 public class SpringConfig {
 	
 	@Bean
@@ -83,6 +85,17 @@ public class SpringConfig {
 	public CalendarioService getCalendarioService() {
 	    return new  CalendarioServiceImpl();
 	}
+	
+//	@Bean
+//	public void getFuncionarioInternoRepository() {
+//		//funcionarioInternoRepository = new FuncionarioInternoRepository();
+//		FuncionarioInternoRepository fornecedor = new FuncionarioInternoRepository() ;
+//	}
+	
+//	@Bean
+//	public FuncionarioInternoRepository getFuncionarioInternoRepository() {
+//	    return new  FuncionarioInternoRepository();
+//	}
 	
 	
 	

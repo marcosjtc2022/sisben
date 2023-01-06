@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.bahiana.sisben.model.entity.Fornecedor;
+import com.bahiana.sisben.api.dto.FuncionarioDto;
 import com.bahiana.sisben.model.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
@@ -26,5 +26,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     List<Usuario> findByNomeColaboradorContainingOrderByNomeColaborador(String nomeColaborador);
 	
 	List<Usuario> findByOrderByNomeColaboradorAsc();
+	
+//    //@Query(value = "SELECT * FROM usuario", nativeQuery = true)
+//	@Query(value = "SELECT func_mat as id, func_nome as nomeColaborador FROM [10.71.17.40].[Corpore].[dbo].[SISBEN_Funcionarios]", nativeQuery = true)
+//	List<Usuario> pesquisaNativa();
 
 }

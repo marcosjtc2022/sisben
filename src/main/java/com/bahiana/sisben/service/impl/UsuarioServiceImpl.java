@@ -7,10 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bahiana.sisben.api.dto.FornecedorDto;
+import com.bahiana.sisben.api.dto.FuncionarioDto;
 import com.bahiana.sisben.api.dto.UsuarioDto;
 import com.bahiana.sisben.exception.ErroAutenticacao;
-import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.model.entity.repository.UsuarioRepository;
 import com.bahiana.sisben.service.UsuarioService;
@@ -88,6 +87,11 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		
 		return usuario;
 	}
+	
+//	@Override
+//	public List<Usuario> listarQueryNativa() {
+//		return usuarioRepository.pesquisaNativa();
+//	}
 	
 	//@Override
 	public void validarEmailUsuario(String emailUsuario) {
