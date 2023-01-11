@@ -1,12 +1,10 @@
 package com.bahiana.sisben.api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 
 //import lombok.AllArgsConstructor;
 //import lombok.Builder;
@@ -49,11 +47,11 @@ public class ProgramacaoEntregaDto {
 	
 //	@Column(name = "data_entrega")
 	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDateTime dataEntrega;
+	private LocalDate dataEntrega;
 	
 //	@Column(name = "data_solicitacao")
 	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDateTime dataSolicitacao;	
+	private LocalDate dataSolicitacao;	
 	
 //	@Column(name = "solic_extra", columnDefinition="BIT")
 	private Boolean solicExtra;
@@ -177,19 +175,19 @@ public class ProgramacaoEntregaDto {
 		this.idUsuario = idUsuario;
 	}	
 
-	public LocalDateTime getDataEntrega() {
+	public LocalDate getDataEntrega() {
 		return dataEntrega;
 	}
 
-	public void setDataEntrega(LocalDateTime dataEntrega) {
+	public void setDataEntrega(LocalDate dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public LocalDateTime getDataSolicitacao() {
+	public LocalDate getDataSolicitacao() {
 		return dataSolicitacao;
 	}
 
-	public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
+	public void setDataSolicitacao(LocalDate dataSolicitacao) {
 		this.dataSolicitacao = dataSolicitacao;
 	}
 
@@ -213,8 +211,8 @@ public class ProgramacaoEntregaDto {
 	
 	
 	public ProgramacaoEntregaDto(Long id, Long matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
-			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDateTime dataEntrega,
-			LocalDateTime dataSolicitacao, Boolean solicExtra, Boolean stAprov, String tabelaProgramacaoEntrega) {
+			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
+			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, String tabelaProgramacaoEntrega) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;

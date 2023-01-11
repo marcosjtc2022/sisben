@@ -29,10 +29,6 @@ public class ProgramacaoEntregaController {
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
 	
-//	@Autowired
-//	ProgramacaoEntregaRepositoryDataTable programacaoEntregaRepositoryDataTable;
-
-	
     @GetMapping(value =  "/teste" )
     @ResponseBody
     public ResponseEntity listar() {

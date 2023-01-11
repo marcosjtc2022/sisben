@@ -1,5 +1,6 @@
 package com.bahiana.sisben.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -97,8 +98,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		Long matriculaColaborador = null;
 		String uaPrevista = null;
 		String uaRealizada = null;
-		LocalDateTime dataEntrega = null;
-		LocalDateTime dataSolicitacao = null;
+		LocalDate dataEntrega = null;
+		LocalDate dataSolicitacao = null;
 		Long idUa = null;
 		Long idJustificativa = null;
 		Long idUsuario = null;
@@ -132,8 +133,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				//dataSolicitacao = utilDataHora.trataDatas(linha[4]);
 				//LocalDateTime dateTime = LocalDateTime.parse("2018-05-05T11:50:55");
 //				dataEntrega2 = linha[3];
-				dataEntrega = LocalDateTime.parse(linha[3]+ "T11:00:00");
-				dataSolicitacao = LocalDateTime.parse(linha[4]+ "T11:00:00");
+				dataEntrega = LocalDate.parse(linha[3]);
+				dataSolicitacao = LocalDate.parse(linha[4]);
 				idUa = new Long(linha[5]);
 				idJustificativa = new Long(linha[6]);
 				idUsuario = new Long(linha[7]);
@@ -149,8 +150,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				//dataSolicitacao = utilDataHora.trataDatas(linha[5]);
 //				dataEntrega = LocalDateTime.parse(linha[4]);   //linha[3];
 //				dataSolicitacao = LocalDateTime.parse(linha[5]);
-				dataEntrega = LocalDateTime.parse(linha[4]+ "T11:00:00");
-				dataSolicitacao = LocalDateTime.parse(linha[5]+ "T11:00:00");
+				dataEntrega = LocalDate.parse(linha[4]);
+				dataSolicitacao = LocalDate.parse(linha[5]);
 				idUa = new Long(linha[6]);
 				idJustificativa = new Long(linha[7]);
 				idUsuario = new Long(linha[8]);

@@ -3,7 +3,6 @@ package com.bahiana.sisben.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.FornecedorService;
 import com.bahiana.sisben.service.FuncionalidadeService;
@@ -15,6 +14,7 @@ import com.bahiana.sisben.service.TipoJustificativaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.UsuarioService;
 import com.bahiana.sisben.service.ValorMarmitaService;
+import com.bahiana.sisben.service.VwSisbenFuncionarioService;
 import com.bahiana.sisben.service.impl.CalendarioServiceImpl;
 import com.bahiana.sisben.service.impl.FornecedorServiceImpl;
 import com.bahiana.sisben.service.impl.FuncionalidadeServiceImpl;
@@ -26,6 +26,7 @@ import com.bahiana.sisben.service.impl.TipoJustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.UnidadeAcademicaServiceImpl;
 import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
 import com.bahiana.sisben.service.impl.ValorMarmitaServiceImpl;
+import com.bahiana.sisben.service.impl.VwSisbenFuncionarioServiceImpl;
 
 @Configuration
 //@ComponentScan("com.bahiana.sisben.model.entity.repository.FuncionarioInternoRepository")
@@ -85,6 +86,13 @@ public class SpringConfig {
 	public CalendarioService getCalendarioService() {
 	    return new  CalendarioServiceImpl();
 	}
+	
+	@Bean
+	public VwSisbenFuncionarioService getVwSisbenFuncionarioService() {
+	    return new  VwSisbenFuncionarioServiceImpl();
+	}
+	
+	
 	
 //	@Bean
 //	public void getFuncionarioInternoRepository() {
