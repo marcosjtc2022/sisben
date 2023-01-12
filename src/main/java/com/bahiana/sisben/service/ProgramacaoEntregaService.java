@@ -1,5 +1,6 @@
 package com.bahiana.sisben.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ public interface ProgramacaoEntregaService {
 	
 	//ProgramacaoEntrega alterarLote(ProgramacaoEntregaDTO programacaoEntregaDto);
 	
-	ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDto programacaoEntregaDto);
+	//ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDto programacaoEntregaDto);
 	
 	List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega, char operacao);
 	
@@ -52,6 +53,13 @@ public interface ProgramacaoEntregaService {
 	long pesquisaValorMarmita(Long idValor);
 	
 	long pesquisaUsuarioEntrega(Long idUsuario);
+	
+	List<ProgramacaoEntrega> listaProgramacao24hOrdenadoData();
+	
+	List<ProgramacaoEntrega> pesquisaProgramacao24hPorDataOrdenadoData(LocalDate dataSolicitacao, Boolean solicExtra );
+	
+	
+	
 		
 	
 

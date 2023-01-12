@@ -1,5 +1,8 @@
 package com.bahiana.sisben.api.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
+import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 //import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepositoryDataTable;
 //import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepositoryDataTable;
@@ -164,6 +169,32 @@ public class ProgramacaoEntregaController {
 				    return ResponseEntity.badRequest().body(e.getMessage());
 			     }
 		    }
+		 
+		 
+		  @GetMapping(value =  "/listarProgramcaoEntregaMenos24h" )
+		  @ResponseBody
+		  public ResponseEntity<List<ProgramacaoEntrega>> listarProgramcaoEntregaMenos24h() {
+			 try {
+					
+					return new ResponseEntity(programacaoEntregaService.listaProgramacao24hOrdenadoData(), HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return new ResponseEntity<List<ProgramacaoEntrega>>(HttpStatus.BAD_REQUEST);
+			     }
+		  }
+		  
+		  @GetMapping(value =  "/pesquisarProgramcaoEntregaMenos24hPorData" )
+			public ResponseEntity<List<ProgramacaoEntrega>> pesquisarPorData(String dataSolicitacao) {
+				 try {
+					 
+					 LocalDate dataSolicitacaoParam = LocalDate.parse(new String(dataSolicitacao));
+						
+					 return new ResponseEntity(programacaoEntregaService.
+							 pesquisaProgramacao24hPorDataOrdenadoData(dataSolicitacaoParam, true),
+							 HttpStatus.CREATED);
+				     } catch (RegraNegocioException e) {
+					    return new ResponseEntity<List<ProgramacaoEntrega>>(HttpStatus.BAD_REQUEST);
+				     }
+			}
 		  
 		
 	

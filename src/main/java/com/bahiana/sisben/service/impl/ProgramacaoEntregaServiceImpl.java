@@ -43,7 +43,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		 return programacaoEntregaRepository.save(programacaoEntrega);
 	}
 	
-	@Override
+	//@Override
 	public ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
 		
 		ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
@@ -303,6 +303,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
+		@Transactional
 		public ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto) {
 			 LocalDateTime dataModificacao = LocalDateTime.now();
 			 programacaoEntregaEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
@@ -317,6 +318,16 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					BeanUtils.copyProperties(programacaoEntregaEntregaMenos24hDto, programacaoEntrega);
 					
 			return programacaoEntrega;
+		}
+
+		@Override
+		public List<ProgramacaoEntrega> listaProgramacao24hOrdenadoData() {
+			return programacaoEntregaRepository.listaProgramacao24hOrdenadoData();
+		}
+
+		@Override
+		public List<ProgramacaoEntrega> pesquisaProgramacao24hPorDataOrdenadoData(LocalDate dataSolicitacao, Boolean solicExtra) {
+			return programacaoEntregaRepository.findByDataSolicitacaoAndSolicExtraOrderByDataSolicitacao(dataSolicitacao, solicExtra);
 		}
 				
 

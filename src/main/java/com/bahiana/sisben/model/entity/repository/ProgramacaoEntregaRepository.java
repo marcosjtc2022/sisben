@@ -1,5 +1,8 @@
 package com.bahiana.sisben.model.entity.repository;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -58,6 +61,13 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE pe.idUsuario=:idUsuario")
 	long pesquisaUsuarioEntrega(@Param("idUsuario") Long idUsuario);
+	
+	@Query("SELECT pe FROM ProgramacaoEntrega pe WHERE pe.solicExtra=1 Order by pe.dataSolicitacao")
+	List<ProgramacaoEntrega> listaProgramacao24hOrdenadoData();
+	
+	List<ProgramacaoEntrega> findByDataSolicitacaoAndSolicExtraOrderByDataSolicitacao(LocalDate dataSolicitacao, Boolean solicExtra );
+	
+	
 	 
 	
 

@@ -38,7 +38,7 @@ public class FornecedorController {
 		private UsuarioService usuarioService;
 		
 		@GetMapping(value =  "/lista-filtro-descricao" )
-		public ResponseEntity<List<Fornecedor>> listarPorMatricula(FornecedorDto  fornecedorDto) {
+		public ResponseEntity<List<Fornecedor>> listarPorDescricaoOrdenadoDescricao(FornecedorDto  fornecedorDto) {
 			 try {
 					
 					return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);

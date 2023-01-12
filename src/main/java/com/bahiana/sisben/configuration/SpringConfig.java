@@ -9,6 +9,7 @@ import com.bahiana.sisben.service.FuncionalidadeService;
 import com.bahiana.sisben.service.JustificativaService;
 import com.bahiana.sisben.service.PerfilFuncionalidadeService;
 import com.bahiana.sisben.service.PerfilService;
+import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.TipoJustificativaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
@@ -21,6 +22,7 @@ import com.bahiana.sisben.service.impl.FuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.JustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilFuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilServiceImpl;
+import com.bahiana.sisben.service.impl.ProgramacaoEntregaServiceImpl;
 import com.bahiana.sisben.service.impl.SuspensaoElegibilidadeServiceImpl;
 import com.bahiana.sisben.service.impl.TipoJustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.UnidadeAcademicaServiceImpl;
@@ -91,7 +93,13 @@ public class SpringConfig {
 	public VwSisbenFuncionarioService getVwSisbenFuncionarioService() {
 	    return new  VwSisbenFuncionarioServiceImpl();
 	}
+
 	
+//	@Bean
+//	public ProgramacaoEntregaService getProgramacaoEntregaService() {
+//	    return new  ProgramacaoEntregaServiceImpl();
+//	}
+//	
 	
 	
 //	@Bean
