@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
+import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
@@ -28,7 +30,13 @@ public interface ProgramacaoEntregaService {
 	
 	ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto);
 	
+	ProgramacaoEntrega autorizarMenos24h(ProgramacaoEntregaMenos24hDto ProgramacaoEntregaMenos24hDto);
+	
+	ProgramacaoEntrega atualizarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto);
+	
 	ProgramacaoEntrega alterar(ProgramacaoEntregaDto programacaoEntregaDto);
+	
+	void apagar(ProgramacaoEntrega programacaoEntrega);
 	
 	ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
 	
@@ -54,13 +62,12 @@ public interface ProgramacaoEntregaService {
 	
 	long pesquisaUsuarioEntrega(Long idUsuario);
 	
+	long pesquisaProgramacaoEntregaMenos24hAprovada(Long id);
+	
 	List<ProgramacaoEntrega> listaProgramacao24hOrdenadoData();
 	
 	List<ProgramacaoEntrega> pesquisaProgramacao24hPorDataOrdenadoData(LocalDate dataSolicitacao, Boolean solicExtra );
 	
-	
-	
-		
 	
 
 }

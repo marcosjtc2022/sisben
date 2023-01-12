@@ -67,6 +67,9 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 	List<ProgramacaoEntrega> findByDataSolicitacaoAndSolicExtraOrderByDataSolicitacao(LocalDate dataSolicitacao, Boolean solicExtra );
 	
+	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE pe.stAprov = 1 and pe.id=:id")
+	long pesquisaProgramacaoEntregaMenos24hAprovada(@Param("id") Long id);
+	
 	
 	 
 	

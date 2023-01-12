@@ -242,8 +242,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 	@Override
 	public Optional<ProgramacaoEntrega> obterPorId(Long id) {
-		// TODO Auto-generated method stub
-		//Optional<ProgramacaoEntrega> usuario = this.programacaoEntregaRepository.obterPorId(id);
 		return this.programacaoEntregaRepository.findById(id);
 	}
 	
@@ -304,10 +302,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 		@Override
 		@Transactional
-		public ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto) {
+		public ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
 			 LocalDateTime dataModificacao = LocalDateTime.now();
-			 programacaoEntregaEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
-			 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaEntregaMenos24hDto);
+			 programacaoEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
+			 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaMenos24hDto);
 			 return programacaoEntregaRepository.save(programacaoEntrega);
 		}
 		
@@ -329,12 +327,33 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public List<ProgramacaoEntrega> pesquisaProgramacao24hPorDataOrdenadoData(LocalDate dataSolicitacao, Boolean solicExtra) {
 			return programacaoEntregaRepository.findByDataSolicitacaoAndSolicExtraOrderByDataSolicitacao(dataSolicitacao, solicExtra);
 		}
-				
 
-		
-         	
-	
-	
+		@Override
+		public ProgramacaoEntrega autorizarMenos24h(
+			 ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+			 LocalDateTime dataModificacao = LocalDateTime.now();
+			 programacaoEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
+			 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaMenos24hDto);
+			 return programacaoEntregaRepository.save(programacaoEntrega);
+		}
+
+		@Override
+		public ProgramacaoEntrega atualizarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+			 LocalDateTime dataModificacao = LocalDateTime.now();
+			 programacaoEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
+			 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaMenos24hDto);
+			 return programacaoEntregaRepository.save(programacaoEntrega);
+		}
+
+		@Override
+		public void apagar(ProgramacaoEntrega programacaoEntrega) {
+			programacaoEntregaRepository.delete(programacaoEntrega);
+		}
+
+		@Override
+		public long pesquisaProgramacaoEntregaMenos24hAprovada(Long id) {
+			return programacaoEntregaRepository.pesquisaProgramacaoEntregaMenos24hAprovada(id);
+		}
 	
 	
 }
