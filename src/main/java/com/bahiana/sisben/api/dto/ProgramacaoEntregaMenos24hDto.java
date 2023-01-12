@@ -1,14 +1,13 @@
-package com.bahiana.sisben.response;
+package com.bahiana.sisben.api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
-import com.bahiana.sisben.model.entity.Elegibilidade;
-import com.bahiana.sisben.model.entity.Setor;
-
-public class ProgramacaoEntregaResponse {
+public class ProgramacaoEntregaMenos24hDto {
+	
 	
 	@Id
     private Long id;	
@@ -39,11 +38,11 @@ public class ProgramacaoEntregaResponse {
 	
 //	@Column(name = "data_entrega")
 	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDateTime dataEntrega;
+	private LocalDate dataEntrega;
 	
 //	@Column(name = "data_solicitacao")
 	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDateTime dataSolicitacao;	
+	private LocalDate dataSolicitacao;	
 	
 //	@Column(name = "solic_extra", columnDefinition="BIT")
 	private Boolean solicExtra;
@@ -51,12 +50,11 @@ public class ProgramacaoEntregaResponse {
 //	@Column(name = "status_aprov", columnDefinition="BIT")
 	private Boolean stAprov;
 	
-	@Transient
-	String tabelaProgramacaoEntrega;
+	private Long idUsuarioUltimaModificacao;
 	
-	private Elegibilidade elegibilidade;
-	
-	private Setor setor;
+	//@Column(name = "data_ultima_modificacao")
+	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+	private LocalDateTime dataUltimaModificacao;
 
 	public Long getId() {
 		return id;
@@ -130,19 +128,19 @@ public class ProgramacaoEntregaResponse {
 		this.idUsuario = idUsuario;
 	}
 
-	public LocalDateTime getDataEntrega() {
+	public LocalDate getDataEntrega() {
 		return dataEntrega;
 	}
 
-	public void setDataEntrega(LocalDateTime dataEntrega) {
+	public void setDataEntrega(LocalDate dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public LocalDateTime getDataSolicitacao() {
+	public LocalDate getDataSolicitacao() {
 		return dataSolicitacao;
 	}
 
-	public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
+	public void setDataSolicitacao(LocalDate dataSolicitacao) {
 		this.dataSolicitacao = dataSolicitacao;
 	}
 
@@ -162,30 +160,50 @@ public class ProgramacaoEntregaResponse {
 		this.stAprov = stAprov;
 	}
 
-	public String getTabelaProgramacaoEntrega() {
-		return tabelaProgramacaoEntrega;
+	public LocalDateTime getDataUltimaModificacao() {
+		return dataUltimaModificacao;
 	}
 
-	public void setTabelaProgramacaoEntrega(String tabelaProgramacaoEntrega) {
-		this.tabelaProgramacaoEntrega = tabelaProgramacaoEntrega;
+	public void setDataUltimaModificacao(LocalDateTime dataUltimaModificacao) {
+		this.dataUltimaModificacao = dataUltimaModificacao;
 	}
 
-	public Elegibilidade getElegibilidade() {
-		return elegibilidade;
+	public Long getIdUsuarioUltimaModificacao() {
+		return idUsuarioUltimaModificacao;
 	}
 
-	public void setElegibilidade(Elegibilidade elegibilidade) {
-		this.elegibilidade = elegibilidade;
-	}
-
-	public Setor getSetor() {
-		return setor;
-	}
-
-	public void setSetor(Setor setor) {
-		this.setor = setor;
+	public void setIdUsuarioUltimaModificacao(Long idUsuarioUltimaModificacao) {
+		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 	
 	
+	public ProgramacaoEntregaMenos24hDto(Long id, Long matriculaColaborador, String uaPrevista, String uaRealizada,
+			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
+			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, Long idUsuarioUltimaModificacao,
+			LocalDateTime dataUltimaModificacao) {
+		super();
+		this.id = id;
+		this.matriculaColaborador = matriculaColaborador;
+		this.uaPrevista = uaPrevista;
+		this.uaRealizada = uaRealizada;
+		this.idData = idData;
+		this.idUa = idUa;
+		this.idJustificativa = idJustificativa;
+		this.idValor = idValor;
+		this.idUsuario = idUsuario;
+		this.dataEntrega = dataEntrega;
+		this.dataSolicitacao = dataSolicitacao;
+		this.solicExtra = solicExtra;
+		this.stAprov = stAprov;
+		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+		this.dataUltimaModificacao = dataUltimaModificacao;
+	}
+
+	public ProgramacaoEntregaMenos24hDto() {
+		
+	}
+	
+	
+
 
 }

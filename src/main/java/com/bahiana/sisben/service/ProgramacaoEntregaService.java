@@ -5,10 +5,9 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
@@ -25,6 +24,8 @@ public interface ProgramacaoEntregaService {
     Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable, ProgramacaoEntregaDto programacaoEntregaDTO );
 	
 	ProgramacaoEntrega salvar(ProgramacaoEntregaDto programacaoEntregaDto);
+	
+	ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto);
 	
 	ProgramacaoEntrega alterar(ProgramacaoEntregaDto programacaoEntregaDto);
 	

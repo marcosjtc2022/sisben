@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
@@ -301,32 +302,26 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		    return  countUsuarioEntrega;
 		}
 
+		@Override
+		public ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto) {
+			 LocalDateTime dataModificacao = LocalDateTime.now();
+			 programacaoEntregaEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
+			 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaEntregaMenos24hDto);
+			 return programacaoEntregaRepository.save(programacaoEntrega);
+		}
 		
-	
-//	@DeleteMapping("{id}")
-//	public ResponseEntity deletar(@PathVariable("id") Long id) {
-//		
-//		//entity é o que retorna de ObterPorId
-//				return service.obterPorId(id).map(entity -> {					
-//					service.deletar(entity);
-//					return new ResponseEntity(HttpStatus.NO_CONTENT);
-//				}).orElseGet(() -> 
-//				    new ResponseEntity("Lançamento não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
-//		
-//		
-//	}
+		// 944 - Método para conversão de classe.
+		public static ProgramacaoEntrega from(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto) {
+					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
+					
+					BeanUtils.copyProperties(programacaoEntregaEntregaMenos24hDto, programacaoEntrega);
+					
+			return programacaoEntrega;
+		}
+				
 
-//	@Override.
-//	@Transactional
-//	public ProgramacaoEntrega alterarLote(ProgramacaoEntregaDTO programacaoEntregaDto) {
-//		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
-//		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega);
-//		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
-//				//validaEPersisteInclusao(centro);	
-//				this.programacaoEntregaRepository.save(programacaoEntregaLinha);
-//		 }
-//		 return programacaoEntrega;
-//	}
+		
+         	
 	
 	
 	

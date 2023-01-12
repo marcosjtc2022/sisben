@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 //import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepositoryDataTable;
@@ -151,6 +152,18 @@ public class ProgramacaoEntregaController {
 				    return new ResponseEntity<Iterable<ProgramacaoEntrega>>(HttpStatus.BAD_REQUEST);
 			     }
 		  }
+		 
+		
+		 @PostMapping("/salvarMenos24h")
+			public ResponseEntity salvar(@RequestBody ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+			  try {
+					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
+					programacaoEntrega = programacaoEntregaService.salvarMenos24h(programacaoEntregaMenos24hDto);
+					return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return ResponseEntity.badRequest().body(e.getMessage());
+			     }
+		    }
 		  
 		
 	
