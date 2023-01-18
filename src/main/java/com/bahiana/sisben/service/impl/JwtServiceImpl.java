@@ -3,6 +3,7 @@ package com.bahiana.sisben.service.impl;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,8 @@ import com.bahiana.sisben.service.JwtService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JwtServiceImpl implements JwtService  {
 	
@@ -26,14 +29,28 @@ public class JwtServiceImpl implements JwtService  {
 	public String gerarToken(Usuario usuario) {
 		long exp = Long.valueOf(expiracao);
 		
-		//Adicionar os minutos a hora atual.
+		//Adicionar os minutos à hora atual.
 		LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(exp);
 		Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
 		Date data = Date.from(instant);
 		
-		return null;
+		String horaExpiracaoToken = dataHoraExpiracao.toLocalTime()
+				.format(DateTimeFormatter.ofPattern("HH:mm"));
+		
+		String token = Jwts
+				.builder()
+				.setExpiration(data)
+				.setSubject(usuario.getEmailUsuario())
+				//.claim("userid", usuario.getId()) 
+				.claim("nome", usuario.getNomeColaborador())
+				.claim("horaExpiracao", horaExpiracaoToken)
+				.signWith( SignatureAlgorithm.HS512 , chaveAssinatura )
+				.compact();
+
+        return token;
 	}
 
+	//Os claims são as informações contidas no token.
 	@Override
 	public Claims obterClaims(String token) throws ExpiredJwtException {
 		// TODO Auto-generated method stub
