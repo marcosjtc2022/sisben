@@ -26,6 +26,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     List<Usuario> findByNomeColaboradorContainingOrderByNomeColaborador(String nomeColaborador);
 	
 	List<Usuario> findByOrderByNomeColaboradorAsc();
+		
 	
 //    //@Query(value = "SELECT * FROM usuario", nativeQuery = true)
 //	@Query(value = "SELECT func_mat as id, func_nome as nomeColaborador FROM [10.71.17.40].[Corpore].[dbo].[SISBEN_Funcionarios]", nativeQuery = true)
