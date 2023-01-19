@@ -104,7 +104,7 @@ public class SpringConfig {
 	
 	@Bean
 	public SecurityUserDetailsService getSecurityUserDetailsService() {
-		return new SecurityUserDetailsService(null);
+		return new SecurityUserDetailsService();
 		
 	}
 	

@@ -13,6 +13,8 @@ import com.bahiana.sisben.model.entity.Usuario;
 public interface UsuarioService {
 	
     Usuario autenticar(String email, String senha);
+    
+    Usuario autenticarToken(String email, String senha);
 	
 	Usuario salvar(UsuarioDto usuarioDto);
 	

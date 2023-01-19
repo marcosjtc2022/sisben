@@ -41,7 +41,7 @@ public class JwtServiceImpl implements JwtService  {
 				.builder()
 				.setExpiration(data)
 				.setSubject(usuario.getEmailUsuario())
-				//.claim("userid", usuario.getId()) 
+				.claim("userid", usuario.getId()) 
 				.claim("nome", usuario.getNomeColaborador())
 				.claim("horaExpiracao", horaExpiracaoToken)
 				.signWith( SignatureAlgorithm.HS512 , chaveAssinatura )
@@ -53,20 +53,31 @@ public class JwtServiceImpl implements JwtService  {
 	//Os claims são as informações contidas no token.
 	@Override
 	public Claims obterClaims(String token) throws ExpiredJwtException {
-		// TODO Auto-generated method stub
-		return null;
+		return Jwts
+				.parser()
+				.setSigningKey(chaveAssinatura)
+				.parseClaimsJws(token)
+				.getBody();
 	}
 
 	@Override
 	public boolean isTokenValido(String token) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			Claims claims = obterClaims(token);
+			java.util.Date dataEx = claims.getExpiration();
+			LocalDateTime dataExpiracao = dataEx.toInstant()
+					.atZone(ZoneId.systemDefault()).toLocalDateTime();
+			boolean dataHoraAtualIsAfterDataExpiracao = LocalDateTime.now().isAfter(dataExpiracao);
+			return !dataHoraAtualIsAfterDataExpiracao;
+		}catch(ExpiredJwtException e) {
+			return false;
+		}
 	}
 
 	@Override
 	public String obterLoginUsuario(String token) {
-		// TODO Auto-generated method stub
-		return null;
+		Claims claims = obterClaims(token);
+		return claims.getSubject();
 	}
 
 }

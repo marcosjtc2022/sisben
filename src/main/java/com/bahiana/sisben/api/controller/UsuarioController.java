@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.FuncionarioDto;
+import com.bahiana.sisben.api.dto.TokenDto;
 import com.bahiana.sisben.api.dto.UsuarioDto;
+import com.bahiana.sisben.exception.ErroAutenticacao;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Usuario;
+import com.bahiana.sisben.service.JwtService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.UsuarioService;
 
@@ -34,6 +36,9 @@ public class UsuarioController {
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
 	
+	@Autowired
+	private JwtService jwtService;
+	
 	
 	@PostMapping("/autenticar")
 	public ResponseEntity autenticar(@RequestBody UsuarioDto dto ) {
@@ -45,6 +50,18 @@ public class UsuarioController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		
+	}
+	
+	@PostMapping("/autenticarToken")
+	public ResponseEntity<?> autenticarToken( @RequestBody UsuarioDto dto ) {
+		try {
+			Usuario usuarioAutenticado = usuarioService.autenticarToken(dto.getEmailUsuario(), dto.getSenhaUsuario());
+			String token = jwtService.gerarToken(usuarioAutenticado);
+			TokenDto tokenDto = new TokenDto( usuarioAutenticado.getNomeColaborador(), token);
+			return ResponseEntity.ok(tokenDto);
+		}catch (ErroAutenticacao e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@GetMapping(value =  "/listarOrdenadoPorNome" )

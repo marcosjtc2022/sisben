@@ -98,6 +98,21 @@ public class UsuarioServiceImpl implements UsuarioService  {
 			// TODO Auto-generated method stub
 	}
 
+	@Override
+	public Usuario autenticarToken(String email, String senha) {
+     Optional<Usuario> usuario  = usuarioRepository.findByEmailUsuario(email);
+		
+		if (!usuario.isPresent()) {
+			throw new ErroAutenticacao("Usuário não encontrado para o email informado");
+		}
+		
+		if(!usuario.get().getSenhaUsuario().equals(senha)) {	
+			throw new ErroAutenticacao("Senha inválida");
+		}
+		
+		return usuario.get();
+	}
+
 	
 
 }
