@@ -84,6 +84,11 @@ public class Usuario implements Serializable {
 	//Mapenado classe ProgramacaoEntrega 
 	@OneToMany(mappedBy = "usuarioEntrega", fetch = FetchType.EAGER)
 	Set<ProgramacaoEntrega> usuarioProgEntregas;
+	
+	//mapeando a classe UnidadeAcademica. **
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(updatable=false,insertable=false,name = "id_ua")
+    UnidadeAcademica unidadeAcademica;
 
 	public Long getId() {
 		return id;
@@ -181,9 +186,34 @@ public class Usuario implements Serializable {
 		this.externo = externo;
 	}
 
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public UnidadeAcademica getUnidadeAcademica() {
+		return unidadeAcademica;
+	}
+
+	public void setUnidadeAcademica(UnidadeAcademica unidadeAcademica) {
+		this.unidadeAcademica = unidadeAcademica;
+	}
+
 	public Usuario() {
 		
 	}
+		
 
 	
 	

@@ -39,6 +39,10 @@ public class UnidadeAcademica implements Serializable {
 	//Mapenado classe programacao entrega 
 	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.EAGER)
 	Set<ProgramacaoEntrega> programcaoEntregas;
+	
+	//Mapenado classe usuario ***
+	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.EAGER)
+	Set<Usuario> usuarios;
 
 	public Long getId() {
 		return id;
