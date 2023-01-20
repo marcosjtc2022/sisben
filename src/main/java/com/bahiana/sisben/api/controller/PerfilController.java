@@ -21,6 +21,7 @@ import com.bahiana.sisben.api.dto.PerfilDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.Perfil;
+import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.service.PerfilService;
 import com.bahiana.sisben.service.UsuarioService;
 
@@ -95,6 +96,14 @@ public class PerfilController {
 	    public List<Perfil> listarOrdenadoDescricao() {
 	    	return this.perfilService.listarSimplesOrdenadoDescricao();  	  
 	    }
+		
+		@GetMapping("/obterPorId/{id}")
+		public Perfil obterPorId(@PathVariable("id") Long id) {
+			
+			Optional<Perfil> perfil = perfilService.obterPorId(id);
+			return  perfil.get();	
+					
+		}
 		
 		
 		
