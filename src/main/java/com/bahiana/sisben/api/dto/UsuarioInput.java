@@ -2,9 +2,7 @@ package com.bahiana.sisben.api.dto;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Id;
-
-public class UsuarioDto {
+public class UsuarioInput {
 	
 	//@Id
     private Long id;
@@ -103,6 +101,14 @@ public class UsuarioDto {
 		this.stUsuarioExterno = stUsuarioExterno;
 	}
 
+	public Boolean getExterno() {
+		return externo;
+	}
+
+	public void setExterno(Boolean externo) {
+		this.externo = externo;
+	}
+
 	public LocalDateTime getDataUltimaModificacao() {
 		return dataUltimaModificacao;
 	}
@@ -119,15 +125,7 @@ public class UsuarioDto {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public Boolean getExterno() {
-		return externo;
-	}
-
-	public void setExterno(Boolean externo) {
-		this.externo = externo;
-	}
-	
-	public UsuarioDto(Long id, Long idPerfil, Long idUa, Long idFornecedor, String matriculaColaborador,
+	public UsuarioInput(Long id, Long idPerfil, Long idUa, Long idFornecedor, String matriculaColaborador,
 			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno, Boolean externo,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
@@ -144,12 +142,12 @@ public class UsuarioDto {
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
-
-	public UsuarioDto() {
+	
+	public UsuarioInput() {
 		
 	}
 	
 	
-	
+
 
 }

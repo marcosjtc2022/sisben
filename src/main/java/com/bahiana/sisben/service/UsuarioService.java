@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.bahiana.sisben.api.dto.FuncionarioDto;
 import com.bahiana.sisben.api.dto.UsuarioDto;
 import com.bahiana.sisben.model.entity.Usuario;
+import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
 
 @Service
 public interface UsuarioService {
@@ -32,6 +32,8 @@ public interface UsuarioService {
 	List<Usuario> listarSimplesOrdenadoNome();
 	
 	List<Usuario> listarPorNomeOrdenadoNome(UsuarioDto usuarioDto);
+	
+	Usuario validarEinserirUsuarioInterno(Optional<VwSisbenFuncionario> funcionario, UsuarioDto usuarioDto);
 	
 //	List<Usuario> listarQueryNativa();
 

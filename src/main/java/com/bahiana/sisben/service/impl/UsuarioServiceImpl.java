@@ -11,6 +11,7 @@ import com.bahiana.sisben.api.dto.FuncionarioDto;
 import com.bahiana.sisben.api.dto.UsuarioDto;
 import com.bahiana.sisben.exception.ErroAutenticacao;
 import com.bahiana.sisben.model.entity.Usuario;
+import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
 import com.bahiana.sisben.model.entity.repository.UsuarioRepository;
 import com.bahiana.sisben.service.UsuarioService;
 
@@ -84,6 +85,7 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		LocalDateTime dataModificacao = LocalDateTime.now();
 		usuarioDto.setDataUltimaModificacao(dataModificacao);
 		BeanUtils.copyProperties(usuarioDto, usuario);
+		usuario.setMatriculaColaborador(Long.parseLong(usuarioDto.getMatriculaColaborador()));
 		
 		return usuario;
 	}
@@ -112,6 +114,18 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		
 		return usuario.get();
 	}
+	
+	public Usuario validarEinserirUsuarioInterno(Optional<VwSisbenFuncionario> funcionario,UsuarioDto usuarioDto) {
+		 UsuarioDto usuarioInterno = new UsuarioDto();
+//		 usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
+//		 usuarioInterno.setMatriculaColaborador(Long.parseLong(funcionario.get().getMatriculaFuncionario()));
+//		 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
+//		 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
+//		 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
+//		 usuarioInterno.setExterno(false);
+		
+		return null;
+    }
 
 	
 
