@@ -25,6 +25,8 @@ public interface UsuarioService {
 	
 	long pesquisaFornecedor(Long id);
 	
+	long pesquisaUsuario(String matriculaColaborador);
+	
 	Usuario alterar(UsuarioDto usuarioDto);
 	
 	void deletar(Usuario usuario);
@@ -34,6 +36,7 @@ public interface UsuarioService {
 	List<Usuario> listarPorNomeOrdenadoNome(UsuarioDto usuarioDto);
 	
 	Usuario validarEinserirUsuarioInterno(Optional<VwSisbenFuncionario> funcionario, UsuarioDto usuarioDto);
+	
 	
 //	List<Usuario> listarQueryNativa();
 

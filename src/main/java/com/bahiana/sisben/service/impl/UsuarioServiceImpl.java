@@ -7,9 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bahiana.sisben.api.dto.FuncionarioDto;
 import com.bahiana.sisben.api.dto.UsuarioDto;
 import com.bahiana.sisben.exception.ErroAutenticacao;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
+//import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
 import com.bahiana.sisben.model.entity.repository.UsuarioRepository;
@@ -80,20 +81,16 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		usuarioRepository.delete(usuario);
 	}
 	
+	
 	public static Usuario from(UsuarioDto usuarioDto) {
 		Usuario usuario = new Usuario();
 		LocalDateTime dataModificacao = LocalDateTime.now();
 		usuarioDto.setDataUltimaModificacao(dataModificacao);
 		BeanUtils.copyProperties(usuarioDto, usuario);
-		usuario.setMatriculaColaborador(Long.parseLong(usuarioDto.getMatriculaColaborador()));
+		//usuario.setMatriculaColaborador(Long.parseLong(usuarioDto.getMatriculaColaborador()));
 		
 		return usuario;
 	}
-	
-//	@Override
-//	public List<Usuario> listarQueryNativa() {
-//		return usuarioRepository.pesquisaNativa();
-//	}
 	
 	//@Override
 	public void validarEmailUsuario(String emailUsuario) {
@@ -103,13 +100,15 @@ public class UsuarioServiceImpl implements UsuarioService  {
 	@Override
 	public Usuario autenticarToken(String email, String senha) {
      Optional<Usuario> usuario  = usuarioRepository.findByEmailUsuario(email);
-		
+     
 		if (!usuario.isPresent()) {
-			throw new ErroAutenticacao("Usuário não encontrado para o email informado");
+			//throw new ErroAutenticacao("Usuário não encontrado para o email informado");
+			throw new GlobalExceptionHandler("Usuário não encontrado para o email informado", 0);
 		}
 		
 		if(!usuario.get().getSenhaUsuario().equals(senha)) {	
-			throw new ErroAutenticacao("Senha inválida");
+			//throw new ErroAutenticacao("Senha inválida");
+			throw new GlobalExceptionHandler("Senha inválida", 0);
 		}
 		
 		return usuario.get();
@@ -126,6 +125,12 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		
 		return null;
     }
+
+	@Override
+	public long pesquisaUsuario(String matriculaColaborador) {
+		Long countUsuario =  this.usuarioRepository.pesquisaUsuario(matriculaColaborador);
+	    return  countUsuario;
+	}
 
 	
 

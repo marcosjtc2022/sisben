@@ -43,7 +43,7 @@ public class Usuario implements Serializable {
     private Long idFornecedor;
 	
 	@Column(name = "matricula_colaborador")
-    private Long matriculaColaborador;
+    private String matriculaColaborador;
 	
 	@Column(name="nome_colaborador")
 	private String nomeColaborador;
@@ -122,11 +122,11 @@ public class Usuario implements Serializable {
 		this.idFornecedor = idFornecedor;
 	}
 
-	public Long getMatriculaColaborador() {
+	public String getMatriculaColaborador() {
 		return matriculaColaborador;
 	}
 
-	public void setMatriculaColaborador(Long matriculaColaborador) {
+	public void setMatriculaColaborador(String matriculaColaborador) {
 		this.matriculaColaborador = matriculaColaborador;
 	}
 
@@ -217,7 +217,7 @@ public class Usuario implements Serializable {
 
 	
 	
-	public Usuario(Long id, Long idPerfil, Long idUa, Long idFornecedor, Long matriculaColaborador,
+	public Usuario(Long id, Long idPerfil, Long idUa, Long idFornecedor, String matriculaColaborador,
 			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno, Boolean externo,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();

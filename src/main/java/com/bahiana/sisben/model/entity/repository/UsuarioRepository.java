@@ -23,6 +23,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 	@Query("SELECT COUNT(u) FROM Usuario u WHERE u.idFornecedor=:id")
 	long pesquisaFornecedor(@Param("id") Long id);
 	
+	@Query("SELECT COUNT(u) FROM Usuario u WHERE u.matriculaColaboradornecedor=:matriculaColaborador")
+	long pesquisaUsuario(@Param("matriculaColaborador") String matriculaColaborador);
+	
     List<Usuario> findByNomeColaboradorContainingOrderByNomeColaborador(String nomeColaborador);
 	
 	List<Usuario> findByOrderByNomeColaboradorAsc();

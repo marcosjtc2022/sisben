@@ -27,6 +27,7 @@ import com.bahiana.sisben.service.JwtService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.UsuarioService;
 import com.bahiana.sisben.service.VwSisbenFuncionarioService;
+import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
 
 @RestController
 @RequestMapping(value = "/usuarios")
@@ -34,6 +35,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private UsuarioServiceImpl usuarioServiceImpl;
 	
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
@@ -65,7 +69,7 @@ public class UsuarioController {
 			
 			 //Verificar se o usuário é interno
 			 if (usuarioDto.getExterno() == false) {
-				 Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(usuarioDto.getMatriculaColaborador().toString());
+				 Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(usuarioDto.getMatriculaColaborador());
 				 
 	             		 
 				 
@@ -73,23 +77,32 @@ public class UsuarioController {
 				if(funcionario.isPresent()) {
 					
 					//Verificar se existe no banco do sisben
-					//Transformar matricula para string na tabela do usuário.
-					//Colocar como string em todos os objetos.
+					Long countUsuario = usuarioService.pesquisaUsuario(usuarioDto.getMatriculaColaborador());
 					
-					 emailUsuario = funcionario.get().getEmailFuncionario(); 
+					if ((countUsuario == 0)) {
 					
-					 //Cria usuário do sisben a partir do funcionário.
-					 UsuarioDto usuarioInterno = new UsuarioDto();
-					 usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
-					 usuarioInterno.setMatriculaColaborador(funcionario.get().getMatriculaFuncionario());
-					 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
-					 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
-					 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
-					 usuarioInterno.setExterno(false);
-					 usuarioInterno.setIdUsuarioUltimaModificacao(usuarioDto.getIdUsuarioUltimaModificacao());
-					 
-					 //Salva no banco do sisben.
-					 this.salvar(usuarioInterno);
+						//Transformar matricula para string na tabela do usuário.
+						//Colocar como string em todos os objetos.
+						
+						 emailUsuario = funcionario.get().getEmailFuncionario(); 
+						
+						 //Cria usuário do sisben a partir do funcionário.
+						 UsuarioDto usuarioInterno = new UsuarioDto();
+						 if ((usuarioDto.getIdPerfil() != null) && (usuarioDto.getIdPerfil() != 0)) { 
+						     usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
+						 }
+						 usuarioInterno.setMatriculaColaborador(funcionario.get().getMatriculaFuncionario());
+						 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
+						 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
+						 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
+						 usuarioInterno.setExterno(false);
+						 //usuarioInterno.setIdUsuarioUltimaModificacao(usuarioDto.getIdUsuarioUltimaModificacao());
+						// usuarioInterno.setIdUsuarioUltimaModificacao(3L);
+						 
+						 //Salva no banco do sisben.
+						 this.salvar(usuarioInterno);
+						 
+				  }	 
 					 
 				} else {
 					return new ResponseEntity("Funcionário não encontrado para a matrícula informada!", HttpStatus.BAD_REQUEST);
@@ -101,7 +114,8 @@ public class UsuarioController {
 			
 			Usuario usuarioAutenticado = usuarioService.autenticarToken(emailUsuario, usuarioDto.getSenhaUsuario());
 			String token = jwtService.gerarToken(usuarioAutenticado);
-			TokenDto tokenDto = new TokenDto( usuarioAutenticado.getNomeColaborador(), token);
+			TokenDto tokenDto = new TokenDto( usuarioAutenticado.getNomeColaborador(),
+					usuarioAutenticado.getId(), usuarioAutenticado.getEmailUsuario(), token );
 			return ResponseEntity.ok(tokenDto);
 		}catch (ErroAutenticacao e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
