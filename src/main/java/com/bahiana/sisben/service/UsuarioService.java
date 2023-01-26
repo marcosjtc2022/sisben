@@ -25,7 +25,7 @@ public interface UsuarioService {
 	
 	long pesquisaFornecedor(Long id);
 	
-	long pesquisaUsuario(String matriculaColaborador);
+    long pesquisaUsuario(String matriculaColaborador);
 	
 	Usuario alterar(UsuarioDto usuarioDto);
 	

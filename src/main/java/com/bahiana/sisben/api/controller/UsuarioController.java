@@ -71,6 +71,7 @@ public class UsuarioController {
 			 if (usuarioDto.getExterno() == false) {
 				 Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(usuarioDto.getMatriculaColaborador());
 				 
+				 emailUsuario = funcionario.get().getEmailFuncionario(); 
 	             		 
 				 
 				//Verificar se funcionário está no banco externo.
@@ -84,7 +85,7 @@ public class UsuarioController {
 						//Transformar matricula para string na tabela do usuário.
 						//Colocar como string em todos os objetos.
 						
-						 emailUsuario = funcionario.get().getEmailFuncionario(); 
+						
 						
 						 //Cria usuário do sisben a partir do funcionário.
 						 UsuarioDto usuarioInterno = new UsuarioDto();
