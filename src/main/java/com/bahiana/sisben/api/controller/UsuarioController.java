@@ -1,5 +1,7 @@
 package com.bahiana.sisben.api.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import com.bahiana.sisben.api.dto.AutenticaApiDto;
 import com.bahiana.sisben.api.dto.TokenDto;
 import com.bahiana.sisben.api.dto.UsuarioDto;
 import com.bahiana.sisben.exception.ErroAutenticacao;
@@ -76,6 +80,29 @@ public class UsuarioController {
 				 
 				//Verificar se funcionário está no banco externo.
 				if(funcionario.isPresent()) {
+					
+					///=======
+					
+					RestTemplate restTemplate = new RestTemplate();
+					//URI uri = new URI("test");
+					
+					URI uri;
+					try {
+						uri = new URI("http://10.71.50.57/Api.Fundacao/api/Autentica/Login");
+						AutenticaApiDto autenticaApiDto = new AutenticaApiDto("06458", "Te$te20");
+						ResponseEntity<AutenticaApiDto> result = restTemplate.postForEntity(uri, autenticaApiDto, AutenticaApiDto.class);
+						String mensagem = result.getBody().toString();
+						String teste = mensagem;
+					} catch (URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					
+					
+					//=====
+
+				       
 					
 					//Verificar se existe no banco do sisben
 					Long countUsuario = usuarioService.pesquisaUsuario(usuarioDto.getMatriculaColaborador());

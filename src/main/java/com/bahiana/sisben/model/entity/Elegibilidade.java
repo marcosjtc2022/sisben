@@ -24,7 +24,7 @@ public class Elegibilidade implements Serializable {
 	
 	@Id
 	@Column(name = "matricula_colaborador")
-	private Long matriculaColaborador;
+	private String matriculaColaborador;
 	
 	@Column(name="nome_colaborador")
 	private String nomeColaborador;

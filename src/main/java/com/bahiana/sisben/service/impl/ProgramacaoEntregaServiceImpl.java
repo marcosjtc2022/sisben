@@ -96,7 +96,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		String[] tabelaProgramacaoEntrega = programacaoEntrega.getTabelaProgramacaoEntrega().split(",");
 		String[] linha		= null;
 		Long id = null;
-		Long matriculaColaborador = null;
+		String matriculaColaborador = null;
 		String uaPrevista = null;
 		String uaRealizada = null;
 		LocalDate dataEntrega = null;
@@ -127,7 +127,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			//Separando os campos da linha.
 			
 			if (operacao == 'I') {
-				matriculaColaborador =  new Long(linha[0]);
+				matriculaColaborador =  linha[0];
 				uaPrevista = linha[1];
 				uaRealizada = linha[2];
 				//dataEntrega = utilDataHora.trataDatas(linha[3]);   //linha[3];
@@ -144,7 +144,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				stAprov = true; //linha[10];
 			} else {
 				id = new Long(linha[0]);
-				matriculaColaborador =  new Long(linha[1]);
+				matriculaColaborador =  linha[1];
 				uaPrevista = linha[2];
 				uaRealizada = linha[3];
 				//dataEntrega = utilDataHora.trataDatas(linha[4]);   //linha[3];

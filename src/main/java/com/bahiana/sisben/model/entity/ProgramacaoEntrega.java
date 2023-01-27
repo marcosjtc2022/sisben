@@ -34,7 +34,7 @@ public class ProgramacaoEntrega implements Serializable{
     private Long id;
 	
 	@Column(name="matricula_colaborador")
-	private Long matriculaColaborador;
+	private String matriculaColaborador;
 	
 	@Column(name="ua_prevista")
 	private String uaPrevista;
@@ -147,11 +147,11 @@ public class ProgramacaoEntrega implements Serializable{
 		this.id = id;
 	}
 
-	public Long getMatriculaColaborador() {
+	public String getMatriculaColaborador() {
 		return matriculaColaborador;
 	}
 
-	public void setMatriculaColaborador(Long matriculaColaborador) {
+	public void setMatriculaColaborador(String matriculaColaborador) {
 		this.matriculaColaborador = matriculaColaborador;
 	}
 
@@ -324,7 +324,7 @@ public class ProgramacaoEntrega implements Serializable{
 	}
 	
 	
-	public ProgramacaoEntrega(Long id, Long matriculaColaborador, String uaPrevista, String uaRealizada,
+	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {

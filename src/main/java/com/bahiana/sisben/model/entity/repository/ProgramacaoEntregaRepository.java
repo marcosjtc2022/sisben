@@ -30,7 +30,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	               + "       s.codSetor =:codSetor and "
                    + " el.codSetor = s.codSetor ")
 	Page<ProgramacaoEntrega> programacaoPorPeriodo(Pageable pageable, 
-			                                       @Param("matriculaColaborador")Long matriculaColaborador ,
+			                                       @Param("matriculaColaborador")String matriculaColaborador ,
 			                                       @Param("uaPrevista") String uaPrevista,
 			                                       @Param("codSetor") String codSetor);
 	
@@ -46,12 +46,12 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
             + "       pe.uaPrevista =:uaPrevista and "
             + "       s.codSetor =:codSetor and "
             + " el.codSetor = s.codSetor ")
-	Iterable<ProgramacaoEntrega>  programacaoDataTable(@Param("matriculaColaborador")Long matriculaColaborador ,
+	Iterable<ProgramacaoEntrega>  programacaoDataTable(@Param("matriculaColaborador")String matriculaColaborador ,
 		                                       @Param("uaPrevista") String uaPrevista,
 		                                       @Param("codSetor") String codSetor);
 	
 	
-	public Iterable<ProgramacaoEntrega> findBymatriculaColaboradorAndUaPrevista(Long matriculaColaborador,String uaPrevista );
+	public Iterable<ProgramacaoEntrega> findBymatriculaColaboradorAndUaPrevista(String matriculaColaborador,String uaPrevista );
 	
 	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE pe.idJustificativa=:idJustificativa")
 	long pesquisaJustificativa(@Param("idJustificativa")Long idJustificativa);

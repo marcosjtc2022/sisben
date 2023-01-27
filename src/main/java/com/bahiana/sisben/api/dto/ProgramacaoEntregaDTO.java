@@ -22,7 +22,7 @@ public class ProgramacaoEntregaDto {
     private Long id;	
 	
 	//@Column(name="matricula_colaborador")
-	private Long matriculaColaborador;
+	private String matriculaColaborador;
 	
 	//@Column(name="ua_prevista")
 	private String uaPrevista;
@@ -111,11 +111,11 @@ public class ProgramacaoEntregaDto {
 		this.id = id;
 	}
 
-	public Long getMatriculaColaborador() {
+	public String getMatriculaColaborador() {
 		return matriculaColaborador;
 	}
 
-	public void setMatriculaColaborador(Long matriculaColaborador) {
+	public void setMatriculaColaborador(String matriculaColaborador) {
 		this.matriculaColaborador = matriculaColaborador;
 	}
 
@@ -210,7 +210,7 @@ public class ProgramacaoEntregaDto {
 	
 	
 	
-	public ProgramacaoEntregaDto(Long id, Long matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
+	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, String tabelaProgramacaoEntrega) {
 		super();

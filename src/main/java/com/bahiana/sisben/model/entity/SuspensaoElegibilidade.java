@@ -25,7 +25,7 @@ public class SuspensaoElegibilidade implements Serializable {
     private Long id;
 	
 	@Column(name = "matricula_colaborador")
-    private Long matriculaColaborador;
+    private String matriculaColaborador;
 	
 	@Column(name="nome_colaborador")
 	private String nomeColaborador;
@@ -60,11 +60,11 @@ public class SuspensaoElegibilidade implements Serializable {
 		this.id = id;
 	}	
 
-	public Long getMatriculaColaborador() {
+	public String getMatriculaColaborador() {
 		return matriculaColaborador;
 	}
 
-	public void setMatriculaColaborador(Long matriculaColaborador) {
+	public void setMatriculaColaborador(String matriculaColaborador) {
 		this.matriculaColaborador = matriculaColaborador;
 	}
 
@@ -120,7 +120,7 @@ public class SuspensaoElegibilidade implements Serializable {
 	
 	
 
-	public SuspensaoElegibilidade(Long id, Long matriculaColaborador, String nomeColaborador, LocalDate dataInicial,
+	public SuspensaoElegibilidade(Long id, String matriculaColaborador, String nomeColaborador, LocalDate dataInicial,
 			LocalDate dataFinal, String justificativaSuspensao, LocalDateTime dataUltimaModificacao,
 			Long idUsuarioUltimaModificacao) {
 		super();
