@@ -10,6 +10,7 @@ import com.bahiana.sisben.service.JustificativaService;
 import com.bahiana.sisben.service.JwtService;
 import com.bahiana.sisben.service.PerfilFuncionalidadeService;
 import com.bahiana.sisben.service.PerfilService;
+import com.bahiana.sisben.service.RestApiAutenticaUsuarioService;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.TipoJustificativaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
@@ -23,6 +24,7 @@ import com.bahiana.sisben.service.impl.JustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.JwtServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilFuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilServiceImpl;
+import com.bahiana.sisben.service.impl.RestApiAutenticaUsuarioServiceImpl;
 import com.bahiana.sisben.service.impl.SecurityUserDetailsService;
 import com.bahiana.sisben.service.impl.SuspensaoElegibilidadeServiceImpl;
 import com.bahiana.sisben.service.impl.TipoJustificativaServiceImpl;
@@ -30,7 +32,6 @@ import com.bahiana.sisben.service.impl.UnidadeAcademicaServiceImpl;
 import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
 import com.bahiana.sisben.service.impl.ValorMarmitaServiceImpl;
 import com.bahiana.sisben.service.impl.VwSisbenFuncionarioServiceImpl;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Configuration
 //@ComponentScan("com.bahiana.sisben.model.entity.repository.FuncionarioInternoRepository")
@@ -107,6 +108,15 @@ public class SpringConfig {
 		return new SecurityUserDetailsService();
 		
 	}
+	
+	
+	@Bean
+	public RestApiAutenticaUsuarioService getRestApiAutenticaUsuarioService() {
+	    return new  RestApiAutenticaUsuarioServiceImpl();
+	}
+	
+	
+	
 	
 //	@Bean
 //	public SecurityUserDetailsService getSecurityUserDetailsService() {

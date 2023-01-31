@@ -7,10 +7,9 @@ public class TokenDto {
 	private String nome;
 	private Long id;
 	private String emailUsuario;
+	private Long idUa;
+	private Long idPerfil;
 	private String token;
-	
-	
-	
 	
 	public Long getId() {
 		return id;
@@ -36,12 +35,27 @@ public class TokenDto {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public TokenDto(String nome, Long id,String emailUsuario, String token) {
+	
+	public Long getIdUa() {
+		return idUa;
+	}
+	public void setIdUa(Long idUa) {
+		this.idUa = idUa;
+	}
+	public Long getIdPerfil() {
+		return idPerfil;
+	}
+	public void setIdPerfil(Long idPerfil) {
+		this.idPerfil = idPerfil;
+	}
+	public TokenDto(String nome, Long id,String emailUsuario, Long idPerfil, Long idUa, String token) {
 		super();
 		this.nome = nome;
-		this.token = token;
 		this.id = id;
 		this.emailUsuario = emailUsuario;
+		this.token = token;
+		this.idUa = idUa;
+		this.idPerfil = idPerfil;
 	}
 	
 	public TokenDto() {

@@ -114,22 +114,38 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		return usuario.get();
 	}
 	
-	public Usuario validarEinserirUsuarioInterno(Optional<VwSisbenFuncionario> funcionario,UsuarioDto usuarioDto) {
-		 UsuarioDto usuarioInterno = new UsuarioDto();
-//		 usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
-//		 usuarioInterno.setMatriculaColaborador(Long.parseLong(funcionario.get().getMatriculaFuncionario()));
-//		 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
-//		 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
-//		 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
-//		 usuarioInterno.setExterno(false);
-		
-		return null;
-    }
+//	public Usuario validarEinserirUsuarioInterno(Optional<VwSisbenFuncionario> funcionario,UsuarioDto usuarioDto) {
+//		 UsuarioDto usuarioInterno = new UsuarioDto();
+////		 usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
+////		 usuarioInterno.setMatriculaColaborador(Long.parseLong(funcionario.get().getMatriculaFuncionario()));
+////		 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
+////		 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
+////		 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
+////		 usuarioInterno.setExterno(false);
+//		
+//		return null;
+//    }
 
 	@Override
 	public long pesquisaUsuario(String matriculaColaborador) {
 		Long countUsuario =  this.usuarioRepository.pesquisaUsuario(matriculaColaborador);
 	    return  countUsuario;
+	}
+
+	@Override
+	public UsuarioDto criaUsuarioInterno(VwSisbenFuncionario funcionario, UsuarioDto usuarioDto) {
+		 //Cria usuário do sisben a partir do funcionário.
+		 UsuarioDto usuarioInterno = new UsuarioDto();
+		 if ((usuarioDto.getIdPerfil() != null) && (usuarioDto.getIdPerfil() != 0)) { 
+		     usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
+		 }
+		 usuarioInterno.setMatriculaColaborador(funcionario.getMatriculaFuncionario());
+		 usuarioInterno.setNomeColaborador(funcionario.getNomeFuncionario());
+		 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
+		 usuarioInterno.setEmailUsuario(funcionario.getEmailFuncionario());
+		 usuarioInterno.setExterno(false);
+		 
+		return usuarioInterno;
 	}
 
 	

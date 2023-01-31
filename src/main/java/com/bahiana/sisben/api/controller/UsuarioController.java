@@ -28,9 +28,9 @@ import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
 import com.bahiana.sisben.service.JwtService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
+import com.bahiana.sisben.service.RestApiAutenticaUsuarioService;
 import com.bahiana.sisben.service.UsuarioService;
 import com.bahiana.sisben.service.VwSisbenFuncionarioService;
-import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
 
 @RestController
 @RequestMapping(value = "/usuarios")
@@ -40,7 +40,7 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 	
 	@Autowired
-	private UsuarioServiceImpl usuarioServiceImpl;
+	private RestApiAutenticaUsuarioService restApiAutenticaUsuarioService;
 	
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
@@ -66,12 +66,30 @@ public class UsuarioController {
 	
 	@PostMapping("/autenticarToken")
 	public ResponseEntity<?> autenticarToken( @RequestBody UsuarioDto usuarioDto ) {
-		try {
+		
+		 String emailUsuario = usuarioDto.getEmailUsuario();  
+		if (usuarioDto.getExterno() == false) { //if 1		
+		
+			try {	
+	//			final String uri2 = "http://10.71.50.57/Api.Fundacao/api/Autentica/Login";
+	//			AutenticaApiDto autenticaApiDto = new AutenticaApiDto(usuarioDto.getMatriculaColaborador(), usuarioDto.getSenhaUsuario());
+	//			RestTemplate restTemplate = new RestTemplate();
+	//			ResponseEntity<AutenticaApiDto> result = restTemplate.postForEntity(uri2, autenticaApiDto, AutenticaApiDto.class);
+	//			//String status = result.getStatusCode().toString();
+				ResponseEntity<AutenticaApiDto> result1 = restApiAutenticaUsuarioService.AutenticarUsuarioInterno(usuarioDto);
+			} catch (HttpClientErrorException ex) {
+				return ResponseEntity.status(ex.getRawStatusCode()).headers(ex.getResponseHeaders())
+	                    .body(ex.getResponseBodyAsString());
+	
+			}
+		
+		
+//		try {
 			
-			 String emailUsuario = usuarioDto.getEmailUsuario();  
+			// String emailUsuario = usuarioDto.getEmailUsuario();  
 			
-			 //Verificar se o usuário é interno
-			 if (usuarioDto.getExterno() == false) {
+			 //Recuperar dados do funcionário.
+//			 if (usuarioDto.getExterno() == false) {
 				 Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(usuarioDto.getMatriculaColaborador());
 				 
 				 emailUsuario = funcionario.get().getEmailFuncionario(); 
@@ -80,63 +98,27 @@ public class UsuarioController {
 				//Verificar se funcionário está no banco externo.
 				if(funcionario.isPresent()) {
 					
-					///=======
-					
-					RestTemplate restTemplate = new RestTemplate();
-					//URI uri = new URI("test");
-					
-//					URI uri;
-//					try {
-//						uri = new URI("http://10.71.50.57/Api.Fundacao/api/Autentica/Login");
-					try {	
-						final String uri2 = "http://10.71.50.57/Api.Fundacao/api/Autentica/Login";
-						AutenticaApiDto autenticaApiDto = new AutenticaApiDto("06458", "Teste@23");
-						ResponseEntity<AutenticaApiDto> result = restTemplate.postForEntity(uri2, autenticaApiDto, AutenticaApiDto.class);
-						String status = result.getStatusCode().toString();
-							
-						
-						String mensagem = result.getBody().toString();
-						String teste = mensagem;
-					} catch (HttpClientErrorException ex) {
-						// TODO Auto-generated catch block
-						return ResponseEntity.status(ex.getRawStatusCode()).headers(ex.getResponseHeaders())
-			                    .body(ex.getResponseBodyAsString());
-
-					}
-				    
-					
-
-					
-					
-					//=====
-
-				       
-					
 					//Verificar se existe no banco do sisben
 					Long countUsuario = usuarioService.pesquisaUsuario(usuarioDto.getMatriculaColaborador());
 					
 					if ((countUsuario == 0)) {
-					
-						//Transformar matricula para string na tabela do usuário.
-						//Colocar como string em todos os objetos.
 						
-						
-						
-						 //Cria usuário do sisben a partir do funcionário.
+////						 //Cria usuário do sisben a partir do funcionário.
+						 
+//						 if ((usuarioDto.getIdPerfil() != null) && (usuarioDto.getIdPerfil() != 0)) { 
+//						     usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
+//						 }
+//						 usuarioInterno.setMatriculaColaborador(funcionario.get().getMatriculaFuncionario());
+//						 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
+//						 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
+//						 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
+//						 usuarioInterno.setExterno(false);
+						 
 						 UsuarioDto usuarioInterno = new UsuarioDto();
-						 if ((usuarioDto.getIdPerfil() != null) && (usuarioDto.getIdPerfil() != 0)) { 
-						     usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
-						 }
-						 usuarioInterno.setMatriculaColaborador(funcionario.get().getMatriculaFuncionario());
-						 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
-						 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
-						 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
-						 usuarioInterno.setExterno(false);
-						 //usuarioInterno.setIdUsuarioUltimaModificacao(usuarioDto.getIdUsuarioUltimaModificacao());
-						// usuarioInterno.setIdUsuarioUltimaModificacao(3L);
+						 usuarioInterno = usuarioService.criaUsuarioInterno(funcionario.get(), usuarioDto);
 						 
 						 //Salva no banco do sisben.
-						 this.salvar(usuarioInterno);
+						 usuarioService.salvar(usuarioInterno);
 						 
 				  }	 
 					 
@@ -146,16 +128,22 @@ public class UsuarioController {
 					
 					
 				 
-			 }
+		 } // End if 1
+		
+		try {
 			
 			Usuario usuarioAutenticado = usuarioService.autenticarToken(emailUsuario, usuarioDto.getSenhaUsuario());
 			String token = jwtService.gerarToken(usuarioAutenticado);
+			
 			TokenDto tokenDto = new TokenDto( usuarioAutenticado.getNomeColaborador(),
-					usuarioAutenticado.getId(), usuarioAutenticado.getEmailUsuario(), token );
+					usuarioAutenticado.getId(), usuarioAutenticado.getEmailUsuario(),
+					usuarioAutenticado.getIdPerfil(), usuarioAutenticado.getIdUa(), token );
+			
 			return ResponseEntity.ok(tokenDto);
 		}catch (ErroAutenticacao e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+		
 	}
 	
 	@GetMapping(value =  "/listarOrdenadoPorNome" )
@@ -186,8 +174,7 @@ public class UsuarioController {
 	     }
     }
 	
-	//Usado para recuperar recurso no servidor.
-	//Quando o "id" é passado na url o valor é colocado na variável "id".
+	
 	@Transactional
 	@PutMapping("{id}")
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody UsuarioDto usuarioDto) {
@@ -229,10 +216,4 @@ public class UsuarioController {
 				
 	}
 	
-//	@GetMapping(value =  "/listarQueryNativa" )
-//    public List<Usuario> listarQueryNativa() {
-//    	return this.usuarioService.listarQueryNativa()	;  
-//    }
-	
-
 }
