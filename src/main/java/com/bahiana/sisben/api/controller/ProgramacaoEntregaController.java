@@ -1,6 +1,7 @@
 package com.bahiana.sisben.api.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -250,6 +251,19 @@ public class ProgramacaoEntregaController {
 					}).orElseGet(() -> 
 					    new ResponseEntity("Programação entrega não encontrada na base de dados.", HttpStatus.BAD_REQUEST));
 		}
+		
+		
+		 @PostMapping("/salvarProgramacaoMes")
+		 @Transactional
+		 public ResponseEntity salvarProgramacaoMes(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
+			  try {
+					List<ProgramacaoEntrega> programacaoEntrega = new ArrayList() ;
+					programacaoEntrega = programacaoEntregaService.salvarProgramacaoMes(programacaoEntregaDto);
+					return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return ResponseEntity.badRequest().body(e.getMessage());
+			     }
+		 }
 		  
 		  
 		  

@@ -68,6 +68,7 @@ public interface ProgramacaoEntregaService {
 	
 	List<ProgramacaoEntrega> pesquisaProgramacao24hPorDataOrdenadoData(LocalDate dataSolicitacao, Boolean solicExtra );
 	
+	List<ProgramacaoEntrega> salvarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto);
 	
 
 }

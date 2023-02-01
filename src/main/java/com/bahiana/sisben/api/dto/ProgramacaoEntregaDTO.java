@@ -6,61 +6,36 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-//import lombok.AllArgsConstructor;
-//import lombok.Builder;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
-
-//@Data
-//@Builder
 @Entity
-//@NoArgsConstructor
-//@AllArgsConstructor
 public class ProgramacaoEntregaDto {
 	
 	@Id
     private Long id;	
 	
-	//@Column(name="matricula_colaborador")
 	private String matriculaColaborador;
 	
-	//@Column(name="ua_prevista")
 	private String uaPrevista;
 	
-	//@Column(name="ua_realizada")
 	private String uaRealizada;
 	
-//	@Column(name = "id_data")
     private Long idData;
-	 
-//    @Column(name = "id_ua")
+
     private Long idUa;
-    
-//    @Column(name = "id_justificativa")
+
     private Long idJustificativa;
     
-//    @Column(name = "id_valor")
     private Long idValor;
     
-//    @Column(name = "id_usuario")
     private Long idUsuario;
 	
-//	@Column(name = "data_entrega")
-	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDate dataEntrega;
 	
-//	@Column(name = "data_solicitacao")
-	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDate dataSolicitacao;	
 	
-//	@Column(name = "solic_extra", columnDefinition="BIT")
 	private Boolean solicExtra;
 	
-//	@Column(name = "status_aprov", columnDefinition="BIT")
 	private Boolean stAprov;
 	
-	//@Column(name = "data_ultima_modificacao")
-	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDateTime dataUltimaModificacao;
 	
 	//@Transient
@@ -70,7 +45,16 @@ public class ProgramacaoEntregaDto {
 		
 	private Long idUsuarioUltimaModificacao;
 	
+	private LocalDate dataAtual;
 	
+	public LocalDate getDataAtual() {
+		return dataAtual;
+	}
+
+	public void setDataAtual(LocalDate dataAtual) {
+		this.dataAtual = dataAtual;
+	}
+
 	public Long getIdUsuarioUltimaModificacao() {
 		return idUsuarioUltimaModificacao;
 	}
@@ -206,13 +190,13 @@ public class ProgramacaoEntregaDto {
 	public void setStAprov(Boolean stAprov) {
 		this.stAprov = stAprov;
 	}
+	
 
 	
-	
-	
-	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
-			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
-			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, String tabelaProgramacaoEntrega) {
+	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
+			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
+			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
+			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -227,26 +211,15 @@ public class ProgramacaoEntregaDto {
 		this.dataSolicitacao = dataSolicitacao;
 		this.solicExtra = solicExtra;
 		this.stAprov = stAprov;
-		this.tabelaProgramacaoEntrega = tabelaProgramacaoEntrega;
+		this.dataUltimaModificacao = dataUltimaModificacao;
+		this.codSetor = codSetor;
+		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+		this.dataAtual = dataAtual;
 	}
 
 	public ProgramacaoEntregaDto() {
 		
 	}
-	
-	@Override
-	public String toString() {
-		return "ProgramacaoEntregaDTO [id=" + id + ", matriculaColaborador=" + matriculaColaborador + ", uaPrevista="
-				+ uaPrevista + ", uaRealizada=" + uaRealizada + ", idData=" + idData + ", idUa=" + idUa
-				+ ", idJustificativa=" + idJustificativa + ", idValor=" + idValor + ", idUsuario=" + idUsuario
-				+ ", dataEntrega=" + dataEntrega + ", dataSolicitacao=" + dataSolicitacao + ", solicExtra=" + solicExtra
-				+ ", stAprov=" + stAprov + ", tabelaProgramacaoEntrega=" + tabelaProgramacaoEntrega + "]";
-	}
-
-	
-	
-	
-
 	
 	
 

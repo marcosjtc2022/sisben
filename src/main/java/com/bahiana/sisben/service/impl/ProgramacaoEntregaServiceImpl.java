@@ -26,6 +26,7 @@ import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
+import com.bahiana.sisben.util.UtilSisben;
 
 
 @Service
@@ -354,6 +355,75 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public long pesquisaProgramacaoEntregaMenos24hAprovada(Long id) {
 			return programacaoEntregaRepository.pesquisaProgramacaoEntregaMenos24hAprovada(id);
 		}
+
+		@Override
+		public List<ProgramacaoEntrega> salvarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
+			
+			
+			UtilSisben utilSisben = new UtilSisben();
+			Integer diasProgramacaoMes = utilSisben.calculaDiasMes(programacaoEntregaDto.getDataAtual());
+			
+			List<ProgramacaoEntrega> programacaoEntregaMes = salvar(programacaoEntregaDto,diasProgramacaoMes);
+			
+			
+			return programacaoEntregaMes;
+		}
+		
+		public List<ProgramacaoEntrega> salvar(ProgramacaoEntregaDto programacaoEntregaDto, Integer diasProgramacaoMes){
+			
+			List<ProgramacaoEntrega> programacaoEntregaMes = new ArrayList(diasProgramacaoMes);
+			
+			LocalDate dataSolicitacao = null;
+			LocalDate dataSolicitacao2 = null;
+			Integer ano =  programacaoEntregaDto.getDataAtual().getYear();
+			Integer mes =  programacaoEntregaDto.getDataAtual().getMonthValue();
+			Integer dia =  programacaoEntregaDto.getDataAtual().getDayOfMonth();
+			
+			String dataSolicitacaoStr = ano.toString() + "-" + mes.toString() + "-" + dia.toString()  ;
+			
+			dataSolicitacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().toString());
+			
+			
+			
+			
+			
+			
+			//for (ProgramacaoEntrega programacaoInput : programacaoEntregaMes) {
+			//for (int i = 1; i <= diasProgramacaoMes; i ++){
+				
+				ProgramacaoEntrega programacaoInput = new ProgramacaoEntrega();
+				
+				
+				
+				programacaoInput.setMatriculaColaborador(programacaoEntregaDto.getMatriculaColaborador());
+				programacaoInput.setUaPrevista("Brotas");
+				programacaoInput.setUaRealizada("Brotas");
+				programacaoInput.setIdData(null);
+				programacaoInput.setIdUa(10007L);
+				programacaoInput.setIdJustificativa(11L);
+				programacaoInput.setIdUsuario(3L);
+				programacaoInput.setIdValor(7L);
+				programacaoInput.setDataEntrega(null);
+				programacaoInput.setDataSolicitacao(dataSolicitacao);
+				programacaoInput.setSolicExtra(false);
+				programacaoInput.setStAprov(false);
+				programacaoInput.setDataUltimaModificacao(LocalDateTime.now());
+				programacaoInput.setIdUsuarioUltimaModificacao(3L);
+		
+				this.programacaoEntregaRepository.save(programacaoInput);
+				
+				dataSolicitacao = dataSolicitacao.plusDays(1);
+				dataSolicitacao2 = dataSolicitacao;
+
+				
+			//}
+			
+			return programacaoEntregaMes;
+		}
+		
+		
+		
+		
 	
 	
 }
