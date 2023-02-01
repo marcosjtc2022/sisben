@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-//
 @Table(name = "VW_SISBEN_FUNCIONARIO" , schema="dbo")
 public class VwSisbenFuncionario {
 	

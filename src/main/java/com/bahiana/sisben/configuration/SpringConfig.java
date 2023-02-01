@@ -16,6 +16,7 @@ import com.bahiana.sisben.service.TipoJustificativaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.UsuarioService;
 import com.bahiana.sisben.service.ValorMarmitaService;
+import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.service.VwSisbenFuncionarioService;
 import com.bahiana.sisben.service.impl.CalendarioServiceImpl;
 import com.bahiana.sisben.service.impl.FornecedorServiceImpl;
@@ -31,6 +32,7 @@ import com.bahiana.sisben.service.impl.TipoJustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.UnidadeAcademicaServiceImpl;
 import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
 import com.bahiana.sisben.service.impl.ValorMarmitaServiceImpl;
+import com.bahiana.sisben.service.impl.VwSisbenElegibilidadeServiceImpl;
 import com.bahiana.sisben.service.impl.VwSisbenFuncionarioServiceImpl;
 
 @Configuration
@@ -113,6 +115,11 @@ public class SpringConfig {
 	@Bean
 	public RestApiAutenticaUsuarioService getRestApiAutenticaUsuarioService() {
 	    return new  RestApiAutenticaUsuarioServiceImpl();
+	}
+	
+	@Bean
+	public VwSisbenElegibilidadeService getVwSisbenElegibilidadeService() {
+	    return new  VwSisbenElegibilidadeServiceImpl();
 	}
 	
 	
