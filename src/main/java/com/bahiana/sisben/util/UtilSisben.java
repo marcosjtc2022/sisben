@@ -13,13 +13,43 @@ public class UtilSisben {
 		
 		LocalDate utlimaDataMes = LocalDate.now().withMonth(mes).with(TemporalAdjusters.lastDayOfMonth());
 		
-		//LocalDate dtEngravidou = Mommy.getDtPregnantDate();
-		Integer Diferencadias = (int) ChronoUnit.DAYS.between(dataAtual, utlimaDataMes );
-		Diferencadias +=1;
+		Integer diferencadias = (int) ChronoUnit.DAYS.between(dataAtual, utlimaDataMes );
+		diferencadias +=1;
 		
 		//Integer dias = utlimaDataMes.getDayOfMonth();
 		
-		return Diferencadias;
+		return diferencadias;
+	}
+	
+	
+	public String getDiaDaSemana(LocalDate dataProgramacao){ //ex 07/03/2017
+	   
+	         String diaDaSemana = "";
+	        switch (dataProgramacao.getDayOfWeek()) {
+	            case SUNDAY:
+	            	diaDaSemana = "Domingo";
+	                break;
+	            case MONDAY:
+	            	diaDaSemana = "Segunda-Feira";
+	                break;
+	            case TUESDAY:
+	            	diaDaSemana = "Terça-Feira";
+	            break;
+	            case WEDNESDAY:
+	            	diaDaSemana = "Quarta-Feira";
+	                break;
+	            case THURSDAY:
+	            	diaDaSemana = "Quinta-Feira";
+	                break;
+	            case FRIDAY:
+	            	diaDaSemana = "Sexta-Feira";
+	                break;
+	            case SATURDAY:
+	            	diaDaSemana = "Sábado";
+
+	        }
+	    
+	    return diaDaSemana;
 	}
 
 }

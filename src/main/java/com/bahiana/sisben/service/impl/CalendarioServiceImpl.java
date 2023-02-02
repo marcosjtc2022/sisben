@@ -1,5 +1,6 @@
 package com.bahiana.sisben.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +68,11 @@ public class CalendarioServiceImpl implements CalendarioService {
 		BeanUtils.copyProperties(calendarioDto, calendario);
 		
 		return calendario;
+	}
+
+	@Override
+	public Calendario pesquisarPorData(LocalDate dataEspecial) {
+		return calendarioRepository.findByDataEspecial(dataEspecial);
 	}
 
 }

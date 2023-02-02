@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
+import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
+import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 import com.bahiana.sisben.util.UtilSisben;
@@ -34,6 +36,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 	@Autowired
 	ProgramacaoEntregaRepository programacaoEntregaRepository;
+	
+	@Autowired
+	CalendarioService calendarioService;
 	
 	
 	@Override
@@ -371,25 +376,22 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		
 		public List<ProgramacaoEntrega> salvar(ProgramacaoEntregaDto programacaoEntregaDto, Integer diasProgramacaoMes){
 			
-			List<ProgramacaoEntrega> programacaoEntregaMes = new ArrayList(diasProgramacaoMes);
+			List<ProgramacaoEntrega> programacaoEntregaMes = new ArrayList();
+			
+			Calendario calendario = new Calendario();
 			
 			LocalDate dataSolicitacao = null;
-			LocalDate dataSolicitacao2 = null;
-			Integer ano =  programacaoEntregaDto.getDataAtual().getYear();
-			Integer mes =  programacaoEntregaDto.getDataAtual().getMonthValue();
-			Integer dia =  programacaoEntregaDto.getDataAtual().getDayOfMonth();
+//			Integer ano =  programacaoEntregaDto.getDataAtual().getYear();
+//			Integer mes =  programacaoEntregaDto.getDataAtual().getMonthValue();
+//			Integer dia =  programacaoEntregaDto.getDataAtual().getDayOfMonth();
 			
-			String dataSolicitacaoStr = ano.toString() + "-" + mes.toString() + "-" + dia.toString()  ;
-			
+			//Colocar anomes programacao. 
 			dataSolicitacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().toString());
 			
+			UtilSisben utilSisben = new UtilSisben();
 			
 			
-			
-			
-			
-			//for (ProgramacaoEntrega programacaoInput : programacaoEntregaMes) {
-			//for (int i = 1; i <= diasProgramacaoMes; i ++){
+			for (int i = 1; i <= diasProgramacaoMes; i ++){
 				
 				ProgramacaoEntrega programacaoInput = new ProgramacaoEntrega();
 				
@@ -409,14 +411,22 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setStAprov(false);
 				programacaoInput.setDataUltimaModificacao(LocalDateTime.now());
 				programacaoInput.setIdUsuarioUltimaModificacao(3L);
+				programacaoInput.setDataProgramacao(dataSolicitacao);
+				programacaoInput.setDiaDaSemana(utilSisben.getDiaDaSemana(dataSolicitacao));
+				
+				calendario = calendarioService.pesquisarPorData(dataSolicitacao);
+				
+				if (calendario != null) {
+					programacaoInput.setDescricaoFeriado(calendario.getDescricao());
+				};
+				
 		
 				this.programacaoEntregaRepository.save(programacaoInput);
 				
 				dataSolicitacao = dataSolicitacao.plusDays(1);
-				dataSolicitacao2 = dataSolicitacao;
 
 				
-			//}
+			}
 			
 			return programacaoEntregaMes;
 		}

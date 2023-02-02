@@ -3,6 +3,7 @@ package com.bahiana.sisben.api.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -46,6 +47,12 @@ public class ProgramacaoEntregaDto {
 	private Long idUsuarioUltimaModificacao;
 	
 	private LocalDate dataAtual;
+	
+	private String diaDaSemana;
+	
+	private LocalDate dataProgramacao;
+	
+	private String descricaoFeriado;
 	
 	public LocalDate getDataAtual() {
 		return dataAtual;
@@ -191,12 +198,38 @@ public class ProgramacaoEntregaDto {
 		this.stAprov = stAprov;
 	}
 	
+	public String getDiaDaSemana() {
+		return diaDaSemana;
+	}
+
+	public void setDiaDaSemana(String diaDaSemana) {
+		this.diaDaSemana = diaDaSemana;
+	}
+
+	public LocalDate getDataProgramacao() {
+		return dataProgramacao;
+	}
+
+	public void setDataProgramacao(LocalDate dataProgramacao) {
+		this.dataProgramacao = dataProgramacao;
+	}
+	
+	
+	
+	public String getDescricaoFeriado() {
+		return descricaoFeriado;
+	}
+
+	public void setDescricaoFeriado(String descricaoFeriado) {
+		this.descricaoFeriado = descricaoFeriado;
+	}
 
 	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
-			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual) {
+			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual, String diaDaSemana,
+			LocalDate dataProgramacao, String descricaoFeriado) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -215,6 +248,9 @@ public class ProgramacaoEntregaDto {
 		this.codSetor = codSetor;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 		this.dataAtual = dataAtual;
+		this.diaDaSemana = diaDaSemana;
+		this.dataProgramacao = dataProgramacao;
+		this.descricaoFeriado = descricaoFeriado;
 	}
 
 	public ProgramacaoEntregaDto() {

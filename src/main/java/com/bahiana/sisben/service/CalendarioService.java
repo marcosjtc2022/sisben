@@ -1,5 +1,6 @@
 package com.bahiana.sisben.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,8 @@ public interface CalendarioService {
 	Optional<Calendario> obterPorId(Long id);
 	
 	List<Calendario> listarSimplesOrdenadoData();
+	
+	Calendario pesquisarPorData(LocalDate dataEspecial);
 
 
 }

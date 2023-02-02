@@ -5,21 +5,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 
 
@@ -82,6 +79,15 @@ public class ProgramacaoEntrega implements Serializable{
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
 	
+	@Column(name="dia_da_semana")
+	private String diaDaSemana;
+	
+	@Column(name = "data_programacao")
+	private LocalDate dataProgramacao;
+	
+	@Column(name="descricaoFeriado")
+	private String descricaoFeriado;
+	
 	@Transient
 	String tabelaProgramacaoEntrega;
 	
@@ -93,10 +99,21 @@ public class ProgramacaoEntrega implements Serializable{
 		this.tabelaProgramacaoEntrega = tabelaProgramacaoEntrega;
 	}
 	
+//	public Calendario getCalendario() {
+//		return calendario;
+//	}
+//
+//	public void setCalendario(Calendario calendario) {
+//		this.calendario = calendario;
+//	}
+
+
+// JPA não aceita mapeamento 0 x N. Nem tente!!!
 //	//mapeando a classe Calendario
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(updatable=false,insertable=false,name = "id_data")
 //    Calendario calendario;
+
     
     //mapeando a classe Elegibilidade.
     @ManyToOne(fetch = FetchType.EAGER)
@@ -259,14 +276,6 @@ public class ProgramacaoEntrega implements Serializable{
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-//	public Calendario getCalendario() {
-//		return calendario;
-//	}
-//
-//	public void setCalendario(Calendario calendario) {
-//		this.calendario = calendario;
-//	}
-
 	public Elegibilidade getElegibilidade() {
 		return elegibilidade;
 	}
@@ -274,14 +283,6 @@ public class ProgramacaoEntrega implements Serializable{
 	public void setElegibilidade(Elegibilidade elegibilidade) {
 		this.elegibilidade = elegibilidade;
 	}
-
-//	public SuspensaoEligibilidade getSuspensaoEligibilidade() {
-//		return suspensaoEligibilidade;
-//	}
-
-//	public void setSuspensaoEligibilidade(SuspensaoEligibilidade suspensaoEligibilidade) {
-//		this.suspensaoEligibilidade = suspensaoEligibilidade;
-//	}
 
 	public UnidadeAcademica getUnidadeAcademica() {
 		return unidadeAcademica;
@@ -323,11 +324,35 @@ public class ProgramacaoEntrega implements Serializable{
 		this.centroCusto = centroCusto;
 	}
 	
+	public String getDiaDaSemana() {
+		return diaDaSemana;
+	}
+
+	public void setDiaDaSemana(String diaDaSemana) {
+		this.diaDaSemana = diaDaSemana;
+	}
+
+	public LocalDate getDataProgramacao() {
+		return dataProgramacao;
+	}
+
+	public void setDataProgramacao(LocalDate dataProgramacao) {
+		this.dataProgramacao = dataProgramacao;
+	}
+		
+	public String getDescricaoFeriado() {
+		return descricaoFeriado;
+	}
+
+	public void setDescricaoFeriado(String descricaoFeriado) {
+		this.descricaoFeriado = descricaoFeriado;
+	}
+
 	
-	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
-			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
+	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
+			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
-			Long idUsuarioUltimaModificacao) {
+			Long idUsuarioUltimaModificacao, String diaDaSemana, LocalDate dataProgramacao, String descricaoFeriado) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -344,6 +369,9 @@ public class ProgramacaoEntrega implements Serializable{
 		this.stAprov = stAprov;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+		this.diaDaSemana = diaDaSemana;
+		this.dataProgramacao = dataProgramacao;
+		this.descricaoFeriado = descricaoFeriado;
 	}
 
 	public ProgramacaoEntrega() {
@@ -351,22 +379,6 @@ public class ProgramacaoEntrega implements Serializable{
 		
 		
 	}
-	
-	
-	
-//	@Override
-//	public String toString() {
-//		return "ProgramacaoEntrega [idProgEntrega=" + idProgEntrega + ", matriculaColaborador=" + matriculaColaborador
-//				+ ", uaPrevista=" + uaPrevista + ", uaRealizada=" + uaRealizada + ", idData=" + idData + ", idUa="
-//				+ idUa + ", idJustificativa=" + idJustificativa + ", idValor=" + idValor + ", idUsuario=" + idUsuario
-//				+ ", dataEntrega=" + dataEntrega + ", dataSolicitacao=" + dataSolicitacao + ", solicExtra=" + solicExtra
-//				+ ", stAprov=" + stAprov + ", dataUltimaModificacao=" + dataUltimaModificacao
-//				+ ", idUsuarioUltimaModificacao=" + idUsuarioUltimaModificacao + ", tabelaProgramacaoEntrega="
-//				+ tabelaProgramacaoEntrega + ", calendario=" + calendario + ", elegibilidade=" + elegibilidade
-//				+ ", suspensaoEligibilidade=" + suspensaoEligibilidade + ", unidadeAcademica=" + unidadeAcademica
-//				+ ", justificativa=" + justificativa + ", valorMarmita=" + valorMarmita + ", usuarioEntrega="
-//				+ usuarioEntrega + ", centroCusto=" + centroCusto + "]";
-//	}
 	
   	
   	
