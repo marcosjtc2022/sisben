@@ -22,11 +22,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
+import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
+import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 import com.bahiana.sisben.util.UtilSisben;
 
@@ -39,6 +42,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Autowired
 	CalendarioService calendarioService;
+	
+	@Autowired
+	VwSisbenElegibilidadeService vwSisbenElegibilidadeService;
 	
 	
 	@Override
@@ -365,8 +371,36 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public List<ProgramacaoEntrega> salvarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			
+			//Criar valida formulário
+			
+			
+			validaInclusao(programacaoEntregaDto);
+			
+//			//Verifica se para aquele mês, ano e matrícula já existe programação.
+//			Long contExisteProgramacao = programacaoEntregaRepository.
+//					    pesquisaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.
+//					    		                         getMesAnoProgramacao().toString(),
+//					    		                         programacaoEntregaDto.getMatriculaColaborador());
+//			
+//			//Verifica se funcionário é elegível.
+//			if (contExisteProgramacao > 0) {
+//				throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !", 0);
+//			}
+//			
+//			//Recupera dados dos elegíveis na visão.
+//			Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
+//			ObterPorMatricula(programacaoEntregaDto.getMatriculaColaborador());
+//			
+//			//Verifica se funcionário é elegível.
+//			if (!VwSisbenElegibilidade.isPresent()) {
+//				throw new GlobalExceptionHandler("Funcionário não elegível!", 0);
+//			}
+//			
+			//Fim criar valida formulário.
+			
 			UtilSisben utilSisben = new UtilSisben();
-			Integer diasProgramacaoMes = utilSisben.calculaDiasMes(programacaoEntregaDto.getDataAtual());
+			Integer diasProgramacaoMes = utilSisben.calculaDiasMes(programacaoEntregaDto.getMesAnoProgramacao(),
+					                                               programacaoEntregaDto.getDataAtual());
 			
 			List<ProgramacaoEntrega> programacaoEntregaMes = salvar(programacaoEntregaDto,diasProgramacaoMes);
 			
@@ -429,6 +463,62 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			}
 			
 			return programacaoEntregaMes;
+		}
+
+		@Override
+		public long pesquisaValorMarmita(String mesAnoProgramacao, String matriculaColaborador ) {
+			return programacaoEntregaRepository.
+				   pesquisaProgramacaoEntregaAnoMesMatricula(mesAnoProgramacao, matriculaColaborador);
+		}
+		
+		public void validaInclusao(ProgramacaoEntregaDto programacaoEntregaDto) {
+			
+			
+			//Gera ano e mês correntes.
+			int mesAtual = LocalDate.now().getMonthValue();
+			int anoAtual = LocalDate.now().getYear();
+			
+			//Recupera ano e mês informados.
+			int mesProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getMonthValue();
+			int anoProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getYear();
+			
+			//Verifica se ano informado é menor que ano corrente.
+			if (anoProgramacao < anoAtual ) {
+				throw new GlobalExceptionHandler("Ano da programção deve ser maior ou igual ao ano corrente!", 0);
+			}
+			
+			//Verifica se mês informado é menor que mês corrente.
+			if (mesProgramacao < mesAtual ) {
+				throw new GlobalExceptionHandler("Mês da programção deve ser maior ou igual ao mês corrente!", 0);
+			}
+			
+			
+			//Recupera dados dos elegíveis na visão.
+			Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
+			ObterPorMatricula(programacaoEntregaDto.getMatriculaColaborador());
+			
+			//Verifica se funcionário é elegível.
+			if (!VwSisbenElegibilidade.isPresent()) {
+				throw new GlobalExceptionHandler("Funcionário não elegível!", 0);
+			}
+			
+			//Verifica se para aquele mês, ano e matrícula já existe programação.
+			Long contExisteProgramacao = programacaoEntregaRepository.
+					    pesquisaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.
+					    		                         getMesAnoProgramacao().toString(),
+					    		                         programacaoEntregaDto.getMatriculaColaborador());
+			
+			if (contExisteProgramacao > 0) {
+				throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !", 0);
+			}
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 		
 		

@@ -31,7 +31,7 @@ public class ProgramacaoEntregaDto {
 	
 	private LocalDate dataEntrega;
 	
-	private LocalDate dataSolicitacao;	
+	private LocalDate dataSolicitacao;
 	
 	private Boolean solicExtra;
 	
@@ -54,6 +54,16 @@ public class ProgramacaoEntregaDto {
 	
 	private String descricaoFeriado;
 	
+	private LocalDate mesAnoProgramacao;
+	
+	public LocalDate getMesAnoProgramacao() {
+		return mesAnoProgramacao;
+	}
+
+	public void setMesAnoProgramacao(LocalDate mesAnoProgramacao) {
+		this.mesAnoProgramacao = mesAnoProgramacao;
+	}
+
 	public LocalDate getDataAtual() {
 		return dataAtual;
 	}
@@ -223,13 +233,13 @@ public class ProgramacaoEntregaDto {
 	public void setDescricaoFeriado(String descricaoFeriado) {
 		this.descricaoFeriado = descricaoFeriado;
 	}
-
+	
 	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
 			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual, String diaDaSemana,
-			LocalDate dataProgramacao, String descricaoFeriado) {
+			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -251,6 +261,7 @@ public class ProgramacaoEntregaDto {
 		this.diaDaSemana = diaDaSemana;
 		this.dataProgramacao = dataProgramacao;
 		this.descricaoFeriado = descricaoFeriado;
+		this.mesAnoProgramacao = mesAnoProgramacao;
 	}
 
 	public ProgramacaoEntregaDto() {

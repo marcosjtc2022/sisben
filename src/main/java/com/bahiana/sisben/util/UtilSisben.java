@@ -7,9 +7,9 @@ import java.time.temporal.TemporalAdjusters;
 public class UtilSisben {
 	
 	
-	public Integer calculaDiasMes(LocalDate dataAtual) {
+	public Integer calculaDiasMes(LocalDate mesAnoProgramacao, LocalDate dataAtual) {
 		
-		Integer mes = dataAtual.getMonth().getValue();
+		Integer mes = mesAnoProgramacao.getMonth().getValue();
 		
 		LocalDate utlimaDataMes = LocalDate.now().withMonth(mes).with(TemporalAdjusters.lastDayOfMonth());
 		

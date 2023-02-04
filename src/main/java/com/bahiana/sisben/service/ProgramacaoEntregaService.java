@@ -70,5 +70,7 @@ public interface ProgramacaoEntregaService {
 	
 	List<ProgramacaoEntrega> salvarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto);
 	
+	long pesquisaValorMarmita(String mesAnoProgramacao, String matriculaColaborador);
+	
 
 }
