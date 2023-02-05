@@ -71,6 +71,12 @@ public class UnidadeAcademicaServiceImpl implements UnidadeAcademicaService  {
 	public List<UnidadeAcademica> listarSimplesOrdenadoDescricao() {
 		return this.unidadeAcademicaRepository.findByOrderByDescricaoAsc();
 	}
+
+	//Verificar se precisa o controller!!
+	@Override
+	public UnidadeAcademica pesquisarPrimeiroPorDescricao(String descricao) {
+		return this.unidadeAcademicaRepository.findFirstByDescricaoContainingOrderByDescricao(descricao);
+	}
 	
 	
 

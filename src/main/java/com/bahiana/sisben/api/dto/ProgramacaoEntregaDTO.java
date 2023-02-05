@@ -56,6 +56,16 @@ public class ProgramacaoEntregaDto {
 	
 	private LocalDate mesAnoProgramacao;
 	
+	private String bairroSecaoElegivel;
+	
+	public String getBairroSecaoElegivel() {
+		return bairroSecaoElegivel;
+	}
+
+	public void setBairroSecaoElegivel(String bairroSecaoElegivel) {
+		this.bairroSecaoElegivel = bairroSecaoElegivel;
+	}
+
 	public LocalDate getMesAnoProgramacao() {
 		return mesAnoProgramacao;
 	}
@@ -235,11 +245,13 @@ public class ProgramacaoEntregaDto {
 	}
 	
 	
+	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
 			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual, String diaDaSemana,
-			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao) {
+			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao,
+			String bairroSecaoElegivel) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -262,6 +274,7 @@ public class ProgramacaoEntregaDto {
 		this.dataProgramacao = dataProgramacao;
 		this.descricaoFeriado = descricaoFeriado;
 		this.mesAnoProgramacao = mesAnoProgramacao;
+		this.bairroSecaoElegivel = bairroSecaoElegivel;
 	}
 
 	public ProgramacaoEntregaDto() {

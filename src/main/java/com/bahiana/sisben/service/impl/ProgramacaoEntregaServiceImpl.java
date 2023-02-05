@@ -25,10 +25,12 @@ import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
+import com.bahiana.sisben.model.entity.UnidadeAcademica;
 import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
+import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 import com.bahiana.sisben.util.UtilSisben;
@@ -45,6 +47,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Autowired
 	VwSisbenElegibilidadeService vwSisbenElegibilidadeService;
+	
+	@Autowired
+	UnidadeAcademicaService unidadeAcademicaService;
 	
 	
 	@Override
@@ -371,37 +376,23 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public List<ProgramacaoEntrega> salvarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			
-			//Criar valida formulário
+			//Valida os campos do formulário
+			validaFormulario(programacaoEntregaDto);
 			
+			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
+			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.
+			pesquisarPrimeiroPorDescricao(programacaoEntregaDto.getBairroSecaoElegivel());
 			
-			validaInclusao(programacaoEntregaDto);
+			//Preenche a descrição e o id da ua.
+			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
+			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
 			
-//			//Verifica se para aquele mês, ano e matrícula já existe programação.
-//			Long contExisteProgramacao = programacaoEntregaRepository.
-//					    pesquisaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.
-//					    		                         getMesAnoProgramacao().toString(),
-//					    		                         programacaoEntregaDto.getMatriculaColaborador());
-//			
-//			//Verifica se funcionário é elegível.
-//			if (contExisteProgramacao > 0) {
-//				throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !", 0);
-//			}
-//			
-//			//Recupera dados dos elegíveis na visão.
-//			Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
-//			ObterPorMatricula(programacaoEntregaDto.getMatriculaColaborador());
-//			
-//			//Verifica se funcionário é elegível.
-//			if (!VwSisbenElegibilidade.isPresent()) {
-//				throw new GlobalExceptionHandler("Funcionário não elegível!", 0);
-//			}
-//			
-			//Fim criar valida formulário.
-			
+			//Calcula os dias do mês, a partir da data da solicitação.
 			UtilSisben utilSisben = new UtilSisben();
 			Integer diasProgramacaoMes = utilSisben.calculaDiasMes(programacaoEntregaDto.getMesAnoProgramacao(),
 					                                               programacaoEntregaDto.getDataAtual());
 			
+			//Sava registros.
 			List<ProgramacaoEntrega> programacaoEntregaMes = salvar(programacaoEntregaDto,diasProgramacaoMes);
 			
 			
@@ -432,19 +423,22 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				
 				programacaoInput.setMatriculaColaborador(programacaoEntregaDto.getMatriculaColaborador());
-				programacaoInput.setUaPrevista("Brotas");
-				programacaoInput.setUaRealizada("Brotas");
+				programacaoInput.setUaPrevista(programacaoEntregaDto.getUaPrevista());
+				programacaoInput.setUaRealizada("");
+				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
 				programacaoInput.setIdData(null);
-				programacaoInput.setIdUa(10007L);
+				//
 				programacaoInput.setIdJustificativa(11L);
 				programacaoInput.setIdUsuario(3L);
 				programacaoInput.setIdValor(7L);
+				//
+				
 				programacaoInput.setDataEntrega(null);
 				programacaoInput.setDataSolicitacao(dataSolicitacao);
 				programacaoInput.setSolicExtra(false);
 				programacaoInput.setStAprov(false);
 				programacaoInput.setDataUltimaModificacao(LocalDateTime.now());
-				programacaoInput.setIdUsuarioUltimaModificacao(3L);
+				programacaoInput.setIdUsuarioUltimaModificacao(programacaoEntregaDto.getIdUsuarioUltimaModificacao());
 				programacaoInput.setDataProgramacao(dataSolicitacao);
 				programacaoInput.setDiaDaSemana(utilSisben.getDiaDaSemana(dataSolicitacao));
 				
@@ -471,7 +465,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				   pesquisaProgramacaoEntregaAnoMesMatricula(mesAnoProgramacao, matriculaColaborador);
 		}
 		
-		public void validaInclusao(ProgramacaoEntregaDto programacaoEntregaDto) {
+		public void validaFormulario(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			
 			//Gera ano e mês correntes.

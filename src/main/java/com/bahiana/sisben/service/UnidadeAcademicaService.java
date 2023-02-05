@@ -27,5 +27,7 @@ public interface UnidadeAcademicaService {
 	
 	List<UnidadeAcademica> listarSimplesOrdenadoDescricao();
 	
+	UnidadeAcademica pesquisarPrimeiroPorDescricao(String descricao);
+	
 
 }
