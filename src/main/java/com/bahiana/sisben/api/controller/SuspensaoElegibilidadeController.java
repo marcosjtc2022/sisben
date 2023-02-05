@@ -56,16 +56,7 @@ public class SuspensaoElegibilidadeController {
 		     }
 	}
 	
-	@GetMapping(value =  "/listarPorFiltroMatricula" )
-	public ResponseEntity<List<SuspensaoElegibilidade>> listarPorFiltroMatricula(SuspensaoElegibilidadeDto suspensaoElegibilidadeDto ) {
-		 try {
-				
-			 //return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);
-				return new ResponseEntity(suspensaoElegibilidadeService.listarPorMatriculaOrdenadoNome(suspensaoElegibilidadeDto), HttpStatus.CREATED);
-		     } catch (RegraNegocioException e) {
-			    return new ResponseEntity<List<SuspensaoElegibilidade>>(HttpStatus.BAD_REQUEST);
-		     }
-	}
+	
 	
 	@GetMapping(value =  "/paginarSimples" )
 	public Page<SuspensaoElegibilidade> listarPaginadoSimples() {
@@ -130,6 +121,26 @@ public class SuspensaoElegibilidadeController {
 			return  suspensaoElegibilidade.get();	
 					
 	}
+	
+	@GetMapping("/obterPorMatricula/{matriculaColaborador}")
+	public SuspensaoElegibilidade obterPorMatricula(@PathVariable("matriculaColaborador") String matriculaColaborador) {
+			
+			Optional<SuspensaoElegibilidade> suspensaoElegibilidade = suspensaoElegibilidadeService.obterPorMatriculaColaborador(matriculaColaborador);
+			return  suspensaoElegibilidade.get();	
+					
+	}
+	
+	
+//	@GetMapping(value =  "/obterPorMatricula" )
+//	public ResponseEntity<List<SuspensaoElegibilidade>> obterPorMatricula(SuspensaoElegibilidadeDto suspensaoElegibilidadeDto ) {
+//		 try {
+//				
+//			 //return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);
+//				return new ResponseEntity(suspensaoElegibilidadeService.pesquisarPorMatriculaOrdenadoNome(suspensaoElegibilidadeDto), HttpStatus.CREATED);
+//		     } catch (RegraNegocioException e) {
+//			    return new ResponseEntity<List<SuspensaoElegibilidade>>(HttpStatus.BAD_REQUEST);
+//		     }
+//	}
 	
 
 }

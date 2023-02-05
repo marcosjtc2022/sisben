@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -31,6 +32,7 @@ import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
+import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
@@ -55,6 +57,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Autowired
 	ValorMarmitaService valorMarmitaService;
+	
+	@Autowired
+	SuspensaoElegibilidadeService suspensaoElegibilidadeService;
 	
 	
 	@Override
@@ -446,11 +451,22 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setDataProgramacao(dataSolicitacao);
 				programacaoInput.setDiaDaSemana(utilSisben.getDiaDaSemana(dataSolicitacao));
 				
+				//Pesquisa existência de data especial.
 				calendario = calendarioService.pesquisarPorData(dataSolicitacao);
 				
 				if (calendario != null) {
 					programacaoInput.setDescricaoFeriado(calendario.getDescricao());
 				};
+				
+				
+				//Pesquisa se existe suspensaão da eligibilidade para o ano e mês.
+				Long contSusElegibilidade = suspensaoElegibilidadeService.
+					pesquisarSuspensao(dataSolicitacao, programacaoEntregaDto.getMatriculaColaborador());
+				
+				
+				if ((contSusElegibilidade > 0) && (contSusElegibilidade != null)) {
+					programacaoInput.setExigSuspensa(true);
+				}
 				
 		
 				this.programacaoEntregaRepository.save(programacaoInput);
@@ -483,7 +499,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			//Preenche a descrição e o id da ua.
 			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
 			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
-			
 			
 			//Pesquisa se existe valor marmita e recupera o mais atual
 			List<ValorMarmita> listaValorMarmita = valorMarmitaService.

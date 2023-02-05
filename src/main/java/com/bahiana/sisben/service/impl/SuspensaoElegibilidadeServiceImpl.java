@@ -1,5 +1,6 @@
 package com.bahiana.sisben.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.bahiana.sisben.api.dto.SuspensaoElegibilidadeDto;
-import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.SuspensaoElegibilidade;
 import com.bahiana.sisben.model.entity.repository.SuspensaoElegibilidadeRepository;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
@@ -72,17 +72,17 @@ public class SuspensaoElegibilidadeServiceImpl implements SuspensaoElegibilidade
 		return suspensaoElegibilidadeLista;
 	}
 
-	@Override
-	public List<SuspensaoElegibilidade> listarPorMatriculaOrdenadoNome(
-			SuspensaoElegibilidadeDto suspensaoElegibilidadeDto) {
-		
-		List<SuspensaoElegibilidade> suspensaoElegibilidadeLista =  
-		        this.suspensaoElegibilidadeRepository.
-		        findByMatriculaColaboradorOrderByNomeColaborador(suspensaoElegibilidadeDto.getMatriculaColaborador());
-		        
-		        
-				return suspensaoElegibilidadeLista;
-	}
+//	@Override
+//	public SuspensaoElegibilidade pesquisarPorMatricula(
+//			SuspensaoElegibilidadeDto suspensaoElegibilidadeDto) {
+//		
+//		SuspensaoElegibilidade suspensaoElegibilidadeLista =  
+//		        this.suspensaoElegibilidadeRepository.
+//		        findByMatriculaColaborador(suspensaoElegibilidadeDto.getMatriculaColaborador());
+//		        
+//		        
+//				return suspensaoElegibilidadeLista;
+//	}
 	
 	public static SuspensaoElegibilidade from(SuspensaoElegibilidadeDto suspensaoElegibilidadeDto) {
 		SuspensaoElegibilidade suspensaoElegibilidade = new SuspensaoElegibilidade();
@@ -91,6 +91,16 @@ public class SuspensaoElegibilidadeServiceImpl implements SuspensaoElegibilidade
 		BeanUtils.copyProperties(suspensaoElegibilidadeDto, suspensaoElegibilidade);
 		
 		return suspensaoElegibilidade;
+	}
+
+	@Override
+	public Optional<SuspensaoElegibilidade> obterPorMatriculaColaborador(String matriculaColaborador) {
+		return suspensaoElegibilidadeRepository.findByMatriculaColaborador(matriculaColaborador);
+	}
+
+	@Override
+	public Long pesquisarSuspensao(LocalDate dataSolicitacao, String Matricula) {
+		return suspensaoElegibilidadeRepository.pesquisarSuspensao(dataSolicitacao, Matricula);
 	}
 
 }

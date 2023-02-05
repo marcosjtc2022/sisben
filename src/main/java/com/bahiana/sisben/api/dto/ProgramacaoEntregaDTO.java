@@ -58,6 +58,16 @@ public class ProgramacaoEntregaDto {
 	
 	private String bairroSecaoElegivel;
 	
+	private Boolean exigSuspensa;
+	
+	public Boolean getExigSuspensa() {
+		return exigSuspensa;
+	}
+
+	public void setExigSuspensa(Boolean exigSuspensa) {
+		this.exigSuspensa = exigSuspensa;
+	}
+
 	public String getBairroSecaoElegivel() {
 		return bairroSecaoElegivel;
 	}
@@ -245,13 +255,12 @@ public class ProgramacaoEntregaDto {
 	}
 	
 	
-	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
 			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual, String diaDaSemana,
-			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao,
-			String bairroSecaoElegivel) {
+			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao, String bairroSecaoElegivel,
+			Boolean exigSuspensa) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -275,6 +284,7 @@ public class ProgramacaoEntregaDto {
 		this.descricaoFeriado = descricaoFeriado;
 		this.mesAnoProgramacao = mesAnoProgramacao;
 		this.bairroSecaoElegivel = bairroSecaoElegivel;
+		this.exigSuspensa = exigSuspensa;
 	}
 
 	public ProgramacaoEntregaDto() {

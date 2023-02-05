@@ -72,6 +72,9 @@ public class ProgramacaoEntrega implements Serializable{
 	@Column(name = "status_aprov", columnDefinition="BIT")
 	private Boolean stAprov;
 	
+	@Column(name = "exig_suspensa", columnDefinition="BIT")
+	private Boolean exigSuspensa;
+	
 	@Column(name = "data_ultima_modificacao")
 	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDateTime dataUltimaModificacao;
@@ -91,6 +94,15 @@ public class ProgramacaoEntrega implements Serializable{
 	@Transient
 	String tabelaProgramacaoEntrega;
 	
+	
+	public Boolean getExigSuspensa() {
+		return exigSuspensa;
+	}
+
+	public void setExigSuspensa(Boolean exigSuspensa) {
+		this.exigSuspensa = exigSuspensa;
+	}
+
 	public String getTabelaProgramacaoEntrega() {
 		return tabelaProgramacaoEntrega;
 	}
@@ -347,12 +359,12 @@ public class ProgramacaoEntrega implements Serializable{
 	public void setDescricaoFeriado(String descricaoFeriado) {
 		this.descricaoFeriado = descricaoFeriado;
 	}
-
 	
 	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
-			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
-			Long idUsuarioUltimaModificacao, String diaDaSemana, LocalDate dataProgramacao, String descricaoFeriado) {
+			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, Boolean exigSuspensa,
+			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao, String diaDaSemana,
+			LocalDate dataProgramacao, String descricaoFeriado) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -367,6 +379,7 @@ public class ProgramacaoEntrega implements Serializable{
 		this.dataSolicitacao = dataSolicitacao;
 		this.solicExtra = solicExtra;
 		this.stAprov = stAprov;
+		this.exigSuspensa = exigSuspensa;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 		this.diaDaSemana = diaDaSemana;

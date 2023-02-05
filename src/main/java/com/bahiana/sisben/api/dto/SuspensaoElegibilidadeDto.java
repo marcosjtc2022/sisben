@@ -12,7 +12,7 @@ public class SuspensaoElegibilidadeDto {
 
 	private Long id;
 	
-    private Long matriculaColaborador;
+    private String matriculaColaborador;
 	
 	private String nomeColaborador;
 	
@@ -36,11 +36,11 @@ public class SuspensaoElegibilidadeDto {
 		this.id = id;
 	}
 
-	public Long getMatriculaColaborador() {
+	public String getMatriculaColaborador() {
 		return matriculaColaborador;
 	}
 
-	public void setMatriculaColaborador(Long matriculaColaborador) {
+	public void setMatriculaColaborador(String matriculaColaborador) {
 		this.matriculaColaborador = matriculaColaborador;
 	}
 
@@ -93,7 +93,7 @@ public class SuspensaoElegibilidadeDto {
 	}
 	
 	
-	public SuspensaoElegibilidadeDto(Long id, Long matriculaColaborador, String nomeColaborador,
+	public SuspensaoElegibilidadeDto(Long id, String matriculaColaborador, String nomeColaborador,
 			LocalDate dataInicial, LocalDate dataFinal, String justificativaSuspensao,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
