@@ -26,11 +26,13 @@ import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
+import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
+import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 import com.bahiana.sisben.util.UtilSisben;
@@ -50,6 +52,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Autowired
 	UnidadeAcademicaService unidadeAcademicaService;
+	
+	@Autowired
+	ValorMarmitaService valorMarmitaService;
 	
 	
 	@Override
@@ -236,15 +241,15 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		return this.programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec(), pageable);
 	}
 
-	@Override
-	public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable , ProgramacaoEntregaDto programacaoEntregaDTO) {
-		
-		Page<ProgramacaoEntrega> ProgramacaoEntregaLista =  this.programacaoEntregaRepository.programacaoPorPeriodo
-				(pageable,programacaoEntregaDTO.getMatriculaColaborador(),
-						  programacaoEntregaDTO.getUaPrevista(),
-						  programacaoEntregaDTO.getCodSetor());
-		return ProgramacaoEntregaLista;
-	}
+//	@Override #
+//	public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable , ProgramacaoEntregaDto programacaoEntregaDTO) {
+//		
+//		Page<ProgramacaoEntrega> ProgramacaoEntregaLista =  this.programacaoEntregaRepository.programacaoPorPeriodo
+//				(pageable,programacaoEntregaDTO.getMatriculaColaborador(),
+//						  programacaoEntregaDTO.getUaPrevista(),
+//						  programacaoEntregaDTO.getCodSetor());
+//		return ProgramacaoEntregaLista;
+//	}
 
 	@Override
 	public ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao) {
@@ -279,14 +284,14 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			return programacaoEntregaRepository.findAll();
 		}
 
-		@Override
-		public Iterable<ProgramacaoEntrega> programacaoDataTable(ProgramacaoEntregaDto programacaoEntregaDTO) {
-			Iterable<ProgramacaoEntrega> ProgramacaoEntregaLista =  this.programacaoEntregaRepository.programacaoDataTable
-					(programacaoEntregaDTO.getMatriculaColaborador(),
-							  programacaoEntregaDTO.getUaPrevista(),
-							  programacaoEntregaDTO.getCodSetor());
-			return ProgramacaoEntregaLista;
-		}
+//		@Override
+//		public Iterable<ProgramacaoEntrega> programacaoDataTable(ProgramacaoEntregaDto programacaoEntregaDTO) {
+//			Iterable<ProgramacaoEntrega> ProgramacaoEntregaLista =  this.programacaoEntregaRepository.programacaoDataTable
+//					(programacaoEntregaDTO.getMatriculaColaborador(),
+//							  programacaoEntregaDTO.getUaPrevista(),
+//							  programacaoEntregaDTO.getCodSetor());
+//			return ProgramacaoEntregaLista;
+//		}
 
 		@Override
 		public Iterable<ProgramacaoEntrega> findBymatriculaColaborador(ProgramacaoEntregaDto programacaoEntregaDTO) {
@@ -379,20 +384,20 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			//Valida os campos do formulário
 			validaFormulario(programacaoEntregaDto);
 			
-			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
-			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.
-			pesquisarPrimeiroPorDescricao(programacaoEntregaDto.getBairroSecaoElegivel());
-			
-			//Preenche a descrição e o id da ua.
-			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
-			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
+//			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
+//			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.
+//			pesquisarPrimeiroPorDescricao(programacaoEntregaDto.getBairroSecaoElegivel());
+//			
+//			//Preenche a descrição e o id da ua.
+//			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
+//			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
 			
 			//Calcula os dias do mês, a partir da data da solicitação.
 			UtilSisben utilSisben = new UtilSisben();
 			Integer diasProgramacaoMes = utilSisben.calculaDiasMes(programacaoEntregaDto.getMesAnoProgramacao(),
 					                                               programacaoEntregaDto.getDataAtual());
 			
-			//Sava registros.
+			//Salva registros.
 			List<ProgramacaoEntrega> programacaoEntregaMes = salvar(programacaoEntregaDto,diasProgramacaoMes);
 			
 			
@@ -424,19 +429,18 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				programacaoInput.setMatriculaColaborador(programacaoEntregaDto.getMatriculaColaborador());
 				programacaoInput.setUaPrevista(programacaoEntregaDto.getUaPrevista());
-				programacaoInput.setUaRealizada("");
+				programacaoInput.setUaRealizada(null);
 				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
 				programacaoInput.setIdData(null);
-				//
+				//Verificar a possibilidade de colocar uma justificativa "n se aplica"
 				programacaoInput.setIdJustificativa(11L);
-				programacaoInput.setIdUsuario(3L);
-				programacaoInput.setIdValor(7L);
 				//
-				
+				programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
+				programacaoInput.setIdValor(programacaoEntregaDto.getIdValor());
 				programacaoInput.setDataEntrega(null);
 				programacaoInput.setDataSolicitacao(dataSolicitacao);
 				programacaoInput.setSolicExtra(false);
-				programacaoInput.setStAprov(false);
+				programacaoInput.setStAprov(null);
 				programacaoInput.setDataUltimaModificacao(LocalDateTime.now());
 				programacaoInput.setIdUsuarioUltimaModificacao(programacaoEntregaDto.getIdUsuarioUltimaModificacao());
 				programacaoInput.setDataProgramacao(dataSolicitacao);
@@ -467,6 +471,31 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		
 		public void validaFormulario(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
+			
+			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
+			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.
+			pesquisarPrimeiroPorDescricao(programacaoEntregaDto.getBairroSecaoElegivel());
+			
+			if ((unidadeAcademica == null)||(unidadeAcademica.getDescricao() == null) ||(unidadeAcademica.getDescricao() == "")) {
+				throw new GlobalExceptionHandler("Elegível sem o bairro da seção!", 0);
+			}
+			
+			//Preenche a descrição e o id da ua.
+			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
+			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
+			
+			
+			//Pesquisa se existe valor marmita e recupera o mais atual
+			List<ValorMarmita> listaValorMarmita = valorMarmitaService.
+			pesquisarValorMaisAtual(programacaoEntregaDto.getMesAnoProgramacao());
+			
+			//listaValorMarmita = null;
+			if ((listaValorMarmita == null)||(listaValorMarmita.get(0) == null)) {
+				throw new GlobalExceptionHandler("Não existe valor marmita cadastrado para o ano e mês solicitado!", 0);
+			}
+			
+			//Preenche o id do valor.
+			programacaoEntregaDto.setIdValor(listaValorMarmita.get(0).getId());
 			
 			//Gera ano e mês correntes.
 			int mesAtual = LocalDate.now().getMonthValue();

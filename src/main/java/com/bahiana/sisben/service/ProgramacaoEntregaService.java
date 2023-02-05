@@ -24,7 +24,7 @@ public interface ProgramacaoEntregaService {
 	
 	Page<ProgramacaoEntrega> listarPaginadoSimples( );
 	
-    Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable, ProgramacaoEntregaDto programacaoEntregaDTO );
+//    Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable, ProgramacaoEntregaDto programacaoEntregaDTO );
 	
 	ProgramacaoEntrega salvar(ProgramacaoEntregaDto programacaoEntregaDto);
 	
@@ -52,7 +52,7 @@ public interface ProgramacaoEntregaService {
 	
 	public Iterable<ProgramacaoEntrega> findAll();
 	
-	Iterable<ProgramacaoEntrega> programacaoDataTable(ProgramacaoEntregaDto programacaoEntregaDTO );
+//	Iterable<ProgramacaoEntrega> programacaoDataTable(ProgramacaoEntregaDto programacaoEntregaDTO );
 	
 	public Iterable<ProgramacaoEntrega> findBymatriculaColaborador(ProgramacaoEntregaDto programacaoEntregaDTO );
 	

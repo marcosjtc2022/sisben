@@ -18,37 +18,37 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 //	Page<ProgramacaoEntrega> findAll(ProgramacaoEntregaSpecification programacaoEntregaSpecification, Pageable pageable);
 	
-	@Query(value =	"select el.gestor1 as gestor,pe.matriculaColaborador,"
-                   + " el.nomeColaborador, pe.uaPrevista , "
-                   + " pe.uaRealizada,s.descricao, ua.descricao "
-                   + " from Elegibilidade el, ProgramacaoEntrega pe, Setor s, "
-                   + " UnidadeAcademica ua"
-	               + " where pe.matriculaColaborador = el.matriculaColaborador and "
-	               + "       pe.idUa = ua.id and "
-	               + "       pe.matriculaColaborador =:matriculaColaborador and "
-	               + "       pe.uaPrevista =:uaPrevista and "
-	               + "       s.codSetor =:codSetor and "
-                   + " el.codSetor = s.codSetor ")
-	Page<ProgramacaoEntrega> programacaoPorPeriodo(Pageable pageable, 
-			                                       @Param("matriculaColaborador")String matriculaColaborador ,
-			                                       @Param("uaPrevista") String uaPrevista,
-			                                       @Param("codSetor") String codSetor);
+//	@Query(value =	"select el.gestor1 as gestor,pe.matriculaColaborador,"
+//                   + " el.nomeColaborador, pe.uaPrevista , "
+//                   + " pe.uaRealizada,s.descricao, ua.descricao "
+//                   + " from Elegibilidade el, ProgramacaoEntrega pe, Setor s, "
+//                   + " UnidadeAcademica ua"
+//	               + " where pe.matriculaColaborador = el.matriculaColaborador and "
+//	               + "       pe.idUa = ua.id and "
+//	               + "       pe.matriculaColaborador =:matriculaColaborador and "
+//	               + "       pe.uaPrevista =:uaPrevista and "
+//	               + "       s.codSetor =:codSetor and "
+//                   + " el.codSetor = s.codSetor ")
+//	Page<ProgramacaoEntrega> programacaoPorPeriodo(Pageable pageable, 
+//			                                       @Param("matriculaColaborador")String matriculaColaborador ,
+//			                                       @Param("uaPrevista") String uaPrevista,
+//			                                       @Param("codSetor") String codSetor);
+//	
 	
-	
-	@Query(value =	"select el.gestor1 as gestor,pe.matriculaColaborador,"
-            + " el.nomeColaborador, pe.uaPrevista , "
-            + " pe.uaRealizada,s.descricao, ua.descricao "
-            + " from Elegibilidade el, ProgramacaoEntrega pe, Setor s, "
-            + " UnidadeAcademica ua"
-            + " where pe.matriculaColaborador = el.matriculaColaborador and "
-            + "       pe.idUa = ua.id and "
-            + "       pe.matriculaColaborador =:matriculaColaborador and "
-            + "       pe.uaPrevista =:uaPrevista and "
-            + "       s.codSetor =:codSetor and "
-            + " el.codSetor = s.codSetor ")
-	Iterable<ProgramacaoEntrega>  programacaoDataTable(@Param("matriculaColaborador")String matriculaColaborador ,
-		                                       @Param("uaPrevista") String uaPrevista,
-		                                       @Param("codSetor") String codSetor);
+//	@Query(value =	"select el.gestor1 as gestor,pe.matriculaColaborador,"
+//            + " el.nomeColaborador, pe.uaPrevista , "
+//            + " pe.uaRealizada,s.descricao, ua.descricao "
+//            + " from Elegibilidade el, ProgramacaoEntrega pe, Setor s, "
+//            + " UnidadeAcademica ua"
+//            + " where pe.matriculaColaborador = el.matriculaColaborador and "
+//            + "       pe.idUa = ua.id and "
+//            + "       pe.matriculaColaborador =:matriculaColaborador and "
+//            + "       pe.uaPrevista =:uaPrevista and "
+//            + "       s.codSetor =:codSetor and "
+//            + " el.codSetor = s.codSetor ")
+//	Iterable<ProgramacaoEntrega>  programacaoDataTable(@Param("matriculaColaborador")String matriculaColaborador ,
+//		                                       @Param("uaPrevista") String uaPrevista,
+//		                                       @Param("codSetor") String codSetor);
 	
 	
 	public Iterable<ProgramacaoEntrega> findBymatriculaColaboradorAndUaPrevista(String matriculaColaborador,String uaPrevista );

@@ -115,10 +115,10 @@ public class ProgramacaoEntrega implements Serializable{
 //    Calendario calendario;
 
     
-    //mapeando a classe Elegibilidade.
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(updatable=false,insertable=false,name = "matricula_colaborador")
-    Elegibilidade elegibilidade;
+//    //mapeando a classe Elegibilidade.
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(updatable=false,insertable=false,name = "matricula_colaborador")
+//    Elegibilidade elegibilidade;
     
 //    //mapeando a classe SuspensaoElegibilidade.
       //Não tem esta relação. Se estiver uma, não pode estar na outra.
@@ -152,9 +152,9 @@ public class ProgramacaoEntrega implements Serializable{
     @JoinColumn(updatable=false,insertable=false,name = "id_usuario_entrega")
     Usuario usuarioEntrega;
     
-    //Mapenado classe CentroCusto. 
-  	@OneToMany(mappedBy = "programacaoEntrega", fetch = FetchType.EAGER)
-  	Set<CentroCustoPercRateio> centroCusto;
+//    //Mapenado classe CentroCusto. 
+//  	@OneToMany(mappedBy = "programacaoEntrega", fetch = FetchType.EAGER)
+//  	Set<CentroCustoPercRateio> centroCusto;
 
 	public Long getId() {
 		return id;
@@ -276,13 +276,13 @@ public class ProgramacaoEntrega implements Serializable{
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
-	public Elegibilidade getElegibilidade() {
-		return elegibilidade;
-	}
-
-	public void setElegibilidade(Elegibilidade elegibilidade) {
-		this.elegibilidade = elegibilidade;
-	}
+//	public Elegibilidade getElegibilidade() {
+//		return elegibilidade;
+//	}
+//
+//	public void setElegibilidade(Elegibilidade elegibilidade) {
+//		this.elegibilidade = elegibilidade;
+//	}
 
 	public UnidadeAcademica getUnidadeAcademica() {
 		return unidadeAcademica;
@@ -316,13 +316,13 @@ public class ProgramacaoEntrega implements Serializable{
 		this.usuarioEntrega = usuarioEntrega;
 	}
 
-	public Set<CentroCustoPercRateio> getCentroCusto() {
-		return centroCusto;
-	}
-
-	public void setCentroCusto(Set<CentroCustoPercRateio> centroCusto) {
-		this.centroCusto = centroCusto;
-	}
+//	public Set<CentroCustoPercRateio> getCentroCusto() {
+//		return centroCusto;
+//	}
+//
+//	public void setCentroCusto(Set<CentroCustoPercRateio> centroCusto) {
+//		this.centroCusto = centroCusto;
+//	}
 	
 	public String getDiaDaSemana() {
 		return diaDaSemana;

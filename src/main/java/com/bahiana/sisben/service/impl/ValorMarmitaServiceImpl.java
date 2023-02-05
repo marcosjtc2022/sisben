@@ -75,6 +75,11 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 		
 		return valorMarmita;
 	}
+
+	@Override
+	public List<ValorMarmita> pesquisarValorMaisAtual(LocalDate dataFinal) {
+		return valorMarmitaRepository.pesquisarValorMaisAtual(dataFinal);
+	}
 	
 	
 

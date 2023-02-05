@@ -72,11 +72,11 @@ public class ProgramacaoEntregaController {
     	
     }
     
-    @GetMapping(value =  "/programacao-por-periodo" )
-    @ResponseBody
-    public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable,ProgramacaoEntregaDto  programacaoEntregaDTO  ) {
-    	return this.programacaoEntregaService.listarProgramacaoPorPeriodo(pageable,programacaoEntregaDTO);   	  
-    }
+//    @GetMapping(value =  "/programacao-por-periodo" ) #
+//    @ResponseBody
+//    public Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable,ProgramacaoEntregaDto  programacaoEntregaDTO  ) {
+//    	return this.programacaoEntregaService.listarProgramacaoPorPeriodo(pageable,programacaoEntregaDTO);   	  
+//    }
     
     @GetMapping(value =  "/listarPaginado" )
     @ResponseBody

@@ -38,13 +38,13 @@ public class Setor implements Serializable {
 //	private Long idUsuarioUltimaModificacao;
 
 			
-	//Mapenado classe UsuarioSetor 
-	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
-	Set<UsuarioSetor> perfisSetores;
-	
-	//Mapenado classe Elegibilidade 
-	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
-	Set<Elegibilidade> elegiveisSetores;
+//	//Mapenado classe UsuarioSetor 
+//	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
+//	Set<UsuarioSetor> perfisSetores;
+//	
+//	//Mapenado classe Elegibilidade 
+//	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
+//	Set<Elegibilidade> elegiveisSetores;
 	
 	
 	
