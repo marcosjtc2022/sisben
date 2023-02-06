@@ -61,10 +61,22 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	@Autowired
 	SuspensaoElegibilidadeService suspensaoElegibilidadeService;
 	
+	private static boolean mesCorrente = false;
+	
+	
+	
 //	@Autowired
 //	VwSisbenFeriasElegivelService vwSisbenFeriasElegivel;
 //	
 	
+	public static boolean isMesCorrente() {
+		return mesCorrente;
+	}
+
+	public static void setMesCorrente(boolean mesCorrente) {
+		ProgramacaoEntregaServiceImpl.mesCorrente = mesCorrente;
+	}
+
 	@Override
 	@Transactional //Abre uma transação. Ao final se ocorrer tudo bem faz commit. No caso de erro faz rollback.
 	public ProgramacaoEntrega salvar(ProgramacaoEntregaDto programacaoEntregaDto) {
@@ -400,8 +412,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
 //			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
 			
-			//Calcula os dias do mês, a partir da data da solicitação.
+			//Calcula os dias do mês.
 			UtilSisben utilSisben = new UtilSisben();
+			
 			Integer diasProgramacaoMes = utilSisben.calculaDiasMes(programacaoEntregaDto.getMesAnoProgramacao(),
 					                                               programacaoEntregaDto.getDataAtual());
 			
@@ -418,14 +431,20 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			Calendario calendario = new Calendario();
 			
-			LocalDate dataSolicitacao = null;
+			LocalDate dataProgramacao = null;
 			//LocalDateTime dataSolicitacaoDateTime = null;
 //			Integer ano =  programacaoEntregaDto.getDataAtual().getYear();
 //			Integer mes =  programacaoEntregaDto.getDataAtual().getMonthValue();
 //			Integer dia =  programacaoEntregaDto.getDataAtual().getDayOfMonth();
 			
-			//Data que foi solicitada. 
-			dataSolicitacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().toString());
+			//Data que foi solicitada.
+			if (mesCorrente == false) {
+			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getMesAnoProgramacao().toString());
+			} else {
+			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().toString());
+			}
+				
+			
 			//dataSolicitacaoDateTime = LocalDateTime.parse(programacaoEntregaDto.getDataAtual().toString());
 			
 			UtilSisben utilSisben = new UtilSisben();
@@ -442,22 +461,22 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setUaRealizada(null);
 				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
 				programacaoInput.setIdData(null);
-				//Verificar a possibilidade de colocar uma justificativa "n se aplica"
+				//Verificar o relacionamento com a tabela justificativa.
 				programacaoInput.setIdJustificativa(11L);
 				//
 				programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
 				programacaoInput.setIdValor(programacaoEntregaDto.getIdValor());
 				programacaoInput.setDataEntrega(null);
-				programacaoInput.setDataSolicitacao(dataSolicitacao);
+				programacaoInput.setDataSolicitacao(programacaoEntregaDto.getDataAtual());
 				programacaoInput.setSolicExtra(false);
 				programacaoInput.setStAprov(null);
 				programacaoInput.setDataUltimaModificacao(LocalDateTime.now());
 				programacaoInput.setIdUsuarioUltimaModificacao(programacaoEntregaDto.getIdUsuarioUltimaModificacao());
-				programacaoInput.setDataProgramacao(dataSolicitacao);
-				programacaoInput.setDiaDaSemana(utilSisben.getDiaDaSemana(dataSolicitacao));
+				programacaoInput.setDataProgramacao(dataProgramacao);
+				programacaoInput.setDiaDaSemana(utilSisben.getDiaDaSemana(dataProgramacao));
 				
 				//Pesquisa existência de data especial.
-				calendario = calendarioService.pesquisarPorData(dataSolicitacao);
+				calendario = calendarioService.pesquisarPorData(dataProgramacao);
 				
 				if (calendario != null) {
 					programacaoInput.setDescricaoFeriado(calendario.getDescricao());
@@ -466,7 +485,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
 				Long contSusElegibilidade = suspensaoElegibilidadeService.
-					pesquisarSuspensao(dataSolicitacao, programacaoEntregaDto.getMatriculaColaborador());
+					pesquisarSuspensao(dataProgramacao, programacaoEntregaDto.getMatriculaColaborador());
 				
 				
 				if ((contSusElegibilidade > 0) && (contSusElegibilidade != null)) {
@@ -484,7 +503,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				this.programacaoEntregaRepository.save(programacaoInput);
 				
-				dataSolicitacao = dataSolicitacao.plusDays(1);
+				dataProgramacao = dataProgramacao.plusDays(1);
 				//dataSolicitacaoDateTime = dataSolicitacaoDateTime.plusDays(1);
 
 				
