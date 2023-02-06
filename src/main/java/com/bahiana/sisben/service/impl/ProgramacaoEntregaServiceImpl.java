@@ -427,7 +427,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		
 		public List<ProgramacaoEntrega> salvar(ProgramacaoEntregaDto programacaoEntregaDto, Integer diasProgramacaoMes){
 			
-			List<ProgramacaoEntrega> programacaoEntregaMes = new ArrayList();
+			List<ProgramacaoEntrega> listaProgramacaoEntregaMes = new ArrayList();
 			
 			Calendario calendario = new Calendario();
 			
@@ -462,7 +462,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
 				programacaoInput.setIdData(null);
 				//Verificar o relacionamento com a tabela justificativa.
-				programacaoInput.setIdJustificativa(11L);
+				//programacaoInput.setIdJustificativa(11L);
 				//
 				programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
 				programacaoInput.setIdValor(programacaoEntregaDto.getIdValor());
@@ -501,13 +501,15 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					programacaoInput.setStFerias(true);
 				}
 				
+				listaProgramacaoEntregaMes.add(programacaoInput);
+				
 				this.programacaoEntregaRepository.save(programacaoInput);
 				
 				dataProgramacao = dataProgramacao.plusDays(1);
 				
 			}
 			
-			return programacaoEntregaMes;
+			return listaProgramacaoEntregaMes;
 		}
 
 		@Override

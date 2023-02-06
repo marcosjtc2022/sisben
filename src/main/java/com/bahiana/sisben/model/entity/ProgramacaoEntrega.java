@@ -162,7 +162,7 @@ public class ProgramacaoEntrega implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "id_justificativa")
     Justificativa justificativa;
-    
+//    
     //mapeando a classe ValorMarmita.
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "id_valor")
@@ -304,6 +304,14 @@ public class ProgramacaoEntrega implements Serializable{
 //	public void setElegibilidade(Elegibilidade elegibilidade) {
 //		this.elegibilidade = elegibilidade;
 //	}
+	
+	public Justificativa getJustificativa() {
+		return justificativa;
+	}
+
+	public void setJustificativa(Justificativa justificativa) {
+		this.justificativa = justificativa;
+	}
 
 	public UnidadeAcademica getUnidadeAcademica() {
 		return unidadeAcademica;
@@ -313,13 +321,13 @@ public class ProgramacaoEntrega implements Serializable{
 		this.unidadeAcademica = unidadeAcademica;
 	}
 
-	public Justificativa getJustificativa() {
-		return justificativa;
-	}
-
-	public void setJustificativa(Justificativa justificativa) {
-		this.justificativa = justificativa;
-	}
+//	public Justificativa getJustificativa() {
+//		return justificativa;
+//	}
+//
+//	public void setJustificativa(Justificativa justificativa) {
+//		this.justificativa = justificativa;
+//	}
 
 	public ValorMarmita getValorMarmita() {
 		return valorMarmita;
