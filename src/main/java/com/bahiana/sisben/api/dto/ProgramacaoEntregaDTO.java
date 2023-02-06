@@ -33,6 +33,8 @@ public class ProgramacaoEntregaDto {
 	
 	private LocalDate dataSolicitacao;
 	
+//	private LocalDateTime dataSolicitacaoDateTime;
+	
 	private Boolean solicExtra;
 	
 	private Boolean stAprov;
@@ -60,6 +62,26 @@ public class ProgramacaoEntregaDto {
 	
 	private Boolean exigSuspensa;
 	
+	private Boolean stFerias;
+	
+	
+	
+	public Boolean getStFerias() {
+		return stFerias;
+	}
+
+	public void setStFerias(Boolean stFerias) {
+		this.stFerias = stFerias;
+	}
+
+//	public LocalDateTime getDataSolicitacaoDateTime() {
+//		return dataSolicitacaoDateTime;
+//	}
+//
+//	public void setDataSolicitacaoDateTime(LocalDateTime dataSolicitacaoDateTime) {
+//		this.dataSolicitacaoDateTime = dataSolicitacaoDateTime;
+//	}
+
 	public Boolean getExigSuspensa() {
 		return exigSuspensa;
 	}
@@ -253,14 +275,15 @@ public class ProgramacaoEntregaDto {
 	public void setDescricaoFeriado(String descricaoFeriado) {
 		this.descricaoFeriado = descricaoFeriado;
 	}
-	
+		
+    
 	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
 			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual, String diaDaSemana,
 			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao, String bairroSecaoElegivel,
-			Boolean exigSuspensa) {
+			Boolean exigSuspensa, Boolean stFerias) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -285,6 +308,7 @@ public class ProgramacaoEntregaDto {
 		this.mesAnoProgramacao = mesAnoProgramacao;
 		this.bairroSecaoElegivel = bairroSecaoElegivel;
 		this.exigSuspensa = exigSuspensa;
+		this.stFerias = stFerias;
 	}
 
 	public ProgramacaoEntregaDto() {

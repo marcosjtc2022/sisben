@@ -1,22 +1,17 @@
 package com.bahiana.sisben.api.dto;
 
 import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Id;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import java.time.LocalDateTime;
 
 public class VwSisbenFeriasElegivelDto {
 	
 	private String matriculaFuncionario;
 	
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDate dataInicioFerias;
 	
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDate dataFimFerias;
+	private LocalDateTime dataInicioFerias;
+	
+	
+	private LocalDateTime dataFimFerias;
 
 	public String getMatriculaFuncionario() {
 		return matriculaFuncionario;
@@ -26,23 +21,23 @@ public class VwSisbenFeriasElegivelDto {
 		this.matriculaFuncionario = matriculaFuncionario;
 	}
 
-	public LocalDate getDataInicioFerias() {
+	public LocalDateTime getDataInicioFerias() {
 		return dataInicioFerias;
 	}
 
-	public void setDataInicioFerias(LocalDate dataInicioFerias) {
+	public void setDataInicioFerias(LocalDateTime dataInicioFerias) {
 		this.dataInicioFerias = dataInicioFerias;
 	}
 
-	public LocalDate getDataFimFerias() {
+	public LocalDateTime getDataFimFerias() {
 		return dataFimFerias;
 	}
 
-	public void setDataFimFerias(LocalDate dataFimFerias) {
+	public void setDataFimFerias(LocalDateTime dataFimFerias) {
 		this.dataFimFerias = dataFimFerias;
 	}
 
-	public VwSisbenFeriasElegivelDto(String matriculaFuncionario, LocalDate dataInicioFerias, LocalDate dataFimFerias) {
+	public VwSisbenFeriasElegivelDto(String matriculaFuncionario, LocalDateTime dataInicioFerias, LocalDateTime dataFimFerias) {
 		super();
 		this.matriculaFuncionario = matriculaFuncionario;
 		this.dataInicioFerias = dataInicioFerias;

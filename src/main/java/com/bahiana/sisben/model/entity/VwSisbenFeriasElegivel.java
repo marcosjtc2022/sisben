@@ -1,6 +1,7 @@
 package com.bahiana.sisben.model.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -20,12 +21,12 @@ public class VwSisbenFeriasElegivel {
 	private String matriculaFuncionario;
 	
 	@Column(name = "DATAINICIOFERIAS")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDate dataInicioFerias;
+	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+	private LocalDateTime dataInicioFerias;
 	
 	@Column(name = "DATAFIMFERIAS")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
-	private LocalDate dataFimFerias;
+	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
+	private LocalDateTime dataFimFerias;
 
 	public String getMatriculaFuncionario() {
 		return matriculaFuncionario;
@@ -35,23 +36,23 @@ public class VwSisbenFeriasElegivel {
 		this.matriculaFuncionario = matriculaFuncionario;
 	}
 
-	public LocalDate getDataInicioFerias() {
+	public LocalDateTime getDataInicioFerias() {
 		return dataInicioFerias;
 	}
 
-	public void setDataInicioFerias(LocalDate dataInicioFerias) {
+	public void setDataInicioFerias(LocalDateTime dataInicioFerias) {
 		this.dataInicioFerias = dataInicioFerias;
 	}
 
-	public LocalDate getDataFimFerias() {
+	public LocalDateTime getDataFimFerias() {
 		return dataFimFerias;
 	}
 
-	public void setDataFimFerias(LocalDate dataFimFerias) {
+	public void setDataFimFerias(LocalDateTime dataFimFerias) {
 		this.dataFimFerias = dataFimFerias;
 	}
 
-	public VwSisbenFeriasElegivel(String matriculaFuncionario, LocalDate dataInicioFerias, LocalDate dataFimFerias) {
+	public VwSisbenFeriasElegivel(String matriculaFuncionario, LocalDateTime dataInicioFerias, LocalDateTime dataFimFerias) {
 		super();
 		this.matriculaFuncionario = matriculaFuncionario;
 		this.dataInicioFerias = dataInicioFerias;

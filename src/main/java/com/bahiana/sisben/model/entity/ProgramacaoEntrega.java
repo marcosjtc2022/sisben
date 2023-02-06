@@ -69,6 +69,9 @@ public class ProgramacaoEntrega implements Serializable{
 	@Column(name = "solic_extra", columnDefinition="BIT")
 	private Boolean solicExtra;
 	
+	@Column(name = "st_ferias", columnDefinition="BIT")
+	private Boolean stFerias;
+	
 	@Column(name = "status_aprov", columnDefinition="BIT")
 	private Boolean stAprov;
 	
@@ -76,7 +79,6 @@ public class ProgramacaoEntrega implements Serializable{
 	private Boolean exigSuspensa;
 	
 	@Column(name = "data_ultima_modificacao")
-	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDateTime dataUltimaModificacao;
 	
 	@Column(name="id_usuario_ultima_modificacao")
@@ -94,7 +96,14 @@ public class ProgramacaoEntrega implements Serializable{
 	@Transient
 	String tabelaProgramacaoEntrega;
 	
-	
+	public Boolean getStFerias() {
+		return stFerias;
+	}
+
+	public void setStFerias(Boolean stFerias) {
+		this.stFerias = stFerias;
+	}
+
 	public Boolean getExigSuspensa() {
 		return exigSuspensa;
 	}
@@ -360,9 +369,11 @@ public class ProgramacaoEntrega implements Serializable{
 		this.descricaoFeriado = descricaoFeriado;
 	}
 	
+	
+	
 	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
-			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, Boolean exigSuspensa,
+			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stFerias, Boolean stAprov, Boolean exigSuspensa,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao, String diaDaSemana,
 			LocalDate dataProgramacao, String descricaoFeriado) {
 		super();
@@ -378,6 +389,7 @@ public class ProgramacaoEntrega implements Serializable{
 		this.dataEntrega = dataEntrega;
 		this.dataSolicitacao = dataSolicitacao;
 		this.solicExtra = solicExtra;
+		this.stFerias = stFerias;
 		this.stAprov = stAprov;
 		this.exigSuspensa = exigSuspensa;
 		this.dataUltimaModificacao = dataUltimaModificacao;

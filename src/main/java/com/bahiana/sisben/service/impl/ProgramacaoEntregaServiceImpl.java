@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -36,6 +35,7 @@ import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
+import com.bahiana.sisben.service.VwSisbenFeriasElegivelService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 import com.bahiana.sisben.util.UtilSisben;
 
@@ -61,6 +61,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	@Autowired
 	SuspensaoElegibilidadeService suspensaoElegibilidadeService;
 	
+//	@Autowired
+//	VwSisbenFeriasElegivelService vwSisbenFeriasElegivel;
+//	
 	
 	@Override
 	@Transactional //Abre uma transação. Ao final se ocorrer tudo bem faz commit. No caso de erro faz rollback.
@@ -416,12 +419,14 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			Calendario calendario = new Calendario();
 			
 			LocalDate dataSolicitacao = null;
+			//LocalDateTime dataSolicitacaoDateTime = null;
 //			Integer ano =  programacaoEntregaDto.getDataAtual().getYear();
 //			Integer mes =  programacaoEntregaDto.getDataAtual().getMonthValue();
 //			Integer dia =  programacaoEntregaDto.getDataAtual().getDayOfMonth();
 			
-			//Colocar anomes programacao. 
+			//Data que foi solicitada. 
 			dataSolicitacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().toString());
+			//dataSolicitacaoDateTime = LocalDateTime.parse(programacaoEntregaDto.getDataAtual().toString());
 			
 			UtilSisben utilSisben = new UtilSisben();
 			
@@ -459,7 +464,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				};
 				
 				
-				//Pesquisa se existe suspensaão da eligibilidade para o ano e mês.
+				//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
 				Long contSusElegibilidade = suspensaoElegibilidadeService.
 					pesquisarSuspensao(dataSolicitacao, programacaoEntregaDto.getMatriculaColaborador());
 				
@@ -468,10 +473,19 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					programacaoInput.setExigSuspensa(true);
 				}
 				
-		
+				
+//				//Pesquisa se existem férias.
+//				Long contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(dataSolicitacaoDateTime, programacaoEntregaDto.getMatriculaColaborador());
+//				
+//				
+//				if ((contFerias > 0) && (contFerias != null)) {
+//					programacaoInput.setStFerias(true);
+//				}
+				
 				this.programacaoEntregaRepository.save(programacaoInput);
 				
 				dataSolicitacao = dataSolicitacao.plusDays(1);
+				//dataSolicitacaoDateTime = dataSolicitacaoDateTime.plusDays(1);
 
 				
 			}
