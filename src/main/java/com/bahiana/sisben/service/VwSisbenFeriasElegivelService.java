@@ -1,10 +1,10 @@
 package com.bahiana.sisben.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public interface VwSisbenFeriasElegivelService {
 	
 	
-//	Long pesquisarFeriasElegivel(LocalDateTime dataSolicitacaoDateTime, String matriculaColaborador );
+	Long pesquisarFeriasElegivel(LocalDate dataSolicitacao, String matriculaColaborador );
 
 }

@@ -1,6 +1,6 @@
 package com.bahiana.sisben.service.impl;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,10 +13,10 @@ public class VwSisbenFeriasElegivelServiceImpl implements VwSisbenFeriasElegivel
 	VwSisbenFeriasElegivelRepository vwSisbenFeriasElegivelRepository;
 	
 	
-//	@Override
-//	public Long pesquisarFeriasElegivel(LocalDateTime dataSolicitacaoDateTime, String matriculaColaborador) {
-//		return vwSisbenFeriasElegivelRepository.
-//			pesquisarFeriasElegivel(dataSolicitacaoDateTime, matriculaColaborador);
-//	}
+	@Override
+	public Long pesquisarFeriasElegivel(LocalDate dataSolicitacao, String matriculaColaborador) {
+		return vwSisbenFeriasElegivelRepository.
+			pesquisarFeriasElegivel(dataSolicitacao, matriculaColaborador);
+	}
 ;
 }

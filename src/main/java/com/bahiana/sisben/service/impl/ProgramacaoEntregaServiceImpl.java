@@ -65,9 +65,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	
 	
-//	@Autowired
-//	VwSisbenFeriasElegivelService vwSisbenFeriasElegivel;
-//	
+	@Autowired
+	VwSisbenFeriasElegivelService vwSisbenFeriasElegivel;
+	
 	
 	public static boolean isMesCorrente() {
 		return mesCorrente;
@@ -437,7 +437,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //			Integer mes =  programacaoEntregaDto.getDataAtual().getMonthValue();
 //			Integer dia =  programacaoEntregaDto.getDataAtual().getDayOfMonth();
 			
-			//Data que foi solicitada.
+			//Verifica variável boolean que é utilizada na classe utilsisben, no método calculaDiasMes.
 			if (mesCorrente == false) {
 			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getMesAnoProgramacao().toString());
 			} else {
@@ -482,7 +482,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					programacaoInput.setDescricaoFeriado(calendario.getDescricao());
 				};
 				
-				
+				//Opção por este tipo de chamada para não trazer muitos objetos para a memória.
 				//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
 				Long contSusElegibilidade = suspensaoElegibilidadeService.
 					pesquisarSuspensao(dataProgramacao, programacaoEntregaDto.getMatriculaColaborador());
@@ -493,19 +493,17 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				}
 				
 				
-//				//Pesquisa se existem férias.
-//				Long contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(dataSolicitacaoDateTime, programacaoEntregaDto.getMatriculaColaborador());
-//				
-//				
-//				if ((contFerias > 0) && (contFerias != null)) {
-//					programacaoInput.setStFerias(true);
-//				}
+				//Pesquisa se existem férias.
+				Long contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(dataProgramacao, programacaoEntregaDto.getMatriculaColaborador());
+				
+				
+				if ((contFerias > 0) && (contFerias != null)) {
+					programacaoInput.setStFerias(true);
+				}
 				
 				this.programacaoEntregaRepository.save(programacaoInput);
 				
 				dataProgramacao = dataProgramacao.plusDays(1);
-				//dataSolicitacaoDateTime = dataSolicitacaoDateTime.plusDays(1);
-
 				
 			}
 			

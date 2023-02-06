@@ -23,9 +23,12 @@ public class UtilSisben {
 		
 		//Verifica se o mês atual é igual ao mês da programação.
 		if (mesProgramacao == mesAtual ) { 
+			  //Calcula a diferença entre a data corrente do mês e o final do mês da programação.
 			  Integer diferencadias = (int) ChronoUnit.DAYS.between(dataAtual, utlimaDataMes );
 			  diferencadias +=1;
 			  qtdDiasmes = diferencadias;
+			  
+			  //Variável boolean de classe.  
 			  ProgramacaoEntregaServiceImpl.setMesCorrente(true);
 		}
 		
