@@ -38,6 +38,8 @@ public interface SuspensaoElegibilidadeService {
 	
 	Long pesquisarSuspensao(LocalDate dataSolicitacao, String matriculaColaborador );
 	
+	List<SuspensaoElegibilidade> obterListaPorMatricula(String matriculaColaborador);
+	
 
 
 }

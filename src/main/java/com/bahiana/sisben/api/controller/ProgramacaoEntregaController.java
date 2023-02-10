@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
+import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
@@ -264,6 +266,41 @@ public class ProgramacaoEntregaController {
 				    return ResponseEntity.badRequest().body(e.getMessage());
 			     }
 		 }
+		
+		 @PutMapping("/alterarProgramacaoMes")
+		 public ResponseEntity alterarProgramacaoMes(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
+			  try {
+					List<ProgramacaoEntrega> listaProgramacaoEntrega = new ArrayList() ;
+					listaProgramacaoEntrega = programacaoEntregaService.alterarProgramacaoMes(programacaoEntregaDto);
+					
+					return new ResponseEntity(listaProgramacaoEntrega, HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return ResponseEntity.badRequest().body(e.getMessage());
+			     }
+		 }
+		 
+		 @GetMapping(value =  "/listarProgramacaoEntregaAnoMesMatricula" )
+		
+		  //@ResponseBody
+		  public ResponseEntity<List<ProgramacaoEntrega>> listarProgramacaoEntregaAnoMesMatricula(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto ) {
+			 try {
+					
+					return new ResponseEntity(programacaoEntregaService.
+							listaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto), HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return new ResponseEntity<List<ProgramacaoEntrega>>(HttpStatus.BAD_REQUEST);
+			     }
+		  }
+		 
+//		 @GetMapping(value =  "/lista-filtro-descricao" )
+//			public ResponseEntity<List<Fornecedor>> listarPorDescricaoOrdenadoDescricao(FornecedorDto  fornecedorDto) {
+//				 try {
+//						
+//						return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);
+//				     } catch (RegraNegocioException e) {
+//					    return new ResponseEntity<List<Fornecedor>>(HttpStatus.BAD_REQUEST);
+//				     }
+//			}
 		  
 		  
 		  

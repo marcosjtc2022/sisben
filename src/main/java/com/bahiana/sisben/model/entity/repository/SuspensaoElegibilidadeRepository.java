@@ -26,5 +26,12 @@ public interface SuspensaoElegibilidadeRepository extends PagingAndSortingReposi
 			+ "and  s.matriculaColaborador = :matriculaColaborador")
 			Long pesquisarSuspensao(@Param("dataSolicitacao") LocalDate dataSolicitacao,
                     @Param("matriculaColaborador") String matriculaColaborador);
+    
+    @Query("select s from SuspensaoElegibilidade s "
+			+ "where s.matriculaColaborador = :matriculaColaborador")
+    List<SuspensaoElegibilidade> obterListaPorMatricula(@Param("matriculaColaborador") String matriculaColaborador);
+    
+    
+    
 
 }

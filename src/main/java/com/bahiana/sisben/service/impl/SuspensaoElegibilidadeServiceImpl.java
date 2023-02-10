@@ -99,8 +99,13 @@ public class SuspensaoElegibilidadeServiceImpl implements SuspensaoElegibilidade
 	}
 
 	@Override
-	public Long pesquisarSuspensao(LocalDate dataSolicitacao, String Matricula) {
-		return suspensaoElegibilidadeRepository.pesquisarSuspensao(dataSolicitacao, Matricula);
+	public Long pesquisarSuspensao(LocalDate dataSolicitacao, String matricula) {
+		return suspensaoElegibilidadeRepository.pesquisarSuspensao(dataSolicitacao, matricula);
+	}
+
+	@Override
+	public List<SuspensaoElegibilidade> obterListaPorMatricula(String matricula) {
+		return suspensaoElegibilidadeRepository.obterListaPorMatricula(matricula);
 	}
 
 }

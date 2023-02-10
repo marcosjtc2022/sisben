@@ -120,6 +120,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	public ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao) {
 		
 		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
+		 
 		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
 		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
 				//validaEPersisteInclusao(centro);	
@@ -477,7 +478,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				//Pesquisa existência de data especial.
 				calendario = calendarioService.pesquisarPorData(dataProgramacao);
-				
+				programacaoInput.setDescricaoFeriado(null);
 				if (calendario != null) {
 					programacaoInput.setDescricaoFeriado(calendario.getDescricao());
 				};
@@ -487,7 +488,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				Long contSusElegibilidade = suspensaoElegibilidadeService.
 					pesquisarSuspensao(dataProgramacao, programacaoEntregaDto.getMatriculaColaborador());
 				
-				
+				programacaoInput.setExigSuspensa(false);
 				if ((contSusElegibilidade > 0) && (contSusElegibilidade != null)) {
 					programacaoInput.setExigSuspensa(true);
 				}
@@ -496,7 +497,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				//Pesquisa se existem férias.
 				Long contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(dataProgramacao, programacaoEntregaDto.getMatriculaColaborador());
 				
-				
+				programacaoInput.setStFerias(false);
 				if ((contFerias > 0) && (contFerias != null)) {
 					programacaoInput.setStFerias(true);
 				}
@@ -555,12 +556,12 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			//Verifica se ano informado é menor que ano corrente.
 			if (anoProgramacao < anoAtual ) {
-				throw new GlobalExceptionHandler("Ano da programção deve ser maior ou igual ao ano corrente!", 0);
+				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!", 0);
 			}
 			
 			//Verifica se mês informado é menor que mês corrente.
 			if (mesProgramacao < mesAtual ) {
-				throw new GlobalExceptionHandler("Mês da programção deve ser maior ou igual ao mês corrente!", 0);
+				throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!", 0);
 			}
 			
 			
@@ -583,14 +584,127 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !", 0);
 			}
 			
-			
-			
-			
-			
-			
-			
-			
 		}
+
+		@Override
+		public List<ProgramacaoEntrega> alterarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
+			 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabelaProg(programacaoEntregaDto);
+			 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
+					this.programacaoEntregaRepository.save(programacaoEntregaLinha);
+			 }
+			 
+			 return listaProgramacaoEntrega;
+		}
+		
+		@SuppressWarnings("removal")
+		public List<ProgramacaoEntrega> concatenaCamposTabelaProg(ProgramacaoEntregaDto programacaoEntregaDto) {
+			
+			List<ProgramacaoEntrega> listaProgramacaoEntrega = new ArrayList<>();
+			
+			//Recupera as Strings preenchidas a partir dos campos das linhas das programações entrega.
+			String[] tabelaProgramacaoEntrega = programacaoEntregaDto.getTabelaProgramacaoEntrega().split(",");
+			String[] linha		= null;
+			Long idProgramacao = null;
+			String matriculaColaborador = null;
+			String uaPrevista = null;
+			String uaRealizada = null;
+			LocalDate dataEntrega = null;
+			LocalDate dataSolicitacao = null;
+			LocalDate dataProgramacao = null;
+			Long idUa = null;
+			Long idUsuarioEntrega = null;
+			Long idUsuarioUltimaModificacao = null;
+			Long idValor = null;
+			Boolean solicExtra = null;
+			String diaDaSemana = null;
+			LocalDateTime dataModificacao = LocalDateTime.now();
+			
+			
+			
+			
+			for (String linhaTabProgEntrega : tabelaProgramacaoEntrega) 
+				{
+				//"11999=3839=CABULA=CABULA=10022=4=8=62=2023-02-09=2023-06-01=2023-02-09=Quinta-Feira"
+				
+				//Separando a linha da tabela.
+				linha 			= linhaTabProgEntrega.split("=");
+				
+				    //Separando os campos da linha.
+					idProgramacao = new Long(linha[0]);
+					matriculaColaborador = linha[1];
+					uaPrevista = linha[2];
+					uaRealizada = linha[3];
+					idUa = new Long(linha[4]);
+					idUsuarioEntrega = new Long(linha[5]);
+					idValor = new Long(linha[6]);
+					idUsuarioUltimaModificacao = new Long(linha[7]);
+					dataEntrega = LocalDate.parse(linha[8]);
+					dataProgramacao = LocalDate.parse(linha[9]);
+					dataSolicitacao = LocalDate.parse(linha[10]);
+                    diaDaSemana = new String(linha[11]).trim();
+                    solicExtra = Boolean.parseBoolean(linha[12]);
+					
+					
+				
+				ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
+				
+				
+				programacaoEntrega.setId(idProgramacao);
+				programacaoEntrega.setMatriculaColaborador(matriculaColaborador);
+				programacaoEntrega.setUaPrevista(uaPrevista);
+				programacaoEntrega.setUaRealizada(uaRealizada);
+				programacaoEntrega.setDataEntrega(dataEntrega);
+				programacaoEntrega.setDataSolicitacao(dataSolicitacao);
+				programacaoEntrega.setIdUsuario(idUsuarioEntrega);
+				programacaoEntrega.setIdUa(idUa);
+				programacaoEntrega.setIdValor(idValor);
+				programacaoEntrega.setDataUltimaModificacao(dataModificacao);
+				programacaoEntrega.setIdUsuarioUltimaModificacao(idUsuarioUltimaModificacao);
+				programacaoEntrega.setDataProgramacao(dataProgramacao);
+				programacaoEntrega.setDiaDaSemana(diaDaSemana);
+				
+				Calendario calendario = new Calendario();
+				
+				//Pesquisa existência de data especial.
+				calendario = calendarioService.pesquisarPorData(dataProgramacao);
+				
+				programacaoEntrega.setDescricaoFeriado(null);
+				if (calendario != null) {
+					programacaoEntrega.setDescricaoFeriado(calendario.getDescricao());
+				};
+				
+				//Opção por este tipo de chamada para não trazer muitos objetos para a memória.
+				//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
+				Long contSusElegibilidade = suspensaoElegibilidadeService.
+					pesquisarSuspensao(dataProgramacao, programacaoEntrega.getMatriculaColaborador());
+				
+				programacaoEntrega.setExigSuspensa(false);
+				if ((contSusElegibilidade > 0) && (contSusElegibilidade != null)) {
+					programacaoEntrega.setExigSuspensa(true);
+				}
+				
+				
+				//Pesquisa se existem férias.
+				Long contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(dataProgramacao, programacaoEntrega.getMatriculaColaborador());
+				
+				programacaoEntrega.setStFerias(false);
+				if ((contFerias > 0) && (contFerias != null)) {
+					programacaoEntrega.setStFerias(true);
+				}
+				
+				listaProgramacaoEntrega.add(programacaoEntrega);
+				
+			}
+			return listaProgramacaoEntrega;
+		}
+
+		@Override
+		public List<ProgramacaoEntrega> listaProgramacaoEntregaAnoMesMatricula(ProgramacaoEntregaDto programacaoEntregaDto) {
+			return programacaoEntregaRepository.
+					listaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.getMesAnoProgramacao(),programacaoEntregaDto.getMatriculaColaborador());
+		}
+
+
 		
 		
 		

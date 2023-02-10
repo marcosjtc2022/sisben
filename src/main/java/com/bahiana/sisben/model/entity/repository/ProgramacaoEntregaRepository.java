@@ -3,8 +3,6 @@ package com.bahiana.sisben.model.entity.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -74,6 +72,12 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ "AND Year(pe.dataProgramacao) = Year(:mesAnoProgramacao)"
 	        + "AND pe.matriculaColaborador = :matriculaColaborador")
 	long pesquisaProgramacaoEntregaAnoMesMatricula(@Param("mesAnoProgramacao") String mesAnoProgramacao,
+			                              @Param("matriculaColaborador") String matriculaColaborador);
+	
+	@Query("SELECT pe FROM ProgramacaoEntrega pe WHERE  Month(pe.dataProgramacao) = Month(:mesAnoProgramacao)"
+			+ "AND Year(pe.dataProgramacao) = Year(:mesAnoProgramacao)"
+	        + "AND pe.matriculaColaborador = :matriculaColaborador")
+	List<ProgramacaoEntrega> listaProgramacaoEntregaAnoMesMatricula(@Param("mesAnoProgramacao") LocalDate mesAnoProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
 	

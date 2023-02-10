@@ -72,5 +72,9 @@ public interface ProgramacaoEntregaService {
 	
 	long pesquisaValorMarmita(String mesAnoProgramacao, String matriculaColaborador);
 	
+	List<ProgramacaoEntrega> alterarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto);
+	
+	List<ProgramacaoEntrega> listaProgramacaoEntregaAnoMesMatricula(ProgramacaoEntregaDto programacaoEntregaDto);
+	
 
 }

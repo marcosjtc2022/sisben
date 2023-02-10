@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.CalendarioDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.Fornecedor;
@@ -52,6 +53,11 @@ public class CalendarioController {
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody CalendarioDto calendarioDto) {
 	  try {
+
+		    if (calendarioService.pesquisarPorData(calendarioDto.getDataEspecial()) != null){
+		    	throw new GlobalExceptionHandler("Data especial já cadastrada!", 0);
+	        }
+		    
 		    Calendario calendario = new Calendario() ;
 		    calendario = calendarioService.salvar(calendarioDto);
 			return new ResponseEntity(calendario, HttpStatus.CREATED);

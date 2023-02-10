@@ -1,5 +1,6 @@
 package com.bahiana.sisben.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.SuspensaoElegibilidadeDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
-import com.bahiana.sisben.model.entity.Calendario;
-import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.SuspensaoElegibilidade;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 
@@ -123,24 +121,13 @@ public class SuspensaoElegibilidadeController {
 	}
 	
 	@GetMapping("/obterPorMatricula/{matriculaColaborador}")
-	public SuspensaoElegibilidade obterPorMatricula(@PathVariable("matriculaColaborador") String matriculaColaborador) {
+	public List<SuspensaoElegibilidade> obterPorMatricula(@PathVariable("matriculaColaborador") String matriculaColaborador) {
+		
+		List<SuspensaoElegibilidade> listaSuspensaoElig = suspensaoElegibilidadeService.obterListaPorMatricula(matriculaColaborador);
 			
-			Optional<SuspensaoElegibilidade> suspensaoElegibilidade = suspensaoElegibilidadeService.obterPorMatriculaColaborador(matriculaColaborador);
-			return  suspensaoElegibilidade.get();	
+		return  listaSuspensaoElig;	
 					
 	}
-	
-	
-//	@GetMapping(value =  "/obterPorMatricula" )
-//	public ResponseEntity<List<SuspensaoElegibilidade>> obterPorMatricula(SuspensaoElegibilidadeDto suspensaoElegibilidadeDto ) {
-//		 try {
-//				
-//			 //return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);
-//				return new ResponseEntity(suspensaoElegibilidadeService.pesquisarPorMatriculaOrdenadoNome(suspensaoElegibilidadeDto), HttpStatus.CREATED);
-//		     } catch (RegraNegocioException e) {
-//			    return new ResponseEntity<List<SuspensaoElegibilidade>>(HttpStatus.BAD_REQUEST);
-//		     }
-//	}
 	
 
 }
