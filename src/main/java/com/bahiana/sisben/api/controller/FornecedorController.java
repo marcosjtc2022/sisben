@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.FornecedorDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Fornecedor;
-import com.bahiana.sisben.model.entity.Perfil;
-import com.bahiana.sisben.model.entity.ValorMarmita;
+import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.FornecedorService;
+import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.UsuarioService;
 
 @RestController
@@ -36,6 +38,9 @@ public class FornecedorController {
 		
 		@Autowired
 		private UsuarioService usuarioService;
+		
+		@Autowired
+		private ProgramacaoEntregaService programacaoEntregaService;
 		
 		@GetMapping(value =  "/lista-filtro-descricao" )
 		public ResponseEntity<List<Fornecedor>> listarPorDescricaoOrdenadoDescricao(FornecedorDto  fornecedorDto) {
@@ -114,6 +119,19 @@ public class FornecedorController {
 			Optional<Fornecedor> fornecedor = fornecedorService.obterPorId(id);
 			return  fornecedor.get();	
 					
+		}
+		
+		@Transactional
+		@PutMapping("/registrarEntrega/{id}")
+		public ResponseEntity registrarEntrega(@PathVariable("id") Long id,@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
+			  try {
+					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
+					programacaoEntregaDto.setId(id);	
+					programacaoEntrega = programacaoEntregaService.registrarEntrega(programacaoEntregaDto);
+					return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return ResponseEntity.badRequest().body(e.getMessage());
+			     }
 		}
 		
 

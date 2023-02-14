@@ -1,8 +1,8 @@
 package com.bahiana.sisben.service.impl;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -153,10 +153,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		Long usuarioModificacao = programacaoEntrega.getIdUsuario();
 		LocalDateTime dataModificacao = LocalDateTime.now();
 		//UtilDataHora utilDataHora = new UtilDataHora() ;
-		String dataEntrega2 = null;
-		String dataSolicitacao2 = null;
-		
-		DateTimeFormatter formatadorComHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm");
+//		String dataEntrega2 = null;
+//		String dataSolicitacao2 = null;
+//		
+//		DateTimeFormatter formatadorComHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm");
 		//String dateInString = "Mon, 05 May 1980";
 //		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy", Locale.ENGLISH);
 //		LocalDate dateTime = LocalDate.parse(dateInString, formatter);
@@ -717,7 +717,57 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			for (String idProgramacao : tabelaProgramacaoEntrega){
 			    programacaoEntregaRepository.deleteById(Long.valueOf(idProgramacao));
 		   }
-	   }	
+	   }
+
+		@Override
+		public ProgramacaoEntrega registrarEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
+			
+			 validaFormRegistroEntrega(programacaoEntregaDto);
+			
+			
+			 ProgramacaoEntrega programacaoEntrega =  programacaoEntregaRepository.findById(programacaoEntregaDto.getId()).get();
+			 LocalDateTime dataModificacao = LocalDateTime.now();
+			 programacaoEntregaDto.setDataUltimaModificacao(dataModificacao);
+			 programacaoEntrega.setDataEntrega(programacaoEntregaDto.getDataEntrega());
+			 programacaoEntrega.setUaRealizada(programacaoEntregaDto.getUaRealizada());
+			 programacaoEntrega.setIdUa(programacaoEntregaDto.getIdUa());
+			 
+			 if((programacaoEntregaDto.getIdJustificativa() != null)) {
+				 programacaoEntrega.setIdJustificativa(programacaoEntregaDto.getIdJustificativa());
+			 }
+			 
+			 return programacaoEntregaRepository.save(programacaoEntrega);
+		}
+		
+        public void validaFormRegistroEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
+        	
+        	UtilSisben utilSisben = new UtilSisben() ;
+        	
+        	
+			
+			//Gera ano e mês correntes.
+			int mesAtual = LocalDate.now().getMonthValue();
+			int anoAtual = LocalDate.now().getYear();
+			
+			//Recupera ano e mês informados.
+			int mesProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getMonthValue();
+			int anoProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getYear();
+			
+			//Verifica se ano informado é menor que ano corrente.
+			if (anoProgramacao < anoAtual ) {
+				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!", 0);
+			}
+			
+			//Verifica se mês informado é menor que mês corrente.
+			if (mesProgramacao < mesAtual ) {
+				throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!", 0);
+			}
+			
+			
+			
+     }		
+			
+		
 
 
 		

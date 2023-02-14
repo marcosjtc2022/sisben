@@ -78,5 +78,7 @@ public interface ProgramacaoEntregaService {
 	
 	void apagarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto);
 	
+	ProgramacaoEntrega registrarEntrega(ProgramacaoEntregaDto programacaoEntregaDto);
+	
 
 }
