@@ -404,14 +404,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			//Valida os campos do formulário
 			validaFormulario(programacaoEntregaDto);
-			
-//			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
-//			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.
-//			pesquisarPrimeiroPorDescricao(programacaoEntregaDto.getBairroSecaoElegivel());
-//			
-//			//Preenche a descrição e o id da ua.
-//			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
-//			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
+
 			
 			//Calcula os dias do mês.
 			UtilSisben utilSisben = new UtilSisben();
@@ -429,14 +422,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public List<ProgramacaoEntrega> salvar(ProgramacaoEntregaDto programacaoEntregaDto, Integer diasProgramacaoMes){
 			
 			List<ProgramacaoEntrega> listaProgramacaoEntregaMes = new ArrayList();
-			
 			Calendario calendario = new Calendario();
-			
 			LocalDate dataProgramacao = null;
-			//LocalDateTime dataSolicitacaoDateTime = null;
-//			Integer ano =  programacaoEntregaDto.getDataAtual().getYear();
-//			Integer mes =  programacaoEntregaDto.getDataAtual().getMonthValue();
-//			Integer dia =  programacaoEntregaDto.getDataAtual().getDayOfMonth();
+			Long contFerias = 0L; 			
+			Long contSusElegibilidade = 0L;
 			
 			//Verifica variável boolean que é utilizada na classe utilsisben, no método calculaDiasMes.
 			if (mesCorrente == false) {
@@ -462,9 +451,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setUaRealizada(null);
 				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
 				programacaoInput.setIdData(null);
-				//Verificar o relacionamento com a tabela justificativa.
-				//programacaoInput.setIdJustificativa(11L);
-				//
 				programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
 				programacaoInput.setIdValor(programacaoEntregaDto.getIdValor());
 				programacaoInput.setDataEntrega(null);
@@ -485,26 +471,30 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				//Opção por este tipo de chamada para não trazer muitos objetos para a memória.
 				//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
-				Long contSusElegibilidade = suspensaoElegibilidadeService.
+				contSusElegibilidade = 0L;
+				contSusElegibilidade = suspensaoElegibilidadeService.
 					pesquisarSuspensao(dataProgramacao, programacaoEntregaDto.getMatriculaColaborador());
 				
-				programacaoInput.setExigSuspensa(false);
-				if ((contSusElegibilidade > 0) && (contSusElegibilidade != null)) {
-					programacaoInput.setExigSuspensa(true);
-				}
+//				programacaoInput.setExigSuspensa(false);
+//				if ((contSusElegibilidade > 0) && (contSusElegibilidade != null)) {
+//					programacaoInput.setExigSuspensa(true);
+//				}
 				
 				
 				//Pesquisa se existem férias.
-				Long contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(dataProgramacao, programacaoEntregaDto.getMatriculaColaborador());
+				contFerias = 0L;
+				contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(dataProgramacao, programacaoEntregaDto.getMatriculaColaborador());
 				
-				programacaoInput.setStFerias(false);
-				if ((contFerias > 0) && (contFerias != null)) {
-					programacaoInput.setStFerias(true);
-				}
+//				programacaoInput.setStFerias(false);
+//				if ((contFerias > 0) && (contFerias != null)) {
+//					programacaoInput.setStFerias(true);
+//				}
 				
-				listaProgramacaoEntregaMes.add(programacaoInput);
-				
-				this.programacaoEntregaRepository.save(programacaoInput);
+				//Só insere se não existirem férias nem suspensão da eligibilidade.
+				if ((contSusElegibilidade == 0)&&(contFerias == 0)) {
+					listaProgramacaoEntregaMes.add(programacaoInput);
+					this.programacaoEntregaRepository.save(programacaoInput);
+				}	
 				
 				dataProgramacao = dataProgramacao.plusDays(1);
 				
@@ -592,7 +582,12 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public List<ProgramacaoEntrega> alterarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabelaProg(programacaoEntregaDto);
 			 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
-					this.programacaoEntregaRepository.save(programacaoEntregaLinha);
+				  //Se existirem férias, ou suspensão da eligibilidade, apaga o registro.
+				  if ((programacaoEntregaLinha.getStFerias() == true)||(programacaoEntregaLinha.getExigSuspensa() == true)) {
+					this.programacaoEntregaRepository.deleteById(programacaoEntregaLinha.getId());
+				  } else {
+					this.programacaoEntregaRepository.save(programacaoEntregaLinha); 
+				  }	
 			 }
 			 
 			 return listaProgramacaoEntrega;
@@ -698,7 +693,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					programacaoEntrega.setStFerias(true);
 				}
 				
+				
 				listaProgramacaoEntrega.add(programacaoEntrega);
+				
+				
+				
 				
 			}
 			return listaProgramacaoEntrega;
