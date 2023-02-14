@@ -582,6 +582,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			if (contExisteProgramacao > 0) {
 				throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !", 0);
+				//throw new SisbenException();
+				//throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !");
 			}
 			
 		}
@@ -630,13 +632,17 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				linha 			= linhaTabProgEntrega.split("=");
 				
 				    //Separando os campos da linha.
-					idProgramacao = new Long(linha[0]);
+					//idProgramacao = new Long(linha[0]);
+					idProgramacao = Long.valueOf(linha[0]);
 					matriculaColaborador = linha[1];
 					uaPrevista = linha[2];
 					uaRealizada = linha[3];
-					idUa = new Long(linha[4]);
-					idUsuarioEntrega = new Long(linha[5]);
-					idValor = new Long(linha[6]);
+					//idUa = new Long(linha[4]);
+					idUa = Long.valueOf(linha[4]);
+					//idUsuarioEntrega = new Long(linha[5]);
+					idUsuarioEntrega = Long.valueOf(linha[5]);
+					//idValor = new Long(linha[6]);
+					idValor = Long.valueOf(linha[6]);
 					idUsuarioUltimaModificacao = new Long(linha[7]);
 					dataEntrega = LocalDate.parse(linha[8]);
 					dataProgramacao = LocalDate.parse(linha[9]);
@@ -703,6 +709,16 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			return programacaoEntregaRepository.
 					listaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.getMesAnoProgramacao(),programacaoEntregaDto.getMatriculaColaborador());
 		}
+
+		@Override
+		public void apagarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
+			
+			String[] tabelaProgramacaoEntrega = programacaoEntregaDto.getTabelaProgramacaoEntrega().split(",");
+			
+			for (String idProgramacao : tabelaProgramacaoEntrega){
+			    programacaoEntregaRepository.deleteById(Long.valueOf(idProgramacao));
+		   }
+	   }	
 
 
 		

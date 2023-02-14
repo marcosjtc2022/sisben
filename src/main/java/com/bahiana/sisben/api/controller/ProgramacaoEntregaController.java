@@ -268,6 +268,7 @@ public class ProgramacaoEntregaController {
 		 }
 		
 		 @PutMapping("/alterarProgramacaoMes")
+		 @Transactional
 		 public ResponseEntity alterarProgramacaoMes(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 			  try {
 					List<ProgramacaoEntrega> listaProgramacaoEntrega = new ArrayList() ;
@@ -291,6 +292,18 @@ public class ProgramacaoEntregaController {
 				    return new ResponseEntity<List<ProgramacaoEntrega>>(HttpStatus.BAD_REQUEST);
 			     }
 		  }
+		 
+		 @DeleteMapping("/apagarProgramacaoMes")
+		 @Transactional
+		 public ResponseEntity apagarProgramacaoMes(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
+			  try {
+					 programacaoEntregaService.apagarProgramacaoMes(programacaoEntregaDto);
+					 return new ResponseEntity(HttpStatus.NO_CONTENT);
+			     } catch (RegraNegocioException e) {
+				    return ResponseEntity.badRequest().body(e.getMessage());
+			     }
+			  
+		 }
 		 
 //		 @GetMapping(value =  "/lista-filtro-descricao" )
 //			public ResponseEntity<List<Fornecedor>> listarPorDescricaoOrdenadoDescricao(FornecedorDto  fornecedorDto) {

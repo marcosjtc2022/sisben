@@ -76,5 +76,7 @@ public interface ProgramacaoEntregaService {
 	
 	List<ProgramacaoEntrega> listaProgramacaoEntregaAnoMesMatricula(ProgramacaoEntregaDto programacaoEntregaDto);
 	
+	void apagarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto);
+	
 
 }
