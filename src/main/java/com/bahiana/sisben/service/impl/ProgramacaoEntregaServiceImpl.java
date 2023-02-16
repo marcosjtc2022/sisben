@@ -1,8 +1,9 @@
 package com.bahiana.sisben.service.impl;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -116,118 +117,118 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		return programacaoEntrega;
 	}
 
-	@Override
-	public ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao) {
-		
-		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
-		 
-		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
-		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
-				//validaEPersisteInclusao(centro);	
-				this.programacaoEntregaRepository.save(programacaoEntregaLinha);
-		 }
-		 return programacaoEntrega;
-	}
-	
-	@SuppressWarnings("removal")
-	@Override
-	public List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega, char operacao) {
-		
-		List<ProgramacaoEntrega> listaProgramacaoEntrega = new ArrayList<>();
-		
-		//Recupera as Strings preenchidas a partir dos campos das linhas das programações entrega.
-		String[] tabelaProgramacaoEntrega = programacaoEntrega.getTabelaProgramacaoEntrega().split(",");
-		String[] linha		= null;
-		Long id = null;
-		String matriculaColaborador = null;
-		String uaPrevista = null;
-		String uaRealizada = null;
-		LocalDate dataEntrega = null;
-		LocalDate dataSolicitacao = null;
-		Long idUa = null;
-		Long idJustificativa = null;
-		Long idUsuario = null;
-		Long idValor = null;
-		Boolean solicExtra = null;
-		Boolean stAprov = null;
-		Long usuarioModificacao = programacaoEntrega.getIdUsuario();
-		LocalDateTime dataModificacao = LocalDateTime.now();
-		//UtilDataHora utilDataHora = new UtilDataHora() ;
-//		String dataEntrega2 = null;
-//		String dataSolicitacao2 = null;
+//	@Override
+//	public ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao) {
 //		
-//		DateTimeFormatter formatadorComHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm");
-		//String dateInString = "Mon, 05 May 1980";
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy", Locale.ENGLISH);
-//		LocalDate dateTime = LocalDate.parse(dateInString, formatter);
-		
-		
-		for (String linhaTabProgEntrega : tabelaProgramacaoEntrega) 
-			{
-			//7352=BROTAS=CABULA=2022-09-29=2022-09-29=1=1=1=4=0=1
-			//Separando a linha da tabela.
-			linha 			= linhaTabProgEntrega.split("=");
-			//Separando os campos da linha.
-			
-			if (operacao == 'I') {
-				matriculaColaborador =  linha[0];
-				uaPrevista = linha[1];
-				uaRealizada = linha[2];
-				//dataEntrega = utilDataHora.trataDatas(linha[3]);   //linha[3];
-				//dataSolicitacao = utilDataHora.trataDatas(linha[4]);
-				//LocalDateTime dateTime = LocalDateTime.parse("2018-05-05T11:50:55");
-//				dataEntrega2 = linha[3];
-				dataEntrega = LocalDate.parse(linha[3]);
-				dataSolicitacao = LocalDate.parse(linha[4]);
-				idUa = new Long(linha[5]);
-				idJustificativa = new Long(linha[6]);
-				idUsuario = new Long(linha[7]);
-				idValor = new Long(linha[8]);
-				solicExtra = true; //linha[9];
-				stAprov = true; //linha[10];
-			} else {
-				id = new Long(linha[0]);
-				matriculaColaborador =  linha[1];
-				uaPrevista = linha[2];
-				uaRealizada = linha[3];
-				//dataEntrega = utilDataHora.trataDatas(linha[4]);   //linha[3];
-				//dataSolicitacao = utilDataHora.trataDatas(linha[5]);
-//				dataEntrega = LocalDateTime.parse(linha[4]);   //linha[3];
-//				dataSolicitacao = LocalDateTime.parse(linha[5]);
-				dataEntrega = LocalDate.parse(linha[4]);
-				dataSolicitacao = LocalDate.parse(linha[5]);
-				idUa = new Long(linha[6]);
-				idJustificativa = new Long(linha[7]);
-				idUsuario = new Long(linha[8]);
-				idValor = new Long(linha[9]);
-				solicExtra = true; //linha[9];
-				stAprov = true; //linha[10];
-			}
-			
-			programacaoEntrega = new ProgramacaoEntrega();
-			
-			if (id != null) {
-				programacaoEntrega.setId(id);
-			}
-			programacaoEntrega.setMatriculaColaborador(matriculaColaborador);
-			programacaoEntrega.setUaPrevista(uaPrevista);
-			programacaoEntrega.setUaRealizada(uaRealizada);
-			programacaoEntrega.setDataEntrega(dataEntrega);
-			programacaoEntrega.setDataSolicitacao(dataSolicitacao);
-			programacaoEntrega.setIdJustificativa(idJustificativa);
-			programacaoEntrega.setIdUsuario(idUsuario);
-			programacaoEntrega.setIdUa(idUa);
-			programacaoEntrega.setSolicExtra(solicExtra);
-			programacaoEntrega.setStAprov(stAprov);
-			programacaoEntrega.setIdValor(idValor);
-			programacaoEntrega.setDataUltimaModificacao(dataModificacao);
-			programacaoEntrega.setIdUsuarioUltimaModificacao(usuarioModificacao);
-			
-			listaProgramacaoEntrega.add(programacaoEntrega);
-			
-		}
-		return listaProgramacaoEntrega;
-	}
+//		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
+//		 
+//		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
+//		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
+//				//validaEPersisteInclusao(centro);	
+//				this.programacaoEntregaRepository.save(programacaoEntregaLinha);
+//		 }
+//		 return programacaoEntrega;
+//	}
+	
+//	@SuppressWarnings("removal")
+//	@Override
+//	public List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega, char operacao) {
+//		
+//		List<ProgramacaoEntrega> listaProgramacaoEntrega = new ArrayList<>();
+//		
+//		//Recupera as Strings preenchidas a partir dos campos das linhas das programações entrega.
+//		String[] tabelaProgramacaoEntrega = programacaoEntrega.getTabelaProgramacaoEntrega().split(",");
+//		String[] linha		= null;
+//		Long id = null;
+//		String matriculaColaborador = null;
+//		String uaPrevista = null;
+//		String uaRealizada = null;
+//		LocalDate dataEntrega = null;
+//		LocalDate dataSolicitacao = null;
+//		Long idUa = null;
+//		Long idJustificativa = null;
+//		Long idUsuario = null;
+//		Long idValor = null;
+//		Boolean solicExtra = null;
+//		Boolean stAprov = null;
+//		Long usuarioModificacao = programacaoEntrega.getIdUsuario();
+//		LocalDateTime dataModificacao = LocalDateTime.now();
+//		//UtilDataHora utilDataHora = new UtilDataHora() ;
+////		String dataEntrega2 = null;
+////		String dataSolicitacao2 = null;
+////		
+////		DateTimeFormatter formatadorComHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm");
+//		//String dateInString = "Mon, 05 May 1980";
+////		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy", Locale.ENGLISH);
+////		LocalDate dateTime = LocalDate.parse(dateInString, formatter);
+//		
+//		
+//		for (String linhaTabProgEntrega : tabelaProgramacaoEntrega) 
+//			{
+//			//7352=BROTAS=CABULA=2022-09-29=2022-09-29=1=1=1=4=0=1
+//			//Separando a linha da tabela.
+//			linha 			= linhaTabProgEntrega.split("=");
+//			//Separando os campos da linha.
+//			
+//			if (operacao == 'I') {
+//				matriculaColaborador =  linha[0];
+//				uaPrevista = linha[1];
+//				uaRealizada = linha[2];
+//				//dataEntrega = utilDataHora.trataDatas(linha[3]);   //linha[3];
+//				//dataSolicitacao = utilDataHora.trataDatas(linha[4]);
+//				//LocalDateTime dateTime = LocalDateTime.parse("2018-05-05T11:50:55");
+////				dataEntrega2 = linha[3];
+//				dataEntrega = LocalDate.parse(linha[3]);
+//				dataSolicitacao = LocalDate.parse(linha[4]);
+//				idUa = new Long(linha[5]);
+//				idJustificativa = new Long(linha[6]);
+//				idUsuario = new Long(linha[7]);
+//				idValor = new Long(linha[8]);
+//				solicExtra = true; //linha[9];
+//				stAprov = true; //linha[10];
+//			} else {
+//				id = new Long(linha[0]);
+//				matriculaColaborador =  linha[1];
+//				uaPrevista = linha[2];
+//				uaRealizada = linha[3];
+//				//dataEntrega = utilDataHora.trataDatas(linha[4]);   //linha[3];
+//				//dataSolicitacao = utilDataHora.trataDatas(linha[5]);
+////				dataEntrega = LocalDateTime.parse(linha[4]);   //linha[3];
+////				dataSolicitacao = LocalDateTime.parse(linha[5]);
+//				dataEntrega = LocalDate.parse(linha[4]);
+//				dataSolicitacao = LocalDate.parse(linha[5]);
+//				idUa = new Long(linha[6]);
+//				idJustificativa = new Long(linha[7]);
+//				idUsuario = new Long(linha[8]);
+//				idValor = new Long(linha[9]);
+//				solicExtra = true; //linha[9];
+//				stAprov = true; //linha[10];
+//			}
+//			
+//			programacaoEntrega = new ProgramacaoEntrega();
+//			
+//			if (id != null) {
+//				programacaoEntrega.setId(id);
+//			}
+//			programacaoEntrega.setMatriculaColaborador(matriculaColaborador);
+//			programacaoEntrega.setUaPrevista(uaPrevista);
+//			programacaoEntrega.setUaRealizada(uaRealizada);
+//			programacaoEntrega.setDataEntrega(dataEntrega);
+//			programacaoEntrega.setDataSolicitacao(dataSolicitacao);
+//			programacaoEntrega.setIdJustificativa(idJustificativa);
+//			programacaoEntrega.setIdUsuario(idUsuario);
+//			programacaoEntrega.setIdUa(idUa);
+//			programacaoEntrega.setSolicExtra(solicExtra);
+//			programacaoEntrega.setStAprov(stAprov);
+//			programacaoEntrega.setIdValor(idValor);
+//			programacaoEntrega.setDataUltimaModificacao(dataModificacao);
+//			programacaoEntrega.setIdUsuarioUltimaModificacao(usuarioModificacao);
+//			
+//			listaProgramacaoEntrega.add(programacaoEntrega);
+//			
+//		}
+//		return listaProgramacaoEntrega;
+//	}
 
 	@Override
 	@Transactional
@@ -272,16 +273,16 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //		return ProgramacaoEntregaLista;
 //	}
 
-	@Override
-	public ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao) {
-		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
-		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
-		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
-				//validaEPersisteInclusao(centro);	
-				this.programacaoEntregaRepository.save(programacaoEntregaLinha);
-		 }
-		 return programacaoEntrega;
-	}
+//	@Override
+//	public ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao) {
+//		 ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
+//		 List<ProgramacaoEntrega> listaProgramacaoEntrega = concatenaCamposTabela(programacaoEntrega, operacao);
+//		 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
+//				//validaEPersisteInclusao(centro);	
+//				this.programacaoEntregaRepository.save(programacaoEntregaLinha);
+//		 }
+//		 return programacaoEntrega;
+//	}
 
 	@Override
 	public Optional<ProgramacaoEntrega> obterPorId(Long id) {
@@ -402,8 +403,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public List<ProgramacaoEntrega> salvarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			
-			//Valida os campos do formulário
-			validaFormulario(programacaoEntregaDto);
+			//Valida os campos do formulário e recupera valores
+			//validaFormularioEobtemValores(programacaoEntregaDto);
 
 			
 			//Calcula os dias do mês.
@@ -411,6 +412,19 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			Integer diasProgramacaoMes = utilSisben.calculaDiasMes(programacaoEntregaDto.getMesAnoProgramacao(),
 					                                               programacaoEntregaDto.getDataAtual());
+			
+			//Recupera o mês da programação.
+			Integer mesProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getMonth().getValue();
+			//Recupera o primeiro e o último dia do mês da programação.
+			LocalDate utlimaDataMes = LocalDate.now().withMonth(mesProgramacao).with(TemporalAdjusters.lastDayOfMonth());
+			LocalDate primeiraDataMes = LocalDate.now().withMonth(mesProgramacao).with(TemporalAdjusters.firstDayOfMonth());
+			//Atribuição ao Dto
+			programacaoEntregaDto.setPrimeiraDataMes(primeiraDataMes);
+			programacaoEntregaDto.setUtlimaDataMes(utlimaDataMes);
+			
+			//Valida os campos do formulário e recupera valores
+			validaFormularioEobtemValores(programacaoEntregaDto);
+			
 			
 			//Salva registros.
 			List<ProgramacaoEntrega> programacaoEntregaMes = salvar(programacaoEntregaDto,diasProgramacaoMes);
@@ -509,7 +523,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				   pesquisaProgramacaoEntregaAnoMesMatricula(mesAnoProgramacao, matriculaColaborador);
 		}
 		
-		public void validaFormulario(ProgramacaoEntregaDto programacaoEntregaDto) {
+		public void validaFormularioEobtemValores(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			
 			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
@@ -517,24 +531,39 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			pesquisarPrimeiroPorDescricao(programacaoEntregaDto.getBairroSecaoElegivel());
 			
 			if ((unidadeAcademica == null)||(unidadeAcademica.getDescricao() == null) ||(unidadeAcademica.getDescricao() == "")) {
-				throw new GlobalExceptionHandler("Elegível sem o bairro da seção!", 0);
+				throw new GlobalExceptionHandler("Elegível sem o bairro da seção!");
 			}
 			
 			//Preenche a descrição e o id da ua.
 			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
 			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
 			
-			//Pesquisa se existe valor marmita e recupera o mais atual
-			List<ValorMarmita> listaValorMarmita = valorMarmitaService.
-			pesquisarValorMaisAtual(programacaoEntregaDto.getMesAnoProgramacao());
+//			//Pesquisa se existe valor marmita e recupera o mais atual
+//			List<ValorMarmita> listaValorMarmita = valorMarmitaService.
+//			pesquisarValorMaisAtual(programacaoEntregaDto.getMesAnoProgramacao());
+//			
+//			//Integer countVlVigencia = valorMarmitaService.obterValorVigenciaPorAnoMes(programacaoEntregaDto.getMesAnoProgramacao());
+//			
+			ValorMarmita valorMarmita = valorMarmitaService.
+					pesquisarValorVigencia(programacaoEntregaDto.getPrimeiraDataMes(), programacaoEntregaDto.getUtlimaDataMes());
 			
 			//listaValorMarmita = null;
-			if ((listaValorMarmita == null)||(listaValorMarmita.get(0) == null)) {
-				throw new GlobalExceptionHandler("Não existe valor marmita cadastrado para o ano e mês solicitado!", 0);
+			if ((valorMarmita == null)) {
+				throw new GlobalExceptionHandler("Não existe vigência de valor"
+						+ " da marmita cadastrado para o período, ou "
+						+ " vigência não cobre todo o período!");
 			}
 			
+//			ValorMarmita valorMarmita = valorMarmitaService.obterValorVigencia(programacaoEntregaDto.getMesAnoProgramacao());
+			
+//			//listaValorMarmita = null;
+//			if ((listaValorMarmita == null)||(listaValorMarmita.get(0) == null)) {
+//				throw new GlobalExceptionHandler("Não existe valor marmita cadastrado para o ano e mês solicitado!");
+//			}
+			
 			//Preenche o id do valor.
-			programacaoEntregaDto.setIdValor(listaValorMarmita.get(0).getId());
+//			//programacaoEntregaDto.setIdValor(listaValorMarmita.get(0).getId());
+			programacaoEntregaDto.setIdValor(valorMarmita.getId());
 			
 			//Gera ano e mês correntes.
 			int mesAtual = LocalDate.now().getMonthValue();
@@ -546,12 +575,12 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			//Verifica se ano informado é menor que ano corrente.
 			if (anoProgramacao < anoAtual ) {
-				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!", 0);
+				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!");
 			}
 			
 			//Verifica se mês informado é menor que mês corrente.
 			if (mesProgramacao < mesAtual ) {
-				throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!", 0);
+				throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!");
 			}
 			
 			
@@ -561,7 +590,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			//Verifica se funcionário é elegível.
 			if (!VwSisbenElegibilidade.isPresent()) {
-				throw new GlobalExceptionHandler("Funcionário não elegível!", 0);
+				throw new GlobalExceptionHandler("Funcionário não elegível!");
 			}
 			
 			//Verifica se para aquele mês, ano e matrícula já existe programação.
@@ -571,9 +600,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					    		                         programacaoEntregaDto.getMatriculaColaborador());
 			
 			if (contExisteProgramacao > 0) {
-				throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !", 0);
-				//throw new SisbenException();
-				//throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !");
+				throw new GlobalExceptionHandler("Já existe programação para esta matrícula neste ano e mês !");
 			}
 			
 		}
@@ -741,9 +768,23 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		
         public void validaFormRegistroEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
         	
-        	UtilSisben utilSisben = new UtilSisben() ;
+        	Integer diferencadias = 0;
+        	if (programacaoEntregaDto.getDataProgramacao() != null){ 
+        	    diferencadias = (int) ChronoUnit.DAYS.between(programacaoEntregaDto.getDataProgramacao(), programacaoEntregaDto.getDataEntrega() );
+        	   if ((diferencadias != 0)) {
+        		   throw new GlobalExceptionHandler("Data da entrega diferente da data da programação!");
+        	   }
+        	}
         	
         	
+//
+        	   
+//        	int diaAtual = LocalDate.now().getDayOfMonth();
+//        	int diaProgramacao = programacaoEntregaDto.getDataEntrega().getDayOfMonth();
+//        	
+//        	if (diferencadias > 3) {
+//        		throw new GlobalExceptionHandler("Data programação retroativa não pode ser maior que 3 dias!");
+//        	}
 			
 			//Gera ano e mês correntes.
 			int mesAtual = LocalDate.now().getMonthValue();
@@ -755,12 +796,12 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			//Verifica se ano informado é menor que ano corrente.
 			if (anoProgramacao < anoAtual ) {
-				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!", 0);
+				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!");
 			}
 			
 			//Verifica se mês informado é menor que mês corrente.
 			if (mesProgramacao < mesAtual ) {
-				throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!", 0);
+				throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!");
 			}
 			
 			

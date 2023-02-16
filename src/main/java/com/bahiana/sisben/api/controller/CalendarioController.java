@@ -55,7 +55,7 @@ public class CalendarioController {
 	  try {
 
 		    if (calendarioService.pesquisarPorData(calendarioDto.getDataEspecial()) != null){
-		    	throw new GlobalExceptionHandler("Data especial já cadastrada!", 0);
+		    	throw new GlobalExceptionHandler("Data especial já cadastrada!");
 	        }
 		    
 		    Calendario calendario = new Calendario() ;

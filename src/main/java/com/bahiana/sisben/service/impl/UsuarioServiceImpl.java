@@ -103,12 +103,12 @@ public class UsuarioServiceImpl implements UsuarioService  {
      
 		if (!usuario.isPresent()) {
 			//throw new ErroAutenticacao("Usuário não encontrado para o email informado");
-			throw new GlobalExceptionHandler("Usuário não encontrado para o email informado", 0);
+			throw new GlobalExceptionHandler("Usuário não encontrado para o email informado");
 		}
 		
 		if(!usuario.get().getSenhaUsuario().equals(senha)) {	
 			//throw new ErroAutenticacao("Senha inválida");
-			throw new GlobalExceptionHandler("Senha inválida", 0);
+			throw new GlobalExceptionHandler("Senha inválida");
 		}
 		
 		return usuario.get();

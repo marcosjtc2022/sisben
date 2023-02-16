@@ -38,9 +38,9 @@ public interface ProgramacaoEntregaService {
 	
 	void apagar(ProgramacaoEntrega programacaoEntrega);
 	
-	ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
+//	ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
 	
-	ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
+//	ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
 	
 	Optional<ProgramacaoEntrega> obterPorId(Long id);	
 	
@@ -48,7 +48,7 @@ public interface ProgramacaoEntregaService {
 	
 	//ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDto programacaoEntregaDto);
 	
-	List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega, char operacao);
+	//List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega, char operacao);
 	
 	public Iterable<ProgramacaoEntrega> findAll();
 	

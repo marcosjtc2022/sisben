@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.JustificativaDto;
 import com.bahiana.sisben.api.dto.ValorMarmitaDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -56,6 +57,13 @@ public class ValorMarmitaController {
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody ValorMarmitaDto valorMarmitaDto) {
 	  try {
+		  
+		    Integer countVlMarmita = valorMarmitaService.verificarValorVigencia(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+			
+			if ((countVlMarmita > 0)) {
+				throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+			}  
+		  
 		    ValorMarmita valorMarmita = new ValorMarmita() ;
 		    valorMarmita = valorMarmitaService.salvar(valorMarmitaDto);
 			return new ResponseEntity(valorMarmita, HttpStatus.CREATED);
@@ -70,6 +78,13 @@ public class ValorMarmitaController {
 	@PutMapping("{id}")
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ValorMarmitaDto valorMarmitaDto) {
 	try {
+		
+		    Integer countVlMarmita = valorMarmitaService.verificarValorVigencia(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+			
+			if ((countVlMarmita > 0)) {
+				throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+			}  
+		
 		    ValorMarmita valorMarmita = new ValorMarmita() ;
 		    valorMarmitaDto.setId(id);			
 		    valorMarmita = valorMarmitaService.alterar(valorMarmitaDto);
@@ -88,7 +103,8 @@ public class ValorMarmitaController {
         Long countValorMarmita = programacaoEntregaService.pesquisaValorMarmita(id);
 		
 		if ((countValorMarmita > 0) && (countValorMarmita != null)) {
-			return new ResponseEntity("Valor marmita está vinculado a uma programação entrega!", HttpStatus.BAD_REQUEST);
+			//return new ResponseEntity("Valor marmita está vinculado a uma programação entrega!", HttpStatus.BAD_REQUEST);
+			throw new GlobalExceptionHandler("Valor da marmita está vinculado a uma programação entrega!");
 		} 
 				
 			//entity é o que retorna de ObterPorId

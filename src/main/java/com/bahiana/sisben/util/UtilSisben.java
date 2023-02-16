@@ -17,7 +17,7 @@ public class UtilSisben {
 		Integer mesProgramacao = mesAnoProgramacao.getMonth().getValue();
 		Integer mesAtual = dataAtual.getMonth().getValue();
 		
-		//Recuperao último dia do mês das programação.
+		//Recuperao último dia do mês da programação.
 		LocalDate utlimaDataMes = LocalDate.now().withMonth(mesProgramacao).with(TemporalAdjusters.lastDayOfMonth());
 		
 		//Recupera a quantidade de dias do mês da programação.

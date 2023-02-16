@@ -66,7 +66,7 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 		valorMarmitaDto.setDataUltimaModificacao(dataModificacao);
 //		String dataInicial = new String(valorMarmitaDto.getDataInicial().toString());
 //		String dataFinal = null;
-		LocalDate dataInicial =  LocalDate.parse(valorMarmitaDto.getDataFinal().toString());
+		LocalDate dataInicial =  LocalDate.parse(valorMarmitaDto.getDataInicial().toString());
 		valorMarmitaDto.setDataInicial(dataInicial);
 		LocalDate dataFinal = LocalDate.parse(valorMarmitaDto.getDataFinal().toString());
 		valorMarmitaDto.setDataFinal(dataFinal);
@@ -76,10 +76,30 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 		return valorMarmita;
 	}
 
+//	@Override
+//	public List<ValorMarmita> pesquisarValorMaisAtual(LocalDate dataFinal) {
+//		return valorMarmitaRepository.pesquisarValorMaisAtual(dataFinal);
+//	}
+//
 	@Override
-	public List<ValorMarmita> pesquisarValorMaisAtual(LocalDate dataFinal) {
-		return valorMarmitaRepository.pesquisarValorMaisAtual(dataFinal);
+	public ValorMarmita pesquisarValorVigencia(LocalDate dataInicial, LocalDate dataFinal) {
+		return valorMarmitaRepository.pesquisarValorVigencia(dataInicial, dataFinal);
 	}
+
+	@Override
+	public Integer verificarValorVigencia(LocalDate dataInicial, LocalDate dataFinal) {
+		return valorMarmitaRepository.verificarValorVigencia(dataInicial, dataFinal);
+	}
+
+//	@Override
+//	public ValorMarmita obterValorVigencia(LocalDate dataProgramacao) {
+//		return valorMarmitaRepository.obterValorVigencia(dataProgramacao);
+//	}
+//
+//	@Override
+//	public Integer obterValorVigenciaPorAnoMes(LocalDate mesAnoProgramacao) {
+//		return valorMarmitaRepository.obterValorVigenciaPorAnoMes(mesAnoProgramacao);
+//	}
 	
 	
 

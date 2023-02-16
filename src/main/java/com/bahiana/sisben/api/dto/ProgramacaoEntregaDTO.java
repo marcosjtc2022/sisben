@@ -2,6 +2,7 @@ package com.bahiana.sisben.api.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,8 +65,26 @@ public class ProgramacaoEntregaDto {
 	
 	private Boolean stFerias;
 	
+	private LocalDate utlimaDataMes;
 	
+	private LocalDate primeiraDataMes;
 	
+	public LocalDate getUtlimaDataMes() {
+		return utlimaDataMes;
+	}
+
+	public void setUtlimaDataMes(LocalDate utlimaDataMes) {
+		this.utlimaDataMes = utlimaDataMes;
+	}
+
+	public LocalDate getPrimeiraDataMes() {
+		return primeiraDataMes;
+	}
+
+	public void setPrimeiraDataMes(LocalDate primeiraDataMes) {
+		this.primeiraDataMes = primeiraDataMes;
+	}
+
 	public Boolean getStFerias() {
 		return stFerias;
 	}
@@ -278,12 +297,13 @@ public class ProgramacaoEntregaDto {
 		
     
 	
+	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
 			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual, String diaDaSemana,
 			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao, String bairroSecaoElegivel,
-			Boolean exigSuspensa, Boolean stFerias) {
+			Boolean exigSuspensa, Boolean stFerias, LocalDate utlimaDataMes, LocalDate primeiraDataMes) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -309,6 +329,8 @@ public class ProgramacaoEntregaDto {
 		this.bairroSecaoElegivel = bairroSecaoElegivel;
 		this.exigSuspensa = exigSuspensa;
 		this.stFerias = stFerias;
+		this.utlimaDataMes = utlimaDataMes;
+		this.primeiraDataMes = primeiraDataMes;
 	}
 
 	public ProgramacaoEntregaDto() {

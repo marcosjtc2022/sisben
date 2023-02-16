@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import com.bahiana.sisben.api.dto.ValorMarmitaDto;
 import com.bahiana.sisben.model.entity.ValorMarmita;
@@ -27,6 +28,14 @@ public interface ValorMarmitaService {
 		
 		List<ValorMarmita> listarSimplesOrdenadoValor();
 		
-		List<ValorMarmita> pesquisarValorMaisAtual(LocalDate dataFinal);
+//		List<ValorMarmita> pesquisarValorMaisAtual(LocalDate dataFinal);
+//		
+		ValorMarmita pesquisarValorVigencia( LocalDate dataInicial,LocalDate dataFinal);
+		
+		Integer verificarValorVigencia(LocalDate dataInicial,LocalDate dataFinal);
+//		
+//		ValorMarmita obterValorVigencia( LocalDate dataProgramacao);
+//		
+//		Integer obterValorVigenciaPorAnoMes(LocalDate mesAnoProgramacao);
 
 }
