@@ -30,7 +30,7 @@ public interface ProgramacaoEntregaService {
 	
 	ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto);
 	
-	ProgramacaoEntrega autorizarMenos24h(ProgramacaoEntregaMenos24hDto ProgramacaoEntregaMenos24hDto);
+	ProgramacaoEntrega autorizar(ProgramacaoEntregaDto ProgramacaoEntregaDto);
 	
 	ProgramacaoEntrega atualizarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto);
 	

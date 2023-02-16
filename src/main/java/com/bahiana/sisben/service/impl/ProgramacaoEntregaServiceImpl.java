@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -373,11 +374,14 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
-		public ProgramacaoEntrega autorizarMenos24h(
-			 ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+		public ProgramacaoEntrega autorizar(
+			 ProgramacaoEntregaDto programacaoEntregaDto) {
+			 ProgramacaoEntrega programacaoEntrega =  programacaoEntregaRepository.findById(programacaoEntregaDto.getId()).get();
 			 LocalDateTime dataModificacao = LocalDateTime.now();
-			 programacaoEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
-			 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaMenos24hDto);
+			 programacaoEntregaDto.setDataUltimaModificacao(dataModificacao);
+			 programacaoEntregaDto.setStAprov(programacaoEntregaDto.getStAprov());
+			 programacaoEntregaDto.setIdUsuarioUltimaModificacao(programacaoEntregaDto.getIdUsuarioUltimaModificacao());
+			 programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
 			 return programacaoEntregaRepository.save(programacaoEntrega);
 		}
 
@@ -416,8 +420,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			//Recupera o mês da programação.
 			Integer mesProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getMonth().getValue();
 			//Recupera o primeiro e o último dia do mês da programação.
-			LocalDate utlimaDataMes = LocalDate.now().withMonth(mesProgramacao).with(TemporalAdjusters.lastDayOfMonth());
-			LocalDate primeiraDataMes = LocalDate.now().withMonth(mesProgramacao).with(TemporalAdjusters.firstDayOfMonth());
+			LocalDate utlimaDataMes = programacaoEntregaDto.getMesAnoProgramacao().withMonth(mesProgramacao).with(TemporalAdjusters.lastDayOfMonth());
+			LocalDate primeiraDataMes = programacaoEntregaDto.getMesAnoProgramacao().withMonth(mesProgramacao).with(TemporalAdjusters.firstDayOfMonth());
 			//Atribuição ao Dto
 			programacaoEntregaDto.setPrimeiraDataMes(primeiraDataMes);
 			programacaoEntregaDto.setUtlimaDataMes(utlimaDataMes);
@@ -440,6 +444,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			LocalDate dataProgramacao = null;
 			Long contFerias = 0L; 			
 			Long contSusElegibilidade = 0L;
+			
 			
 			//Verifica variável boolean que é utilizada na classe utilsisben, no método calculaDiasMes.
 			if (mesCorrente == false) {
@@ -525,6 +530,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		
 		public void validaFormularioEobtemValores(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
+			boolean existeValor = false;
 			
 			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
 			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.
@@ -544,15 +550,119 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //			
 //			//Integer countVlVigencia = valorMarmitaService.obterValorVigenciaPorAnoMes(programacaoEntregaDto.getMesAnoProgramacao());
 //			
-			ValorMarmita valorMarmita = valorMarmitaService.
-					pesquisarValorVigencia(programacaoEntregaDto.getPrimeiraDataMes(), programacaoEntregaDto.getUtlimaDataMes());
+			//Pesquisa se existe valor marmita e recupera o mais atual
+			ValorMarmita valorMarmitaAtual = valorMarmitaService.
+					pesquisarValorVigenciaAtual();
+			
+			
+			
+			if (valorMarmitaAtual != null) {
+				
+				
+				Integer intMesPrimeiraData = programacaoEntregaDto.getPrimeiraDataMes().getMonthValue();
+				Integer intAnoPrimeiraData = programacaoEntregaDto.getPrimeiraDataMes().getYear();
+				Integer intDiaPrimeiraData = programacaoEntregaDto.getPrimeiraDataMes().getDayOfMonth();
+				
+				Integer intMesUltimaData = programacaoEntregaDto.getUtlimaDataMes().getMonthValue();
+				Integer intAnoUltimaData = programacaoEntregaDto.getUtlimaDataMes().getYear();
+				Integer intDiaUltimaData = programacaoEntregaDto.getUtlimaDataMes().getDayOfMonth();
+				
+				
+				Integer intMesVlMarmita = valorMarmitaAtual.getDataInicial().getMonthValue();
+				Integer intAnoVlMarmita = valorMarmitaAtual.getDataInicial().getYear();
+				Integer intDiaVlMarmita = valorMarmitaAtual.getDataInicial().getDayOfMonth();
+				
+				
+				String strDiaPrimeiraData = intDiaPrimeiraData.toString();
+				if (strDiaPrimeiraData.length()== 1) {
+					strDiaPrimeiraData = "0" + strDiaPrimeiraData;
+				}
+				String strMesPrimeiraData = intMesPrimeiraData.toString();
+				if (strMesPrimeiraData.length()== 1) {
+					strMesPrimeiraData = "0" + strMesPrimeiraData;
+				}
+				String strAnoPrimeiraData = intAnoPrimeiraData.toString();
+				
+				String strDtInvPrDta = strAnoPrimeiraData + strMesPrimeiraData + strDiaPrimeiraData; 
+				
+				Integer dataInvertidaPrDta = Integer.valueOf(strDtInvPrDta);
+				
+				
+				String strMesUltimaData = intMesUltimaData.toString();
+				if (strMesUltimaData.length()== 1) {
+					strMesUltimaData = "0" + strMesUltimaData;
+				}
+				String strDiaUltimaData = intDiaUltimaData.toString();
+				if (strDiaUltimaData.length()== 1) {
+					strDiaUltimaData = "0" + strDiaUltimaData;
+				}
+				String strAnoUltimaData = intAnoUltimaData.toString();
+				
+                String strDtInvUlDta = strAnoUltimaData + strMesUltimaData + strDiaUltimaData; 
+				
+				Integer dataInvertidaUlDta = Integer.valueOf(strDtInvUlDta);
+				
+				
+				
+				
+				String strMesVlMarmita = intMesVlMarmita.toString();
+				if (strMesVlMarmita.length()== 1) {
+					strMesVlMarmita = "0" + strMesVlMarmita;
+				}
+				String strDiaVlMarmita = intDiaVlMarmita.toString();
+				if (strDiaVlMarmita.length()== 1) {
+					strDiaVlMarmita = "0" + strDiaVlMarmita;
+				}
+				String strAnoVlMarmita = intAnoVlMarmita.toString();
+				
+                String strDtInvVlMar = strAnoVlMarmita + strMesVlMarmita + strDiaVlMarmita; 
+				
+				Integer dataInvertidaVlMar = Integer.valueOf(strDtInvVlMar);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			// if (dataInvertidaPrDta >= dataInvertidaVlMar || dataInvertidaUlDta <= dataInvertidaVlMar   ){
+			 if (dataInvertidaUlDta >= dataInvertidaVlMar ){	 
+//			 if ((dataInvertidaUlDta.compareTo(dataInvertidaVlMar) > 0 )||
+//				 (dataInvertidaUlDta.compareTo(dataInvertidaVlMar) == 0 ) ){
+				 //Verificar quando o mês for fracionado na vigência
+				 
+				 //Integer.compare(x, y)	 
+					
+					  programacaoEntregaDto.setIdValor(valorMarmitaAtual.getId());
+					  existeValor = true; 
+					
+				} else {
+				
+				ValorMarmita valorMarmitaAnterior = valorMarmitaService.
+						pesquisarValorVigencia(programacaoEntregaDto.getPrimeiraDataMes(), programacaoEntregaDto.getUtlimaDataMes());
+				
+				 if ( valorMarmitaAnterior != null) {
+				     programacaoEntregaDto.setIdValor(valorMarmitaAnterior.getId()); 				
+				     existeValor = true; 
+				 }
+				 
+			  }	 
+				
+			}
 			
 			//listaValorMarmita = null;
-			if ((valorMarmita == null)) {
+			if (!existeValor) {
 				throw new GlobalExceptionHandler("Não existe vigência de valor"
-						+ " da marmita cadastrado para o período, ou "
-						+ " vigência não cobre todo o período!");
+						+ " da marmita cadastrado para o período!");
 			}
+			
+			
+			
+			
 			
 //			ValorMarmita valorMarmita = valorMarmitaService.obterValorVigencia(programacaoEntregaDto.getMesAnoProgramacao());
 			
@@ -563,7 +673,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			//Preenche o id do valor.
 //			//programacaoEntregaDto.setIdValor(listaValorMarmita.get(0).getId());
-			programacaoEntregaDto.setIdValor(valorMarmita.getId());
+			//programacaoEntregaDto.setIdValor(valorMarmita.getId());
 			
 			//Gera ano e mês correntes.
 			int mesAtual = LocalDate.now().getMonthValue();
@@ -578,9 +688,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!");
 			}
 			
-			//Verifica se mês informado é menor que mês corrente.
-			if (mesProgramacao < mesAtual ) {
-				throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!");
+			if (anoProgramacao == anoAtual ) {
+				//Verifica se mês informado é menor que mês corrente.
+				if (mesProgramacao < mesAtual ) {
+					throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!");
+				}
 			}
 			
 			

@@ -210,13 +210,13 @@ public class ProgramacaoEntregaController {
 		  }
 		  
 		  @Transactional
-		  @PatchMapping("/autorizarMenos24h/{id}")
-		  public ResponseEntity autorizarMenos24h(@PathVariable("id") Long id, @RequestBody ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+		  @PutMapping("/autorizar/{id}")
+		  public ResponseEntity autorizar(@PathVariable("id") Long id, @RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 			  try {
 					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
-					programacaoEntregaMenos24hDto.setId(id);			
-					programacaoEntregaMenos24hDto.setStAprov(true);
-					programacaoEntrega = programacaoEntregaService.autorizarMenos24h(programacaoEntregaMenos24hDto);
+					programacaoEntregaDto.setId(id);			
+					programacaoEntregaDto.setStAprov(true);
+					programacaoEntrega = programacaoEntregaService.autorizar(programacaoEntregaDto);
 					return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
 			     } catch (RegraNegocioException e) {
 				    return ResponseEntity.badRequest().body(e.getMessage());

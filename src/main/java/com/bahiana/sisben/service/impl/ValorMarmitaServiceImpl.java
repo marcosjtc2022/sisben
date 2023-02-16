@@ -64,23 +64,19 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 		ValorMarmita valorMarmita = new ValorMarmita();
 		LocalDateTime dataModificacao = LocalDateTime.now();
 		valorMarmitaDto.setDataUltimaModificacao(dataModificacao);
-//		String dataInicial = new String(valorMarmitaDto.getDataInicial().toString());
-//		String dataFinal = null;
 		LocalDate dataInicial =  LocalDate.parse(valorMarmitaDto.getDataInicial().toString());
 		valorMarmitaDto.setDataInicial(dataInicial);
-		LocalDate dataFinal = LocalDate.parse(valorMarmitaDto.getDataFinal().toString());
-		valorMarmitaDto.setDataFinal(dataFinal);
+		
+		if (valorMarmitaDto.getDataFinal() != null) {
+			LocalDate dataFinal = LocalDate.parse(valorMarmitaDto.getDataFinal().toString());
+		    valorMarmitaDto.setDataFinal(dataFinal);
+		}
 		
 		BeanUtils.copyProperties(valorMarmitaDto, valorMarmita);
 		
 		return valorMarmita;
 	}
 
-//	@Override
-//	public List<ValorMarmita> pesquisarValorMaisAtual(LocalDate dataFinal) {
-//		return valorMarmitaRepository.pesquisarValorMaisAtual(dataFinal);
-//	}
-//
 	@Override
 	public ValorMarmita pesquisarValorVigencia(LocalDate dataInicial, LocalDate dataFinal) {
 		return valorMarmitaRepository.pesquisarValorVigencia(dataInicial, dataFinal);
@@ -91,15 +87,15 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 		return valorMarmitaRepository.verificarValorVigencia(dataInicial, dataFinal);
 	}
 
-//	@Override
-//	public ValorMarmita obterValorVigencia(LocalDate dataProgramacao) {
-//		return valorMarmitaRepository.obterValorVigencia(dataProgramacao);
-//	}
-//
-//	@Override
-//	public Integer obterValorVigenciaPorAnoMes(LocalDate mesAnoProgramacao) {
-//		return valorMarmitaRepository.obterValorVigenciaPorAnoMes(mesAnoProgramacao);
-//	}
+	@Override
+	public Integer verificarValorVigenciaAtual() {
+		return valorMarmitaRepository.verificarValorVigenciaAtual();
+	}
+
+	@Override
+	public ValorMarmita pesquisarValorVigenciaAtual() {
+		return valorMarmitaRepository.pesquisarValorVigenciaAtual();
+	}
 	
 	
 

@@ -62,7 +62,15 @@ public class ValorMarmitaController {
 			
 			if ((countVlMarmita > 0)) {
 				throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-			}  
+			}
+			
+			Integer countVlAtual = valorMarmitaService.verificarValorVigenciaAtual();
+				
+			if ((countVlAtual > 0)) {
+					throw new GlobalExceptionHandler("Para inserir uma nova vigência,"
+							+ " informe a data final da atual vigência !");
+			}
+			
 		  
 		    ValorMarmita valorMarmita = new ValorMarmita() ;
 		    valorMarmita = valorMarmitaService.salvar(valorMarmitaDto);

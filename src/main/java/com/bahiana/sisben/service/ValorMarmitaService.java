@@ -28,14 +28,14 @@ public interface ValorMarmitaService {
 		
 		List<ValorMarmita> listarSimplesOrdenadoValor();
 		
-//		List<ValorMarmita> pesquisarValorMaisAtual(LocalDate dataFinal);
-//		
 		ValorMarmita pesquisarValorVigencia( LocalDate dataInicial,LocalDate dataFinal);
 		
 		Integer verificarValorVigencia(LocalDate dataInicial,LocalDate dataFinal);
-//		
-//		ValorMarmita obterValorVigencia( LocalDate dataProgramacao);
-//		
-//		Integer obterValorVigenciaPorAnoMes(LocalDate mesAnoProgramacao);
+		
+		Integer verificarValorVigenciaAtual();
+		
+		ValorMarmita pesquisarValorVigenciaAtual();
+		
+		
 
 }

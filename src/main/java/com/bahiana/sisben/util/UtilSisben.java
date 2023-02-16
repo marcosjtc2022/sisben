@@ -12,27 +12,36 @@ public class UtilSisben {
 	
 	
 	public Integer calculaDiasMes(LocalDate mesAnoProgramacao, LocalDate dataAtual) {
+		
+		//Variável boolean de classe.
+		ProgramacaoEntregaServiceImpl.setMesCorrente(false);
 
-		//Recupera o mês da programação e o mês atual.
+		//Recupera o ano e o mês da programação, e o ano e o mês atual.
 		Integer mesProgramacao = mesAnoProgramacao.getMonth().getValue();
 		Integer mesAtual = dataAtual.getMonth().getValue();
+		Integer anoProgramacao = mesAnoProgramacao.getYear();
+		Integer anoAtual = dataAtual.getYear();
 		
 		//Recuperao último dia do mês da programação.
-		LocalDate utlimaDataMes = LocalDate.now().withMonth(mesProgramacao).with(TemporalAdjusters.lastDayOfMonth());
+		//LocalDate utlimaDataMes = LocalDate.now().withMonth(mesProgramacao).with(TemporalAdjusters.lastDayOfMonth());
+		LocalDate utlimaDataMes = mesAnoProgramacao.withMonth(mesProgramacao).with(TemporalAdjusters.lastDayOfMonth());
 		
 		//Recupera a quantidade de dias do mês da programação.
 		Integer qtdDiasmes = utlimaDataMes.getDayOfMonth();
 		
-		//Verifica se o mês atual é igual ao mês da programação.
-		if (mesProgramacao == mesAtual ) { 
-			  //Calcula a diferença entre a data corrente do mês e o final do mês da programação.
-			  Integer diferencadias = (int) ChronoUnit.DAYS.between(dataAtual, utlimaDataMes );
-			  diferencadias +=1;
-			  qtdDiasmes = diferencadias;
-			  
-			  //Variável boolean de classe.  
-			  ProgramacaoEntregaServiceImpl.setMesCorrente(true);
-		}
+		//Verifica se o ano e o mês atuais são iguais ao mês da programação.
+		if (anoProgramacao.equals(anoAtual) ) { 
+			
+			if (mesProgramacao.equals(mesAtual)) { 
+				  //Calcula a diferença entre a data corrente do mês e o final do mês da programação.
+				  Integer diferencadias = (int) ChronoUnit.DAYS.between(dataAtual, utlimaDataMes );
+				  diferencadias +=1;
+				  qtdDiasmes = diferencadias;
+				  
+				  //Variável boolean de classe.  
+				  ProgramacaoEntregaServiceImpl.setMesCorrente(true);
+			}
+	  }	
 		
 		return qtdDiasmes;
 	}
