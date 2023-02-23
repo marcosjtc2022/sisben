@@ -755,6 +755,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			String diaDaSemana = null;
 			LocalDateTime dataModificacao = LocalDateTime.now();
 			
+			//#
+			//Pesquisa se existe valor marmita e recupera o mais atual
+			ValorMarmita valorMarmitaAtual = valorMarmitaService.
+					pesquisarValorVigenciaAtual();
+			//#
 			
 			
 			
@@ -777,14 +782,15 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					idUsuarioEntrega = Long.valueOf(linha[5]);
 					//idValor = new Long(linha[6]);
 					idValor = Long.valueOf(linha[6]);
-					idUsuarioUltimaModificacao = new Long(linha[7]);
+					idUsuarioUltimaModificacao = Long.valueOf(linha[7]);
 					dataEntrega = LocalDate.parse(linha[8]);
 					dataProgramacao = LocalDate.parse(linha[9]);
 					dataSolicitacao = LocalDate.parse(linha[10]);
                     diaDaSemana = new String(linha[11]).trim();
                     solicExtra = Boolean.parseBoolean(linha[12]);
-					
-					
+                    
+                    
+                  	
 				
 				ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
 				
@@ -797,11 +803,110 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoEntrega.setDataSolicitacao(dataSolicitacao);
 				programacaoEntrega.setIdUsuario(idUsuarioEntrega);
 				programacaoEntrega.setIdUa(idUa);
-				programacaoEntrega.setIdValor(idValor);
+				//#programacaoEntrega.setIdValor(idValor);
 				programacaoEntrega.setDataUltimaModificacao(dataModificacao);
 				programacaoEntrega.setIdUsuarioUltimaModificacao(idUsuarioUltimaModificacao);
 				programacaoEntrega.setDataProgramacao(dataProgramacao);
 				programacaoEntrega.setDiaDaSemana(diaDaSemana);
+				
+				// trecho repetido. colocar em uma função.
+				
+				  //#
+                
+                
+                if (valorMarmitaAtual != null) {
+    				
+    				
+    				Integer intMesDataProg = dataProgramacao.getMonthValue();
+    				Integer intAnoDataProg = dataProgramacao.getYear();
+    				Integer intDiaDataProg = dataProgramacao.getDayOfMonth();
+    				
+//    				Integer intMesUltimaData = programacaoEntregaDto.getUtlimaDataMes().getMonthValue();
+//    				Integer intAnoUltimaData = programacaoEntregaDto.getUtlimaDataMes().getYear();
+//    				Integer intDiaUltimaData = programacaoEntregaDto.getUtlimaDataMes().getDayOfMonth();
+//    				
+    				
+    				Integer intMesVlMarmita = valorMarmitaAtual.getDataInicial().getMonthValue();
+    				Integer intAnoVlMarmita = valorMarmitaAtual.getDataInicial().getYear();
+    				Integer intDiaVlMarmita = valorMarmitaAtual.getDataInicial().getDayOfMonth();
+    				
+    				
+    				String strDiaDataProg = intDiaDataProg.toString();
+    				if (strDiaDataProg.length()== 1) {
+    					strDiaDataProg = "0" + strDiaDataProg;
+    				}
+    				String strMesDataProg = intMesDataProg.toString();
+    				if (strMesDataProg.length()== 1) {
+    					strMesDataProg = "0" + strMesDataProg;
+    				}
+    				String strAnoDataProg = intAnoDataProg.toString();
+    				
+    				String strDtInvDtaProg = strAnoDataProg + strMesDataProg + strDiaDataProg; 
+    				
+    				Integer dataInvertidaDtaProg = Integer.valueOf(strDtInvDtaProg);
+    				
+    				
+//    				String strMesUltimaData = intMesUltimaData.toString();
+//    				if (strMesUltimaData.length()== 1) {
+//    					strMesUltimaData = "0" + strMesUltimaData;
+//    				}
+//    				String strDiaUltimaData = intDiaUltimaData.toString();
+//    				if (strDiaUltimaData.length()== 1) {
+//    					strDiaUltimaData = "0" + strDiaUltimaData;
+//    				}
+//    				String strAnoUltimaData = intAnoUltimaData.toString();
+    				
+//                    String strDtInvUlDta = strAnoUltimaData + strMesUltimaData + strDiaUltimaData; 
+    				
+//    				Integer dataInvertidaUlDta = Integer.valueOf(strDtInvUlDta);
+    				
+    				
+    				
+    				
+    				String strMesVlMarmita = intMesVlMarmita.toString();
+    				if (strMesVlMarmita.length()== 1) {
+    					strMesVlMarmita = "0" + strMesVlMarmita;
+    				}
+    				String strDiaVlMarmita = intDiaVlMarmita.toString();
+    				if (strDiaVlMarmita.length()== 1) {
+    					strDiaVlMarmita = "0" + strDiaVlMarmita;
+    				}
+    				String strAnoVlMarmita = intAnoVlMarmita.toString();
+    				
+                    String strDtInvVlMar = strAnoVlMarmita + strMesVlMarmita + strDiaVlMarmita; 
+    				
+    				Integer dataInvertidaVlMar = Integer.valueOf(strDtInvVlMar);
+    				
+    			 if (dataInvertidaDtaProg >= dataInvertidaVlMar ){	 
+    					
+    					  programacaoEntrega.setIdValor(valorMarmitaAtual.getId());
+    					
+    				} else {
+    				
+    				ValorMarmita valorMarmitaAnterior = valorMarmitaService.
+    						pesquisarValorVigencia(dataProgramacao, dataProgramacao);
+    				
+    				 if ( valorMarmitaAnterior != null) {
+    				     programacaoEntrega.setIdValor(valorMarmitaAnterior.getId()); 				
+    				      
+    				 }
+    				 
+    			  }	 
+    				
+    			}
+    			
+                
+                
+                
+                
+                //#
+				
+			
+				
+				
+				
+				//
+				
 				
 				Calendario calendario = new Calendario();
 				
