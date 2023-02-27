@@ -173,6 +173,14 @@ public class ProgramacaoEntrega implements Serializable{
     @JoinColumn(updatable=false,insertable=false,name = "id_usuario_entrega")
     Usuario usuarioEntrega;
     
+//  //mapeando a classe VwSisbenFuncionario.
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(updatable=false,insertable=false,name = "matricula_colaborador")
+//    VwSisbenFuncionario funcionario;
+    
+    
+    
+    
 //    //Mapenado classe CentroCusto. 
 //  	@OneToMany(mappedBy = "programacaoEntrega", fetch = FetchType.EAGER)
 //  	Set<CentroCustoPercRateio> centroCusto;

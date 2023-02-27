@@ -1,11 +1,15 @@
 package com.bahiana.sisben.model.entity;
 
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -100,6 +104,10 @@ public class VwSisbenFuncionario {
 	public void setChefe2Funcionario(String chefe2Funcionario) {
 		this.chefe2Funcionario = chefe2Funcionario;
 	}
+	
+//	//Mapenado classe ProgramacaoEntrega 
+//		@OneToMany(mappedBy = "funcionario", fetch = FetchType.EAGER)
+//		Set<ProgramacaoEntrega> funcionarioProgEntregas;
 
 	public VwSisbenFuncionario(String matriculaFuncionario, Long codColigada, String codSecao, String descSecao,
 			String nomeFuncionario, String emailFuncionario, String chefe1Funcionario, String chefe2Funcionario) {

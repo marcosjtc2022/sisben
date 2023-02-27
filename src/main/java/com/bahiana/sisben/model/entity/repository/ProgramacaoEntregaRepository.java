@@ -80,6 +80,27 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	List<ProgramacaoEntrega> listaProgramacaoEntregaAnoMesMatricula(@Param("mesAnoProgramacao") LocalDate mesAnoProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
+	@Query("SELECT pe FROM ProgramacaoEntrega pe"
+	 	 + " Order by pe.matriculaColaborador, pe.dataProgramacao")
+	List<ProgramacaoEntrega> listarProgramacaoEntrega();
+	
+//	@Query("SELECT pe FROM ProgramacaoEntrega pe"
+//		 	 + " Group by pe.matriculaColaborador, pe.dataProgramacao , pe.uaPrevista, "
+//		 	 + " pe.uaRealizada, pe.idData, pe.idUa, pe.idJustificativa, pe.idValor, pe.idUsuario, pe.id, pe.dataEntrega"	
+//			 + " Order by pe.matriculaColaborador, pe.dataProgramacao , pe.uaPrevista, pe.dataSolicitacao, pe.solicExtra, pe.stFerias "
+//			 + " pe.uaRealizada, pe.idData, pe.idUa, pe.idJustificativa, pe.idValor, pe.idUsuario, pe.id, pe.dataEntrega, "
+//			 + " pe.dataSolicitacao, pe.solicExtra, pe.stFerias " )
+//		List<ProgramacaoEntrega> listarProgramacaoEntrega();
+	
+//	@Query("SELECT pe.dataProgramacao, pe.matriculaColaborador,pe.solicExtra,"
+//			+ " vwe.nomeFuncionario, pe.uaRealizada "
+//			+ " FROM ProgramacaoEntrega pe, VwSisbenElegibilidade vwe "
+//			+ " where vwe.matriculaFuncionario = pe.matriculaColaborador"
+//			+ " group by pe.matriculaColaborador, pe.dataProgramacao, pe.uaRealizada,"
+//			+ " pe.solicExtra, vwe.nomeFuncionario"
+//			+ " order by pe.dataProgramacao,pe.matriculaColaborador, pe.uaRealizada,"
+//			+ " pe.solicExtra, vwe.nomeFuncionario" )
+//	List<ProgramacaoEntrega> listarProgramacaoEntrega();
 	
 	 
 	

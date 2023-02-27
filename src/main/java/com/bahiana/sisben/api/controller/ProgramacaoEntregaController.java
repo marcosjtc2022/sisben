@@ -305,6 +305,19 @@ public class ProgramacaoEntregaController {
 			  
 		 }
 		 
+		 
+		 @GetMapping(value =  "/listarProgramacaoEntrega" )
+		  @ResponseBody
+		  public ResponseEntity<List<ProgramacaoEntrega>> listarProgramacaoEntrega() {
+			 try {
+					
+					return new ResponseEntity(programacaoEntregaService.listarProgramacaoEntrega(), HttpStatus.CREATED);
+			     } catch (RegraNegocioException e) {
+				    return new ResponseEntity<List<ProgramacaoEntrega>>(HttpStatus.BAD_REQUEST);
+			     }
+		  }
+		 
+		 
 //		 @GetMapping(value =  "/lista-filtro-descricao" )
 //			public ResponseEntity<List<Fornecedor>> listarPorDescricaoOrdenadoDescricao(FornecedorDto  fornecedorDto) {
 //				 try {

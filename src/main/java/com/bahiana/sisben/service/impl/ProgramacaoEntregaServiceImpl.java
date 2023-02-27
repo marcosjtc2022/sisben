@@ -1021,17 +1021,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!");
 			}
 			
-			
-			
-     }		
-			
-		
+     }
 
-
-		
-		
-		
-		
-	
+		@Override
+		public List<ProgramacaoEntrega> listarProgramacaoEntrega() {
+			return programacaoEntregaRepository.listarProgramacaoEntrega();
+		}		
 	
 }

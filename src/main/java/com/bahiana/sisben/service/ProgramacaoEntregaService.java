@@ -80,5 +80,7 @@ public interface ProgramacaoEntregaService {
 	
 	ProgramacaoEntrega registrarEntrega(ProgramacaoEntregaDto programacaoEntregaDto);
 	
+	List<ProgramacaoEntrega> listarProgramacaoEntrega();
+	
 
 }
