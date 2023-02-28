@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,6 +29,7 @@ import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
 import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
+import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
@@ -38,6 +38,7 @@ import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.service.VwSisbenFeriasElegivelService;
+import com.bahiana.sisben.service.VwSisbenFuncionarioService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 import com.bahiana.sisben.util.UtilSisben;
 
@@ -62,6 +63,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Autowired
 	SuspensaoElegibilidadeService suspensaoElegibilidadeService;
+	
+	@Autowired
+	VwSisbenFuncionarioService vwSisbenFuncionarioService;
+	
 	
 	private static boolean mesCorrente = false;
 	
@@ -261,7 +266,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 	@Override
 	public Page<ProgramacaoEntrega> listarPaginadoQueryDinamica(ProgramacaoEntregaSpecification programacaoEntregaSpecification, Pageable pageable) {
-		return this.programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec(), pageable);
+		Pageable wholePage = Pageable.unpaged();
+		//return this.programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec(), pageable);
+		return this.programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec(), wholePage);
 	}
 
 //	@Override #
@@ -821,11 +828,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
     				Integer intAnoDataProg = dataProgramacao.getYear();
     				Integer intDiaDataProg = dataProgramacao.getDayOfMonth();
     				
-//    				Integer intMesUltimaData = programacaoEntregaDto.getUtlimaDataMes().getMonthValue();
-//    				Integer intAnoUltimaData = programacaoEntregaDto.getUtlimaDataMes().getYear();
-//    				Integer intDiaUltimaData = programacaoEntregaDto.getUtlimaDataMes().getDayOfMonth();
-//    				
-    				
     				Integer intMesVlMarmita = valorMarmitaAtual.getDataInicial().getMonthValue();
     				Integer intAnoVlMarmita = valorMarmitaAtual.getDataInicial().getYear();
     				Integer intDiaVlMarmita = valorMarmitaAtual.getDataInicial().getDayOfMonth();
@@ -844,23 +846,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
     				String strDtInvDtaProg = strAnoDataProg + strMesDataProg + strDiaDataProg; 
     				
     				Integer dataInvertidaDtaProg = Integer.valueOf(strDtInvDtaProg);
-    				
-    				
-//    				String strMesUltimaData = intMesUltimaData.toString();
-//    				if (strMesUltimaData.length()== 1) {
-//    					strMesUltimaData = "0" + strMesUltimaData;
-//    				}
-//    				String strDiaUltimaData = intDiaUltimaData.toString();
-//    				if (strDiaUltimaData.length()== 1) {
-//    					strDiaUltimaData = "0" + strDiaUltimaData;
-//    				}
-//    				String strAnoUltimaData = intAnoUltimaData.toString();
-    				
-//                    String strDtInvUlDta = strAnoUltimaData + strMesUltimaData + strDiaUltimaData; 
-    				
-//    				Integer dataInvertidaUlDta = Integer.valueOf(strDtInvUlDta);
-    				
-    				
     				
     				
     				String strMesVlMarmita = intMesVlMarmita.toString();
@@ -893,20 +878,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
     				 
     			  }	 
     				
-    			}
-    			
-                
-                
-                
-                
-                //#
-				
-			
-				
-				
-				
-				//
-				
+    			}	
 				
 				Calendario calendario = new Calendario();
 				
@@ -1025,7 +997,30 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 		@Override
 		public List<ProgramacaoEntrega> listarProgramacaoEntrega() {
-			return programacaoEntregaRepository.listarProgramacaoEntrega();
+			
+			List<ProgramacaoEntrega> listProgEntrega = new ArrayList();
+			
+			listProgEntrega = programacaoEntregaRepository.listarProgramacaoEntrega();
+			
+			VwSisbenFuncionario funcionario = null;  
+			
+			for (ProgramacaoEntrega ProgEntrega : listProgEntrega) {
+				
+			    ProgEntrega.getMatriculaColaborador();
+			    
+			    funcionario = vwSisbenFuncionarioService.ObterPorMatricula(ProgEntrega.getMatriculaColaborador()).get();
+			    ProgEntrega.setNomeFuncionario(funcionario.getNomeFuncionario());
+			    
+			}
+			
+			return listProgEntrega;
+			
+		}
+
+		@Override
+		public List<ProgramacaoEntrega> listarComFiltros(
+				ProgramacaoEntregaSpecification programacaoEntregaSpecification) {
+			return this.programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec());
 		}		
 	
 }

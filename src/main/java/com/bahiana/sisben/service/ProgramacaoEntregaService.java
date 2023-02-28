@@ -82,5 +82,7 @@ public interface ProgramacaoEntregaService {
 	
 	List<ProgramacaoEntrega> listarProgramacaoEntrega();
 	
+	List<ProgramacaoEntrega> listarComFiltros(ProgramacaoEntregaSpecification programacaoEntregaSpecification);
+	
 
 }

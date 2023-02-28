@@ -96,6 +96,17 @@ public class ProgramacaoEntrega implements Serializable{
 	@Transient
 	String tabelaProgramacaoEntrega;
 	
+	@Transient
+	String nomeFuncionario;
+	
+	public String getNomeFuncionario() {
+		return nomeFuncionario;
+	}
+
+	public void setNomeFuncionario(String nomeFuncionario) {
+		this.nomeFuncionario = nomeFuncionario;
+	}
+
 	public Boolean getStFerias() {
 		return stFerias;
 	}

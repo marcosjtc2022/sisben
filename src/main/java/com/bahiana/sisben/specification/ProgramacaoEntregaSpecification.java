@@ -22,7 +22,7 @@ public class ProgramacaoEntregaSpecification {
     private Long id;	
 	
 	//@Column(name="matricula_colaborador")
-	private Long matriculaColaborador;
+	private String matriculaColaborador;
 	
 	//@Column(name="ua_prevista")
 	private String uaPrevista;
@@ -70,11 +70,11 @@ public class ProgramacaoEntregaSpecification {
 		this.id = id;
 	}
 
-	public Long getMatriculaColaborador() {
+	public String getMatriculaColaborador() {
 		return matriculaColaborador;
 	}
 
-	public void setMatriculaColaborador(Long matriculaColaborador) {
+	public void setMatriculaColaborador(String matriculaColaborador) {
 		this.matriculaColaborador = matriculaColaborador;
 	}
 
@@ -174,7 +174,7 @@ public class ProgramacaoEntregaSpecification {
 		this.tabelaProgramacaoEntrega = tabelaProgramacaoEntrega;
 	}
 
-	public ProgramacaoEntregaSpecification(Long id, Long matriculaColaborador, String uaPrevista, String uaRealizada,
+	public ProgramacaoEntregaSpecification(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDateTime dataEntrega,
 			LocalDateTime dataSolicitacao, Boolean solicExtra, Boolean stAprov, String tabelaProgramacaoEntrega) {
 		super();
@@ -202,14 +202,25 @@ public class ProgramacaoEntregaSpecification {
 	public Specification<ProgramacaoEntrega> toSpec(){
 		return (root, query, builder) -> {
 			List<Predicate> predicados = new ArrayList<>();
-			if (StringUtils.hasText(uaPrevista)) {
-				Path<String> campoUaPrevista = root.<String>get("uaPrevista");
+			if (StringUtils.hasText(uaRealizada)) {
+				Path<String> campoUaPrevista = root.<String>get("uaRealizada");
 				//Predicate PredicadoNome =  builder.equal(campoUaPrevista, uaPrevista);
-				Predicate PredicadoLike =  builder.like(campoUaPrevista, "%"+uaPrevista+"%");
+				Predicate PredicadoLike =  builder.like(campoUaPrevista, "%"+uaRealizada+"%");
 				//predicados.add(PredicadoNome);
 				predicados.add(PredicadoLike);
 				
 			}
+			if (StringUtils.hasText(matriculaColaborador)) {
+				Path<String> campoMatriculaColaborador = root.<String>get("matriculaColaborador");
+				Predicate PredicadoMatricula =  builder.equal(campoMatriculaColaborador, matriculaColaborador);
+				//Predicate PredicadoLike =  builder.like(campoUaPrevista, "%"+uaRealizada+"%");
+				//predicados.add(PredicadoNome);
+				predicados.add(PredicadoMatricula);
+				
+			}
+			
+			
+			
 			return builder.and(predicados.toArray(new Predicate[0]));
 		};
 	}

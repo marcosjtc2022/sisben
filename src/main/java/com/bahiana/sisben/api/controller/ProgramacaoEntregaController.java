@@ -318,6 +318,20 @@ public class ProgramacaoEntregaController {
 		  }
 		 
 		 
+		 @GetMapping(value =  "/listarComFiltros" )
+		    @ResponseBody
+		    public List<ProgramacaoEntrega> listarComFiltros(ProgramacaoEntregaSpecification programacaoEntregaSpecification , Pageable pageable  ) {
+		    	
+				// Page<ProgramacaoEntrega>	listarComFiltros = new Page<ProgramacaoEntrega>();
+				 
+				 return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
+				 
+				//return listarComFiltros;
+		    	
+		    	
+		    }
+		 
+		 
 //		 @GetMapping(value =  "/lista-filtro-descricao" )
 //			public ResponseEntity<List<Fornecedor>> listarPorDescricaoOrdenadoDescricao(FornecedorDto  fornecedorDto) {
 //				 try {
