@@ -2,6 +2,7 @@ package com.bahiana.sisben.specification;
 
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,16 @@ public class ProgramacaoEntregaSpecification {
 	
 	@Transient
 	String tabelaProgramacaoEntrega;
+	
+	private LocalDate dataProgramacao;
+	
+	public LocalDate getDataProgramacao() {
+		return dataProgramacao;
+	}
+
+	public void setDataProgramacao(LocalDate dataProgramacao) {
+		this.dataProgramacao = dataProgramacao;
+	}
 
 	public Long getId() {
 		return id;
@@ -219,7 +230,14 @@ public class ProgramacaoEntregaSpecification {
 				
 			}
 			
-			
+			if (StringUtils.hasText(dataProgramacao.toString())) {
+				Path<String> campoDataProgramacao = root.<String>get("dataProgramacao");
+				Predicate PredicadoDataProgramacao =  builder.equal(campoDataProgramacao, dataProgramacao);
+				//Predicate PredicadoLike =  builder.like(campoUaPrevista, "%"+uaRealizada+"%");
+				//predicados.add(PredicadoNome);
+				predicados.add(PredicadoDataProgramacao);
+				
+			}
 			
 			return builder.and(predicados.toArray(new Predicate[0]));
 		};

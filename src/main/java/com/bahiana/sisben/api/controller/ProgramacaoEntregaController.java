@@ -14,20 +14,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
-import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
@@ -320,9 +318,19 @@ public class ProgramacaoEntregaController {
 		 
 		 @GetMapping(value =  "/listarComFiltros" )
 		    @ResponseBody
-		    public List<ProgramacaoEntrega> listarComFiltros(ProgramacaoEntregaSpecification programacaoEntregaSpecification , Pageable pageable  ) {
+		    //public List<ProgramacaoEntrega> listarComFiltros(ProgramacaoEntregaSpecification programacaoEntregaSpecification) {
+			 public List<ProgramacaoEntrega> listarComFiltros(@RequestParam(required = false ) String uaRealizada,
+					                                          @RequestParam(required = false ) String matriculaColaborador,
+					                                          @RequestParam(required = false ) String dataProgramacao) {
 		    	
 				// Page<ProgramacaoEntrega>	listarComFiltros = new Page<ProgramacaoEntrega>();
+			 
+			     ProgramacaoEntregaSpecification programacaoEntregaSpecification = new ProgramacaoEntregaSpecification();
+			     
+			     programacaoEntregaSpecification.setUaRealizada(uaRealizada);
+			     programacaoEntregaSpecification.setMatriculaColaborador(matriculaColaborador);
+			     LocalDate dataProgramacaoDate = LocalDate.parse(dataProgramacao);
+			     programacaoEntregaSpecification.setDataProgramacao(dataProgramacaoDate);
 				 
 				 return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
 				 
