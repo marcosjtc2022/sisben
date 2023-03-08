@@ -93,12 +93,14 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	@Query("update ProgramacaoEntrega set dataEntrega = :dataEntrega,"
 			+ " uaRealizada = :uaRealizada, "
 			+ " idUsuario = :idUsuario,"
-			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao"
+			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
+			+ " idUa = :idUa "
 			+ " where id = :id")
 	void atulizaProgramacaoEntrega(@Param("dataEntrega") LocalDate dataEntrega,
 			@Param("uaRealizada") String uaRealizada,
 			@Param("idUsuario") Long idUsuario,
 			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("idUa") Long idUa,
 			@Param("id") Long id);
 	
 	

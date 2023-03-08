@@ -324,16 +324,34 @@ public class ProgramacaoEntregaController {
 		    //public List<ProgramacaoEntrega> listarComFiltros(ProgramacaoEntregaSpecification programacaoEntregaSpecification) {
 			 public List<ProgramacaoEntrega> listarComFiltros(@RequestParam(required = false ) String uaRealizada,
 					                                          @RequestParam(required = false ) String matriculaColaborador,
-					                                          @RequestParam(required = false ) String dataProgramacao) {
+					                                          @RequestParam(required = false ) String anoMes,
+					                                          @RequestParam(required = false ) String codSetor) {
 		    	
 				// Page<ProgramacaoEntrega>	listarComFiltros = new Page<ProgramacaoEntrega>();
 			 
 			     ProgramacaoEntregaSpecification programacaoEntregaSpecification = new ProgramacaoEntregaSpecification();
 			     
-			     programacaoEntregaSpecification.setUaRealizada(uaRealizada);
-			     programacaoEntregaSpecification.setMatriculaColaborador(matriculaColaborador);
-			     LocalDate dataProgramacaoDate = LocalDate.parse(dataProgramacao);
-			     programacaoEntregaSpecification.setDataProgramacao(dataProgramacaoDate);
+                 if (uaRealizada != "") {
+                	 programacaoEntregaSpecification.setUaRealizada(uaRealizada);	 
+			     }
+                 
+                 if (matriculaColaborador != "") {
+                	 programacaoEntregaSpecification.setMatriculaColaborador(matriculaColaborador);	 
+			     }
+                 
+                 if (anoMes != "") {;
+                	 programacaoEntregaSpecification.setAnoMes(anoMes); 
+			     }
+                 
+                 if (codSetor != "") {;
+            	   programacaoEntregaSpecification.setCodSetor(codSetor);
+		         }
+                 
+			     
+			    
+			    // programacaoEntregaSpecification.setCodSetor(dataProgramacao)
+			    // LocalDate dataProgramacaoDate = LocalDate.parse(dataProgramacao);
+			    // programacaoEntregaSpecification.setDataProgramacao(dataProgramacaoDate);
 				 
 				 return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
 				 
@@ -341,6 +359,25 @@ public class ProgramacaoEntregaController {
 		    	
 		    	
 		    }
+		 
+		 
+		 @Transactional
+			@DeleteMapping("/apagar/{id}")
+			public ResponseEntity apagarProgramacaoEntrega(@PathVariable("id") Long id) {
+				
+//				   Long countProgAprovada = programacaoEntregaService.pesquisaProgramacaoEntregaMenos24hAprovada(id);
+//					
+//					if ((countProgAprovada > 0) && (countProgAprovada != null)) {
+//						return new ResponseEntity("Programação entrega com menos de 24h já aprovada!", HttpStatus.BAD_REQUEST);
+//					} 
+				
+				//entity é o que retorna de ObterPorId
+						return programacaoEntregaService.obterPorId(id).map(entity -> {					
+							programacaoEntregaService.apagar(entity);
+							return new ResponseEntity(HttpStatus.NO_CONTENT);
+						}).orElseGet(() -> 
+						    new ResponseEntity("Programação entrega não encontrada na base de dados.", HttpStatus.BAD_REQUEST));
+			}
 		 
 		 
 //		 @GetMapping(value =  "/lista-filtro-descricao" )

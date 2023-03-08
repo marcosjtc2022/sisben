@@ -138,6 +138,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				 programacaoEntrega.getUaRealizada(),
 				 programacaoEntrega.getIdUsuario(),
 				 programacaoEntrega.getIdUsuarioUltimaModificacao(),
+				 programacaoEntrega.getIdUa(),
 				 programacaoEntrega.getId());
 		
 	}
@@ -393,7 +394,21 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			} else {
 			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().toString());
 			}
-				
+			
+			//Separa ano e mês da programação.
+			Integer intMesProg = dataProgramacao.getMonthValue();
+			Integer intAnoProg = dataProgramacao.getYear();
+			
+			
+			String strMesProg = intMesProg.toString();
+			if (strMesProg.length()== 1) {
+				strMesProg = "0" + strMesProg;
+			}
+			String strAnoMesProg = intAnoProg.toString() + strMesProg ;
+			
+			//Recupera o setor do funcionário.#
+			VwSisbenFuncionario funcionario = vwSisbenFuncionarioService.ObterPorMatricula(programacaoEntregaDto.getMatriculaColaborador()).get();
+			
 			
 			//dataSolicitacaoDateTime = LocalDateTime.parse(programacaoEntregaDto.getDataAtual().toString());
 			
@@ -421,6 +436,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setIdUsuarioUltimaModificacao(programacaoEntregaDto.getIdUsuarioUltimaModificacao());
 				programacaoInput.setDataProgramacao(dataProgramacao);
 				programacaoInput.setDiaDaSemana(utilSisben.getDiaDaSemana(dataProgramacao));
+				programacaoInput.setAnoMes(strAnoMesProg);
+				programacaoInput.setCodSetor(funcionario.getCodSecao());
 				
 				//Pesquisa existência de data especial.
 				calendario = calendarioService.pesquisarPorData(dataProgramacao);
@@ -696,11 +713,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			String diaDaSemana = null;
 			LocalDateTime dataModificacao = LocalDateTime.now();
 			
-			//#
+			//
 			//Pesquisa se existe valor marmita e recupera o mais atual
 			ValorMarmita valorMarmitaAtual = valorMarmitaService.
 					pesquisarValorVigenciaAtual();
-			//#
+			//
 			
 			
 			
@@ -744,7 +761,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoEntrega.setDataSolicitacao(dataSolicitacao);
 				programacaoEntrega.setIdUsuario(idUsuarioEntrega);
 				programacaoEntrega.setIdUa(idUa);
-				//#programacaoEntrega.setIdValor(idValor);
+				//programacaoEntrega.setIdValor(idValor);
 				programacaoEntrega.setDataUltimaModificacao(dataModificacao);
 				programacaoEntrega.setIdUsuarioUltimaModificacao(idUsuarioUltimaModificacao);
 				programacaoEntrega.setDataProgramacao(dataProgramacao);
@@ -752,7 +769,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				// trecho repetido. colocar em uma função.
 				
-				  //#
+				  //
                 
                 
                 if (valorMarmitaAtual != null) {
@@ -954,7 +971,30 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		@Override
 		public List<ProgramacaoEntrega> listarComFiltros(
 				ProgramacaoEntregaSpecification programacaoEntregaSpecification) {
-			return this.programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec());
+			
+			///
+			
+			List<ProgramacaoEntrega> listProgEntrega = new ArrayList();
+			
+			VwSisbenFuncionario funcionario = null; 
+			
+			listProgEntrega = programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec());
+			
+            for (ProgramacaoEntrega ProgEntrega : listProgEntrega) {
+				
+			    funcionario = vwSisbenFuncionarioService.ObterPorMatricula(ProgEntrega.getMatriculaColaborador()).get();
+			    ProgEntrega.setNomeFuncionario(funcionario.getNomeFuncionario());
+			    
+			}
+			 
+			
+			///
+			
+			return listProgEntrega;
+			
+			
+			
+			//return this.programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec());
 		}
 		
 		public Long retornaIdValorMarmita(LocalDate primeiraDataMes,  LocalDate ultimaDataMes) {
