@@ -90,8 +90,14 @@ public class ProgramacaoEntrega implements Serializable{
 	@Column(name = "data_programacao")
 	private LocalDate dataProgramacao;
 	
-	@Column(name="descricaoFeriado")
+	@Column(name="descricao_feriado")
 	private String descricaoFeriado;
+	
+	@Column(name="ano_mes")
+	private String anoMes;
+	
+	@Column(name="cod_setor")
+	private String codSetor;
 	
 	@Transient
 	String tabelaProgramacaoEntrega;
@@ -99,6 +105,22 @@ public class ProgramacaoEntrega implements Serializable{
 	@Transient
 	String nomeFuncionario;
 	
+	public String getAnoMes() {
+		return anoMes;
+	}
+
+	public void setAnoMes(String anoMes) {
+		this.anoMes = anoMes;
+	}
+
+	public String getCodSetor() {
+		return codSetor;
+	}
+
+	public void setCodSetor(String codSetor) {
+		this.codSetor = codSetor;
+	}
+
 	public String getNomeFuncionario() {
 		return nomeFuncionario;
 	}
@@ -397,12 +419,11 @@ public class ProgramacaoEntrega implements Serializable{
 	}
 	
 	
-	
 	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stFerias, Boolean stAprov, Boolean exigSuspensa,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao, String diaDaSemana,
-			LocalDate dataProgramacao, String descricaoFeriado) {
+			LocalDate dataProgramacao, String descricaoFeriado, String anoMes, String codSetor) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -424,6 +445,8 @@ public class ProgramacaoEntrega implements Serializable{
 		this.diaDaSemana = diaDaSemana;
 		this.dataProgramacao = dataProgramacao;
 		this.descricaoFeriado = descricaoFeriado;
+		this.anoMes = anoMes;
+		this.codSetor = codSetor;
 	}
 
 	public ProgramacaoEntrega() {

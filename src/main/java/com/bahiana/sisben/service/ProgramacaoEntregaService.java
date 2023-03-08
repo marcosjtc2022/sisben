@@ -34,7 +34,7 @@ public interface ProgramacaoEntregaService {
 	
 	ProgramacaoEntrega atualizarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto);
 	
-	ProgramacaoEntrega alterar(ProgramacaoEntregaDto programacaoEntregaDto);
+	void alterar(ProgramacaoEntregaDto programacaoEntregaDto);
 	
 	void apagar(ProgramacaoEntrega programacaoEntrega);
 	

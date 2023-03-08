@@ -69,6 +69,16 @@ public class ProgramacaoEntregaDto {
 	
 	private LocalDate primeiraDataMes;
 	
+	private String anoMes;
+	
+	public String getAnoMes() {
+		return anoMes;
+	}
+
+	public void setAnoMes(String anoMes) {
+		this.anoMes = anoMes;
+	}
+
 	public LocalDate getUtlimaDataMes() {
 		return utlimaDataMes;
 	}
@@ -294,16 +304,13 @@ public class ProgramacaoEntregaDto {
 	public void setDescricaoFeriado(String descricaoFeriado) {
 		this.descricaoFeriado = descricaoFeriado;
 	}
-		
-    
-	
 	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
 			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual, String diaDaSemana,
 			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao, String bairroSecaoElegivel,
-			Boolean exigSuspensa, Boolean stFerias, LocalDate utlimaDataMes, LocalDate primeiraDataMes) {
+			Boolean exigSuspensa, Boolean stFerias, LocalDate utlimaDataMes, LocalDate primeiraDataMes, String anoMes) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -331,6 +338,7 @@ public class ProgramacaoEntregaDto {
 		this.stFerias = stFerias;
 		this.utlimaDataMes = utlimaDataMes;
 		this.primeiraDataMes = primeiraDataMes;
+		this.anoMes = anoMes;
 	}
 
 	public ProgramacaoEntregaDto() {

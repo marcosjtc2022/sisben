@@ -3,7 +3,10 @@ package com.bahiana.sisben.model.entity.repository;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -83,6 +86,22 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	@Query("SELECT pe FROM ProgramacaoEntrega pe"
 	 	 + " Order by pe.matriculaColaborador, pe.dataProgramacao")
 	List<ProgramacaoEntrega> listarProgramacaoEntrega();
+	
+	
+	@Transactional
+	@Modifying
+	@Query("update ProgramacaoEntrega set dataEntrega = :dataEntrega,"
+			+ " uaRealizada = :uaRealizada, "
+			+ " idUsuario = :idUsuario,"
+			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao"
+			+ " where id = :id")
+	void atulizaProgramacaoEntrega(@Param("dataEntrega") LocalDate dataEntrega,
+			@Param("uaRealizada") String uaRealizada,
+			@Param("idUsuario") Long idUsuario,
+			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("id") Long id);
+	
+	
 	
 //	@Query("SELECT pe FROM ProgramacaoEntrega pe"
 //		 	 + " Group by pe.matriculaColaborador, pe.dataProgramacao , pe.uaPrevista, "

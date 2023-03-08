@@ -55,6 +55,46 @@ public class ProgramacaoEntregaMenos24hDto {
 	//@Column(name = "data_ultima_modificacao")
 	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDateTime dataUltimaModificacao;
+	
+	private String anoMes;
+	
+	private String codSetor;
+	
+    private LocalDate utlimaDataMes;
+	
+	private LocalDate primeiraDataMes;  
+	
+	public LocalDate getUtlimaDataMes() {
+		return utlimaDataMes;
+	}
+
+	public void setUtlimaDataMes(LocalDate utlimaDataMes) {
+		this.utlimaDataMes = utlimaDataMes;
+	}
+
+	public LocalDate getPrimeiraDataMes() {
+		return primeiraDataMes;
+	}
+
+	public void setPrimeiraDataMes(LocalDate primeiraDataMes) {
+		this.primeiraDataMes = primeiraDataMes;
+	}
+
+	public String getAnoMes() {
+		return anoMes;
+	}
+
+	public void setAnoMes(String anoMes) {
+		this.anoMes = anoMes;
+	}
+
+	public String getCodSetor() {
+		return codSetor;
+	}
+
+	public void setCodSetor(String codSetor) {
+		this.codSetor = codSetor;
+	}
 
 	public Long getId() {
 		return id;
@@ -176,11 +216,11 @@ public class ProgramacaoEntregaMenos24hDto {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 	
-	
 	public ProgramacaoEntregaMenos24hDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, Long idUsuarioUltimaModificacao,
-			LocalDateTime dataUltimaModificacao) {
+			LocalDateTime dataUltimaModificacao, String anoMes, String codSetor, LocalDate utlimaDataMes,
+			LocalDate primeiraDataMes) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -197,6 +237,10 @@ public class ProgramacaoEntregaMenos24hDto {
 		this.stAprov = stAprov;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 		this.dataUltimaModificacao = dataUltimaModificacao;
+		this.anoMes = anoMes;
+		this.codSetor = codSetor;
+		this.utlimaDataMes = utlimaDataMes;
+		this.primeiraDataMes = primeiraDataMes;
 	}
 
 	public ProgramacaoEntregaMenos24hDto() {

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.persistence.criteria.Path;
@@ -65,6 +66,27 @@ public class ProgramacaoEntregaSpecification {
 	
 	private LocalDate dataProgramacao;
 	
+	private String anoMes;
+	
+	private String codSetor;
+	
+	
+	public String getAnoMes() {
+		return anoMes;
+	}
+
+	public void setAnoMes(String anoMes) {
+		this.anoMes = anoMes;
+	}
+
+	public String getCodSetor() {
+		return codSetor;
+	}
+
+	public void setCodSetor(String codSetor) {
+		this.codSetor = codSetor;
+	}
+
 	public LocalDate getDataProgramacao() {
 		return dataProgramacao;
 	}
@@ -184,10 +206,11 @@ public class ProgramacaoEntregaSpecification {
 	public void setTabelaProgramacaoEntrega(String tabelaProgramacaoEntrega) {
 		this.tabelaProgramacaoEntrega = tabelaProgramacaoEntrega;
 	}
-
+	
 	public ProgramacaoEntregaSpecification(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDateTime dataEntrega,
-			LocalDateTime dataSolicitacao, Boolean solicExtra, Boolean stAprov, String tabelaProgramacaoEntrega) {
+			LocalDateTime dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDate dataProgramacao,
+			String anoMes, String codSetor) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -202,10 +225,11 @@ public class ProgramacaoEntregaSpecification {
 		this.dataSolicitacao = dataSolicitacao;
 		this.solicExtra = solicExtra;
 		this.stAprov = stAprov;
-		this.tabelaProgramacaoEntrega = tabelaProgramacaoEntrega;
+		this.dataProgramacao = dataProgramacao;
+		this.anoMes = anoMes;
+		this.codSetor = codSetor;
 	}
-	
-	
+
 	public ProgramacaoEntregaSpecification() {
 		
 	}
@@ -213,31 +237,33 @@ public class ProgramacaoEntregaSpecification {
 	public Specification<ProgramacaoEntrega> toSpec(){
 		return (root, query, builder) -> {
 			List<Predicate> predicados = new ArrayList<>();
+			
 			if (StringUtils.hasText(uaRealizada)) {
 				Path<String> campoUaPrevista = root.<String>get("uaRealizada");
-				//Predicate PredicadoNome =  builder.equal(campoUaPrevista, uaPrevista);
 				Predicate PredicadoLike =  builder.like(campoUaPrevista, "%"+uaRealizada+"%");
-				//predicados.add(PredicadoNome);
 				predicados.add(PredicadoLike);
-				
 			}
+			
 			if (StringUtils.hasText(matriculaColaborador)) {
 				Path<String> campoMatriculaColaborador = root.<String>get("matriculaColaborador");
 				Predicate PredicadoMatricula =  builder.equal(campoMatriculaColaborador, matriculaColaborador);
-				//Predicate PredicadoLike =  builder.like(campoUaPrevista, "%"+uaRealizada+"%");
-				//predicados.add(PredicadoNome);
 				predicados.add(PredicadoMatricula);
-				
 			}
 			
-			if (StringUtils.hasText(dataProgramacao.toString())) {
-				Path<String> campoDataProgramacao = root.<String>get("dataProgramacao");
-				Predicate PredicadoDataProgramacao =  builder.equal(campoDataProgramacao, dataProgramacao);
-				//Predicate PredicadoLike =  builder.like(campoUaPrevista, "%"+uaRealizada+"%");
-				//predicados.add(PredicadoNome);
-				predicados.add(PredicadoDataProgramacao);
-				
+			if (StringUtils.hasText(anoMes)) {
+				Path<String> campoAnoMes = root.<String>get("anoMes");
+				Predicate PredicadoAnoMes =  builder.equal(campoAnoMes, anoMes);
+				predicados.add(PredicadoAnoMes);
 			}
+			
+			if (StringUtils.hasText(codSetor)) {
+				Path<String> campoCodSetor = root.<String>get("codSetor");
+				Predicate PredicadoCodSetor =  builder.equal(campoCodSetor, codSetor);
+				predicados.add(PredicadoCodSetor);
+			}
+			
+			
+			
 			
 			return builder.and(predicados.toArray(new Predicate[0]));
 		};

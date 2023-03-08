@@ -114,9 +114,12 @@ public class ProgramacaoEntregaController {
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 	  try {
 			ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
-			programacaoEntregaDto.setId(id);			
-			programacaoEntrega = programacaoEntregaService.alterar(programacaoEntregaDto);
-			return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
+			programacaoEntregaDto.setId(id);
+			//programacaoEntregaDto
+			 programacaoEntregaService.alterar(programacaoEntregaDto);
+			//programacaoEntrega = programacaoEntregaService.alterar(programacaoEntregaDto);
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			//return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
 	     } catch (RegraNegocioException e) {
 		    return ResponseEntity.badRequest().body(e.getMessage());
 	     }
