@@ -103,27 +103,15 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("idUa") Long idUa,
 			@Param("id") Long id);
 	
+	@Query("select pe.dataEntrega, pe.matriculaColaborador, pe.codSetor, "
+			+ " pe.uaRealizada, pe.dataProgramacao"
+			+ " from ProgramacaoEntrega pe, Usuario u, Fornecedor f "
+			+ " where pe.idUsuario = u.id and "
+			+ "       u.idFornecedor = f.id and "
+			+ "	      u.id = :id"
+		 	+ " Order by pe.matriculaColaborador, pe.dataProgramacao")
+		List<ProgramacaoEntrega> pesquisarRegistroEntregaPorUsuario(@Param("id") Long id);
 	
-	
-//	@Query("SELECT pe FROM ProgramacaoEntrega pe"
-//		 	 + " Group by pe.matriculaColaborador, pe.dataProgramacao , pe.uaPrevista, "
-//		 	 + " pe.uaRealizada, pe.idData, pe.idUa, pe.idJustificativa, pe.idValor, pe.idUsuario, pe.id, pe.dataEntrega"	
-//			 + " Order by pe.matriculaColaborador, pe.dataProgramacao , pe.uaPrevista, pe.dataSolicitacao, pe.solicExtra, pe.stFerias "
-//			 + " pe.uaRealizada, pe.idData, pe.idUa, pe.idJustificativa, pe.idValor, pe.idUsuario, pe.id, pe.dataEntrega, "
-//			 + " pe.dataSolicitacao, pe.solicExtra, pe.stFerias " )
-//		List<ProgramacaoEntrega> listarProgramacaoEntrega();
-	
-//	@Query("SELECT pe.dataProgramacao, pe.matriculaColaborador,pe.solicExtra,"
-//			+ " vwe.nomeFuncionario, pe.uaRealizada "
-//			+ " FROM ProgramacaoEntrega pe, VwSisbenElegibilidade vwe "
-//			+ " where vwe.matriculaFuncionario = pe.matriculaColaborador"
-//			+ " group by pe.matriculaColaborador, pe.dataProgramacao, pe.uaRealizada,"
-//			+ " pe.solicExtra, vwe.nomeFuncionario"
-//			+ " order by pe.dataProgramacao,pe.matriculaColaborador, pe.uaRealizada,"
-//			+ " pe.solicExtra, vwe.nomeFuncionario" )
-//	List<ProgramacaoEntrega> listarProgramacaoEntrega();
-	
-	 
 	
 
 }

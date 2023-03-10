@@ -1,10 +1,12 @@
 package com.bahiana.sisben.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import com.bahiana.sisben.service.impl.ProgramacaoEntregaServiceImpl;
 
@@ -77,45 +79,91 @@ public class UtilSisben {
 	    return diaDaSemana;
 	}
 	
-	
-
+	public Long diferencaEntreDatas() {
+		
+		String primeiraHora = "08-03-2023 01:10:20";
+		String segundaHora = "09-03-2023 06:30:50";
+		
+		
+		SimpleDateFormat sdf
+        = new SimpleDateFormat(
+            "dd-MM-yyyy HH:mm:ss");
+		
+		long difference_In_Hours = 0L;
+		
+		
+		try {
+			Date d1 = sdf.parse(primeiraHora);
+			Date d2 = sdf.parse(segundaHora);
+			
+            long difference_In_Time
+                = d2.getTime() - d1.getTime();
+			 
+			 //Calculate time difference in seconds,
+	            // minutes, hours, years, and days
+	            long difference_In_Seconds
+	                = TimeUnit.MILLISECONDS
+	                      .toSeconds(difference_In_Time)
+	                  % 60;
 	 
+	            long difference_In_Minutes
+	                = TimeUnit
+	                      .MILLISECONDS
+	                      .toMinutes(difference_In_Time)
+	                  % 60;
+	 
+	             difference_In_Hours
+	                = TimeUnit
+	                      .MILLISECONDS
+	                      .toHours(difference_In_Time)
+	                  % 24;
+	 
+	            long difference_In_Days
+	                = TimeUnit
+	                      .MILLISECONDS
+	                      .toDays(difference_In_Time)
+	                  % 365;
+	 
+	            long difference_In_Years
+	                = TimeUnit
+	                      .MILLISECONDS
+	                      .toDays(difference_In_Time)
+	                  / 365l;
+	 
+	            // Print the date difference in
+	            // years, in days, in hours, in
+	            // minutes, and in seconds
+	            System.out.print(
+	                "Difference"
+	                + " between two dates is: ");
+	 
+	            // Print result
+	            System.out.println(
+	                difference_In_Years
+	                + " years, "
+	                + difference_In_Days
+	                + " days, "
+	                + difference_In_Hours
+	                + " hours, "
+	                + difference_In_Minutes
+	                + " minutes, "
+	                + difference_In_Seconds
+	                + " seconds");
+	 
+			
+			
+			
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+      
+
 	
-//	  public static void main(String args[]){ 
-//	    try{
-//	      // constrói a primeira data
-//	      DateFormat fm = new SimpleDateFormat(
-//	        "dd/MM/yyyy HH:mm:ss");
-//	      Date data1 = (Date)fm.parse("20/12/2008 16:20:12");
-//	 
-//	      // constrói a segunda data
-//	      fm = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//	      Date data2 = (Date)fm.parse("30/12/2008 21:30:15");
-//	 
-//	      // vamos obter a diferença em semanas, dias, horas,
-//	      // minutos e segundos
-//	      long segundos = (data2.getTime() - 
-//	        data1.getTime()) / 1000;
-//	      int semanas = (int)Math.floor(segundos / 604800);
-//	      segundos -= semanas * 604800;
-//	      int dias = (int)Math.floor(segundos / 86400);
-//	      segundos -= dias * 86400;
-//	      int horas = (int)Math.floor(segundos / 3600);
-//	      segundos -= horas * 3600;
-//	      int minutos = (int)Math.floor(segundos / 60);
-//	      segundos -= minutos * 60;
-//	 
-//	      // exibe o resultado
-//	      System.out.println("As duas datas tem " +
-//	        semanas + " semanas, " + dias + " dias, " + 
-//	        horas + " horas, " + minutos + " minutos e " +
-//	        segundos + " segundos de diferença");
-//	    }
-//	    catch(ParseException e){
-//	      e.printStackTrace();
-//	    }
-//	  } 
-//	
+		return difference_In_Hours;
+		
+		
+	}
 
 	
 

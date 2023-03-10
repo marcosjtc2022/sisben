@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.FornecedorService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.UsuarioService;
+import com.bahiana.sisben.util.UtilSisben;
 
 @RestController
 @RequestMapping(value = "/fornecedores")
@@ -41,6 +41,9 @@ public class FornecedorController {
 		
 		@Autowired
 		private ProgramacaoEntregaService programacaoEntregaService;
+		
+		
+		
 		
 		@GetMapping(value =  "/lista-filtro-descricao" )
 		public ResponseEntity<List<Fornecedor>> listarPorDescricaoOrdenadoDescricao(FornecedorDto  fornecedorDto) {
@@ -64,6 +67,12 @@ public class FornecedorController {
 		
 		@GetMapping(value =  "/listarOrdenadoDescricao" )
 	    public List<Fornecedor> listarOrdenadoDescricao() {
+			
+			
+//			UtilSisben utilSisben = new UtilSisben();
+//			
+//			utilSisben.diferencaEntreDatas();
+			
 	    	return this.fornecedorService.listarSimplesOrdenadoDescricao();  	  
 	    }
 		

@@ -92,39 +92,25 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		return usuario;
 	}
 	
-	//@Override
-	public void validarEmailUsuario(String emailUsuario) {
-			// TODO Auto-generated method stub
-	}
+//	//@Override
+//	public void validarEmailUsuario(String emailUsuario) {
+//			// TODO Auto-generated method stub
+//	}
 
 	@Override
 	public Usuario autenticarToken(String email, String senha) {
      Optional<Usuario> usuario  = usuarioRepository.findByEmailUsuario(email);
      
 		if (!usuario.isPresent()) {
-			//throw new ErroAutenticacao("Usuário não encontrado para o email informado");
 			throw new GlobalExceptionHandler("Usuário não encontrado para o email informado");
 		}
 		
 		if(!usuario.get().getSenhaUsuario().equals(senha)) {	
-			//throw new ErroAutenticacao("Senha inválida");
 			throw new GlobalExceptionHandler("Senha inválida");
 		}
 		
 		return usuario.get();
 	}
-	
-//	public Usuario validarEinserirUsuarioInterno(Optional<VwSisbenFuncionario> funcionario,UsuarioDto usuarioDto) {
-//		 UsuarioDto usuarioInterno = new UsuarioDto();
-////		 usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
-////		 usuarioInterno.setMatriculaColaborador(Long.parseLong(funcionario.get().getMatriculaFuncionario()));
-////		 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
-////		 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
-////		 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
-////		 usuarioInterno.setExterno(false);
-//		
-//		return null;
-//    }
 
 	@Override
 	public long pesquisaUsuario(String matriculaColaborador) {
@@ -146,6 +132,11 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		 usuarioInterno.setExterno(false);
 		 
 		return usuarioInterno;
+	}
+
+	@Override
+	public List<Usuario> listarUsuarioFornecedor() {
+		return usuarioRepository.listarUsuarioFornecedor();
 	}
 
 	

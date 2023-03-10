@@ -19,6 +19,7 @@ import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.service.VwSisbenFeriasElegivelService;
 import com.bahiana.sisben.service.VwSisbenFuncionarioService;
+import com.bahiana.sisben.service.VwSisbenSetorService;
 import com.bahiana.sisben.service.impl.CalendarioServiceImpl;
 import com.bahiana.sisben.service.impl.FornecedorServiceImpl;
 import com.bahiana.sisben.service.impl.FuncionalidadeServiceImpl;
@@ -36,6 +37,7 @@ import com.bahiana.sisben.service.impl.ValorMarmitaServiceImpl;
 import com.bahiana.sisben.service.impl.VwSisbenElegibilidadeServiceImpl;
 import com.bahiana.sisben.service.impl.VwSisbenFeriasElegivelServiceImpl;
 import com.bahiana.sisben.service.impl.VwSisbenFuncionarioServiceImpl;
+import com.bahiana.sisben.service.impl.VwSisbenSetorServiceImpl;
 
 @Configuration
 //@ComponentScan("com.bahiana.sisben.model.entity.repository.FuncionarioInternoRepository")
@@ -129,42 +131,10 @@ public class SpringConfig {
 	    return new  VwSisbenFeriasElegivelServiceImpl();
 	}
 	
-//	@Bean
-//	public VwSisbenFuncionarioService getVwSisbenFuncionarioServiceConfig() {
-//	    return new  VwSisbenFuncionarioServiceImpl();
-//	}
-	
-	
-	
-//	@Bean
-//	public SecurityUserDetailsService getSecurityUserDetailsService() {
-//	    return  new UserDetailsService();
-//	}
-
-	
-//	@Bean
-//	public ProgramacaoEntregaService getProgramacaoEntregaService() {
-//	    return new  ProgramacaoEntregaServiceImpl();
-//	}
-//	
-	
-	
-//	@Bean
-//	public void getFuncionarioInternoRepository() {
-//		//funcionarioInternoRepository = new FuncionarioInternoRepository();
-//		FuncionarioInternoRepository fornecedor = new FuncionarioInternoRepository() ;
-//	}
-	
-//	@Bean
-//	public FuncionarioInternoRepository getFuncionarioInternoRepository() {
-//	    return new  FuncionarioInternoRepository();
-//	}
-	
-	
-	
-	
-	
-	
+	@Bean
+	public VwSisbenSetorService getVwSisbenSetorService() {
+	    return new  VwSisbenSetorServiceImpl();
+	}
 	
 
 }

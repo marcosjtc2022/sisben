@@ -113,6 +113,9 @@ public class ProgramacaoEntregaController {
 	@PutMapping("{id}")
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 	  try {
+		  
+		  //Colocar o excluir em caso de alteração da suspensão da exigibilidade.
+		  
 			ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 			programacaoEntregaDto.setId(id);
 			//programacaoEntregaDto
@@ -325,7 +328,8 @@ public class ProgramacaoEntregaController {
 			 public List<ProgramacaoEntrega> listarComFiltros(@RequestParam(required = false ) String uaRealizada,
 					                                          @RequestParam(required = false ) String matriculaColaborador,
 					                                          @RequestParam(required = false ) String anoMes,
-					                                          @RequestParam(required = false ) String codSetor) {
+					                                          @RequestParam(required = false ) String codSetor,
+					                                          @RequestParam(required = false ) Long idUsuario) {
 		    	
 				// Page<ProgramacaoEntrega>	listarComFiltros = new Page<ProgramacaoEntrega>();
 			 
@@ -339,12 +343,16 @@ public class ProgramacaoEntregaController {
                 	 programacaoEntregaSpecification.setMatriculaColaborador(matriculaColaborador);	 
 			     }
                  
-                 if (anoMes != "") {;
+                 if (anoMes != "") {
                 	 programacaoEntregaSpecification.setAnoMes(anoMes); 
 			     }
                  
-                 if (codSetor != "") {;
+                 if (codSetor != "") {
             	   programacaoEntregaSpecification.setCodSetor(codSetor);
+		         }
+                 
+                 if (idUsuario != null) {
+          	        programacaoEntregaSpecification.setIdUsuario(idUsuario);
 		         }
                  
 			     

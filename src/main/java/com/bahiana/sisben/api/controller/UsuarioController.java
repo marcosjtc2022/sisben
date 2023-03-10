@@ -216,4 +216,11 @@ public class UsuarioController {
 				
 	}
 	
+	
+	@GetMapping(value =  "/listarUsuarioFornecedor" )
+    public List<Usuario> listarUsuarioFornecedor() {
+    	return this.usuarioService.listarUsuarioFornecedor();  
+    }
+	
+	
 }

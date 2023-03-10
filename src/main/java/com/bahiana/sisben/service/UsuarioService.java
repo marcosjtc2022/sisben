@@ -18,7 +18,6 @@ public interface UsuarioService {
 	
 	Usuario salvar(UsuarioDto usuarioDto);
 	
-	//Retorna um optiona vazio caso não exista.
 	Optional<Usuario> obterPorId(Long id);
 	
 	long pesquisaPerfil(Long idPerfil);
@@ -35,12 +34,9 @@ public interface UsuarioService {
 	
 	List<Usuario> listarPorNomeOrdenadoNome(UsuarioDto usuarioDto);
 	
-	//Usuario validarEinserirUsuarioInterno(Optional<VwSisbenFuncionario> funcionario, UsuarioDto usuarioDto);
-	
 	UsuarioDto criaUsuarioInterno(VwSisbenFuncionario funcionario, UsuarioDto usuarioDto);
 	
-	
-//	List<Usuario> listarQueryNativa();
+	List<Usuario> listarUsuarioFornecedor();
 
 
 }

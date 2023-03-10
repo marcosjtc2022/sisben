@@ -24,8 +24,6 @@ public interface ProgramacaoEntregaService {
 	
 	Page<ProgramacaoEntrega> listarPaginadoSimples( );
 	
-//    Page<ProgramacaoEntrega> listarProgramacaoPorPeriodo(Pageable pageable, ProgramacaoEntregaDto programacaoEntregaDTO );
-	
 	ProgramacaoEntrega salvar(ProgramacaoEntregaDto programacaoEntregaDto);
 	
 	ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto);
@@ -38,21 +36,9 @@ public interface ProgramacaoEntregaService {
 	
 	void apagar(ProgramacaoEntrega programacaoEntrega);
 	
-//	ProgramacaoEntrega salvarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
-	
-//	ProgramacaoEntrega atualizarLote(ProgramacaoEntregaDto programacaoEntregaDto, char operacao);
-	
 	Optional<ProgramacaoEntrega> obterPorId(Long id);	
 	
-	//ProgramacaoEntrega alterarLote(ProgramacaoEntregaDTO programacaoEntregaDto);
-	
-	//ProgramacaoEntrega toProgramacaoEntrega(ProgramacaoEntregaDto programacaoEntregaDto);
-	
-	//List<ProgramacaoEntrega> concatenaCamposTabela(ProgramacaoEntrega programacaoEntrega, char operacao);
-	
 	public Iterable<ProgramacaoEntrega> findAll();
-	
-//	Iterable<ProgramacaoEntrega> programacaoDataTable(ProgramacaoEntregaDto programacaoEntregaDTO );
 	
 	public Iterable<ProgramacaoEntrega> findBymatriculaColaborador(ProgramacaoEntregaDto programacaoEntregaDTO );
 	
@@ -83,6 +69,8 @@ public interface ProgramacaoEntregaService {
 	List<ProgramacaoEntrega> listarProgramacaoEntrega();
 	
 	List<ProgramacaoEntrega> listarComFiltros(ProgramacaoEntregaSpecification programacaoEntregaSpecification);
+	
+	List<ProgramacaoEntrega> listarRegistroEntregaPorUsuario(ProgramacaoEntregaSpecification programacaoEntregaSpecification);
 	
 
 }

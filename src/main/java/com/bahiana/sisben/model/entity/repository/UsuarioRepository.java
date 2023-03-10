@@ -31,8 +31,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 	List<Usuario> findByOrderByNomeColaboradorAsc();
 		
 	
-//    //@Query(value = "SELECT * FROM usuario", nativeQuery = true)
-//	@Query(value = "SELECT func_mat as id, func_nome as nomeColaborador FROM [10.71.17.40].[Corpore].[dbo].[SISBEN_Funcionarios]", nativeQuery = true)
-//	List<Usuario> pesquisaNativa();
+	@Query(" select u "
+		 + " from Usuario u, Fornecedor f "
+		 + " where u.idFornecedor = f.id"
+		 + " order by u.nomeColaborador  ")
+	List<Usuario> listarUsuarioFornecedor();
 
 }

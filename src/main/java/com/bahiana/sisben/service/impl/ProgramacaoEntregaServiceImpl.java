@@ -1106,6 +1106,32 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			return idValorMarmita;
 		}
+
+		@Override
+		public List<ProgramacaoEntrega> listarRegistroEntregaPorUsuario(ProgramacaoEntregaSpecification programacaoEntregaSpecification) {
+			
+            List<ProgramacaoEntrega> listProgEntrega = new ArrayList();
+            List<ProgramacaoEntrega> listRegistroEntregaUsuario = new ArrayList();
+			
+			VwSisbenFuncionario funcionario = null; 
+			
+			listProgEntrega = programacaoEntregaRepository.findAll(programacaoEntregaSpecification.toSpec());
+			
+			
+            for (ProgramacaoEntrega ProgEntrega : listProgEntrega) {
+				
+//			    funcionario = vwSisbenFuncionarioService.ObterPorMatricula(ProgEntrega.getMatriculaColaborador()).get();
+//			    ProgEntrega.setNomeFuncionario(funcionario.getNomeFuncionario());
+//			   
+			    listRegistroEntregaUsuario.add(ProgEntrega);
+			    
+			}
+			 
+			
+			///
+			
+			return listProgEntrega;
+		}
 	
 	
 }

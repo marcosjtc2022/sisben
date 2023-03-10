@@ -240,27 +240,39 @@ public class ProgramacaoEntregaSpecification {
 			
 			if (StringUtils.hasText(uaRealizada)) {
 				Path<String> campoUaPrevista = root.<String>get("uaRealizada");
-				Predicate PredicadoLike =  builder.like(campoUaPrevista, "%"+uaRealizada+"%");
-				predicados.add(PredicadoLike);
+				Predicate predicadoLike =  builder.like(campoUaPrevista, "%"+uaRealizada+"%");
+				predicados.add(predicadoLike);
 			}
 			
 			if (StringUtils.hasText(matriculaColaborador)) {
 				Path<String> campoMatriculaColaborador = root.<String>get("matriculaColaborador");
-				Predicate PredicadoMatricula =  builder.equal(campoMatriculaColaborador, matriculaColaborador);
-				predicados.add(PredicadoMatricula);
+				Predicate predicadoMatricula =  builder.equal(campoMatriculaColaborador, matriculaColaborador);
+				predicados.add(predicadoMatricula);
 			}
 			
 			if (StringUtils.hasText(anoMes)) {
 				Path<String> campoAnoMes = root.<String>get("anoMes");
-				Predicate PredicadoAnoMes =  builder.equal(campoAnoMes, anoMes);
-				predicados.add(PredicadoAnoMes);
+				Predicate predicadoAnoMes =  builder.equal(campoAnoMes, anoMes);
+				predicados.add(predicadoAnoMes);
 			}
 			
 			if (StringUtils.hasText(codSetor)) {
 				Path<String> campoCodSetor = root.<String>get("codSetor");
-				Predicate PredicadoCodSetor =  builder.equal(campoCodSetor, codSetor);
-				predicados.add(PredicadoCodSetor);
+				Predicate predicadoCodSetor =  builder.equal(campoCodSetor, codSetor);
+				predicados.add(predicadoCodSetor);
 			}
+			
+			
+			
+			if(idUsuario != null) {
+				Object teste = root.get("idUsuario").isNull();
+			}
+			
+//			if (StringUtils.hasText(idUsuario)) {
+//				Path<Long> campoIdUsuario = root.<Long>get("idUsuario");
+//				Predicate predicadoIdusuario =  builder.equal(campoIdUsuario, idUsuario);
+//				predicados.add(predicadoIdusuario);
+//			}
 			
 			
 			
