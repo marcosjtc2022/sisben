@@ -23,14 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bahiana.sisben.api.dto.ListarProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
-import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
-import com.bahiana.sisben.specification.ProgEntregaCriteria;
-import com.bahiana.sisben.specification.ProgEntregaSpecification;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
 @RestController
@@ -40,8 +38,8 @@ public class ProgramacaoEntregaController {
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
 	
-	@Autowired
-	private ProgramacaoEntregaRepository programacaoEntregaRepository;
+//	@Autowired
+//	private ProgramacaoEntregaRepository programacaoEntregaRepository;
 	
     @GetMapping(value =  "/teste" )
     @ResponseBody
@@ -443,34 +441,49 @@ public class ProgramacaoEntregaController {
 		    	
 		    	
 		    }
-		
-		  
-		    @GetMapping(value =  "/listarCriteria" )
+		    
+		    
+		    @GetMapping(value =  "/listarProgramacaoEntregaVigente" )
 		    @ResponseBody
-			 public List<ProgramacaoEntrega> listarCriteria() {
+			 public List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
+                     @RequestParam(required = false ) String uaRealizada,
+                     @RequestParam(required = false  ) String matriculaColaborador,
+                     @RequestParam(required = false ) String anoMes,
+                     @RequestParam(required = false ) String codSetor) {
 		    	
-			 
-			 
-			  
-			  ProgEntregaCriteria progEntregaCriteria = new ProgEntregaCriteria();
-			  progEntregaCriteria.setIdUsuario(3L);
-			  
-			  ProgEntregaSpecification programacaoEntregaSpecification = new ProgEntregaSpecification(progEntregaCriteria);
-			  //programacaoEntregaSpecification.setIdUsuario(63L);
-			  
-			  
-			  
-			  List<ProgramacaoEntrega> list = new ArrayList();
-			  
-			  list = programacaoEntregaRepository.findAll(programacaoEntregaSpecification);
-			  
-			  return list;
-			   
-			  //return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
-			
-		    	
+		    	return this.programacaoEntregaService.
+		    			listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,uaRealizada,codSetor );
 		    	
 		    }
+		    
+		
+		  
+//		    @GetMapping(value =  "/listarCriteria" )
+//		    @ResponseBody
+//			 public List<ProgramacaoEntrega> listarCriteria() {
+//		    	
+//			 
+//			 
+//			  
+//			  ProgEntregaCriteria progEntregaCriteria = new ProgEntregaCriteria();
+//			  progEntregaCriteria.setIdUsuario(3L);
+//			  
+//			  ProgEntregaSpecification programacaoEntregaSpecification = new ProgEntregaSpecification(progEntregaCriteria);
+//			  //programacaoEntregaSpecification.setIdUsuario(63L);
+//			  
+//			  
+//			  
+//			  List<ProgramacaoEntrega> list = new ArrayList();
+//			  
+//			  list = programacaoEntregaRepository.findAll(programacaoEntregaSpecification);
+//			  
+//			  return list;
+//			   
+//			  //return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
+//			
+//		    	
+//		    	
+//		    }
 		
 		  
 		  

@@ -16,12 +16,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.bahiana.sisben.api.dto.ListarProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
@@ -1131,6 +1131,13 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			///
 			
 			return listProgEntrega;
+		}
+
+		@Override
+		public List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
+				String matriculaColaborador, String anoMes, String uaRealizada,String codSetor) {
+			return programacaoEntregaRepository.
+					listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,uaRealizada,codSetor);
 		}
 	
 	

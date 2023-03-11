@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.bahiana.sisben.api.dto.ListarProgEntVigenteDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 
 public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository<ProgramacaoEntrega, Long>, JpaSpecificationExecutor<ProgramacaoEntrega> {
@@ -112,6 +113,18 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 		 	+ " Order by pe.matriculaColaborador, pe.dataProgramacao")
 		List<ProgramacaoEntrega> pesquisarRegistroEntregaPorUsuario(@Param("id") Long id);
 	
+	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ListarProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
+			+ " pe.codSetor) "
+			+ " FROM ProgramacaoEntrega pe "
+			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
+			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
+			+ "       (:uaRealizada is null or pe.uaRealizada = :uaRealizada) and"
+			+ "       (:codSetor is null or pe.codSetor = :codSetor) ")
+	List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
+			@Param("matriculaColaborador") String matriculaColaborador,
+			@Param("anoMes") String anoMes,
+			@Param("uaRealizada") String uaRealizada,
+			@Param("codSetor") String codSetor);
 	
 
 }
