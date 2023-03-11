@@ -27,7 +27,10 @@ import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
+import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
+import com.bahiana.sisben.specification.ProgEntregaCriteria;
+import com.bahiana.sisben.specification.ProgEntregaSpecification;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
 @RestController
@@ -36,6 +39,9 @@ public class ProgramacaoEntregaController {
 	
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
+	
+	@Autowired
+	private ProgramacaoEntregaRepository programacaoEntregaRepository;
 	
     @GetMapping(value =  "/teste" )
     @ResponseBody
@@ -328,8 +334,7 @@ public class ProgramacaoEntregaController {
 			 public List<ProgramacaoEntrega> listarComFiltros(@RequestParam(required = false ) String uaRealizada,
 					                                          @RequestParam(required = false ) String matriculaColaborador,
 					                                          @RequestParam(required = false ) String anoMes,
-					                                          @RequestParam(required = false ) String codSetor,
-					                                          @RequestParam(required = false ) Long idUsuario) {
+					                                          @RequestParam(required = false ) String codSetor) {
 		    	
 				// Page<ProgramacaoEntrega>	listarComFiltros = new Page<ProgramacaoEntrega>();
 			 
@@ -351,9 +356,9 @@ public class ProgramacaoEntregaController {
             	   programacaoEntregaSpecification.setCodSetor(codSetor);
 		         }
                  
-                 if (idUsuario != null) {
-          	        programacaoEntregaSpecification.setIdUsuario(idUsuario);
-		         }
+//                 if (idUsuario != null) {
+//          	        programacaoEntregaSpecification.setIdUsuario(idUsuario);
+//		         }
                  
 			     
 			    
@@ -397,7 +402,76 @@ public class ProgramacaoEntregaController {
 //					    return new ResponseEntity<List<Fornecedor>>(HttpStatus.BAD_REQUEST);
 //				     }
 //			}
+		 
+		 
+		    @GetMapping(value =  "/listarRegistroEntrega" )
+		    @ResponseBody
+			 public List<ProgramacaoEntrega> listarRegistroEntrega(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto,
+					                                          @RequestParam(required = false ) String uaRealizada,
+					                                          @RequestParam(required = false ) String matriculaColaborador,
+					                                          @RequestParam(required = false ) String anoMes,
+					                                          @RequestParam(required = false ) String codSetor,
+					                                          @RequestParam(required = true ) Long idUsuario) {
+		    	
+			 
+			  ProgramacaoEntregaSpecification programacaoEntregaSpecification = new ProgramacaoEntregaSpecification();
+			     
+              if (uaRealizada != "") {
+             	  programacaoEntregaSpecification.setUaRealizada(uaRealizada);	 
+			  }
+              
+              if (matriculaColaborador != "") {
+             	  programacaoEntregaSpecification.setMatriculaColaborador(matriculaColaborador);	 
+			  }
+              
+              if (anoMes != "") {
+             	  programacaoEntregaSpecification.setAnoMes(anoMes); 
+			  }
+              
+              if (codSetor != "") {
+         	      programacaoEntregaSpecification.setCodSetor(codSetor);
+		      }
+              
+              if (idUsuario != null) {
+       	         programacaoEntregaSpecification.setIdUsuario(idUsuario);
+		      }
+			    
+			    
+				 
+				 return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
+			
+		    	
+		    	
+		    }
+		
 		  
+		    @GetMapping(value =  "/listarCriteria" )
+		    @ResponseBody
+			 public List<ProgramacaoEntrega> listarCriteria() {
+		    	
+			 
+			 
+			  
+			  ProgEntregaCriteria progEntregaCriteria = new ProgEntregaCriteria();
+			  progEntregaCriteria.setIdUsuario(3L);
+			  
+			  ProgEntregaSpecification programacaoEntregaSpecification = new ProgEntregaSpecification(progEntregaCriteria);
+			  //programacaoEntregaSpecification.setIdUsuario(63L);
+			  
+			  
+			  
+			  List<ProgramacaoEntrega> list = new ArrayList();
+			  
+			  list = programacaoEntregaRepository.findAll(programacaoEntregaSpecification);
+			  
+			  return list;
+			   
+			  //return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
+			
+		    	
+		    	
+		    }
+		
 		  
 		  
 		

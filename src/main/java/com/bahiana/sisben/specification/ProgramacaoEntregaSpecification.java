@@ -262,10 +262,10 @@ public class ProgramacaoEntregaSpecification {
 				predicados.add(predicadoCodSetor);
 			}
 			
-			
-			
-			if(idUsuario != null) {
-				Object teste = root.get("idUsuario").isNull();
+			if(this.idUsuario != null) {
+				Path<Long> campoIdUsuario = root.<Long>get("idUsuario");
+				Predicate predicadoIdusuario =  builder.equal(campoIdUsuario, idUsuario);
+				predicados.add(predicadoIdusuario);
 			}
 			
 //			if (StringUtils.hasText(idUsuario)) {
