@@ -71,11 +71,6 @@ public class UsuarioController {
 		if (usuarioDto.getExterno() == false) { //if 1		
 		
 			try {	
-	//			final String uri2 = "http://10.71.50.57/Api.Fundacao/api/Autentica/Login";
-	//			AutenticaApiDto autenticaApiDto = new AutenticaApiDto(usuarioDto.getMatriculaColaborador(), usuarioDto.getSenhaUsuario());
-	//			RestTemplate restTemplate = new RestTemplate();
-	//			ResponseEntity<AutenticaApiDto> result = restTemplate.postForEntity(uri2, autenticaApiDto, AutenticaApiDto.class);
-	//			//String status = result.getStatusCode().toString();
 				ResponseEntity<AutenticaApiDto> result1 = restApiAutenticaUsuarioService.AutenticarUsuarioInterno(usuarioDto);
 			} catch (HttpClientErrorException ex) {
 				return ResponseEntity.status(ex.getRawStatusCode()).headers(ex.getResponseHeaders())
@@ -83,13 +78,6 @@ public class UsuarioController {
 	
 			}
 		
-		
-//		try {
-			
-			// String emailUsuario = usuarioDto.getEmailUsuario();  
-			
-			 //Recuperar dados do funcionário.
-//			 if (usuarioDto.getExterno() == false) {
 				 Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(usuarioDto.getMatriculaColaborador());
 				 
 				 emailUsuario = funcionario.get().getEmailFuncionario(); 
@@ -102,17 +90,6 @@ public class UsuarioController {
 					Long countUsuario = usuarioService.pesquisaUsuario(usuarioDto.getMatriculaColaborador());
 					
 					if ((countUsuario == 0)) {
-						
-////						 //Cria usuário do sisben a partir do funcionário.
-						 
-//						 if ((usuarioDto.getIdPerfil() != null) && (usuarioDto.getIdPerfil() != 0)) { 
-//						     usuarioInterno.setIdPerfil(usuarioDto.getIdPerfil());
-//						 }
-//						 usuarioInterno.setMatriculaColaborador(funcionario.get().getMatriculaFuncionario());
-//						 usuarioInterno.setNomeColaborador(funcionario.get().getNomeFuncionario());
-//						 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
-//						 usuarioInterno.setEmailUsuario(funcionario.get().getEmailFuncionario());
-//						 usuarioInterno.setExterno(false);
 						 
 						 UsuarioDto usuarioInterno = new UsuarioDto();
 						 usuarioInterno = usuarioService.criaUsuarioInterno(funcionario.get(), usuarioDto);
@@ -137,7 +114,7 @@ public class UsuarioController {
 			
 			TokenDto tokenDto = new TokenDto( usuarioAutenticado.getNomeColaborador(),
 					usuarioAutenticado.getId(), usuarioAutenticado.getEmailUsuario(),
-					usuarioAutenticado.getIdPerfil(), usuarioAutenticado.getIdUa(), token );
+					usuarioAutenticado.getIdPerfil(), usuarioAutenticado.getIdUa(),usuarioAutenticado.getExterno(), token );
 			
 			return ResponseEntity.ok(tokenDto);
 		}catch (ErroAutenticacao e) {

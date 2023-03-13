@@ -10,7 +10,16 @@ public class TokenDto {
 	private Long idUa;
 	private Long idPerfil;
 	private String token;
+	private Boolean stUsuarioExterno;
 	
+	
+	
+	public Boolean getStUsuarioExterno() {
+		return stUsuarioExterno;
+	}
+	public void setStUsuarioExterno(Boolean stUsuarioExterno) {
+		this.stUsuarioExterno = stUsuarioExterno;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -48,14 +57,18 @@ public class TokenDto {
 	public void setIdPerfil(Long idPerfil) {
 		this.idPerfil = idPerfil;
 	}
-	public TokenDto(String nome, Long id,String emailUsuario, Long idPerfil, Long idUa, String token) {
-		super();
+	
+	public TokenDto(String nome, Long id, String emailUsuario, Long idUa, Long idPerfil,
+			Boolean stUsuarioExterno,String token) {
+		
 		this.nome = nome;
 		this.id = id;
 		this.emailUsuario = emailUsuario;
-		this.token = token;
 		this.idUa = idUa;
 		this.idPerfil = idPerfil;
+		this.stUsuarioExterno = stUsuarioExterno;
+		this.token = token;
+		
 	}
 	
 	public TokenDto() {

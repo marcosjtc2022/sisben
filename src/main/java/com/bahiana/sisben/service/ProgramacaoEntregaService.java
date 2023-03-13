@@ -72,7 +72,7 @@ public interface ProgramacaoEntregaService {
 	List<ProgramacaoEntrega> listarRegistroEntregaPorUsuario(ProgramacaoEntregaSpecification programacaoEntregaSpecification);
 	
 	List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(String matriculaColaborador, String anoMes,
-			                                                 String uaRealizada,String codSetor);
+			                                                      String codSetor);
 	
 
 }

@@ -118,12 +118,11 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " FROM ProgramacaoEntrega pe "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
-			+ "       (:uaRealizada is null or pe.uaRealizada = :uaRealizada) and"
-			+ "       (:codSetor is null or pe.codSetor = :codSetor) ")
+			+ "       (:codSetor is null or pe.codSetor = :codSetor)"
+			+ " order by pe.anoMes,pe.matriculaColaborador   ")
 	List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
-			@Param("uaRealizada") String uaRealizada,
 			@Param("codSetor") String codSetor);
 	
 

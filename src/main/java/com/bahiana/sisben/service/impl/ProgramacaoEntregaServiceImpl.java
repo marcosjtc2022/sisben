@@ -1135,9 +1135,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 		@Override
 		public List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
-				String matriculaColaborador, String anoMes, String uaRealizada,String codSetor) {
+				String matriculaColaborador, String anoMes, String codSetor) {
 			return programacaoEntregaRepository.
-					listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,uaRealizada,codSetor);
+					listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,codSetor);
 		}
 	
 	

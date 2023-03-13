@@ -446,13 +446,12 @@ public class ProgramacaoEntregaController {
 		    @GetMapping(value =  "/listarProgramacaoEntregaVigente" )
 		    @ResponseBody
 			 public List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
-                     @RequestParam(required = false ) String uaRealizada,
                      @RequestParam(required = false  ) String matriculaColaborador,
                      @RequestParam(required = false ) String anoMes,
                      @RequestParam(required = false ) String codSetor) {
 		    	
 		    	return this.programacaoEntregaService.
-		    			listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,uaRealizada,codSetor );
+		    			listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,codSetor );
 		    	
 		    }
 		    
