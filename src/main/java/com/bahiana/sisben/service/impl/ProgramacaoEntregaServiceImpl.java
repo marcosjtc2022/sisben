@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.bahiana.sisben.api.dto.ListarProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
+import com.bahiana.sisben.api.response.ListarProgEntVigenteResponse;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -31,6 +32,7 @@ import com.bahiana.sisben.model.entity.UnidadeAcademica;
 import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
 import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
+import com.bahiana.sisben.model.entity.VwSisbenSetor;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
@@ -40,6 +42,7 @@ import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.service.VwSisbenFeriasElegivelService;
 import com.bahiana.sisben.service.VwSisbenFuncionarioService;
+import com.bahiana.sisben.service.VwSisbenSetorService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 import com.bahiana.sisben.util.UtilSisben;
 
@@ -67,6 +70,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Autowired
 	VwSisbenFuncionarioService vwSisbenFuncionarioService;
+	
+	@Autowired
+	VwSisbenSetorService vwSisbenSetorService;
 	
 	
 	private static boolean mesCorrente = false;
@@ -1134,11 +1140,53 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
-		public List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
+		public List<ListarProgEntVigenteResponse> listarProgramacaoEntregaVigente(
 				String matriculaColaborador, String anoMes, String codSetor) {
-			return programacaoEntregaRepository.
-					listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,codSetor);
+			
+
+	    	 if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
+	    		 matriculaColaborador = null;
+			 }
+	    	 
+	    	 if ((anoMes == "")||((anoMes == null))) {
+	    		 anoMes = null;
+			 }
+	    	 
+	    	 if ((codSetor == "")||((codSetor == null))) {
+	    		 codSetor = null;
+			 }
+	    	 
+	    	 
+	    	 
+	    	 List<ListarProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
+						listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,codSetor);
+	    	 
+	    	 List<ListarProgEntVigenteResponse> ListarProgEntVigenteResponse = new ArrayList(); 
+	    	 
+	    	
+	    	 
+	    	for (ListarProgEntVigenteDto ProgEntrega : listarProgEntVigenteDto) {
+					
+	    		 
+	    		 ListarProgEntVigenteResponse ProgEntVigenteResponse = new ListarProgEntVigenteResponse();
+	    		 
+	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(ProgEntrega.getCodSetor());
+	    		 ProgEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
+	    		 
+	    		 ProgEntVigenteResponse.setAnoMes(ProgEntrega.getAnoMes());
+	    		 ProgEntVigenteResponse.setMatriculaColaborador(ProgEntrega.getMatriculaColaborador());
+	    		 ProgEntVigenteResponse.setCodSetor(ProgEntrega.getCodSetor());
+				   
+	    		 ListarProgEntVigenteResponse.add(ProgEntVigenteResponse);
+				    
+			}
+	    	 
+			
+			
+			return ListarProgEntVigenteResponse;
 		}
+		
+		
 	
 	
 }

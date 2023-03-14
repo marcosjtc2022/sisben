@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.ListarProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
+import com.bahiana.sisben.api.response.ListarProgEntVigenteResponse;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
@@ -445,7 +445,7 @@ public class ProgramacaoEntregaController {
 		    
 		    @GetMapping(value =  "/listarProgramacaoEntregaVigente" )
 		    @ResponseBody
-			 public List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
+			 public List<ListarProgEntVigenteResponse> listarProgramacaoEntregaVigente(
                      @RequestParam(required = false  ) String matriculaColaborador,
                      @RequestParam(required = false ) String anoMes,
                      @RequestParam(required = false ) String codSetor) {
@@ -455,6 +455,7 @@ public class ProgramacaoEntregaController {
 		    	
 		    }
 		    
+		   
 		
 		  
 //		    @GetMapping(value =  "/listarCriteria" )
