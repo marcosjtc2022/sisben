@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
-import com.bahiana.sisben.api.response.ListarProgEntVigenteResponse;
+import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
@@ -289,10 +289,16 @@ public class ProgramacaoEntregaController {
 		 }
 		 
 		 @GetMapping(value =  "/listarProgramacaoEntregaAnoMesMatricula" )
-		
-		  //@ResponseBody
-		  public ResponseEntity<List<ProgramacaoEntrega>> listarProgramacaoEntregaAnoMesMatricula(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto ) {
+		 public ResponseEntity<List<ProgramacaoEntrega>> listarProgramacaoEntregaAnoMesMatricula(@RequestParam(required = true  ) String matriculaColaborador,
+			         @RequestParam(required = true ) String mesAnoProgramacao ) {
 			 try {
+				 
+				    ProgramacaoEntregaDto programacaoEntregaDto = new ProgramacaoEntregaDto();
+				    LocalDate mesAnoProgramacaoDate = LocalDate.parse(mesAnoProgramacao);
+				    
+				    programacaoEntregaDto.setMesAnoProgramacao(mesAnoProgramacaoDate);
+				    programacaoEntregaDto.setMatriculaColaborador(matriculaColaborador);
+				    
 					
 					return new ResponseEntity(programacaoEntregaService.
 							listaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto), HttpStatus.CREATED);
@@ -404,7 +410,7 @@ public class ProgramacaoEntregaController {
 		 
 		    @GetMapping(value =  "/listarRegistroEntrega" )
 		    @ResponseBody
-			 public List<ProgramacaoEntrega> listarRegistroEntrega(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto,
+			 public List<ProgramacaoEntrega> listarRegistroEntrega(
 					                                          @RequestParam(required = false ) String uaRealizada,
 					                                          @RequestParam(required = false ) String matriculaColaborador,
 					                                          @RequestParam(required = false ) String anoMes,
@@ -445,7 +451,7 @@ public class ProgramacaoEntregaController {
 		    
 		    @GetMapping(value =  "/listarProgramacaoEntregaVigente" )
 		    @ResponseBody
-			 public List<ListarProgEntVigenteResponse> listarProgramacaoEntregaVigente(
+			 public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigente(
                      @RequestParam(required = false  ) String matriculaColaborador,
                      @RequestParam(required = false ) String anoMes,
                      @RequestParam(required = false ) String codSetor) {

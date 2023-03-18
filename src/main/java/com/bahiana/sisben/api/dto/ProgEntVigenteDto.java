@@ -2,7 +2,7 @@ package com.bahiana.sisben.api.dto;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-public class ListarProgEntVigenteDto {
+public class ProgEntVigenteDto {
 	
 	
 	
@@ -37,7 +37,7 @@ public class ListarProgEntVigenteDto {
 		this.codSetor = codSetor;
 	}
 
-	public ListarProgEntVigenteDto(String matriculaColaborador, String anoMes, 
+	public ProgEntVigenteDto(String matriculaColaborador, String anoMes, 
 			                       String codSetor) {
 		this.matriculaColaborador = matriculaColaborador;
 		this.anoMes = anoMes;

@@ -11,7 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.bahiana.sisben.api.dto.ListarProgEntVigenteDto;
+import com.bahiana.sisben.api.dto.ProgEntVigenteDto;
+import com.bahiana.sisben.api.dto.ProgEntVigenteNpDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 
 public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository<ProgramacaoEntrega, Long>, JpaSpecificationExecutor<ProgramacaoEntrega> {
@@ -113,16 +114,28 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 		 	+ " Order by pe.matriculaColaborador, pe.dataProgramacao")
 		List<ProgramacaoEntrega> pesquisarRegistroEntregaPorUsuario(@Param("id") Long id);
 	
-	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ListarProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
+	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
 			+ " pe.codSetor) "
 			+ " FROM ProgramacaoEntrega pe "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
 			+ "       (:codSetor is null or pe.codSetor = :codSetor)"
 			+ " order by pe.anoMes,pe.matriculaColaborador   ")
-	List<ListarProgEntVigenteDto> listarProgramacaoEntregaVigente(
+	List<ProgEntVigenteDto> listarProgramacaoEntregaVigente(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
+			@Param("codSetor") String codSetor);
+	
+	
+	@Query("SELECT new com.bahiana.sisben.api.dto.ProgEntVigenteNpDto(vw.matriculaFuncionario, 'Não programado',"
+			+ " vw.codSecao,vw.descSecao,vw.nomeFuncionario  ) "
+			+ " FROM VwSisbenElegibilidade vw "
+			+ " where (:matriculaColaborador is null or vw.matriculaFuncionario = :matriculaColaborador) and "
+			+ "       (:codSetor is null or vw.codSecao = :codSetor) and "
+			+ " vw.matriculaFuncionario not in (select pe.matriculaColaborador from ProgramacaoEntrega pe)   "
+			+ " order by vw.nomeFuncionario,vw.codSecao, vw.matriculaFuncionario    ")
+	List<ProgEntVigenteNpDto> listarProgramacaoEntregaVigenteNaoProgramado(
+			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("codSetor") String codSetor);
 	
 

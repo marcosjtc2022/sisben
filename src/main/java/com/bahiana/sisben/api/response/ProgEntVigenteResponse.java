@@ -1,6 +1,6 @@
 package com.bahiana.sisben.api.response;
 
-public class ListarProgEntVigenteResponse {
+public class ProgEntVigenteResponse {
 	
 private String matriculaColaborador;
 	
@@ -9,6 +9,16 @@ private String matriculaColaborador;
 	private String codSetor;
 	
 	private String descrSetor;
+	
+	private String nomeColaborador;
+	
+	public String getNomeColaborador() {
+		return nomeColaborador;
+	}
+
+	public void setNomeColaborador(String nomeColaborador) {
+		this.nomeColaborador = nomeColaborador;
+	}
 
 	public String getMatriculaColaborador() {
 		return matriculaColaborador;
@@ -41,16 +51,17 @@ private String matriculaColaborador;
 	public void setDescrSetor(String descrSetor) {
 		this.descrSetor = descrSetor;
 	}
-
-	public ListarProgEntVigenteResponse(String matriculaColaborador, String anoMes, String codSetor, String descrSetor) {
+	
+	public ProgEntVigenteResponse(String matriculaColaborador, String anoMes, String codSetor, String descrSetor,
+			String nomeColaborador) {
 		this.matriculaColaborador = matriculaColaborador;
 		this.anoMes = anoMes;
 		this.codSetor = codSetor;
 		this.descrSetor = descrSetor;
+		this.nomeColaborador = nomeColaborador;
 	}
-	
-	
-	public ListarProgEntVigenteResponse() {
+
+	public ProgEntVigenteResponse() {
 		
 	}
 

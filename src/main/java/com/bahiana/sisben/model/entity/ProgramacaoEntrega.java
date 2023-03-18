@@ -105,6 +105,17 @@ public class ProgramacaoEntrega implements Serializable{
 	@Transient
 	String nomeFuncionario;
 	
+	@Transient
+	String descrSetor;
+	
+	public String getDescrSetor() {
+		return descrSetor;
+	}
+
+	public void setDescrSetor(String descrSetor) {
+		this.descrSetor = descrSetor;
+	}
+
 	public String getAnoMes() {
 		return anoMes;
 	}

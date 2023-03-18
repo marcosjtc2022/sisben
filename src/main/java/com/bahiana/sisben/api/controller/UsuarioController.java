@@ -114,7 +114,7 @@ public class UsuarioController {
 			
 			TokenDto tokenDto = new TokenDto( usuarioAutenticado.getNomeColaborador(),
 					usuarioAutenticado.getId(), usuarioAutenticado.getEmailUsuario(),
-					usuarioAutenticado.getIdPerfil(), usuarioAutenticado.getIdUa(),usuarioAutenticado.getExterno(), token );
+					usuarioAutenticado.getIdUa(),usuarioAutenticado.getIdPerfil(), usuarioAutenticado.getExterno(), token );
 			
 			return ResponseEntity.ok(tokenDto);
 		}catch (ErroAutenticacao e) {

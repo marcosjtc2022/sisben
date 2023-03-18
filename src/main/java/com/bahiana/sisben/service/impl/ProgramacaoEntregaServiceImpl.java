@@ -21,10 +21,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.bahiana.sisben.api.dto.ListarProgEntVigenteDto;
+import com.bahiana.sisben.api.dto.ProgEntVigenteDto;
+import com.bahiana.sisben.api.dto.ProgEntVigenteNpDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
-import com.bahiana.sisben.api.response.ListarProgEntVigenteResponse;
+import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -876,10 +877,64 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			return listaProgramacaoEntrega;
 		}
 
+		//?
 		@Override
 		public List<ProgramacaoEntrega> listaProgramacaoEntregaAnoMesMatricula(ProgramacaoEntregaDto programacaoEntregaDto) {
-			return programacaoEntregaRepository.
-					listaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.getMesAnoProgramacao(),programacaoEntregaDto.getMatriculaColaborador());
+			
+			
+             List<ProgramacaoEntrega> listaProgramacaoEntrega = programacaoEntregaRepository.
+ 					listaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.getMesAnoProgramacao(),programacaoEntregaDto.getMatriculaColaborador());
+	    	
+	    	
+	    	for (ProgramacaoEntrega programacaoEntrega : listaProgramacaoEntrega) {
+				
+	    		 
+	    		 
+	    		 
+	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(programacaoEntrega.getCodSetor());
+	    		 programacaoEntrega.setDescrSetor(vwSisbenSetor.getDescrSetor());
+	    		 
+	    		 VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(programacaoEntrega.getMatriculaColaborador()).get();
+	    		 programacaoEntrega.setNomeFuncionario(funcionario.getNomeFuncionario());
+	    		 
+				    
+			}
+	    	
+	    	if (listaProgramacaoEntrega.isEmpty() ) {
+	    		
+	    		
+	    		 Integer intMesProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getMonthValue();
+				 Integer intAnoProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getYear();
+				
+				
+				 String strMesProgramacao = intMesProgramacao.toString();
+				 if (strMesProgramacao.length()== 1) {
+					 strMesProgramacao = "0" + strMesProgramacao;
+				 }
+				 
+				 String strMesAnoProgramcao = intAnoProgramacao.toString() + strMesProgramacao;
+				 programacaoEntregaDto.setAnoMes(strMesAnoProgramcao);
+	    		 
+	    		 VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(programacaoEntregaDto.getMatriculaColaborador()).get();
+	    		 programacaoEntregaDto.setNomeFuncionario(funcionario.getNomeFuncionario());
+	    		 programacaoEntregaDto.setCodSetor(funcionario.getCodSecao());
+	    		 
+	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(funcionario.getCodSecao());
+	    		 programacaoEntregaDto.setDescrSetor(vwSisbenSetor.getDescrSetor());
+	    		 
+	    		 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
+	    		 
+	    		 
+	    		 listaProgramacaoEntrega.add(programacaoEntrega);
+	    		
+	    		
+	    	}
+			
+			
+			return listaProgramacaoEntrega; 
+	    	
+//			return programacaoEntregaRepository.
+//					listaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.getMesAnoProgramacao(),programacaoEntregaDto.getMatriculaColaborador());
 		}
 
 		@Override
@@ -1140,7 +1195,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
-		public List<ListarProgEntVigenteResponse> listarProgramacaoEntregaVigente(
+		public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigente(
 				String matriculaColaborador, String anoMes, String codSetor) {
 			
 
@@ -1158,32 +1213,53 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    	 
 	    	 
 	    	 
-	    	 List<ListarProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
+	    	 List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
 						listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,codSetor);
 	    	 
-	    	 List<ListarProgEntVigenteResponse> ListarProgEntVigenteResponse = new ArrayList(); 
+	    	 List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList(); 
 	    	 
 	    	
 	    	 
-	    	for (ListarProgEntVigenteDto ProgEntrega : listarProgEntVigenteDto) {
+	    	for (ProgEntVigenteDto progEntrega : listarProgEntVigenteDto) {
 					
 	    		 
-	    		 ListarProgEntVigenteResponse ProgEntVigenteResponse = new ListarProgEntVigenteResponse();
+	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse();
 	    		 
-	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(ProgEntrega.getCodSetor());
-	    		 ProgEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
+	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor());
+	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
 	    		 
-	    		 ProgEntVigenteResponse.setAnoMes(ProgEntrega.getAnoMes());
-	    		 ProgEntVigenteResponse.setMatriculaColaborador(ProgEntrega.getMatriculaColaborador());
-	    		 ProgEntVigenteResponse.setCodSetor(ProgEntrega.getCodSetor());
+	    		 VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador()).get();
+	    		 progEntVigenteResponse.setNomeColaborador(funcionario.getNomeFuncionario());
+	    		 
+	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
+	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
+	    		 progEntVigenteResponse.setCodSetor(progEntrega.getCodSetor());
 				   
-	    		 ListarProgEntVigenteResponse.add(ProgEntVigenteResponse);
+	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
+				    
+			}
+	    	
+	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramado(matriculaColaborador, codSetor);
+	    	
+	    	
+	    	for (ProgEntVigenteNpDto progEntregaNp : listarProgEntVigenteDtoNaoProg) {
+				
+	    		 
+	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse();
+	    		 
+	    		 progEntVigenteResponse.setDescrSetor(progEntregaNp.getDescrSetor());
+	    		 progEntVigenteResponse.setMatriculaColaborador(progEntregaNp.getMatriculaColaborador());
+	    		 progEntVigenteResponse.setCodSetor(progEntregaNp.getCodSetor());
+	    		 progEntVigenteResponse.setNomeColaborador(progEntregaNp.getNomeColaborador());
+	    		 progEntVigenteResponse.setAnoMes(progEntregaNp.getAnoMes());
+				   
+	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
 				    
 			}
 	    	 
 			
 			
-			return ListarProgEntVigenteResponse;
+			return listarProgEntVigenteResponse;
 		}
 		
 		

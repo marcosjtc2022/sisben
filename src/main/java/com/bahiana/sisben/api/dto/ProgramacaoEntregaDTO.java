@@ -7,6 +7,7 @@ import java.time.temporal.TemporalAdjusters;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class ProgramacaoEntregaDto {
@@ -71,6 +72,26 @@ public class ProgramacaoEntregaDto {
 	
 	private String anoMes;
 	
+	private String nomeFuncionario;
+	
+	private String descrSetor;
+	
+	public String getNomeFuncionario() {
+		return nomeFuncionario;
+	}
+
+	public void setNomeFuncionario(String nomeFuncionario) {
+		this.nomeFuncionario = nomeFuncionario;
+	}
+
+	public String getDescrSetor() {
+		return descrSetor;
+	}
+
+	public void setDescrSetor(String descrSetor) {
+		this.descrSetor = descrSetor;
+	}
+
 	public String getAnoMes() {
 		return anoMes;
 	}

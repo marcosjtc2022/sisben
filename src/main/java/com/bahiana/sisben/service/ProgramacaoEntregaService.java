@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
-import com.bahiana.sisben.api.response.ListarProgEntVigenteResponse;
+import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
@@ -71,7 +71,7 @@ public interface ProgramacaoEntregaService {
 	
 	List<ProgramacaoEntrega> listarRegistroEntregaPorUsuario(ProgramacaoEntregaSpecification programacaoEntregaSpecification);
 	
-	List<ListarProgEntVigenteResponse> listarProgramacaoEntregaVigente(String matriculaColaborador, String anoMes,
+	List<ProgEntVigenteResponse> listarProgramacaoEntregaVigente(String matriculaColaborador, String anoMes,
 			                                                      String codSetor);
 	
 
