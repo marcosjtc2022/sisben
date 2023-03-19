@@ -37,6 +37,8 @@ public interface ProgramacaoEntregaService {
 	
 	Optional<ProgramacaoEntrega> obterPorId(Long id);	
 	
+	ProgramacaoEntrega obterPorId2(Long id);
+	
 	public Iterable<ProgramacaoEntrega> findAll();
 	
 	public Iterable<ProgramacaoEntrega> findBymatriculaColaborador(ProgramacaoEntregaDto programacaoEntregaDTO );

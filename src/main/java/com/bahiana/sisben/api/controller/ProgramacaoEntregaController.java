@@ -463,37 +463,13 @@ public class ProgramacaoEntregaController {
 		    
 		   
 		
-		  
-//		    @GetMapping(value =  "/listarCriteria" )
-//		    @ResponseBody
-//			 public List<ProgramacaoEntrega> listarCriteria() {
-//		    	
-//			 
-//			 
-//			  
-//			  ProgEntregaCriteria progEntregaCriteria = new ProgEntregaCriteria();
-//			  progEntregaCriteria.setIdUsuario(3L);
-//			  
-//			  ProgEntregaSpecification programacaoEntregaSpecification = new ProgEntregaSpecification(progEntregaCriteria);
-//			  //programacaoEntregaSpecification.setIdUsuario(63L);
-//			  
-//			  
-//			  
-//			  List<ProgramacaoEntrega> list = new ArrayList();
-//			  
-//			  list = programacaoEntregaRepository.findAll(programacaoEntregaSpecification);
-//			  
-//			  return list;
-//			   
-//			  //return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
-//			
-//		    	
-//		    	
-//		    }
-		
-		  
-		  
-		
+		    @GetMapping("/obterPorId2/{id}")
+			public ProgramacaoEntrega obterPorId2(@PathVariable("id") Long id) {
+					
+					ProgramacaoEntrega programacaoEntrega = programacaoEntregaService.obterPorId2(id);
+					return  programacaoEntrega;	
+							
+		    }		
 	
   
 

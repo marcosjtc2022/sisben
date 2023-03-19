@@ -1234,12 +1234,13 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
 	    		 progEntVigenteResponse.setCodSetor(progEntrega.getCodSetor());
+	    		 progEntVigenteResponse.setStatus("Programado");
 				   
 	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
 				    
 			}
 	    	
-	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramado(matriculaColaborador, codSetor);
+	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramado(matriculaColaborador, codSetor, anoMes);
 	    	
 	    	
 	    	for (ProgEntVigenteNpDto progEntregaNp : listarProgEntVigenteDtoNaoProg) {
@@ -1251,7 +1252,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntregaNp.getMatriculaColaborador());
 	    		 progEntVigenteResponse.setCodSetor(progEntregaNp.getCodSetor());
 	    		 progEntVigenteResponse.setNomeColaborador(progEntregaNp.getNomeColaborador());
-	    		 progEntVigenteResponse.setAnoMes(progEntregaNp.getAnoMes());
+	    		 progEntVigenteResponse.setAnoMes(anoMes);
+	    		 progEntVigenteResponse.setStatus("Não Programado");
 				   
 	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
 				    
@@ -1260,6 +1262,21 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			
 			return listarProgEntVigenteResponse;
+		}
+
+		@Override
+		public ProgramacaoEntrega obterPorId2(Long id) {
+			
+			ProgramacaoEntrega programacaoEntrega = programacaoEntregaRepository.findById(id).get();	    	
+	    		 
+	    	VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(programacaoEntrega.getCodSetor());
+	    	programacaoEntrega.setDescrSetor(vwSisbenSetor.getDescrSetor());
+	    		 
+	    	VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(programacaoEntrega.getMatriculaColaborador()).get();
+	    	programacaoEntrega.setNomeFuncionario(funcionario.getNomeFuncionario());
+	    	
+	    	return programacaoEntrega;
+	    	
 		}
 		
 		

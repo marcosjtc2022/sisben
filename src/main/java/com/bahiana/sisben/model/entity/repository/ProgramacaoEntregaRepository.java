@@ -127,16 +127,17 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("codSetor") String codSetor);
 	
 	
-	@Query("SELECT new com.bahiana.sisben.api.dto.ProgEntVigenteNpDto(vw.matriculaFuncionario, 'Não programado',"
+	@Query("SELECT new com.bahiana.sisben.api.dto.ProgEntVigenteNpDto(vw.matriculaFuncionario, '',"
 			+ " vw.codSecao,vw.descSecao,vw.nomeFuncionario  ) "
 			+ " FROM VwSisbenElegibilidade vw "
 			+ " where (:matriculaColaborador is null or vw.matriculaFuncionario = :matriculaColaborador) and "
 			+ "       (:codSetor is null or vw.codSecao = :codSetor) and "
-			+ " vw.matriculaFuncionario not in (select pe.matriculaColaborador from ProgramacaoEntrega pe)   "
+			+ " vw.matriculaFuncionario not in (select pe.matriculaColaborador from ProgramacaoEntrega pe where pe.anoMes = :anoMes )   "
 			+ " order by vw.nomeFuncionario,vw.codSecao, vw.matriculaFuncionario    ")
 	List<ProgEntVigenteNpDto> listarProgramacaoEntregaVigenteNaoProgramado(
 			@Param("matriculaColaborador") String matriculaColaborador,
-			@Param("codSetor") String codSetor);
+			@Param("codSetor") String codSetor,
+			@Param("anoMes") String anoMes);
 	
 
 }
