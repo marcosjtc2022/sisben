@@ -469,7 +469,13 @@ public class ProgramacaoEntregaController {
 					ProgramacaoEntrega programacaoEntrega = programacaoEntregaService.obterPorId2(id);
 					return  programacaoEntrega;	
 							
-		    }		
+		    }	
+		    
+		    @GetMapping(value =  "/listarAnoMes" )
+		    @ResponseBody
+		    public List<String> listarAnoMes() {
+		    	return this.programacaoEntregaService.listarAnoMes(); 	  
+		    }
 	
   
 

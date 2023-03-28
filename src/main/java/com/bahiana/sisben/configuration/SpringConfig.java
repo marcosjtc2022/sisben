@@ -15,6 +15,7 @@ import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.TipoJustificativaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 import com.bahiana.sisben.service.UsuarioService;
+import com.bahiana.sisben.service.UsuarioSetorGerenciadoService;
 import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.service.VwSisbenFeriasElegivelService;
@@ -33,6 +34,7 @@ import com.bahiana.sisben.service.impl.SuspensaoElegibilidadeServiceImpl;
 import com.bahiana.sisben.service.impl.TipoJustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.UnidadeAcademicaServiceImpl;
 import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
+import com.bahiana.sisben.service.impl.UsuarioSetorGerenciadoServiceImpl;
 import com.bahiana.sisben.service.impl.ValorMarmitaServiceImpl;
 import com.bahiana.sisben.service.impl.VwSisbenElegibilidadeServiceImpl;
 import com.bahiana.sisben.service.impl.VwSisbenFeriasElegivelServiceImpl;
@@ -134,6 +136,11 @@ public class SpringConfig {
 	@Bean
 	public VwSisbenSetorService getVwSisbenSetorService() {
 	    return new  VwSisbenSetorServiceImpl();
+	}
+	
+	@Bean
+	public UsuarioSetorGerenciadoService getUsuarioSetorGerenciadoService() {
+	    return new  UsuarioSetorGerenciadoServiceImpl();
 	}
 	
 

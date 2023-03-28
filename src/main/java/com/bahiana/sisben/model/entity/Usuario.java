@@ -93,6 +93,15 @@ public class Usuario implements Serializable {
     @JoinColumn(updatable=false,insertable=false,name = "id_ua")
     UnidadeAcademica unidadeAcademica;
     
+    
+	//Mapenado classe SetorGerenciado 
+	@OneToMany(mappedBy = "usuarioLider", fetch = FetchType.EAGER)
+	Set<UsuarioSetorGerenciado> usuariosLideres;
+    
+//	//Mapenado classe usuariosetorgerenciado
+//	@OneToMany(mappedBy = "usuarioGerente", fetch = FetchType.EAGER)
+//	Set<UsuarioSetorGerenciado> usuariosLideres;
+    
 	public String getCodSetor() {
 		return codSetor;
 	}

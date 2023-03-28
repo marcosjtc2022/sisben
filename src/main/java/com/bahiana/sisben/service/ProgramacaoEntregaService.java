@@ -76,5 +76,7 @@ public interface ProgramacaoEntregaService {
 	List<ProgEntVigenteResponse> listarProgramacaoEntregaVigente(String matriculaColaborador, String anoMes,
 			                                                      String codSetor);
 	
+	List<String> listarAnoMes();
+	
 
 }

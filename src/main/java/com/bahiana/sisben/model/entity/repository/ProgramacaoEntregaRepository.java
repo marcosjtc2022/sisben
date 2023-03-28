@@ -139,5 +139,11 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("codSetor") String codSetor,
 			@Param("anoMes") String anoMes);
 	
+	@Query("SELECT distinct pe.anoMes FROM ProgramacaoEntrega pe"
+			 + " where pe.anoMes is not null "
+		 	 + " Order by pe.anoMes")
+	List<String> listarAnoMes();
+	
+	
 
 }

@@ -1278,6 +1278,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    	return programacaoEntrega;
 	    	
 		}
+
+		@Override
+		public List<String> listarAnoMes() {
+			return programacaoEntregaRepository.listarAnoMes();
+		}
 		
 		
 	
