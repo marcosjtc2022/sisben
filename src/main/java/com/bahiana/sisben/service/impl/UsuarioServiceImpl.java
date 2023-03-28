@@ -127,7 +127,7 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		 }
 		 usuarioInterno.setMatriculaColaborador(funcionario.getMatriculaFuncionario());
 		 usuarioInterno.setNomeColaborador(funcionario.getNomeFuncionario());
-		 usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
+		// usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
 		 usuarioInterno.setEmailUsuario(funcionario.getEmailFuncionario());
 		 usuarioInterno.setExterno(false);
 		 
@@ -137,6 +137,11 @@ public class UsuarioServiceImpl implements UsuarioService  {
 	@Override
 	public List<Usuario> listarUsuarioFornecedor() {
 		return usuarioRepository.listarUsuarioFornecedor();
+	}
+
+	@Override
+	public Usuario obterPorMatriculaColaborador(String matriculaColaborador) {
+		return usuarioRepository.findByMatriculaColaborador(matriculaColaborador).get();
 	}
 
 	

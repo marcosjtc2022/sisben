@@ -37,6 +37,8 @@ public interface UsuarioService {
 	UsuarioDto criaUsuarioInterno(VwSisbenFuncionario funcionario, UsuarioDto usuarioDto);
 	
 	List<Usuario> listarUsuarioFornecedor();
+	
+	Usuario obterPorMatriculaColaborador(String matriculaColaborador);
 
 
 }

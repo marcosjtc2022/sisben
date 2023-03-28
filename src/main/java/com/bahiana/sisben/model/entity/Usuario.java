@@ -60,6 +60,9 @@ public class Usuario implements Serializable {
 	@Column(name = "externo", columnDefinition="BIT")
 	private Boolean externo;
 	
+	@Column(name="cod_setor")
+	private String codSetor;
+	
 	@Column(name = "data_ultima_modificacao")
 	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDateTime dataUltimaModificacao;
@@ -89,6 +92,14 @@ public class Usuario implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(updatable=false,insertable=false,name = "id_ua")
     UnidadeAcademica unidadeAcademica;
+    
+	public String getCodSetor() {
+		return codSetor;
+	}
+
+	public void setCodSetor(String codSetor) {
+		this.codSetor = codSetor;
+	}
 
 	public Long getId() {
 		return id;
@@ -217,9 +228,10 @@ public class Usuario implements Serializable {
 
 	
 	
+	
 	public Usuario(Long id, Long idPerfil, Long idUa, Long idFornecedor, String matriculaColaborador,
 			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno, Boolean externo,
-			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
+			String codSetor, LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
 		this.idPerfil = idPerfil;
@@ -231,6 +243,7 @@ public class Usuario implements Serializable {
 		this.senhaUsuario = senhaUsuario;
 		this.stUsuarioExterno = stUsuarioExterno;
 		this.externo = externo;
+		this.codSetor = codSetor;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}

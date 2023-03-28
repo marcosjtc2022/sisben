@@ -36,5 +36,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 		 + " where u.idFornecedor = f.id"
 		 + " order by u.nomeColaborador  ")
 	List<Usuario> listarUsuarioFornecedor();
+	
+	//Optional evita tratamento de null pointer exception
+	Optional<Usuario> findByMatriculaColaborador(String matriculaColaborador);
 
 }

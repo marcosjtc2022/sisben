@@ -27,9 +27,19 @@ public class UsuarioDto {
 	
 	private Boolean externo;
 	
+	private String codSetor;
+	
 	private LocalDateTime dataUltimaModificacao;
 	
 	private Long idUsuarioUltimaModificacao;
+	
+	public String getCodSetor() {
+		return codSetor;
+	}
+
+	public void setCodSetor(String codSetor) {
+		this.codSetor = codSetor;
+	}
 
 	public Long getId() {
 		return id;
@@ -129,7 +139,7 @@ public class UsuarioDto {
 	
 	public UsuarioDto(Long id, Long idPerfil, Long idUa, Long idFornecedor, String matriculaColaborador,
 			String nomeColaborador, String emailUsuario, String senhaUsuario, Boolean stUsuarioExterno, Boolean externo,
-			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
+			String codSetor, LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao) {
 		super();
 		this.id = id;
 		this.idPerfil = idPerfil;
@@ -141,6 +151,7 @@ public class UsuarioDto {
 		this.senhaUsuario = senhaUsuario;
 		this.stUsuarioExterno = stUsuarioExterno;
 		this.externo = externo;
+		this.codSetor = codSetor;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
