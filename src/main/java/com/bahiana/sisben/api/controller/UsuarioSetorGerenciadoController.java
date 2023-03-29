@@ -1,32 +1,66 @@
 package com.bahiana.sisben.api.controller;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.UsuarioSetorGerenciadoDto;
 import com.bahiana.sisben.exception.RegraNegocioException;
-import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.UsuarioSetorGerenciado;
+import com.bahiana.sisben.model.entity.VwSisbenSetor;
+import com.bahiana.sisben.service.UsuarioSetorGerenciadoService;
 
 @RestController
 @RequestMapping(value = "/setores-gerenciados")
 public class UsuarioSetorGerenciadoController {
 	
+	@Autowired
+	private UsuarioSetorGerenciadoService usuarioSetorGerenciadoService;
+	
 	
 	@PostMapping("/salvar")
 	public ResponseEntity salvar(@RequestBody UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
 	  try {
-		  UsuarioSetorGerenciado usuarioSetorGerenciado = new UsuarioSetorGerenciado() ;
-			//programacaoEntrega = programacaoEntregaService.salvarLote(programacaoEntregaDto,'I');
+		 List<UsuarioSetorGerenciado> listUsuarioSetorGerenciado = 
+				  usuarioSetorGerenciadoService.salvar(usuarioSetorGerenciadoDto);
 			
-			return new ResponseEntity(usuarioSetorGerenciado, HttpStatus.CREATED);
+			return new ResponseEntity(listUsuarioSetorGerenciado, HttpStatus.CREATED);
 	     } catch (RegraNegocioException e) {
 		    return ResponseEntity.badRequest().body(e.getMessage());
 	     }
+    }
+	
+	 @DeleteMapping("/apagar")
+	 @Transactional
+	 public ResponseEntity apagarProgramacaoMes(@RequestBody UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
+		  try {
+			  usuarioSetorGerenciadoService.apagar(usuarioSetorGerenciadoDto);
+				 return new ResponseEntity(HttpStatus.NO_CONTENT);
+		     } catch (RegraNegocioException e) {
+			    return ResponseEntity.badRequest().body(e.getMessage());
+		     }
+		  
+	 }
+	
+	@GetMapping(value =  "/listarOrdenadoPorDescricao" )
+    public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorDescricao() {
+    	return usuarioSetorGerenciadoService.listaSetorOrdenadoPorDescricao();  	  
+    }
+	
+	@GetMapping(value =  "/listarOrdenadoPorCodigo" )
+    public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorCodigo() {
+    	return usuarioSetorGerenciadoService.listaSetorOrdenadoPorCodigo(); 	  
     }
 	
 	

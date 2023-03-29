@@ -1,17 +1,24 @@
 package com.bahiana.sisben.service;
 
+import java.util.List;
+
 import com.bahiana.sisben.api.dto.UsuarioSetorGerenciadoDto;
-import com.bahiana.sisben.model.entity.ValorMarmita;
+import com.bahiana.sisben.model.entity.UsuarioSetorGerenciado;
+import com.bahiana.sisben.model.entity.VwSisbenSetor;
 
 public interface UsuarioSetorGerenciadoService {
 	
 	
 			
-		ValorMarmita salvar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto);
+	List<UsuarioSetorGerenciado> salvar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto);
+	
+    List<UsuarioSetorGerenciado> listaSetorOrdenadoPorCodigo();
+	
+	List<UsuarioSetorGerenciado> listaSetorOrdenadoPorDescricao();
 		
 //		ValorMarmita alterar(ValorMarmitaDto valorMarmitaDto);
 //		
-//		void deletar(ValorMarmita valorMarmita);
+		void apagar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto);
 //		
 //		Optional<ValorMarmita> obterPorId(Long id);
 //		
