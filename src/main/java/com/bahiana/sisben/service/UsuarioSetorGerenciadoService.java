@@ -2,6 +2,8 @@ package com.bahiana.sisben.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.bahiana.sisben.api.dto.UsuarioSetorGerenciadoDto;
 import com.bahiana.sisben.model.entity.UsuarioSetorGerenciado;
 import com.bahiana.sisben.model.entity.VwSisbenSetor;
@@ -12,17 +14,13 @@ public interface UsuarioSetorGerenciadoService {
 			
 	List<UsuarioSetorGerenciado> salvar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto);
 	
-    List<UsuarioSetorGerenciado> listaSetorOrdenadoPorCodigo();
+    List<UsuarioSetorGerenciado> listaSetorOrdenadoPorCodigo(Long idUsuarioLider);
 	
-	List<UsuarioSetorGerenciado> listaSetorOrdenadoPorDescricao();
+	List<UsuarioSetorGerenciado> listaSetorOrdenadoPorDescricao(Long idUsuarioLider);
+	
+	List<UsuarioSetorGerenciado> alterar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto);
 		
-//		ValorMarmita alterar(ValorMarmitaDto valorMarmitaDto);
-//		
-		void apagar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto);
-//		
-//		Optional<ValorMarmita> obterPorId(Long id);
-//		
-//		List<ValorMarmita> listarSimplesOrdenadoValor();
-//		
-//	
+	void apagar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto);
+	
+	long pesquisaUsuarioSetorGerenciado(Long idUsuarioLider);
 }

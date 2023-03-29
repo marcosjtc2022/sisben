@@ -41,6 +41,18 @@ public class UsuarioSetorGerenciadoController {
 	     }
     }
 	
+	@PostMapping("/alterar")
+	public ResponseEntity alterar(@RequestBody UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
+	  try {
+		 List<UsuarioSetorGerenciado> listUsuarioSetorGerenciado = 
+				  usuarioSetorGerenciadoService.alterar(usuarioSetorGerenciadoDto);
+			
+			return new ResponseEntity(listUsuarioSetorGerenciado, HttpStatus.CREATED);
+	     } catch (RegraNegocioException e) {
+		    return ResponseEntity.badRequest().body(e.getMessage());
+	     }
+    }
+	
 	 @DeleteMapping("/apagar")
 	 @Transactional
 	 public ResponseEntity apagarProgramacaoMes(@RequestBody UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
@@ -54,13 +66,13 @@ public class UsuarioSetorGerenciadoController {
 	 }
 	
 	@GetMapping(value =  "/listarOrdenadoPorDescricao" )
-    public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorDescricao() {
-    	return usuarioSetorGerenciadoService.listaSetorOrdenadoPorDescricao();  	  
+    public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorDescricao(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
+    	return usuarioSetorGerenciadoService.listaSetorOrdenadoPorDescricao(usuarioSetorGerenciadoDto.getIdUsuarioLider());  	  
     }
 	
 	@GetMapping(value =  "/listarOrdenadoPorCodigo" )
-    public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorCodigo() {
-    	return usuarioSetorGerenciadoService.listaSetorOrdenadoPorCodigo(); 	  
+    public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorCodigo(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
+    	return usuarioSetorGerenciadoService.listaSetorOrdenadoPorCodigo(usuarioSetorGerenciadoDto.getIdUsuarioLider()); 	  
     }
 	
 	

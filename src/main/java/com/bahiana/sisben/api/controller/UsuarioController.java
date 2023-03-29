@@ -23,6 +23,7 @@ import com.bahiana.sisben.api.dto.AutenticaApiDto;
 import com.bahiana.sisben.api.dto.TokenDto;
 import com.bahiana.sisben.api.dto.UsuarioDto;
 import com.bahiana.sisben.exception.ErroAutenticacao;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
@@ -30,6 +31,7 @@ import com.bahiana.sisben.service.JwtService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.RestApiAutenticaUsuarioService;
 import com.bahiana.sisben.service.UsuarioService;
+import com.bahiana.sisben.service.UsuarioSetorGerenciadoService;
 import com.bahiana.sisben.service.VwSisbenFuncionarioService;
 import com.bahiana.sisben.service.impl.UsuarioServiceImpl;
 
@@ -51,6 +53,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private VwSisbenFuncionarioService vwSisbenFuncionarioService;
+	
+	@Autowired
+	private UsuarioSetorGerenciadoService usuarioSetorGerenciadoService;
 	
 	
 	@PostMapping("/autenticar")
@@ -195,8 +200,19 @@ public class UsuarioController {
 		Long countUsuarioEntrega = programacaoEntregaService.pesquisaUsuarioEntrega(id);
 		
 		if ((countUsuarioEntrega > 0) && (countUsuarioEntrega != null)) {
-			return new ResponseEntity("O usuário está vinculado a uma programação entrega!", HttpStatus.BAD_REQUEST);
+			throw new GlobalExceptionHandler("O usuário está vinculado a uma programação entrega!");
+			//return new ResponseEntity("O usuário está vinculado a uma programação entrega!", HttpStatus.BAD_REQUEST);
 		}
+		
+        Long countUsuarioSetor = usuarioSetorGerenciadoService.pesquisaUsuarioSetorGerenciado(id);
+		
+		if ((countUsuarioSetor > 0) && (countUsuarioSetor != null)) {
+			throw new GlobalExceptionHandler("O usuário está vinculado a um gerenciamento de setor!");
+			//return new ResponseEntity("O usuário está vinculado a uma programação entrega!", HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		
 		
 		//entity é o que retorna de ObterPorId
 				return usuarioService.obterPorId(id).map(entity -> {					

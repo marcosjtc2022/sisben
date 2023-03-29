@@ -53,11 +53,11 @@ public class UsuarioSetorGerenciadoServiceImpl implements UsuarioSetorGerenciado
 		List<UsuarioSetorGerenciado> listaUsuarioSetorGerenciado = new ArrayList<>();
 		
 		//Recupera os setores informados para a matrícula.
-		String[] tabelaSetor = usuarioSetorGerenciadoDto.getTabelaSetores().split(",");
+		String[] tabelaCodSetores = usuarioSetorGerenciadoDto.getTabelaCodSetores().split(",");
 		//LocalDateTime dataModificacao = LocalDateTime.now();
 		
 		
-			 for (String codSetor : tabelaSetor) {
+			 for (String codSetor : tabelaCodSetores) {
 				
 				UsuarioSetorGerenciado usuarioSetorGerenciado = new UsuarioSetorGerenciado();
 				
@@ -80,9 +80,9 @@ public class UsuarioSetorGerenciadoServiceImpl implements UsuarioSetorGerenciado
 	public void apagar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
 		
 		//Recupera os setores informados para a matrícula.
-		String[] tabelaSetor = usuarioSetorGerenciadoDto.getTabelaSetores().split(",");
+		String[] tabelaIdUsuarioSetores = usuarioSetorGerenciadoDto.getTabelaIdUsuarioSetores().split(",");
 		
-		for (String idSetor : tabelaSetor) {
+		for (String idSetor : tabelaIdUsuarioSetores) {
 				this.usuarioSetorGerenciadoRepository.deleteById(Long.valueOf(idSetor)); 
 	    }
 		
@@ -90,14 +90,29 @@ public class UsuarioSetorGerenciadoServiceImpl implements UsuarioSetorGerenciado
 	}
 
 	@Override
-	public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorCodigo() {
-		return usuarioSetorGerenciadoRepository.listaSetorOrdenadoPorCodigo() ;
+	public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorCodigo(Long idUsuarioLider) {
+		return usuarioSetorGerenciadoRepository.listaSetorOrdenadoPorCodigo(idUsuarioLider) ;
 	}
 
 
 	@Override
-	public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorDescricao() {
-		return usuarioSetorGerenciadoRepository.listaSetorOrdenadoPorDescricao();
+	public List<UsuarioSetorGerenciado> listaSetorOrdenadoPorDescricao(Long idUsuarioLider) {
+		return usuarioSetorGerenciadoRepository.listaSetorOrdenadoPorDescricao(idUsuarioLider);
+	}
+
+
+	@Override
+	public List<UsuarioSetorGerenciado> alterar(UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
+		this.apagar(usuarioSetorGerenciadoDto);
+		List<UsuarioSetorGerenciado> listaUsuarioSetorGerenciado = this.salvar(usuarioSetorGerenciadoDto);
+		
+		return listaUsuarioSetorGerenciado;
+	}
+
+
+	@Override
+	public long pesquisaUsuarioSetorGerenciado(Long idUsuarioLider) {
+		return usuarioSetorGerenciadoRepository.pesquisaUsuarioSetorGerenciado(idUsuarioLider);
 	}
 
 

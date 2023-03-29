@@ -12,7 +12,27 @@ public class UsuarioSetorGerenciadoDto {
 	
 	private String descricao;
 	
+	private String tabelaCodSetores;
+	
+	private String tabelaIdUsuarioSetores;
+	
 	private String tabelaSetores;
+	
+	public String getTabelaCodSetores() {
+		return tabelaCodSetores;
+	}
+
+	public void setTabelaCodSetores(String tabelaCodSetores) {
+		this.tabelaCodSetores = tabelaCodSetores;
+	}
+
+	public String getTabelaIdUsuarioSetores() {
+		return tabelaIdUsuarioSetores;
+	}
+
+	public void setTabelaIdUsuarioSetores(String tabelaIdUsuarioSetores) {
+		this.tabelaIdUsuarioSetores = tabelaIdUsuarioSetores;
+	}
 
 	public String getTabelaSetores() {
 		return tabelaSetores;
