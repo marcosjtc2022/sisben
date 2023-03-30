@@ -36,6 +36,8 @@ public interface ValorMarmitaService {
 		
 		ValorMarmita pesquisarValorVigenciaAtual();
 		
+		ValorMarmita obterValorVigencia(LocalDate dataProgramacao);
+		
 		
 
 }

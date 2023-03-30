@@ -619,6 +619,14 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 			}
 			
+			ValorMarmita valorMarmita = valorMarmitaService.obterValorVigencia(programacaoEntregaDto.getMesAnoProgramacao());
+			
+			if (valorMarmita != null) {
+				programacaoEntregaDto.setIdValor(valorMarmita.getId()); 				
+			    existeValor = true; 
+			}
+			
+			
 			//listaValorMarmita = null;
 			if (!existeValor) {
 				throw new GlobalExceptionHandler("Não existe vigência de valor"
