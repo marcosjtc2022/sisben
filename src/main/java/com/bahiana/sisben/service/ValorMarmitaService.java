@@ -38,6 +38,10 @@ public interface ValorMarmitaService {
 		
 		ValorMarmita obterValorVigencia(LocalDate dataProgramacao);
 		
+		Integer verificarVigenciaParaDataInformada( LocalDate dataInicial,LocalDate dataFinal);
+		
+		List<ValorMarmita> verificarOutrasVigencias(LocalDate dataInicial,LocalDate dataFinal);
+		
 		
 
 }

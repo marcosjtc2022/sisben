@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.JustificativaDto;
+import com.bahiana.sisben.api.dto.ProgEntVigenteNpDto;
 import com.bahiana.sisben.api.dto.ValorMarmitaDto;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
@@ -87,14 +88,41 @@ public class ValorMarmitaController {
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ValorMarmitaDto valorMarmitaDto) {
 	try {
 		
-		    Integer countVlMarmita = valorMarmitaService.verificarValorVigencia(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+//		    Integer countVlMarmita = valorMarmitaService.verificarValorVigencia(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+//			
+//			if ((countVlMarmita > 0)) {
+//				throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//			}  
 			
-			if ((countVlMarmita > 0)) {
-				throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-			}  
-		
-		    ValorMarmita valorMarmita = new ValorMarmita() ;
-		    valorMarmitaDto.setId(id);			
+     		//Caso o usuário altere apenas o valor o count não será zero.
+            Integer countVlMarmita = valorMarmitaService.verificarVigenciaParaDataInformada(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+			
+            ValorMarmita valorMarmita = new ValorMarmita() ;
+            Boolean chaveAlterar = false;
+            
+            
+			if ((countVlMarmita == 0)) {
+				
+				List<ValorMarmita> listValorMarmita = valorMarmitaService.verificarOutrasVigencias(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+				
+				//Verifica as outras vigências diferentes da data informada na alteração.
+				if (listValorMarmita != null) {
+					
+					for (ValorMarmita valorMarmitaList : listValorMarmita) {
+						 Integer countVlMarmitaList = valorMarmitaService.verificarValorVigencia(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+							
+						 if ((countVlMarmitaList > 0)) {
+								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+						 }  
+						
+					}
+					
+					
+				}
+			    
+			}
+			
+			valorMarmitaDto.setId(id);			
 		    valorMarmita = valorMarmitaService.alterar(valorMarmitaDto);
 			return new ResponseEntity(valorMarmita, HttpStatus.CREATED);
 		} catch (RegraNegocioException e) {

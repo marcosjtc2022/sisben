@@ -101,6 +101,16 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 	public ValorMarmita obterValorVigencia(LocalDate dataProgramacao) {
 		return valorMarmitaRepository.obterValorVigencia(dataProgramacao);
 	}
+
+	@Override
+	public Integer verificarVigenciaParaDataInformada(LocalDate dataInicial, LocalDate dataFinal) {
+		return valorMarmitaRepository.verificarVigenciaParaDataInformada(dataInicial, dataFinal);
+	}
+
+	@Override
+	public List<ValorMarmita> verificarOutrasVigencias(LocalDate dataInicial, LocalDate dataFinal) {
+		return valorMarmitaRepository.verificarOutrasVigencias(dataInicial, dataFinal);
+	}
 	
 	
 

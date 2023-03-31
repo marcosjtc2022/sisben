@@ -45,5 +45,19 @@ public interface ValorMarmitaRepository extends PagingAndSortingRepository<Valor
 		    + "where dataFinal is null ")
 	         Integer verificarValorVigenciaAtual();
 	
+	
+	@Query("select COUNT(v) from ValorMarmita v "
+			+ "where :dataInicial = dataInicial and "
+			+ "      :dataFinal = dataFinal ")
+	         Integer verificarVigenciaParaDataInformada(@Param("dataInicial") LocalDate dataInicial,
+					                        @Param("dataFinal") LocalDate dataFinal);
+	
+	
+	@Query("select v from ValorMarmita v "
+		    + "where dataInicial not BETWEEN :dataInicial AND :dataFinal and "
+			+ "      dataFinal not   BETWEEN :dataInicial AND :dataFinal ")
+	        List<ValorMarmita> verificarOutrasVigencias(@Param("dataInicial") LocalDate dataInicial,
+	        		                             @Param("dataFinal") LocalDate dataFinal);
+	
 
 }
