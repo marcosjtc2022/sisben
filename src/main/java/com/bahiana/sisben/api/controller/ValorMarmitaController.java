@@ -1,5 +1,6 @@
 package com.bahiana.sisben.api.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,17 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.JustificativaDto;
-import com.bahiana.sisben.api.dto.ProgEntVigenteNpDto;
 import com.bahiana.sisben.api.dto.ValorMarmitaDto;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
-import com.bahiana.sisben.model.entity.Justificativa;
-import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
-import com.bahiana.sisben.model.entity.TipoJustificativa;
 import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.ValorMarmitaService;
+import com.bahiana.sisben.util.UtilSisben;
 
 @RestController
 @RequestMapping(value = "/valores-marmitas")
@@ -95,32 +92,128 @@ public class ValorMarmitaController {
 //			}  
 			
      		//Caso o usuário altere apenas o valor o count não será zero.
-            Integer countVlMarmita = valorMarmitaService.verificarVigenciaParaDataInformada(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+//            Integer countVlMarmita = valorMarmitaService.verificarVigenciaParaDataInformada(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
 			
             ValorMarmita valorMarmita = new ValorMarmita() ;
-            Boolean chaveAlterar = false;
-            
-            
-			if ((countVlMarmita == 0)) {
+            Integer count = 0;
+ 		    count = valorMarmitaService.pesquisarValorVigenciaExcluiAlterada(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal(), id); 
+			//Compara a vigência informada com as outras vigências
+			if (count > 0) {
+				throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+			}
 				
-				List<ValorMarmita> listValorMarmita = valorMarmitaService.verificarOutrasVigencias(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
+				//valorMarmita = valorMarmitaService.obterPorId(id).get();
+				
+//				List<ValorMarmita> listValorMarmita = valorMarmitaService.verificarOutrasVigencias(id);
 				
 				//Verifica as outras vigências diferentes da data informada na alteração.
-				if (listValorMarmita != null) {
+//				if (listValorMarmita != null) {
 					
-					for (ValorMarmita valorMarmitaList : listValorMarmita) {
-						 Integer countVlMarmitaList = valorMarmitaService.verificarValorVigencia(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
-							
-						 if ((countVlMarmitaList > 0)) {
-								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-						 }  
+					LocalDate menorDataInicial = valorMarmitaService.pesquisarMenorDataInicial();
+					LocalDate maiorDataFinal = valorMarmitaService.pesquisarMaiorDataFinal();
+					
+					UtilSisben utilSisben = new UtilSisben();
 						
+					
+					Integer dataInvMenorInicial = utilSisben.inverterData(menorDataInicial);
+					Integer dataInvMaiorFinal = utilSisben.inverterData(maiorDataFinal);
+					
+					
+//					//Calcula os dias do mês.
+//					UtilSisben utilSisben = new UtilSisben();
+					
+					Integer dataInvertidaInicialDto = utilSisben.inverterData(valorMarmitaDto.getDataInicial());
+					Integer dataInvertidaFinalDto = utilSisben.inverterData(valorMarmitaDto.getDataFinal());
+					
+					if ((dataInvertidaInicialDto <= dataInvMenorInicial )&&
+							(dataInvertidaFinalDto >= dataInvMaiorFinal )	) {
+						throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
 					}
 					
 					
-				}
+					if ((dataInvertidaInicialDto >= dataInvMenorInicial )&&
+							(dataInvertidaInicialDto <= dataInvMaiorFinal )&&
+							(dataInvertidaFinalDto >= dataInvMaiorFinal )) {
+						throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+					}
+					
+					if ((dataInvertidaFinalDto >= dataInvMenorInicial )&&
+							(dataInvMaiorFinal <= dataInvMenorInicial )&&
+							(dataInvertidaInicialDto <= dataInvMenorInicial )) {
+						throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+					}
+					
+//					Integer dataInvertidaInicialBanco = null;
+//					Integer dataInvertidaFinalBanco = null;
+					
+					
+//					for (ValorMarmita valorMarmitaList : listValorMarmita) {
+//						
+//						//listValorMarmita = valorMarmitaService.pesquisarValorVigenciaExcluiAlterada();
+//						
+//						
+//						
+//						
+//						dataInvertidaInicialBanco = utilSisben.inverterData(valorMarmitaList.getDataInicial());
+//						dataInvertidaFinalBanco = utilSisben.inverterData(valorMarmitaList.getDataFinal());
+//					}
+//			 }		
+						
+						
+//						
+//						if ((dataInvertidaInicialDto >= dataInvertidaInicialBanco)&&
+//							(dataInvertidaFinalDto <= dataInvertidaFinalBanco)) {
+//							throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//						}
+//						
+//						if ((dataInvertidaInicialDto <= dataInvertidaInicialBanco)&&
+//								(dataInvertidaInicialDto <= dataInvertidaFinalBanco)&&
+//								(dataInvertidaFinalDto >= dataInvertidaFinalBanco)&&
+//								(dataInvertidaFinalDto >= dataInvertidaInicialBanco)) {
+//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//						}	
+//						
+//						if ((dataInvertidaInicialDto <= dataInvertidaInicialBanco)&&
+//								(dataInvertidaInicialDto <= dataInvertidaFinalBanco)&&
+//								(dataInvertidaFinalDto >= dataInvertidaFinalBanco)&&
+//								(dataInvertidaFinalDto >= dataInvertidaInicialBanco)) {
+//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//						}		
+//			
+						
+//						if ((dataInvertidaInicialDto >= dataInvertidaInicialBanco)&&
+//								(dataInvertidaFinalDto >= dataInvertidaFinalBanco)) {
+//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//						}
+//						
+//						if ((dataInvertidaInicialDto >= dataInvertidaInicialBanco)&&
+//								(dataInvertidaInicialDto <= dataInvertidaFinalBanco)) {
+//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//						}
+//						
+//						if ((dataInvertidaFinalDto >= dataInvertidaInicialBanco)&&
+//								(dataInvertidaFinalDto <= dataInvertidaFinalBanco)) {
+//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//						}
+//						
+//						if (valorMarmitaList.getDataInicial().equals(valorMarmitaDto.getDataInicial())) {
+//							 throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//				        }
+//						if (valorMarmitaList.getDataFinal().equals(valorMarmitaDto.getDataFinal())) {
+//							 throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+//				        }
+						
+						
+						
+						
+						
+						
+//					}
+					
+					
+//				}
 			    
-			}
+//			}
 			
 			valorMarmitaDto.setId(id);			
 		    valorMarmita = valorMarmitaService.alterar(valorMarmitaDto);

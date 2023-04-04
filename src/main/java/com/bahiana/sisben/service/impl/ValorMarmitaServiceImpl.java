@@ -108,10 +108,24 @@ public class ValorMarmitaServiceImpl implements ValorMarmitaService {
 	}
 
 	@Override
-	public List<ValorMarmita> verificarOutrasVigencias(LocalDate dataInicial, LocalDate dataFinal) {
-		return valorMarmitaRepository.verificarOutrasVigencias(dataInicial, dataFinal);
+	public List<ValorMarmita> verificarOutrasVigencias(Long id) {
+		return valorMarmitaRepository.verificarOutrasVigencias(id);
 	}
-	
+
+	@Override
+	public Integer pesquisarValorVigenciaExcluiAlterada(LocalDate dataInicial, LocalDate dataFinal, Long id) {
+		return valorMarmitaRepository.pesquisarValorVigenciaExcluiAlterada(dataInicial, dataFinal, id);
+	}
+
+	@Override
+	public LocalDate pesquisarMaiorDataFinal() {
+		return valorMarmitaRepository.pesquisarMaiorDataFinal();
+	}
+
+	@Override
+	public LocalDate pesquisarMenorDataInicial() {
+		return valorMarmitaRepository.pesquisarMenorDataInicial();
+	}
 	
 
 }

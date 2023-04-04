@@ -164,6 +164,32 @@ public class UtilSisben {
 		
 		
 	}
+	
+   public Integer inverterData(LocalDate data) {
+	   
+	    //Recupera a data inicial do banco.
+		Integer intMesData = data.getMonthValue();
+		Integer intAnoData = data.getYear();
+		Integer intDiaData = data.getDayOfMonth();
+		
+		
+		String strDiaData = intDiaData.toString();
+		if (strDiaData.length()== 1) {
+			strDiaData = "0" + strDiaData;
+		}
+		String strMesData = intMesData.toString();
+		if (strMesData.length()== 1) {
+			strMesData = "0" + strMesData;
+		}
+		String strAnoData = intAnoData.toString();
+		
+		String strDataInv = strAnoData + strMesData + strDiaData;
+		
+		return  Integer.valueOf(strDataInv);
+		
+	   
+	   
+   }
 
 	
 
