@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -172,12 +172,12 @@ public class ProgramacaoEntregaController {
 		  }
 		 
 		
-		 @PostMapping("/salvarMenos24h")
+		 @PostMapping("/salvarProgramacaoAvulsa")
 		 @Transactional
-		 public ResponseEntity salvarMenos24h(@RequestBody ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+		 public ResponseEntity salvarProgramacaoAvulsa(@RequestBody ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto) {
 			  try {
 					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
-					//programacaoEntrega = programacaoEntregaService.salvarMenos24h(programacaoEntregaMenos24hDto);
+					programacaoEntrega = programacaoEntregaService.salvarProgramacaoAvulsa(programacaoEntregaAvulsaDto);
 					
 					//UtilSisben utilSisben = new UtilSisben();
 					//manutenção %
@@ -239,7 +239,7 @@ public class ProgramacaoEntregaController {
 		
 		@Transactional
 		@PutMapping("/atualizarMenos24h/{id}")
-		public ResponseEntity atualizarMenos24h(@PathVariable("id") Long id,@RequestBody ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+		public ResponseEntity atualizarMenos24h(@PathVariable("id") Long id,@RequestBody ProgramacaoEntregaAvulsaDto programacaoEntregaMenos24hDto) {
 			  try {
 					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 					programacaoEntregaMenos24hDto.setId(id);	

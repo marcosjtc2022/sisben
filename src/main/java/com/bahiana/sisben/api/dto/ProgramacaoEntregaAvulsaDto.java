@@ -6,54 +6,38 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
-public class ProgramacaoEntregaMenos24hDto {
+public class ProgramacaoEntregaAvulsaDto {
 	
 	
-	@Id
+	//@Id
     private Long id;	
 	
-	//@Column(name="matricula_colaborador")
 	private String matriculaColaborador;
 	
-	//@Column(name="ua_prevista")
 	private String uaPrevista;
 	
-	//@Column(name="ua_realizada")
 	private String uaRealizada;
 	
-//	@Column(name = "id_data")
     private Long idData;
 	 
-//    @Column(name = "id_ua")
     private Long idUa;
     
-//    @Column(name = "id_justificativa")
     private Long idJustificativa;
     
-//    @Column(name = "id_valor")
     private Long idValor;
-    
-//    @Column(name = "id_usuario")
+
     private Long idUsuario;
 	
-//	@Column(name = "data_entrega")
-	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDate dataEntrega;
 	
-//	@Column(name = "data_solicitacao")
-	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDate dataSolicitacao;	
-	
-//	@Column(name = "solic_extra", columnDefinition="BIT")
+
 	private Boolean solicExtra;
 	
-//	@Column(name = "status_aprov", columnDefinition="BIT")
 	private Boolean stAprov;
 	
 	private Long idUsuarioUltimaModificacao;
 	
-	//@Column(name = "data_ultima_modificacao")
-	//@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class   )
 	private LocalDateTime dataUltimaModificacao;
 	
 	private String anoMes;
@@ -64,6 +48,16 @@ public class ProgramacaoEntregaMenos24hDto {
 	
 	private LocalDate primeiraDataMes;  
 	
+	private LocalDate dataProgramacao;
+	
+	public LocalDate getDataProgramacao() {
+		return dataProgramacao;
+	}
+
+	public void setDataProgramacao(LocalDate dataProgramacao) {
+		this.dataProgramacao = dataProgramacao;
+	}
+
 	public LocalDate getUtlimaDataMes() {
 		return utlimaDataMes;
 	}
@@ -216,7 +210,7 @@ public class ProgramacaoEntregaMenos24hDto {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 	
-	public ProgramacaoEntregaMenos24hDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
+	public ProgramacaoEntregaAvulsaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, Long idUsuarioUltimaModificacao,
 			LocalDateTime dataUltimaModificacao, String anoMes, String codSetor, LocalDate utlimaDataMes,
@@ -243,7 +237,7 @@ public class ProgramacaoEntregaMenos24hDto {
 		this.primeiraDataMes = primeiraDataMes;
 	}
 
-	public ProgramacaoEntregaMenos24hDto() {
+	public ProgramacaoEntregaAvulsaDto() {
 		
 	}
 	

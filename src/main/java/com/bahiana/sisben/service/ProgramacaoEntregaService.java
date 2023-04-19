@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
@@ -25,11 +25,11 @@ public interface ProgramacaoEntregaService {
 	
 	ProgramacaoEntrega salvar(ProgramacaoEntregaDto programacaoEntregaDto);
 	
-	ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto);
+	ProgramacaoEntrega salvarProgramacaoAvulsa(ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto);
 	
 	ProgramacaoEntrega autorizar(ProgramacaoEntregaDto ProgramacaoEntregaDto);
 	
-	ProgramacaoEntrega atualizarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto);
+	ProgramacaoEntrega atualizarMenos24h(ProgramacaoEntregaAvulsaDto programacaoEntregaMenos24hDto);
 	
 	void alterar(ProgramacaoEntregaDto programacaoEntregaDto);
 	

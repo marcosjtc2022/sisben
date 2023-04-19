@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.bahiana.sisben.api.dto.ProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgEntVigenteNpDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaMenos24hDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
@@ -266,55 +266,74 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 		@Override
 		@Transactional
-		public ProgramacaoEntrega salvarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+		public ProgramacaoEntrega salvarProgramacaoAvulsa(ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto) {
 			
+			Long contFerias = 0L; 			
+			Long contSusElegibilidade = 0L;
 			
+			//Opção por este tipo de chamada para não trazer muitos objetos para a memória.
+			//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
+			contSusElegibilidade = 0L;
+			contSusElegibilidade = suspensaoElegibilidadeService.
+				pesquisarSuspensao(programacaoEntregaAvulsaDto.getDataProgramacao(), programacaoEntregaAvulsaDto.getMatriculaColaborador());
+			
+			//Pesquisa se existem férias.
+			contFerias = 0L;
+			contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(programacaoEntregaAvulsaDto.getDataProgramacao(), programacaoEntregaAvulsaDto.getMatriculaColaborador());
+			
+			//Só insere se não existirem férias nem suspensão da eligibilidade.
+			if ((contSusElegibilidade > 0)||(contFerias > 0)) {
+				throw new GlobalExceptionHandler("Data com férias ou suspensão da elegibilidade!");
+			}
+			
+			//Recupera setor do usuário.
 			VwSisbenFuncionario vwSisbenFuncionario = vwSisbenFuncionarioService.
-			ObterPorMatricula(programacaoEntregaMenos24hDto.getMatriculaColaborador()).get();
+			ObterPorMatricula(programacaoEntregaAvulsaDto.getMatriculaColaborador()).get();
 			
-			programacaoEntregaMenos24hDto.setCodSetor(vwSisbenFuncionario.getCodSecao());
+			programacaoEntregaAvulsaDto.setCodSetor(vwSisbenFuncionario.getCodSecao());
 			
-			
-			//Trazer valor marmita por período
-			
-			//Recupera valor marmita mais atual.
-			ValorMarmita valorMarmitaAtual = valorMarmitaService.
-					pesquisarValorVigenciaAtual();
-			
-			//Recupera o mês da programação.
-			Integer mesProgramacao = programacaoEntregaMenos24hDto.getDataSolicitacao().getMonth().getValue();
-			//Recupera o primeiro e o último dia do mês da programação.
-			LocalDate utlimaDataMes = programacaoEntregaMenos24hDto.getDataSolicitacao().withMonth(mesProgramacao).with(TemporalAdjusters.lastDayOfMonth());
-			LocalDate primeiraDataMes = programacaoEntregaMenos24hDto.getDataSolicitacao().withMonth(mesProgramacao).with(TemporalAdjusters.firstDayOfMonth());
-			//Atribuição ao Dto
-			
-			Long idValorMarmita = retornaIdValorMarmita(primeiraDataMes,utlimaDataMes );
-			
-			programacaoEntregaMenos24hDto.setIdValor(idValorMarmita);
+			//programacaoEntregaAvulsaDto.setIdValor(programacaoEntregaAvulsaDto.getIdValor());
 			
 			LocalDateTime dataModificacao = LocalDateTime.now();
-			programacaoEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
+			programacaoEntregaAvulsaDto.setDataUltimaModificacao(dataModificacao);
 			 
 			
-			Integer intMesProg24h = programacaoEntregaMenos24hDto.getDataSolicitacao().getMonthValue();
-			Integer intAnoProg24h = programacaoEntregaMenos24hDto.getDataSolicitacao().getYear();
+			Integer intMesProgAvulsa = programacaoEntregaAvulsaDto.getDataProgramacao().getMonthValue();
+			Integer intAnoProgAvulsa = programacaoEntregaAvulsaDto.getDataProgramacao().getYear();
 				
 				
-			String strMesProg24h = intMesProg24h.toString();
-			if (strMesProg24h.length()== 1) {
-				strMesProg24h = "0" + strMesProg24h;
+			String strMesProgAvulsa = intMesProgAvulsa.toString();
+			if (strMesProgAvulsa.length()== 1) {
+				strMesProgAvulsa = "0" + strMesProgAvulsa;
 			}
 				
-			String strAnoMesProg24h = intAnoProg24h.toString() + strMesProg24h; 
+			String strAnoMesProgAvulsa = intAnoProgAvulsa.toString() + strMesProgAvulsa; 
 				
-			programacaoEntregaMenos24hDto.setAnoMes(strAnoMesProg24h);
-			ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaMenos24hDto);
+			programacaoEntregaAvulsaDto.setAnoMes(strAnoMesProgAvulsa);
+			
+			//Converte de dto para o objeto bean.
+			ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaAvulsaDto);
+			
+			/// alteração começa aqui.
+			Calendario calendario = new Calendario();
+			
+			
+			//Pesquisa existência de data especial.
+			calendario = calendarioService.pesquisarPorData(programacaoEntregaAvulsaDto.getDataProgramacao());
+			programacaoEntrega.setDescricaoFeriado(null);
+			if (calendario != null) {
+				programacaoEntrega.setDescricaoFeriado(calendario.getDescricao());
+			};
+			
+			
+			/// alteração Termina aqui.
+			
 			
 			return programacaoEntregaRepository.save(programacaoEntrega);
 		}
 		
 		// 944 - Método para conversão de classe.
-		public static ProgramacaoEntrega from(ProgramacaoEntregaMenos24hDto programacaoEntregaEntregaMenos24hDto) {
+		public static ProgramacaoEntrega from(ProgramacaoEntregaAvulsaDto programacaoEntregaEntregaMenos24hDto) {
 					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega();
 					
 					BeanUtils.copyProperties(programacaoEntregaEntregaMenos24hDto, programacaoEntrega);
@@ -345,7 +364,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
-		public ProgramacaoEntrega atualizarMenos24h(ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
+		public ProgramacaoEntrega atualizarMenos24h(ProgramacaoEntregaAvulsaDto programacaoEntregaMenos24hDto) {
 			 LocalDateTime dataModificacao = LocalDateTime.now();
 			 programacaoEntregaMenos24hDto.setDataUltimaModificacao(dataModificacao);
 			 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaMenos24hDto);
@@ -442,7 +461,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setUaPrevista(programacaoEntregaDto.getUaPrevista());
 				programacaoInput.setUaRealizada(null);
 				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
-				programacaoInput.setIdData(null);
+			    programacaoInput.setIdData(null);
 				programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
 				programacaoInput.setIdValor(programacaoEntregaDto.getIdValor());
 				programacaoInput.setDataEntrega(null);
