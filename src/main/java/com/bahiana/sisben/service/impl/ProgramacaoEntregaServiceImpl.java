@@ -1260,7 +1260,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    	 
 	    	 List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList(); 
 	    	 
-	    	
+	    	 
 	    	 
 	    	for (ProgEntVigenteDto progEntrega : listarProgEntVigenteDto) {
 					
@@ -1270,8 +1270,15 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor());
 	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
 	    		 
-	    		 VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador()).get();
-	    		 progEntVigenteResponse.setNomeColaborador(funcionario.getNomeFuncionario());
+	    		 Optional<VwSisbenFuncionario>   funcionario =  vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador());
+	    		 
+	    		 if (funcionario.isPresent() ) {
+	    			 progEntVigenteResponse.setNomeColaborador(funcionario.get().getNomeFuncionario());	 
+	    		 } else {
+	    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
+	    		 }
+	    		 
+	    		 
 	    		 
 	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
