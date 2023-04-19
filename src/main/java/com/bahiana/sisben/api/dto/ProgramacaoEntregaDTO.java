@@ -76,6 +76,16 @@ public class ProgramacaoEntregaDto {
 	
 	private String descrSetor;
 	
+	private String tipoSolicitacao;
+	
+	public String getTipoSolicitacao() {
+		return tipoSolicitacao;
+	}
+
+	public void setTipoSolicitacao(String tipoSolicitacao) {
+		this.tipoSolicitacao = tipoSolicitacao;
+	}
+
 	public String getNomeFuncionario() {
 		return nomeFuncionario;
 	}
@@ -326,12 +336,15 @@ public class ProgramacaoEntregaDto {
 		this.descricaoFeriado = descricaoFeriado;
 	}
 	
+	
+	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
 			String codSetor, Long idUsuarioUltimaModificacao, LocalDate dataAtual, String diaDaSemana,
 			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao, String bairroSecaoElegivel,
-			Boolean exigSuspensa, Boolean stFerias, LocalDate utlimaDataMes, LocalDate primeiraDataMes, String anoMes) {
+			Boolean exigSuspensa, Boolean stFerias, LocalDate utlimaDataMes, LocalDate primeiraDataMes, String anoMes,
+			String nomeFuncionario, String descrSetor, String tipoSolicitacao) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -360,6 +373,9 @@ public class ProgramacaoEntregaDto {
 		this.utlimaDataMes = utlimaDataMes;
 		this.primeiraDataMes = primeiraDataMes;
 		this.anoMes = anoMes;
+		this.nomeFuncionario = nomeFuncionario;
+		this.descrSetor = descrSetor;
+		this.tipoSolicitacao = tipoSolicitacao;
 	}
 
 	public ProgramacaoEntregaDto() {

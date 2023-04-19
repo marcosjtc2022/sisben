@@ -10,6 +10,7 @@ import com.bahiana.sisben.service.JustificativaService;
 import com.bahiana.sisben.service.JwtService;
 import com.bahiana.sisben.service.PerfilFuncionalidadeService;
 import com.bahiana.sisben.service.PerfilService;
+import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.RestApiAutenticaUsuarioService;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.TipoJustificativaService;
@@ -28,6 +29,7 @@ import com.bahiana.sisben.service.impl.JustificativaServiceImpl;
 import com.bahiana.sisben.service.impl.JwtServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilFuncionalidadeServiceImpl;
 import com.bahiana.sisben.service.impl.PerfilServiceImpl;
+import com.bahiana.sisben.service.impl.ProgramacaoEntregaServiceImpl;
 import com.bahiana.sisben.service.impl.RestApiAutenticaUsuarioServiceImpl;
 import com.bahiana.sisben.service.impl.SecurityUserDetailsService;
 import com.bahiana.sisben.service.impl.SuspensaoElegibilidadeServiceImpl;
@@ -142,6 +144,11 @@ public class SpringConfig {
 	public UsuarioSetorGerenciadoService getUsuarioSetorGerenciadoService() {
 	    return new  UsuarioSetorGerenciadoServiceImpl();
 	}
+	
+//	@Bean
+//	public ProgramacaoEntregaService getProgramacaoEntregaService() {
+//	    return new  ProgramacaoEntregaServiceImpl();
+//	}
 	
 
 }

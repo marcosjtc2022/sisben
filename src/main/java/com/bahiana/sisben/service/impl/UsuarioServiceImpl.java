@@ -129,6 +129,7 @@ public class UsuarioServiceImpl implements UsuarioService  {
 		 usuarioInterno.setNomeColaborador(funcionario.getNomeFuncionario());
 		// usuarioInterno.setSenhaUsuario(usuarioDto.getSenhaUsuario());
 		 usuarioInterno.setEmailUsuario(funcionario.getEmailFuncionario());
+		 usuarioInterno.setCodSetor(funcionario.getCodSecao());
 		 usuarioInterno.setExterno(false);
 		 
 		return usuarioInterno;

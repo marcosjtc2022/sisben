@@ -30,6 +30,8 @@ import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
+import com.bahiana.sisben.model.entity.Usuario;
+import com.bahiana.sisben.model.entity.UsuarioSetorGerenciado;
 import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
 import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
@@ -39,6 +41,8 @@ import com.bahiana.sisben.service.CalendarioService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
+import com.bahiana.sisben.service.UsuarioService;
+import com.bahiana.sisben.service.UsuarioSetorGerenciadoService;
 import com.bahiana.sisben.service.ValorMarmitaService;
 import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.service.VwSisbenFeriasElegivelService;
@@ -74,6 +78,12 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Autowired
 	VwSisbenSetorService vwSisbenSetorService;
+	
+	@Autowired
+	UsuarioService usuarioService;
+	
+	@Autowired
+	UsuarioSetorGerenciadoService usuarioSetorGerenciadoService;
 	
 	
 	private static boolean mesCorrente = false;
@@ -734,6 +744,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					pesquisarValorVigenciaAtual();
 			//
 			
+			Calendario calendario = new Calendario();
+			
+			UtilSisben utilSisben = new UtilSisben();
+			
 			
 			
 			for (String linhaTabProgEntrega : tabelaProgramacaoEntrega) 
@@ -846,7 +860,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
     				
     			}	
 				
-				Calendario calendario = new Calendario();
+//				Calendario calendario = new Calendario();
 				
 				//Pesquisa existência de data especial.
 				calendario = calendarioService.pesquisarPorData(dataProgramacao);
@@ -875,6 +889,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					programacaoEntrega.setStFerias(true);
 				}
 				
+				//manutenção %
+				//Long horas = utilSisben.diferencaEntreDatas();
+				
+				
 				
 				listaProgramacaoEntrega.add(programacaoEntrega);
 				
@@ -894,10 +912,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
  					listaProgramacaoEntregaAnoMesMatricula(programacaoEntregaDto.getMesAnoProgramacao(),programacaoEntregaDto.getMatriculaColaborador());
 	    	
 	    	
-	    	for (ProgramacaoEntrega programacaoEntrega : listaProgramacaoEntrega) {
-				
-	    		 
-	    		 
+	    	for (ProgramacaoEntrega programacaoEntrega : listaProgramacaoEntrega) { 
 	    		 
 	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(programacaoEntrega.getCodSetor());
 	    		 programacaoEntrega.setDescrSetor(vwSisbenSetor.getDescrSetor());
@@ -1290,6 +1305,86 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		@Override
 		public List<String> listarAnoMes() {
 			return programacaoEntregaRepository.listarAnoMes();
+		}
+
+		@Override
+		public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(String matriculaColaborador,
+				String anoMes,String codSetor, String idUsuarioLogado) {
+			
+			if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
+	    		 matriculaColaborador = null;
+			 }
+	    	 
+	    	 if ((anoMes == "")||((anoMes == null))) {
+	    		 anoMes = null;
+			 }
+	    	 
+	    	 if ((codSetor == "")||((codSetor == null))) {
+	    		 codSetor = null;
+			 }
+	    	 
+	    	 
+	    	 List<String> listStrCodSetor = usuarioSetorGerenciadoService.
+	    		     concatenaSetoresLider(idUsuarioLogado);
+	    	  
+		    	 List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
+							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,listStrCodSetor);
+		    	 
+//		    	 List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
+//							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor);
+//		    	 
+		    	 List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList();
+		    	 
+		    	 
+		    	 
+	    	
+	    	 
+	    	for (ProgEntVigenteDto progEntrega : listarProgEntVigenteDto) {
+					
+	    		 
+	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse();
+	    		 
+	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor());
+	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
+	    		 
+	    		 VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador()).get();
+	    		 progEntVigenteResponse.setNomeColaborador(funcionario.getNomeFuncionario());
+	    		 
+	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
+	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
+	    		 progEntVigenteResponse.setCodSetor(progEntrega.getCodSetor());
+	    		 progEntVigenteResponse.setStatus("Programado");
+				   
+	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
+				    
+			}
+	    	
+	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramadoLiderSetor(matriculaColaborador,anoMes, codSetor, listStrCodSetor );
+	    	
+//	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramadoLiderSetor(matriculaColaborador,anoMes, codSetor );
+	    	
+	    	
+	    	for (ProgEntVigenteNpDto progEntregaNp : listarProgEntVigenteDtoNaoProg) {
+				
+	    		 
+	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse();
+	    		 
+	    		 progEntVigenteResponse.setDescrSetor(progEntregaNp.getDescrSetor());
+	    		 progEntVigenteResponse.setMatriculaColaborador(progEntregaNp.getMatriculaColaborador());
+	    		 progEntVigenteResponse.setCodSetor(progEntregaNp.getCodSetor());
+	    		 progEntVigenteResponse.setNomeColaborador(progEntregaNp.getNomeColaborador());
+	    		 progEntVigenteResponse.setAnoMes(anoMes);
+	    		 progEntVigenteResponse.setStatus("Não Programado");
+				   
+	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
+				    
+			}
+	    	 
+			
+			
+			return listarProgEntVigenteResponse;
+
+			
 		}
 		
 		

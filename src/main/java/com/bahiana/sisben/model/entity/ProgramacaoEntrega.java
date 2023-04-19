@@ -99,6 +99,10 @@ public class ProgramacaoEntrega implements Serializable{
 	@Column(name="cod_setor")
 	private String codSetor;
 	
+	@Column(name="tipo_solicitacao")
+	private String tipoSolicitacao;
+	
+	
 	@Transient
 	String tabelaProgramacaoEntrega;
 	
@@ -108,6 +112,14 @@ public class ProgramacaoEntrega implements Serializable{
 	@Transient
 	String descrSetor;
 	
+	public String getTipoSolicitacao() {
+		return tipoSolicitacao;
+	}
+
+	public void setTipoSolicitacao(String tipoSolicitacao) {
+		this.tipoSolicitacao = tipoSolicitacao;
+	}
+
 	public String getDescrSetor() {
 		return descrSetor;
 	}
@@ -430,11 +442,13 @@ public class ProgramacaoEntrega implements Serializable{
 	}
 	
 	
+	
 	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stFerias, Boolean stAprov, Boolean exigSuspensa,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao, String diaDaSemana,
-			LocalDate dataProgramacao, String descricaoFeriado, String anoMes, String codSetor) {
+			LocalDate dataProgramacao, String descricaoFeriado, String anoMes, String codSetor,
+			String tipoSolicitacao) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -458,6 +472,7 @@ public class ProgramacaoEntrega implements Serializable{
 		this.descricaoFeriado = descricaoFeriado;
 		this.anoMes = anoMes;
 		this.codSetor = codSetor;
+		this.tipoSolicitacao = tipoSolicitacao;
 	}
 
 	public ProgramacaoEntrega() {

@@ -144,6 +144,35 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 		 	 + " Order by pe.anoMes")
 	List<String> listarAnoMes();
 	
+	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
+			+ " pe.codSetor) "
+			+ " FROM ProgramacaoEntrega pe "
+			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
+			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
+			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
+			+ "       pe.codSetor IN :strCodSetor "
+			+ " order by pe.anoMes,pe.matriculaColaborador   ")
+	List<ProgEntVigenteDto> listarProgramacaoEntregaVigenteLiderSetor(
+			@Param("matriculaColaborador") String matriculaColaborador,
+			@Param("anoMes") String anoMes,
+			@Param("codSetor") String codSetor,
+			@Param("strCodSetor") List<String> strCodSetor);
+	
+	
+	@Query("SELECT new com.bahiana.sisben.api.dto.ProgEntVigenteNpDto(vw.matriculaFuncionario, '',"
+			+ " vw.codSecao,vw.descSecao,vw.nomeFuncionario  ) "
+			+ " FROM VwSisbenElegibilidade vw "
+			+ " where (:matriculaColaborador is null or vw.matriculaFuncionario = :matriculaColaborador) and "
+			+ "       (:codSetor is null or vw.codSecao = :codSetor) and "
+			+ "      vw.codSecao IN :strCodSetor and "
+			+ " vw.matriculaFuncionario not in (select pe.matriculaColaborador from ProgramacaoEntrega pe where pe.anoMes = :anoMes )   "
+			+ " order by vw.nomeFuncionario,vw.codSecao, vw.matriculaFuncionario    ")
+	List<ProgEntVigenteNpDto> listarProgramacaoEntregaVigenteNaoProgramadoLiderSetor(
+			@Param("matriculaColaborador") String matriculaColaborador,
+			@Param("anoMes") String anoMes,
+			@Param("codSetor") String codSetor,
+			@Param("strCodSetor") List<String> strCodSetor);
+	
 	
 
 }

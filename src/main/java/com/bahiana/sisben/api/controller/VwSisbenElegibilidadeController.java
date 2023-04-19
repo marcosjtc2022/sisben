@@ -68,6 +68,51 @@ public class VwSisbenElegibilidadeController {
 				
 	}
 	
+	@GetMapping(value =  "/pesquisarPorMatriculaEliderSetorOrdenadoNome" )
+	public ResponseEntity<List<VwSisbenElegibilidade>> pesquisarPorMatriculaEliderSetorOrdenadoNome(VwSisbenElegibilidadeDto  vwSisbenElegibilidadeDto) {
+		 try {
+				
+			// return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);
+				return new ResponseEntity(vwSisbenElegibilidadeService.pesquisarPorMatriculaEliderSetorOrdenadoNome(vwSisbenElegibilidadeDto),HttpStatus.CREATED );
+		     } catch (RegraNegocioException e) {
+			    return new ResponseEntity<List<VwSisbenElegibilidade>>(HttpStatus.BAD_REQUEST);
+		     }
+	}
+	
+	
+	@GetMapping(value =  "/pesquisarPorNomeEliderSetorOrdenadoNome" )
+	public ResponseEntity<List<VwSisbenElegibilidade>> pesquisarPorNomeEliderSetorOrdenadoNome(VwSisbenElegibilidadeDto  vwSisbenElegibilidadeDto) {
+		 try {
+				
+			// return new ResponseEntity(fornecedorService.listarPorDescricaoOrdenadoDescricao(fornecedorDto), HttpStatus.CREATED);
+				return new ResponseEntity(vwSisbenElegibilidadeService.pesquisarPorNomeEliderSetorOrdenadoNome(vwSisbenElegibilidadeDto),HttpStatus.CREATED );
+		     } catch (RegraNegocioException e) {
+			    return new ResponseEntity<List<VwSisbenElegibilidade>>(HttpStatus.BAD_REQUEST);
+		     }
+	}
+	
+	@GetMapping(value =  "/listarElegivelPorSetorLiderOrdenadoNome" )
+	public ResponseEntity<List<VwSisbenElegibilidade>> listarElegivelPorSetorLiderOrdenadoNome(VwSisbenElegibilidadeDto  vwSisbenElegibilidadeDto) {
+		 try {
+				
+				return new ResponseEntity(vwSisbenElegibilidadeService.listarElegivelPorLiderSetorOrdenadoNome(vwSisbenElegibilidadeDto),HttpStatus.CREATED );
+		     } catch (RegraNegocioException e) {
+			    return new ResponseEntity<List<VwSisbenElegibilidade>>(HttpStatus.BAD_REQUEST);
+		     }
+	}
+	
+	
+//	@GetMapping("/obterPorMatriculaEliderSetor/{matriculaFuncionario}/{idUsuarioLogado}")
+//	public VwSisbenElegibilidade obterPorMatriculaEliderSetor(
+//			@PathVariable("matriculaFuncionario") String matriculaFuncionario,
+//			@PathVariable("idUsuarioLogado") String idUsuarioLogado) {
+//		
+//		//Optional<VwSisbenFuncionario> funcionario = new ArrayList();
+//		Optional<VwSisbenElegibilidade> elegivel = vwSisbenElegibilidadeService.obterPorMatriculaEliderSetor(matriculaFuncionario, idUsuarioLogado);
+//		return  elegivel.get();	
+//				
+//	}
+
 	
 
 }

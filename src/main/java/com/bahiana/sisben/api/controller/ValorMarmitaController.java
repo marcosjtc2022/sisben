@@ -85,29 +85,15 @@ public class ValorMarmitaController {
 	public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ValorMarmitaDto valorMarmitaDto) {
 	try {
 		
-//		    Integer countVlMarmita = valorMarmitaService.verificarValorVigencia(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
-//			
-//			if ((countVlMarmita > 0)) {
-//				throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//			}  
 			
-     		//Caso o usuário altere apenas o valor o count não será zero.
-//            Integer countVlMarmita = valorMarmitaService.verificarVigenciaParaDataInformada(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal());
-			
-            ValorMarmita valorMarmita = new ValorMarmita() ;
-            Integer count = 0;
- 		    count = valorMarmitaService.pesquisarValorVigenciaExcluiAlterada(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal(), id); 
-			//Compara a vigência informada com as outras vigências
-			if (count > 0) {
-				throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-			}
-				
-				//valorMarmita = valorMarmitaService.obterPorId(id).get();
-				
-//				List<ValorMarmita> listValorMarmita = valorMarmitaService.verificarOutrasVigencias(id);
-				
-				//Verifica as outras vigências diferentes da data informada na alteração.
-//				if (listValorMarmita != null) {
+		            ValorMarmita valorMarmita = new ValorMarmita() ;
+		            Integer count = 0;
+		 		    count = valorMarmitaService.pesquisarValorVigenciaExcluiAlterada(valorMarmitaDto.getDataInicial(), valorMarmitaDto.getDataFinal(), id);
+		 		    
+					//Compara a vigência informada com as outras vigências
+					if (count > 0) {
+						throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
+					}
 					
 					LocalDate menorDataInicial = valorMarmitaService.pesquisarMenorDataInicial();
 					LocalDate maiorDataFinal = valorMarmitaService.pesquisarMaiorDataFinal();
@@ -118,10 +104,6 @@ public class ValorMarmitaController {
 					Integer dataInvMenorInicial = utilSisben.inverterData(menorDataInicial);
 					Integer dataInvMaiorFinal = utilSisben.inverterData(maiorDataFinal);
 					
-					
-//					//Calcula os dias do mês.
-//					UtilSisben utilSisben = new UtilSisben();
-					
 					Integer dataInvertidaInicialDto = utilSisben.inverterData(valorMarmitaDto.getDataInicial());
 					Integer dataInvertidaFinalDto = utilSisben.inverterData(valorMarmitaDto.getDataFinal());
 					
@@ -130,7 +112,6 @@ public class ValorMarmitaController {
 						throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
 					}
 					
-					
 					if ((dataInvertidaInicialDto >= dataInvMenorInicial )&&
 							(dataInvertidaInicialDto <= dataInvMaiorFinal )&&
 							(dataInvertidaFinalDto >= dataInvMaiorFinal )) {
@@ -138,85 +119,14 @@ public class ValorMarmitaController {
 					}
 					
 					if ((dataInvertidaFinalDto >= dataInvMenorInicial )&&
-							(dataInvMaiorFinal <= dataInvMenorInicial )&&
+							(dataInvMaiorFinal <= dataInvMaiorFinal )&&
 							(dataInvertidaInicialDto <= dataInvMenorInicial )) {
 						throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
 					}
-					
-//					Integer dataInvertidaInicialBanco = null;
-//					Integer dataInvertidaFinalBanco = null;
-					
-					
-//					for (ValorMarmita valorMarmitaList : listValorMarmita) {
-//						
-//						//listValorMarmita = valorMarmitaService.pesquisarValorVigenciaExcluiAlterada();
-//						
-//						
-//						
-//						
-//						dataInvertidaInicialBanco = utilSisben.inverterData(valorMarmitaList.getDataInicial());
-//						dataInvertidaFinalBanco = utilSisben.inverterData(valorMarmitaList.getDataFinal());
-//					}
-//			 }		
-						
-						
-//						
-//						if ((dataInvertidaInicialDto >= dataInvertidaInicialBanco)&&
-//							(dataInvertidaFinalDto <= dataInvertidaFinalBanco)) {
-//							throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//						}
-//						
-//						if ((dataInvertidaInicialDto <= dataInvertidaInicialBanco)&&
-//								(dataInvertidaInicialDto <= dataInvertidaFinalBanco)&&
-//								(dataInvertidaFinalDto >= dataInvertidaFinalBanco)&&
-//								(dataInvertidaFinalDto >= dataInvertidaInicialBanco)) {
-//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//						}	
-//						
-//						if ((dataInvertidaInicialDto <= dataInvertidaInicialBanco)&&
-//								(dataInvertidaInicialDto <= dataInvertidaFinalBanco)&&
-//								(dataInvertidaFinalDto >= dataInvertidaFinalBanco)&&
-//								(dataInvertidaFinalDto >= dataInvertidaInicialBanco)) {
-//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//						}		
-//			
-						
-//						if ((dataInvertidaInicialDto >= dataInvertidaInicialBanco)&&
-//								(dataInvertidaFinalDto >= dataInvertidaFinalBanco)) {
-//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//						}
-//						
-//						if ((dataInvertidaInicialDto >= dataInvertidaInicialBanco)&&
-//								(dataInvertidaInicialDto <= dataInvertidaFinalBanco)) {
-//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//						}
-//						
-//						if ((dataInvertidaFinalDto >= dataInvertidaInicialBanco)&&
-//								(dataInvertidaFinalDto <= dataInvertidaFinalBanco)) {
-//								throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//						}
-//						
-//						if (valorMarmitaList.getDataInicial().equals(valorMarmitaDto.getDataInicial())) {
-//							 throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//				        }
-//						if (valorMarmitaList.getDataFinal().equals(valorMarmitaDto.getDataFinal())) {
-//							 throw new GlobalExceptionHandler("Já existe vigência para a data informada!");
-//				        }
-						
-						
-						
-						
-						
-						
-//					}
-					
-					
-//				}
-			    
-//			}
 			
-			valorMarmitaDto.setId(id);			
-		    valorMarmita = valorMarmitaService.alterar(valorMarmitaDto);
+					valorMarmitaDto.setId(id);			
+				    valorMarmita = valorMarmitaService.alterar(valorMarmitaDto);
+				    
 			return new ResponseEntity(valorMarmita, HttpStatus.CREATED);
 		} catch (RegraNegocioException e) {
 			 return ResponseEntity.badRequest().body(e.getMessage());

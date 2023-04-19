@@ -28,6 +28,16 @@ public class VwSisbenElegibilidadeDto {
     private String descricaoSituacao;
 	
 	private LocalDateTime dataAdmissao;
+	
+	private String idUsuarioLogado;
+	
+	public String getIdUsuarioLogado() {
+		return idUsuarioLogado;
+	}
+
+	public void setIdUsuarioLogado(String idUsuarioLogado) {
+		this.idUsuarioLogado = idUsuarioLogado;
+	}
 
 	public String getMatriculaFuncionario() {
 		return matriculaFuncionario;
@@ -117,9 +127,11 @@ public class VwSisbenElegibilidadeDto {
 		this.dataAdmissao = dataAdmissao;
 	}
 
+	
+	
 	public VwSisbenElegibilidadeDto(String matriculaFuncionario, String nomeFuncionario, String emailFuncionario,
 			Long codColigada, String codSecao, String descSecao, String bairro, String chefe1Elegivel,
-			String chefe2Elegivel, String descricaoSituacao, LocalDateTime dataAdmissao) {
+			String chefe2Elegivel, String descricaoSituacao, LocalDateTime dataAdmissao, String idUsuarioLogado) {
 		super();
 		this.matriculaFuncionario = matriculaFuncionario;
 		this.nomeFuncionario = nomeFuncionario;
@@ -132,8 +144,9 @@ public class VwSisbenElegibilidadeDto {
 		this.chefe2Elegivel = chefe2Elegivel;
 		this.descricaoSituacao = descricaoSituacao;
 		this.dataAdmissao = dataAdmissao;
+		this.idUsuarioLogado = idUsuarioLogado;
 	}
-	
+
 	public VwSisbenElegibilidadeDto() {
 		
 	}

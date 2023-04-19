@@ -3,6 +3,7 @@ package com.bahiana.sisben.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.UsuarioSetorGerenciadoDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
+import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.model.entity.UsuarioSetorGerenciado;
 import com.bahiana.sisben.model.entity.VwSisbenSetor;
 import com.bahiana.sisben.model.entity.repository.UsuarioSetorGerenciadoRepository;
+import com.bahiana.sisben.service.UsuarioService;
 import com.bahiana.sisben.service.UsuarioSetorGerenciadoService;
 import com.bahiana.sisben.service.VwSisbenSetorService;
 
@@ -24,6 +27,13 @@ public class UsuarioSetorGerenciadoServiceImpl implements UsuarioSetorGerenciado
 	
 	@Autowired
 	VwSisbenSetorService vwSisbenSetorService;
+	
+	@Autowired
+	UsuarioService usuarioService;
+	
+	@Autowired
+	UsuarioSetorGerenciadoService usuarioSetorGerenciadoService;
+
 	
 	@GetMapping("/obterPorCodSetor/{codSetor}")
 	public VwSisbenSetor obterPorCodSetor(@PathVariable("codSetor") String codSetor) {
@@ -113,6 +123,37 @@ public class UsuarioSetorGerenciadoServiceImpl implements UsuarioSetorGerenciado
 	@Override
 	public long pesquisaUsuarioSetorGerenciado(Long idUsuarioLider) {
 		return usuarioSetorGerenciadoRepository.pesquisaUsuarioSetorGerenciado(idUsuarioLider);
+	}
+
+
+	@Override
+	public Optional<UsuarioSetorGerenciado> obterPorId(Long id) {
+		return usuarioSetorGerenciadoRepository.findById(id);
+	}
+	
+	public List<String> concatenaSetoresLider(String strIdUsuarioLogado ){
+		
+         Long idUsuarioLogado = Long.valueOf(strIdUsuarioLogado);
+		
+		 Usuario usuario =  usuarioService.obterPorId(idUsuarioLogado).get();
+   	 
+	   	 List<String> listStrCodSetor = new ArrayList();
+	   	 listStrCodSetor.add(usuario.getCodSetor());
+	   	 
+	   	 List<UsuarioSetorGerenciado> listaSetorGerenciado =
+	   	 usuarioSetorGerenciadoService.listaSetorOrdenadoPorCodigo(idUsuarioLogado);
+	   	 
+	   	   if (listaSetorGerenciado != null) {
+	   	
+		    	 for (UsuarioSetorGerenciado setorGerenciado : listaSetorGerenciado) {
+		    		 
+		    		 listStrCodSetor.add(setorGerenciado.getCodSetor());
+		    		 
+		    	 }
+		    	 
+		  } 
+	   	   
+	   	 return listStrCodSetor;  
 	}
 
 

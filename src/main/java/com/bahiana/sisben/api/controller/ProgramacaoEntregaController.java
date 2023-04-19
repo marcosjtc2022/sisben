@@ -30,6 +30,7 @@ import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
+import com.bahiana.sisben.util.UtilSisben;
 
 @RestController
 @RequestMapping(value = "/programacoes-entregas")
@@ -176,7 +177,12 @@ public class ProgramacaoEntregaController {
 		 public ResponseEntity salvarMenos24h(@RequestBody ProgramacaoEntregaMenos24hDto programacaoEntregaMenos24hDto) {
 			  try {
 					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
-					programacaoEntrega = programacaoEntregaService.salvarMenos24h(programacaoEntregaMenos24hDto);
+					//programacaoEntrega = programacaoEntregaService.salvarMenos24h(programacaoEntregaMenos24hDto);
+					
+					//UtilSisben utilSisben = new UtilSisben();
+					//manutenção %
+					//Long horas = utilSisben.diferencaEntreDatas();
+					
 					return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
 			     } catch (RegraNegocioException e) {
 				    return ResponseEntity.badRequest().body(e.getMessage());
@@ -475,6 +481,22 @@ public class ProgramacaoEntregaController {
 		    @ResponseBody
 		    public List<String> listarAnoMes() {
 		    	return this.programacaoEntregaService.listarAnoMes(); 	  
+		    }
+		    
+		    @GetMapping(value =  "/listarProgramacaoEntregaVigenteLiderSetor" )
+		    @ResponseBody
+			 public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(
+                     @RequestParam(required = false  ) String matriculaColaborador,
+                     @RequestParam(required = false ) String anoMes,
+                     @RequestParam(required = false ) String codSetor,
+                     @RequestParam(required = false ) String idUsuarioLogado) {
+		    	
+		    	
+		    	//Long idUsuario = Long.valueOf(idUsuarioLogado);
+		    	
+		    	return this.programacaoEntregaService.
+		    			listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes, codSetor,idUsuarioLogado );
+		    	
 		    }
 	
   

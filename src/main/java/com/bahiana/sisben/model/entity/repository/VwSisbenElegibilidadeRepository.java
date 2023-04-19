@@ -23,5 +23,41 @@ public interface VwSisbenElegibilidadeRepository extends JpaRepository<VwSisbenE
 	@Query("SELECT eleg FROM VwSisbenElegibilidade eleg WHERE eleg.matriculaFuncionario=:matriculaFuncionario")
 	Optional<VwSisbenElegibilidade> obterPorMatricula(@Param("matriculaFuncionario")  String matriculaFuncionario);
 	
+	
+	@Query("SELECT eleg FROM VwSisbenElegibilidade eleg WHERE matriculaFuncionario LIKE %:matriculaFuncionario%"
+			+ " and eleg.codSecao IN :strCodSetor "
+			+ " order by eleg.nomeFuncionario, eleg.matriculaFuncionario ")
+	List<VwSisbenElegibilidade> pesquisarPorMatriculaEliderSetorOrdenadoNome(
+			@Param("matriculaFuncionario")  String matriculaFuncionario,
+			@Param("strCodSetor") List<String> strCodSetor);
+	
+	@Query("SELECT eleg FROM VwSisbenElegibilidade eleg WHERE nomeFuncionario LIKE %:nomeFuncionario%"
+			+ " and eleg.codSecao IN :strCodSetor  "
+			+ " order by eleg.nomeFuncionario, eleg.matriculaFuncionario ")
+	List<VwSisbenElegibilidade> pesquisarPorNomeEliderSetorOrdenadoNome(
+			@Param("nomeFuncionario")  String nomeFuncionario,
+			@Param("strCodSetor") List<String> strCodSetor);
+	
+	
+	@Query("SELECT eleg FROM VwSisbenElegibilidade eleg "
+			+ "  WHERE eleg.codSecao IN :strCodSetor  "
+			+ " order by eleg.nomeFuncionario, eleg.matriculaFuncionario ")
+	List<VwSisbenElegibilidade> listarElegivelPorLiderSetorOrdenadoNome(
+			@Param("strCodSetor") List<String> strCodSetor);
+	
+	
+//	@Query("SELECT eleg FROM VwSisbenElegibilidade eleg "
+//			+ " WHERE eleg.matriculaFuncionario=:matriculaFuncionario and "
+//			+ " eleg.codSecao IN :strCodSetor ")
+//	Optional<VwSisbenElegibilidade> obterPorMatriculaEliderSetor(
+//			@Param("matriculaFuncionario")  String matriculaFuncionario,
+//			@Param("strCodSetor") List<String> strCodSetor);
+	
+	
+	
+	
+	
+	
+	
 
 }

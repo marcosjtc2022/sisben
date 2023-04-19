@@ -79,10 +79,10 @@ public class UtilSisben {
 	    return diaDaSemana;
 	}
 	
-	public Long diferencaEntreDatas() {
+	public Long diferencaEntreDatas(String primeiraData, String segundaData ) {
 		
-		String primeiraHora = "08-03-2023 01:10:20";
-		String segundaHora = "09-03-2023 06:30:50";
+//		String primeiraData = "08-03-2024 08:10:20";
+//		String segundaHora = "09-03-2024 23:59:59";
 		
 		
 		SimpleDateFormat sdf
@@ -93,8 +93,8 @@ public class UtilSisben {
 		
 		
 		try {
-			Date d1 = sdf.parse(primeiraHora);
-			Date d2 = sdf.parse(segundaHora);
+			Date d1 = sdf.parse(primeiraData);
+			Date d2 = sdf.parse(segundaData);
 			
             long difference_In_Time
                 = d2.getTime() - d1.getTime();
@@ -132,23 +132,23 @@ public class UtilSisben {
 	 
 	            // Print the date difference in
 	            // years, in days, in hours, in
-	            // minutes, and in seconds
-	            System.out.print(
-	                "Difference"
-	                + " between two dates is: ");
+//	            // minutes, and in seconds
+//	            System.out.print(
+//	                "Difference"
+//	                + " between two dates is: ");
 	 
-	            // Print result
-	            System.out.println(
-	                difference_In_Years
-	                + " years, "
-	                + difference_In_Days
-	                + " days, "
-	                + difference_In_Hours
-	                + " hours, "
-	                + difference_In_Minutes
-	                + " minutes, "
-	                + difference_In_Seconds
-	                + " seconds");
+//	            // Print result
+//	            System.out.println(
+//	                difference_In_Years
+//	                + " years, "
+//	                + difference_In_Days
+//	                + " days, "
+//	                + difference_In_Hours
+//	                + " hours, "
+//	                + difference_In_Minutes
+//	                + " minutes, "
+//	                + difference_In_Seconds
+//	                + " seconds");
 	 
 			
 			
