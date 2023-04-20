@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.UsuarioSetorGerenciadoDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.model.entity.UsuarioSetorGerenciado;
@@ -35,6 +36,17 @@ public class UsuarioSetorGerenciadoController {
 	@PostMapping("/salvar")
 	public ResponseEntity salvar(@RequestBody UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
 	  try {
+		 
+		//Inserir dados na tabela usuario_setor e colocar pesquisa de registros.
+			
+		 Long countUsuarioSetor = usuarioSetorGerenciadoService.
+					pesquisaUsuarioSetorGerenciado(usuarioSetorGerenciadoDto.getIdUsuarioLider());
+			
+		 if ((countUsuarioSetor > 0) && (countUsuarioSetor != null)) {
+				throw new GlobalExceptionHandler("Líder já vinculado a um ou mais setores. Faça a alteração!");
+		 } 
+		  
+		  
 		 List<UsuarioSetorGerenciado> listUsuarioSetorGerenciado = 
 				  usuarioSetorGerenciadoService.salvar(usuarioSetorGerenciadoDto);
 			

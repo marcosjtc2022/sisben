@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
@@ -80,6 +81,9 @@ public interface ProgramacaoEntregaService {
 	
 	List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(String matriculaColaborador, String anoMes,
            String codSetor, String idUsuarioLogado);
+	
+	long pesquisarProgramacaoEntregaDataProgramacaoMatricula(LocalDate dataProgramacao,
+                                                             String matriculaColaborador);
 	
 
 }

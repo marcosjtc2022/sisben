@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
@@ -176,6 +177,16 @@ public class ProgramacaoEntregaController {
 		 @Transactional
 		 public ResponseEntity salvarProgramacaoAvulsa(@RequestBody ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto) {
 			  try {
+				  
+//				     Long countProg = programacaoEntregaService.
+//				    		          pesquisarProgramacaoEntregaDataProgramacaoMatricula(
+//				    		        		  programacaoEntregaAvulsaDto.getDataProgramacao(),
+//				    		        		  programacaoEntregaAvulsaDto.getMatriculaColaborador());
+//					
+//					if ((countProg > 0) && (countProg != null)) {
+//						throw new GlobalExceptionHandler("Já existe programação para esta data!");
+//					} 
+					
 					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 					programacaoEntrega = programacaoEntregaService.salvarProgramacaoAvulsa(programacaoEntregaAvulsaDto);
 					

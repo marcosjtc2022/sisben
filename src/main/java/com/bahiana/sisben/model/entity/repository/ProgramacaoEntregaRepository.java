@@ -173,6 +173,13 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("codSetor") String codSetor,
 			@Param("strCodSetor") List<String> strCodSetor);
 	
+	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe"
+			+ " WHERE  pe.dataProgramacao = :dataProgramacao"
+	        + " AND pe.matriculaColaborador = :matriculaColaborador"
+	        + " AND pe.dataProgramacao is not null ")
+	long pesquisarProgramacaoEntregaDataProgramacaoMatricula(@Param("dataProgramacao") LocalDate dataProgramacao,
+			                              @Param("matriculaColaborador") String matriculaColaborador);
+	
 	
 
 }

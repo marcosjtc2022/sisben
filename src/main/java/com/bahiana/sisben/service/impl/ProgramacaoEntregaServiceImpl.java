@@ -286,21 +286,26 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				throw new GlobalExceptionHandler("Data com férias ou suspensão da elegibilidade!");
 			}
 			
+			//Converte de dto para o objeto bean.
+			ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaAvulsaDto);
+			
+			//Recupera dia da semana
+			UtilSisben utilSisben = new UtilSisben(); 
+			programacaoEntrega.setDiaDaSemana(utilSisben.getDiaDaSemana(programacaoEntrega.getDataProgramacao()));	
+			
 			//Recupera setor do usuário.
 			VwSisbenFuncionario vwSisbenFuncionario = vwSisbenFuncionarioService.
-			ObterPorMatricula(programacaoEntregaAvulsaDto.getMatriculaColaborador()).get();
+			ObterPorMatricula(programacaoEntrega.getMatriculaColaborador()).get();
 			
-			programacaoEntregaAvulsaDto.setCodSetor(vwSisbenFuncionario.getCodSecao());
+			programacaoEntrega.setCodSetor(vwSisbenFuncionario.getCodSecao());
 			
 			//programacaoEntregaAvulsaDto.setIdValor(programacaoEntregaAvulsaDto.getIdValor());
 			
 			LocalDateTime dataModificacao = LocalDateTime.now();
-			programacaoEntregaAvulsaDto.setDataUltimaModificacao(dataModificacao);
-			 
+			programacaoEntrega.setDataUltimaModificacao(dataModificacao);
 			
-			Integer intMesProgAvulsa = programacaoEntregaAvulsaDto.getDataProgramacao().getMonthValue();
-			Integer intAnoProgAvulsa = programacaoEntregaAvulsaDto.getDataProgramacao().getYear();
-				
+			Integer intMesProgAvulsa = programacaoEntrega.getDataProgramacao().getMonthValue();
+			Integer intAnoProgAvulsa = programacaoEntrega.getDataProgramacao().getYear();
 				
 			String strMesProgAvulsa = intMesProgAvulsa.toString();
 			if (strMesProgAvulsa.length()== 1) {
@@ -309,17 +314,17 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 			String strAnoMesProgAvulsa = intAnoProgAvulsa.toString() + strMesProgAvulsa; 
 				
-			programacaoEntregaAvulsaDto.setAnoMes(strAnoMesProgAvulsa);
+			programacaoEntrega.setAnoMes(strAnoMesProgAvulsa);
 			
 			//Converte de dto para o objeto bean.
-			ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaAvulsaDto);
+			//ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaAvulsaDto);
 			
 			/// alteração começa aqui.
 			Calendario calendario = new Calendario();
 			
 			
 			//Pesquisa existência de data especial.
-			calendario = calendarioService.pesquisarPorData(programacaoEntregaAvulsaDto.getDataProgramacao());
+			calendario = calendarioService.pesquisarPorData(programacaoEntrega.getDataProgramacao());
 			programacaoEntrega.setDescricaoFeriado(null);
 			if (calendario != null) {
 				programacaoEntrega.setDescricaoFeriado(calendario.getDescricao());
@@ -1373,8 +1378,18 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor());
 	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
 	    		 
-	    		 VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador()).get();
-	    		 progEntVigenteResponse.setNomeColaborador(funcionario.getNomeFuncionario());
+//	    		 VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador()).get();
+//	    		 progEntVigenteResponse.setNomeColaborador(funcionario.getNomeFuncionario());
+//	    		 
+	    		 
+                 Optional<VwSisbenFuncionario>   funcionario =  vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador());
+	    		 
+	    		 if (funcionario.isPresent() ) {
+	    			 progEntVigenteResponse.setNomeColaborador(funcionario.get().getNomeFuncionario());	 
+	    		 } else {
+	    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
+	    		 }
+	    		 
 	    		 
 	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
@@ -1411,6 +1426,15 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			return listarProgEntVigenteResponse;
 
 			
+		}
+
+		@Override
+		public long pesquisarProgramacaoEntregaDataProgramacaoMatricula(LocalDate dataProgramacao,
+				String matriculaColaborador) {
+			
+			    
+			
+			return pesquisarProgramacaoEntregaDataProgramacaoMatricula(dataProgramacao,matriculaColaborador);
 		}
 		
 		
