@@ -50,6 +50,16 @@ public class ProgramacaoEntregaAvulsaDto {
 	
 	private LocalDate dataProgramacao;
 	
+	private LocalDate mesAnoProgramacao;
+	
+	public LocalDate getMesAnoProgramacao() {
+		return mesAnoProgramacao;
+	}
+
+	public void setMesAnoProgramacao(LocalDate mesAnoProgramacao) {
+		this.mesAnoProgramacao = mesAnoProgramacao;
+	}
+
 	public LocalDate getDataProgramacao() {
 		return dataProgramacao;
 	}

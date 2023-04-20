@@ -178,21 +178,16 @@ public class ProgramacaoEntregaController {
 		 public ResponseEntity salvarProgramacaoAvulsa(@RequestBody ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto) {
 			  try {
 				  
-//				     Long countProg = programacaoEntregaService.
-//				    		          pesquisarProgramacaoEntregaDataProgramacaoMatricula(
-//				    		        		  programacaoEntregaAvulsaDto.getDataProgramacao(),
-//				    		        		  programacaoEntregaAvulsaDto.getMatriculaColaborador());
-//					
-//					if ((countProg > 0) && (countProg != null)) {
-//						throw new GlobalExceptionHandler("Já existe programação para esta data!");
-//					} 
+				    Long countProg = programacaoEntregaService.
+				    		pesquisarProgrEntregaDataMatr(programacaoEntregaAvulsaDto.getDataProgramacao().toString(),
+				    				                      programacaoEntregaAvulsaDto.getMatriculaColaborador());
+					
+					if ((countProg > 0)) {
+						throw new GlobalExceptionHandler("Já existe programação para esta data!");
+					} 
 					
 					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 					programacaoEntrega = programacaoEntregaService.salvarProgramacaoAvulsa(programacaoEntregaAvulsaDto);
-					
-					//UtilSisben utilSisben = new UtilSisben();
-					//manutenção %
-					//Long horas = utilSisben.diferencaEntreDatas();
 					
 					return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
 			     } catch (RegraNegocioException e) {

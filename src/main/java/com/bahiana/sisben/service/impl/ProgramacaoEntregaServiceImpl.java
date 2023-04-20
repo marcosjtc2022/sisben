@@ -1429,12 +1429,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
-		public long pesquisarProgramacaoEntregaDataProgramacaoMatricula(LocalDate dataProgramacao,
+		public long pesquisarProgrEntregaDataMatr(String dataProgramacao,
 				String matriculaColaborador) {
-			
 			    
-			
-			return pesquisarProgramacaoEntregaDataProgramacaoMatricula(dataProgramacao,matriculaColaborador);
+			return programacaoEntregaRepository.
+					pesquisarProgrEntregaDataMatr(dataProgramacao, matriculaColaborador);
 		}
 		
 		
