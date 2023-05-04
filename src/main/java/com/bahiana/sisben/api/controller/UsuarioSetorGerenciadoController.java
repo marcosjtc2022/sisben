@@ -59,8 +59,11 @@ public class UsuarioSetorGerenciadoController {
 	@PostMapping("/alterar")
 	public ResponseEntity alterar(@RequestBody UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
 	  try {
+//		 List<UsuarioSetorGerenciado> listUsuarioSetorGerenciado = 
+//				  usuarioSetorGerenciadoService.alterar(usuarioSetorGerenciadoDto);
+//		 
 		 List<UsuarioSetorGerenciado> listUsuarioSetorGerenciado = 
-				  usuarioSetorGerenciadoService.alterar(usuarioSetorGerenciadoDto);
+				  usuarioSetorGerenciadoService.salvar(usuarioSetorGerenciadoDto);
 			
 			return new ResponseEntity(listUsuarioSetorGerenciado, HttpStatus.CREATED);
 	     } catch (RegraNegocioException e) {
