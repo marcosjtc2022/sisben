@@ -180,6 +180,13 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	long pesquisarProgrEntregaDataMatr(@Param("dataProgramacao") String dataProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
+	@Transactional
+	@Modifying
+	@Query("update ProgramacaoEntrega set tipoSolicitacao = :tipoSolicitacao"
+			+ " where id = :id")
+	void atulizarProgEntregaTipoSolicitacao(@Param("tipoSolicitacao") String tipoSolicitacao,
+			@Param("id") Long id);
+	
 	
 	
 

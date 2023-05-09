@@ -1,5 +1,6 @@
 package com.bahiana.sisben.api.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,6 @@ import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.FornecedorService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.UsuarioService;
-import com.bahiana.sisben.util.UtilSisben;
 
 @RestController
 @RequestMapping(value = "/fornecedores")
@@ -69,9 +69,7 @@ public class FornecedorController {
 	    public List<Fornecedor> listarOrdenadoDescricao() {
 			
 			
-//			UtilSisben utilSisben = new UtilSisben();
-//			
-//			utilSisben.diferencaEntreDatas();
+			
 			
 	    	return this.fornecedorService.listarSimplesOrdenadoDescricao();  	  
 	    }

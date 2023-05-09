@@ -1,5 +1,6 @@
 package com.bahiana.sisben.api.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class VwSisbenSetorController {
 	
 	@GetMapping(value =  "/listarOrdenadoPorDescricao" )
     public List<VwSisbenSetor> listaSetorOrdenadoPorDescricao() {
+		
+//		LocalDate today = LocalDate.now(); marcos
+//		LocalDate pastDate = LocalDate.parse("2023-05-04");
+//
+//		int compareValue = today.compareTo(pastDate);
+		
     	return vwSisbenSetorService.listaSetorOrdenadoPorDescricao();  	  
     }
 	

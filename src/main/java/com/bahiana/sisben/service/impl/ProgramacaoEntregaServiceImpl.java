@@ -319,7 +319,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			//Converte de dto para o objeto bean.
 			//ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaAvulsaDto);
 			
-			/// alteração começa aqui.
 			Calendario calendario = new Calendario();
 			
 			
@@ -330,8 +329,18 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoEntrega.setDescricaoFeriado(calendario.getDescricao());
 			};
 			
+			//Pesquisa se existe valor marmita e recupera.
+			ValorMarmita valorMarmita = valorMarmitaService.
+					obterValorVigencia(programacaoEntrega.getDataProgramacao());
 			
-			/// alteração Termina aqui.
+			if ( valorMarmita == null) {
+				throw new GlobalExceptionHandler("Não existe vigência de valor"
+						+ " da marmita cadastrado para a data da programação informada!");
+			}
+			
+			//Recupera e atribui o valor da marmita.
+			programacaoEntrega.setIdValor(valorMarmita.getId());
+			
 			
 			
 			return programacaoEntregaRepository.save(programacaoEntrega);
@@ -507,6 +516,18 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //				if ((contFerias > 0) && (contFerias != null)) {
 //					programacaoInput.setStFerias(true);
 //				}
+				
+				//Cálculo entre datas para saber se tem menos de 24h
+				
+				
+				
+				
+//				
+				//utilSisben.diferencaEntreDatas("04-04-2023 08:10:20","05-04-2023 23:59:59");
+				
+				
+				
+				//Fim cálculo.
 				
 				//Só insere se não existirem férias nem suspensão da eligibilidade.
 				if ((contSusElegibilidade == 0)&&(contFerias == 0)) {
@@ -990,7 +1011,20 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			String[] tabelaProgramacaoEntrega = programacaoEntregaDto.getTabelaProgramacaoEntrega().split(",");
 			
 			for (String idProgramacao : tabelaProgramacaoEntrega){
-			    programacaoEntregaRepository.deleteById(Long.valueOf(idProgramacao));
+				
+				//Recupera data da programação para verificar se tem menos de 24h. (#$)
+				ProgramacaoEntrega programacaoEntrega = 
+				programacaoEntregaRepository.findById(Long.valueOf(idProgramacao)).get();
+				
+				LocalDate dataHoje = LocalDate.now();
+				boolean igual = programacaoEntrega.getDataProgramacao().equals(dataHoje);
+				//Verifica se a data da programação é igual a data atual.
+				if (!igual) {
+					programacaoEntregaRepository.deleteById(Long.valueOf(idProgramacao));
+				} else  {
+					programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("E",programacaoEntrega.getId());
+				}
+			    
 		   }
 	   }
 
