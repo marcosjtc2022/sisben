@@ -554,17 +554,24 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			boolean existeValor = false;
 			
-			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
-			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.
-			pesquisarPrimeiroPorDescricao(programacaoEntregaDto.getBairroSecaoElegivel());
+			// alteração - bairroSecaoElegivel
 			
-			if ((unidadeAcademica == null)||(unidadeAcademica.getDescricao() == null) ||(unidadeAcademica.getDescricao() == "")) {
-				throw new GlobalExceptionHandler("Elegível sem o bairro da seção!");
-			}
+			//Pesquisa unidade acadêmcia, a partir do bairro da seção do elegível.
+//			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.
+//			pesquisarPrimeiroPorDescricao(programacaoEntregaDto.getBairroSecaoElegivel());
+//			
+//			if ((unidadeAcademica == null)||(unidadeAcademica.getDescricao() == null) ||(unidadeAcademica.getDescricao() == "")) {
+//				throw new GlobalExceptionHandler("Elegível sem o bairro da seção!");
+//			}
+			
+			//Pesquisa unidade acadêmcia, a partir do id.
+			UnidadeAcademica unidadeAcademica = unidadeAcademicaService.obterPorId(programacaoEntregaDto.getIdUa()).get();
 			
 			//Preenche a descrição e o id da ua.
 			programacaoEntregaDto.setIdUa(unidadeAcademica.getId());
 			programacaoEntregaDto.setUaPrevista(unidadeAcademica.getDescricao());
+			
+			//fim alteração - bairroSecaoElegivel
 			
 //			//Pesquisa se existe valor marmita e recupera o mais atual
 //			List<ValorMarmita> listaValorMarmita = valorMarmitaService.
