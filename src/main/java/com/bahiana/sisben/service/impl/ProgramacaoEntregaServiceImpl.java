@@ -23,21 +23,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.bahiana.sisben.api.dto.ProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgEntVigenteNpDto;
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
-import com.bahiana.sisben.model.entity.Usuario;
-import com.bahiana.sisben.model.entity.UsuarioSetorGerenciado;
 import com.bahiana.sisben.model.entity.ValorMarmita;
 import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
 import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
 import com.bahiana.sisben.model.entity.VwSisbenSetor;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.CalendarioService;
+import com.bahiana.sisben.service.ProgramacaoEntregaAprovacaoService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
@@ -84,6 +83,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 	@Autowired
 	UsuarioSetorGerenciadoService usuarioSetorGerenciadoService;
+	
+//	@Autowired
+//	ProgramacaoEntregaAprovacaoService programacaoEntregaAprovacaoService;
 	
 	
 	private static boolean mesCorrente = false;
@@ -751,9 +753,21 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
 				  //Se existirem férias, ou suspensão da eligibilidade, apaga o registro.
 				  if ((programacaoEntregaLinha.getStFerias() == true)||(programacaoEntregaLinha.getExigSuspensa() == true)) {
-					this.programacaoEntregaRepository.deleteById(programacaoEntregaLinha.getId());
-				  } else {
-					this.programacaoEntregaRepository.save(programacaoEntregaLinha); 
+					  this.programacaoEntregaRepository.deleteById(programacaoEntregaLinha.getId());
+				  } else { //alteração %$
+					 
+//					  //Recupera data da programação para verificar se tem menos de 24h.
+//					  LocalDate dataHoje = LocalDate.now();
+//					  boolean igual = programacaoEntregaLinha.getDataProgramacao().equals(dataHoje);  
+//					  
+//					  if (!igual) {
+					     this.programacaoEntregaRepository.save(programacaoEntregaLinha);
+//					  } else {
+//						//Caso seja com menos de 24h atualiza com o tipo de solicitação igual a "E"
+//						 this.programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("A",programacaoEntregaLinha.getId());
+//					  }
+					
+					
 				  }	
 			 }
 			 
@@ -835,7 +849,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoEntrega.setDataSolicitacao(dataSolicitacao);
 				programacaoEntrega.setIdUsuario(idUsuarioEntrega);
 				programacaoEntrega.setIdUa(idUa);
-				//programacaoEntrega.setIdValor(idValor);
+				programacaoEntrega.setIdValor(idValor);
 				programacaoEntrega.setDataUltimaModificacao(dataModificacao);
 				programacaoEntrega.setIdUsuarioUltimaModificacao(idUsuarioUltimaModificacao);
 				programacaoEntrega.setDataProgramacao(dataProgramacao);
@@ -846,7 +860,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				  //
                 
                 
-                if (valorMarmitaAtual != null) {
+                /* if (valorMarmitaAtual != null) {
     				
     				
     				Integer intMesDataProg = dataProgramacao.getMonthValue();
@@ -904,6 +918,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
     			  }	 
     				
     			}	
+				*/
 				
 //				Calendario calendario = new Calendario();
 				
@@ -1012,18 +1027,19 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			for (String idProgramacao : tabelaProgramacaoEntrega){
 				
-				//Recupera data da programação para verificar se tem menos de 24h. (#$)
-				ProgramacaoEntrega programacaoEntrega = 
-				programacaoEntregaRepository.findById(Long.valueOf(idProgramacao)).get();
-				
-				LocalDate dataHoje = LocalDate.now();
-				boolean igual = programacaoEntrega.getDataProgramacao().equals(dataHoje);
-				//Verifica se a data da programação é igual a data atual.
-				if (!igual) {
+				//Recupera data da programação para verificar se tem menos de 24h.
+//				ProgramacaoEntrega programacaoEntrega = 
+//				programacaoEntregaRepository.findById(Long.valueOf(idProgramacao)).get();
+//				
+//				LocalDate dataHoje = LocalDate.now();
+//				boolean igual = programacaoEntrega.getDataProgramacao().equals(dataHoje);
+//				//Verifica se a data da programação é igual a data atual.
+//				if (!igual) {
 					programacaoEntregaRepository.deleteById(Long.valueOf(idProgramacao));
-				} else  {
-					programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("E",programacaoEntrega.getId());
-				}
+//				} else  {
+//					//Caso seja com menos de 24h atualiza com o tipo de solicitação igual a "E"
+//					programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("E",programacaoEntrega.getId());
+//				}
 			    
 		   }
 	   }

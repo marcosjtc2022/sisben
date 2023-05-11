@@ -23,5 +23,11 @@ public interface UsuarioSetorGerenciadoRepository extends JpaRepository<UsuarioS
 	@Query("SELECT COUNT(u) FROM UsuarioSetorGerenciado u WHERE u.idUsuarioLider=:idUsuarioLider")
 	long pesquisaUsuarioSetorGerenciado(@Param("idUsuarioLider") Long idUsuarioLider);
 	
+	@Query("SELECT COUNT(u) FROM UsuarioSetorGerenciado u "
+			+ " WHERE u.idUsuarioLider=:idUsuarioLider AND "
+			+ " u.codSetor=:codSetor ")
+	long pesquisarExisteUsuarioSetor(@Param("idUsuarioLider") Long idUsuarioLider,
+			@Param("codSetor") String codSetor);
+	
 
 }

@@ -32,20 +32,10 @@ public class UsuarioSetorGerenciadoController {
 	@Autowired
 	private UsuarioSetorGerenciadoService usuarioSetorGerenciadoService;
 	
-	
+	@Transactional
 	@PostMapping("/salvar")
 	public ResponseEntity salvar(@RequestBody UsuarioSetorGerenciadoDto usuarioSetorGerenciadoDto) {
 	  try {
-		 
-		//Inserir dados na tabela usuario_setor e colocar pesquisa de registros.
-			
-		 Long countUsuarioSetor = usuarioSetorGerenciadoService.
-					pesquisaUsuarioSetorGerenciado(usuarioSetorGerenciadoDto.getIdUsuarioLider());
-			
-		 if ((countUsuarioSetor > 0) && (countUsuarioSetor != null)) {
-				throw new GlobalExceptionHandler("Líder já vinculado a um ou mais setores. Faça a alteração!");
-		 } 
-		  
 		  
 		 List<UsuarioSetorGerenciado> listUsuarioSetorGerenciado = 
 				  usuarioSetorGerenciadoService.salvar(usuarioSetorGerenciadoDto);

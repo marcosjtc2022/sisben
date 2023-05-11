@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.UsuarioSetorGerenciadoDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.model.entity.Usuario;
 import com.bahiana.sisben.model.entity.UsuarioSetorGerenciado;
@@ -47,7 +48,20 @@ public class UsuarioSetorGerenciadoServiceImpl implements UsuarioSetorGerenciado
 				concatenaCamposTabelaSetor(usuarioSetorGerenciadoDto);
 		
 		
+		
+		
 		for (UsuarioSetorGerenciado usuarioSetorGerenciado : listaUsuarioSetorGerenciado) {
+			
+			    //Verifica se setor já foi inserido.
+				Long countUsuarioSetor = usuarioSetorGerenciadoRepository.
+						pesquisarExisteUsuarioSetor(usuarioSetorGerenciado.getIdUsuarioLider(),
+								usuarioSetorGerenciado.getCodSetor()); 
+			
+				if ((countUsuarioSetor > 0) && (countUsuarioSetor != null)) {
+					throw new GlobalExceptionHandler("Erro - O setor " + usuarioSetorGerenciado.getCodSetor() +  " já está cadastrado !");
+			    } 
+				
+			
 				this.usuarioSetorGerenciadoRepository.save(usuarioSetorGerenciado); 
 	    }
 		
@@ -75,6 +89,7 @@ public class UsuarioSetorGerenciadoServiceImpl implements UsuarioSetorGerenciado
 				usuarioSetorGerenciado.setCodSetor(codSetor);
 				usuarioSetorGerenciado.setDescricao(vwSisbenSetor.getDescrSetor());
 				usuarioSetorGerenciado.setIdUsuarioLider(usuarioSetorGerenciadoDto.getIdUsuarioLider());
+				usuarioSetorGerenciado.setId(usuarioSetorGerenciadoDto.getIdUsuarioLider());
 				
 				listaUsuarioSetorGerenciado.add(usuarioSetorGerenciado);
 				

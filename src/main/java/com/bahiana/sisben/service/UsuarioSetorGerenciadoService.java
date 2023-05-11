@@ -28,9 +28,4 @@ public interface UsuarioSetorGerenciadoService {
 	
 	Optional<UsuarioSetorGerenciado> obterPorId(Long id);
 	
-	List<String> concatenaSetoresLider(String strIdUsuarioLogado );
-	
-	
-	
-	
-}
+	List<String> concatenaSetoresLider(String strIdUsuarioLogado );}
