@@ -465,11 +465,13 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			//dataSolicitacaoDateTime = LocalDateTime.parse(programacaoEntregaDto.getDataAtual().toString());
 			
 			UtilSisben utilSisben = new UtilSisben();
+			boolean incluirData ;
 			
 			
 			for (int i = 1; i <= diasProgramacaoMes; i ++){
 				
 				ProgramacaoEntrega programacaoInput = new ProgramacaoEntrega();
+				incluirData = true;
 				
 				
 				
@@ -490,6 +492,15 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setDiaDaSemana(utilSisben.getDiaDaSemana(dataProgramacao));
 				programacaoInput.setAnoMes(strAnoMesProg);
 				programacaoInput.setCodSetor(funcionario.getCodSecao());
+				
+				
+				//Verifica se é para incluir sábados e domingos.
+				if (programacaoEntregaDto.getNaoGerarFDS()== true) {
+					if (programacaoInput.getDiaDaSemana().equalsIgnoreCase("Sábado")||
+							programacaoInput.getDiaDaSemana().equalsIgnoreCase("Domingo")) {
+						incluirData = false;
+					}
+				}
 				
 				//Pesquisa existência de data especial.
 				calendario = calendarioService.pesquisarPorData(dataProgramacao);
@@ -531,8 +542,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				//Fim cálculo.
 				
-				//Só insere se não existirem férias nem suspensão da eligibilidade.
-				if ((contSusElegibilidade == 0)&&(contFerias == 0)) {
+				//Só insere se não existirem férias nem suspensão da eligibilidade,
+				//ou quando for escolhido não gerar sábado e domingo.
+				if ((contSusElegibilidade == 0)&&(contFerias == 0)&&(incluirData == true)) {
 					listaProgramacaoEntregaMes.add(programacaoInput);
 					this.programacaoEntregaRepository.save(programacaoInput);
 				}	

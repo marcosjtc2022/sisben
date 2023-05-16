@@ -78,6 +78,16 @@ public class ProgramacaoEntregaDto {
 	
 	private String tipoSolicitacao;
 	
+	private Boolean naoGerarFDS;
+	
+	public Boolean getNaoGerarFDS() {
+		return naoGerarFDS;
+	}
+
+	public void setNaoGerarFDS(Boolean naoGerarFDS) {
+		this.naoGerarFDS = naoGerarFDS;
+	}
+
 	public String getTipoSolicitacao() {
 		return tipoSolicitacao;
 	}
