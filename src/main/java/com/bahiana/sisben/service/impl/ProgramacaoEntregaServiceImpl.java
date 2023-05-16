@@ -444,7 +444,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			if (mesCorrente == false) {
 			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getMesAnoProgramacao().toString());
 			} else {
-			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().toString());
+			   //Despreza a data corrente e a data posterior getDataAtual().plusDays(2) . 
+			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().plusDays(2).toString());
 			}
 			
 			//Separa ano e mês da programação.
