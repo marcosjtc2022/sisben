@@ -150,12 +150,14 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
 			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
+			//+ "       (:uaRealizada is null or pe.uaRealizada LIKE %:uaRealizada% ) and"
 			+ "       pe.codSetor IN :strCodSetor "
 			+ " order by pe.anoMes,pe.matriculaColaborador   ")
 	List<ProgEntVigenteDto> listarProgramacaoEntregaVigenteLiderSetor(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
 			@Param("codSetor") String codSetor,
+		//	@Param("uaRealizada") String uaRealizada,
 			@Param("strCodSetor") List<String> strCodSetor);
 	
 	
@@ -186,6 +188,16 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " where id = :id")
 	void atulizarProgEntregaTipoSolicitacao(@Param("tipoSolicitacao") String tipoSolicitacao,
 			@Param("id") Long id);
+	
+	@Query("SELECT pe FROM ProgramacaoEntrega pe WHERE  Month(pe.dataProgramacao) = Month(:dataProgramacao)"
+			+ "AND Year(pe.dataProgramacao) = Year(:dataProgramacao)"
+	        + "AND pe.matriculaColaborador = :matriculaColaborador")
+	List<ProgramacaoEntrega>  recuperarProgrEntregaDataMatr(@Param("dataProgramacao") String dataProgramacao,
+			                              @Param("matriculaColaborador") String matriculaColaborador);
+	
+	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe   "
+	+ " WHERE   pe.idUa = :idUa ")
+    long pesquisarProgrEntregaUa(@Param("idUa") Long idUa);
 	
 	
 	

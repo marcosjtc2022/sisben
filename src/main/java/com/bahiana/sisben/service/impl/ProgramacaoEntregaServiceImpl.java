@@ -480,6 +480,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setUaPrevista(programacaoEntregaDto.getUaPrevista());
 				programacaoInput.setUaRealizada(null);
 				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
+				//programacaoInput.setIdUa(null);
 			    programacaoInput.setIdData(null);
 				programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
 				programacaoInput.setIdValor(programacaoEntregaDto.getIdValor());
@@ -1412,7 +1413,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(String matriculaColaborador,
 				String anoMes,String codSetor, String idUsuarioLogado) {
 			
-			if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
+			 if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
 	    		 matriculaColaborador = null;
 			 }
 	    	 
@@ -1423,7 +1424,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    	 if ((codSetor == "")||((codSetor == null))) {
 	    		 codSetor = null;
 			 }
-	    	 
+//	    	 
+//	    	 if ((uaRealizada == "")||((uaRealizada == null))) {
+//	    		 uaRealizada = null;
+//			 }
 	    	 
 	    	 List<String> listStrCodSetor = usuarioSetorGerenciadoService.
 	    		     concatenaSetoresLider(idUsuarioLogado);
@@ -1505,8 +1509,63 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			return programacaoEntregaRepository.
 					pesquisarProgrEntregaDataMatr(dataProgramacao, matriculaColaborador);
 		}
-		
-		
+
+		@Override
+		public List<ProgramacaoEntrega> recuperarProgrEntregaDataMatr(String dataProgramacao,
+				String matriculaColaborador) {
+			return programacaoEntregaRepository.
+					recuperarProgrEntregaDataMatr(dataProgramacao, matriculaColaborador);
+		}
+
+		@Override
+		public List<ProgramacaoEntrega> copiarProgramacaoEntrega(String dataProgramacao,
+				                                                 String matriculaOrigem,
+				                                                 String matriculaDestino,
+				                                                 String idUsuarioLogado) {
+			
+			 List<ProgramacaoEntrega> listaProgCopia = new ArrayList();
+			 
+			 
+			 Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(matriculaDestino.trim());
+			 
+			 
+			 if (!funcionario.isPresent()) {
+				 throw new GlobalExceptionHandler("Funcionário de matrícula " + matriculaDestino +  " não existe no TOTVS !" ); 
+			 }
+			 
 	
+			 List<ProgramacaoEntrega> listaProgramacaoEntrega = this.recuperarProgrEntregaDataMatr(dataProgramacao, matriculaOrigem);
+			 
+			 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
+				 
+				   ProgramacaoEntrega programacaoEntregaDestino = new  ProgramacaoEntrega();
+				   
+				   programacaoEntregaDestino.setMatriculaColaborador(matriculaDestino);
+				   programacaoEntregaDestino.setAnoMes(programacaoEntregaLinha.getAnoMes());
+				   programacaoEntregaDestino.setCodSetor(funcionario.get().getCodSecao());
+				   programacaoEntregaDestino.setDataEntrega(programacaoEntregaLinha.getDataEntrega());
+				   programacaoEntregaDestino.setDataProgramacao(programacaoEntregaLinha.getDataProgramacao());
+				   programacaoEntregaDestino.setDataSolicitacao(programacaoEntregaLinha.getDataSolicitacao());
+				   programacaoEntregaDestino.setDataUltimaModificacao(LocalDateTime.now());
+				   programacaoEntregaDestino.setDescricaoFeriado(programacaoEntregaLinha.getDescricaoFeriado());
+				   programacaoEntregaDestino.setDiaDaSemana(programacaoEntregaLinha.getDiaDaSemana());
+				   programacaoEntregaDestino.setIdUa(programacaoEntregaLinha.getIdUa());
+				   programacaoEntregaDestino.setIdUsuario(programacaoEntregaLinha.getIdUsuario());
+				   programacaoEntregaDestino.setIdUsuarioUltimaModificacao(Long.parseLong(idUsuarioLogado));
+				   programacaoEntregaDestino.setIdValor(programacaoEntregaLinha.getIdValor());
+				   programacaoEntregaDestino.setUaPrevista(programacaoEntregaLinha.getUaPrevista());
+				   
+				   listaProgCopia.add(programacaoEntregaDestino);
+				  
+				   this.programacaoEntregaRepository.save(programacaoEntregaDestino);
+			 }
+			
+			return listaProgCopia;
+		}
+
+		@Override
+		public long pesquisarProgrEntregaUa(Long idUa) {
+			return this.programacaoEntregaRepository.pesquisarProgrEntregaUa(idUa);
+		}
 	
 }

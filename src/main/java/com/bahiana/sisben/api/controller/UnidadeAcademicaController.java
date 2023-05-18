@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.UnidadeAcademicaDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
+import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
 
 @RestController
@@ -31,6 +33,9 @@ public class UnidadeAcademicaController {
 	
 	@Autowired
 	private UnidadeAcademicaService unidadeAcademicaService;
+	
+	@Autowired
+	private ProgramacaoEntregaService programacaoEntregaService;
 	
 	@Transactional
 	@PostMapping
@@ -63,10 +68,16 @@ public class UnidadeAcademicaController {
 	@DeleteMapping("{id}")
 	public ResponseEntity deletar(@PathVariable("id") Long id) {
 		
-		//entity é o que retorna de ObterPorId
-				return unidadeAcademicaService.obterPorId(id).map(entity -> {					
-					unidadeAcademicaService.deletar(entity);
-					return new ResponseEntity(HttpStatus.NO_CONTENT);
+		Long countUa = programacaoEntregaService.pesquisarProgrEntregaUa(id);
+		
+		if ((countUa > 0)) {
+			throw new GlobalExceptionHandler("Unidade acadêmica já vinculada a uma programação!");
+		} 
+		
+		//entity é o que retorna de ObterPorId 
+		return unidadeAcademicaService.obterPorId(id).map(entity -> {					
+			   unidadeAcademicaService.deletar(entity);
+	    return new ResponseEntity(HttpStatus.NO_CONTENT);
 				}).orElseGet(() -> 
 				    new ResponseEntity("Unidade acadêmica não encontrada na base de dados.", HttpStatus.BAD_REQUEST));
 	}

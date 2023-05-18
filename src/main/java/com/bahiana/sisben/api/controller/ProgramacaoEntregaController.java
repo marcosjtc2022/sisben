@@ -40,9 +40,6 @@ public class ProgramacaoEntregaController {
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
 	
-//	@Autowired
-//	private ProgramacaoEntregaRepository programacaoEntregaRepository;
-	
     @GetMapping(value =  "/teste" )
     @ResponseBody
     public ResponseEntity listar() {
@@ -502,6 +499,26 @@ public class ProgramacaoEntregaController {
 		    	
 		    	return this.programacaoEntregaService.
 		    			listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes, codSetor,idUsuarioLogado );
+		    	
+		    }
+		    
+		    @PostMapping(value =  "/copiarProgramacaoEntrega" )
+			public List<ProgramacaoEntrega> copiarProgramacaoEntrega(
+                     @RequestParam(required = true  ) String dataProgramacao, //dataProgramacao = YYYY-MM-DD
+                     @RequestParam(required = true ) String matriculaOrigem,
+                     @RequestParam(required = true ) String matriculaDestino,
+                     @RequestParam(required = true ) String idUsuarioLogado ) {
+		    	
+		    	Long countProg = programacaoEntregaService.
+			    		pesquisarProgrEntregaDataMatr(dataProgramacao,
+			    				matriculaDestino);
+				
+				if ((countProg > 0)) {
+					throw new GlobalExceptionHandler("Já existe programação para esta data e matrícula = " + matriculaDestino );
+				} 
+		    	
+		    	return this.programacaoEntregaService.copiarProgramacaoEntrega(dataProgramacao
+		    			,matriculaOrigem,matriculaDestino,idUsuarioLogado);
 		    	
 		    }
 	
