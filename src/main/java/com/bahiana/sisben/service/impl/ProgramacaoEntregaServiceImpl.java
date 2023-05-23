@@ -1,5 +1,6 @@
 package com.bahiana.sisben.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -36,7 +37,6 @@ import com.bahiana.sisben.model.entity.VwSisbenFuncionario;
 import com.bahiana.sisben.model.entity.VwSisbenSetor;
 import com.bahiana.sisben.model.entity.repository.ProgramacaoEntregaRepository;
 import com.bahiana.sisben.service.CalendarioService;
-import com.bahiana.sisben.service.ProgramacaoEntregaAprovacaoService;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.service.SuspensaoElegibilidadeService;
 import com.bahiana.sisben.service.UnidadeAcademicaService;
@@ -343,7 +343,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			//Recupera e atribui o valor da marmita.
 			programacaoEntrega.setIdValor(valorMarmita.getId());
 			
-			
+			//Verifica se a solicitação tem menos de 24h
+			String tipoOperacao = this.verificaProgramacaoMenos24h(programacaoEntrega.getDataProgramacao(), "I");
+			programacaoEntrega.setTipoSolicitacao(tipoOperacao);
 			
 			return programacaoEntregaRepository.save(programacaoEntrega);
 		}
@@ -1032,6 +1034,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
+		//@Transactional
 		public void apagarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			String[] tabelaProgramacaoEntrega = programacaoEntregaDto.getTabelaProgramacaoEntrega().split(",");
@@ -1041,16 +1044,18 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				//Recupera data da programação para verificar se tem menos de 24h.
 //				ProgramacaoEntrega programacaoEntrega = 
 //				programacaoEntregaRepository.findById(Long.valueOf(idProgramacao)).get();
-//				
-//				LocalDate dataHoje = LocalDate.now();
-//				boolean igual = programacaoEntrega.getDataProgramacao().equals(dataHoje);
-//				//Verifica se a data da programação é igual a data atual.
-//				if (!igual) {
+				
+				//Verifica se a solicitação tem menos de 24h
+				//String tipoOperacao = null;
+				//String tipoOperacao = this.verificaProgramacaoMenos24h(programacaoEntrega.getDataProgramacao(), "E");
+				
+				//Testa o retorno da função.
+				//if (tipoOperacao == "") {
 					programacaoEntregaRepository.deleteById(Long.valueOf(idProgramacao));
-//				} else  {
-//					//Caso seja com menos de 24h atualiza com o tipo de solicitação igual a "E"
-//					programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("E",programacaoEntrega.getId());
-//				}
+			    //} else  {
+					//Caso seja com menos de 24h atualiza com o tipo de solicitação igual a "E"
+				//	programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("E",programacaoEntrega.getId());
+				//}
 			    
 		   }
 	   }
@@ -1557,5 +1562,47 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public long pesquisarProgrEntregaUa(Long idUa) {
 			return this.programacaoEntregaRepository.pesquisarProgrEntregaUa(idUa);
 		}
+		
+		public String verificaProgramacaoMenos24h(LocalDate dataProgramacao, String tipoOperacao) {
+			
+			UtilSisben utilSisben = new UtilSisben();
+			String tpOperacao = "";
+			String descricaoTpOperacao = "";
+			
+		    switch (tipoOperacao) {
+		            case "I":
+		            	descricaoTpOperacao = "Inclusão";
+		                break;
+		            case "A":
+		            	descricaoTpOperacao = "Alteração";
+		                break;     
+		            case "E":
+		            	descricaoTpOperacao = "Exclusão";
+		                break;     
+		           
+		    }
+
+			
+			//Verifica se a data de programação é igual a data corrente.
+			if (dataProgramacao.equals(LocalDate.now())) {
+				
+				//Verifica se a hora da programação é menor que 13:00h. 
+				if (utilSisben.verificaHoraLimiteSolicitacao()) {
+					tpOperacao = tipoOperacao ;
+				} else {
+					throw new GlobalExceptionHandler("Hora limite esgotada para solicitar " + descricaoTpOperacao
+							+ " para a data " + dataProgramacao );
+				}
+				
+			}
+			
+			//Verifica se a data de programação é igual a data de amanhã.
+			if (dataProgramacao.equals(LocalDate.now().plusDays(1))) {
+				tpOperacao = tipoOperacao ;
+			}	
+			
+			return tpOperacao;
+		} 
+		
 	
 }

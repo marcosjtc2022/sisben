@@ -3,8 +3,11 @@ package com.bahiana.sisben.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -190,7 +193,38 @@ public class UtilSisben {
 	   
 	   
    }
+   
+   public Boolean verificaHoraLimiteSolicitacao() {
+	   
+	   
+	    boolean podeSolicitar24h = true; 
+	   
+	    final DateTimeFormatter CUSTOM_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+		LocalDateTime ldt = LocalDateTime.now();
+		String formattedString = ldt.format(CUSTOM_FORMATTER);  //2022-12-09 18:25:58
+		
+		
+		String horaAtual = formattedString;
+		String horaLimite = "20:00";
 
-	
+		String[] parts = horaAtual.split(":");
+		Calendar cal1 = Calendar.getInstance();
+		cal1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(parts[0]));
+		cal1.set(Calendar.MINUTE, Integer.parseInt(parts[1]));
+		
+		parts = horaLimite.split(":");
+		Calendar cal2 = Calendar.getInstance();
+		cal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(parts[0]));
+		cal2.set(Calendar.MINUTE, Integer.parseInt(parts[1]));
+		cal2.add(Calendar.DATE, 0);
+
+		if (cal1.after(cal2)) {
+			podeSolicitar24h = false;
+		}	   
+	   
+	   return podeSolicitar24h;
+   }
+   
+   
 
 }
