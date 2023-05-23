@@ -479,10 +479,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setMatriculaColaborador(programacaoEntregaDto.getMatriculaColaborador());
 				programacaoInput.setUaPrevista(programacaoEntregaDto.getUaPrevista());
 				programacaoInput.setUaRealizada(null);
-				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
-				//programacaoInput.setIdUa(null);
+				//programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
+				programacaoInput.setIdUa(null);
 			    programacaoInput.setIdData(null);
-				programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
+				//programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
 				programacaoInput.setIdValor(programacaoEntregaDto.getIdValor());
 				programacaoInput.setDataEntrega(null);
 				programacaoInput.setDataSolicitacao(programacaoEntregaDto.getDataAtual());
@@ -509,6 +509,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				programacaoInput.setDescricaoFeriado(null);
 				if (calendario != null) {
 					programacaoInput.setDescricaoFeriado(calendario.getDescricao());
+					incluirData = false;
 				};
 				
 				//Opção por este tipo de chamada para não trazer muitos objetos para a memória.
@@ -532,21 +533,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //					programacaoInput.setStFerias(true);
 //				}
 				
-				//Cálculo entre datas para saber se tem menos de 24h
-				
-				
-				
-				
-//				
-				//utilSisben.diferencaEntreDatas("04-04-2023 08:10:20","05-04-2023 23:59:59");
-				
-				
-				
-				//Fim cálculo.
-				
 				//Só insere se não existirem férias nem suspensão da eligibilidade,
-				//ou quando for escolhido não gerar sábado e domingo.
+				//ou quando for escolhido não gerar sábados,domingos e feriados.
 				if ((contSusElegibilidade == 0)&&(contFerias == 0)&&(incluirData == true)) {
+				//if ((contSusElegibilidade == 0)&&(contFerias == 0)) {	
 					listaProgramacaoEntregaMes.add(programacaoInput);
 					this.programacaoEntregaRepository.save(programacaoInput);
 				}	
