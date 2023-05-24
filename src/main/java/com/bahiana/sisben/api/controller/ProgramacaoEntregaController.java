@@ -521,6 +521,18 @@ public class ProgramacaoEntregaController {
 		    			,matriculaOrigem,matriculaDestino,idUsuarioLogado);
 		    	
 		    }
+		    
+		    @DeleteMapping("/apagarProgramacaoMesNovo")
+			 @Transactional
+			 public ResponseEntity apagarProgramacaoMesNovo(@RequestParam(required = true  ) String idProgramacao) {
+				  try {
+						 programacaoEntregaService.apagarProgramacaoMesNovo(idProgramacao);
+						 return new ResponseEntity(HttpStatus.NO_CONTENT);
+				     } catch (RegraNegocioException e) {
+					    return ResponseEntity.badRequest().body(e.getMessage());
+				     }
+				  
+			 }
 	
   
 

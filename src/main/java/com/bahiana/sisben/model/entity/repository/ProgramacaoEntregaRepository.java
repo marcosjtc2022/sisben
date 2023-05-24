@@ -199,6 +199,16 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	+ " WHERE   pe.idUa = :idUa ")
     long pesquisarProgrEntregaUa(@Param("idUa") Long idUa);
 	
+	@Transactional
+	@Modifying
+	@Query("delete from ProgramacaoEntrega"
+			+ " where id = :id")
+	void apagarProgEntrega(@Param("id") Long id);
+	
+	@Query("SELECT pe.dataProgramacao FROM ProgramacaoEntrega pe   "
+			+ " WHERE   pe.id = :id ")
+		    LocalDate pesquisarDataProgramacao(@Param("id") Long id);
+	
 	
 	
 

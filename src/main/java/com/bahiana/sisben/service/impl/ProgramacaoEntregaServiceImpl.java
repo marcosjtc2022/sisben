@@ -1038,24 +1038,43 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public void apagarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			String[] tabelaProgramacaoEntrega = programacaoEntregaDto.getTabelaProgramacaoEntrega().split(",");
+			LocalDate dataProgramacao = null;
 			
 			for (String idProgramacao : tabelaProgramacaoEntrega){
 				
 				//Recupera data da programação para verificar se tem menos de 24h.
+				dataProgramacao = 
+				programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
+				
+				
+				
+				//Recupera data da programação para verificar se tem menos de 24h.
 //				ProgramacaoEntrega programacaoEntrega = 
 //				programacaoEntregaRepository.findById(Long.valueOf(idProgramacao)).get();
+//				
+				//Verifica se a programação já está em análise para inclusão ou alteração.
+//				if ((programacaoEntrega.getTipoSolicitacao() != null)&&
+//					(programacaoEntrega.getTipoSolicitacao() != "")&&
+//					(programacaoEntrega.getTipoSolicitacao() != "E")) {
+//					
+//					throw new GlobalExceptionHandler("A Programação com data "
+//							+ programacaoEntrega.getDataProgramacao() +  " já está em análise para aprovação ! ");
+//					
+//				}
+				
+				programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
 				
 				//Verifica se a solicitação tem menos de 24h
 				//String tipoOperacao = null;
-				//String tipoOperacao = this.verificaProgramacaoMenos24h(programacaoEntrega.getDataProgramacao(), "E");
-				
+				String tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "E");
+			
 				//Testa o retorno da função.
-				//if (tipoOperacao == "") {
-					programacaoEntregaRepository.deleteById(Long.valueOf(idProgramacao));
-			    //} else  {
+				if (tipoOperacao == "") {
+					programacaoEntregaRepository.apagarProgEntrega(Long.valueOf(idProgramacao));
+			    } else  {
 					//Caso seja com menos de 24h atualiza com o tipo de solicitação igual a "E"
-				//	programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("E",programacaoEntrega.getId());
-				//}
+					programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("E",Long.valueOf(idProgramacao));
+				}
 			    
 		   }
 	   }
@@ -1602,6 +1621,30 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			}	
 			
 			return tpOperacao;
+		}
+
+		@Override
+		public void apagarProgramacaoMesNovo(String idProgramacao) {
+			
+             String[] tabelaProgramacaoEntrega = idProgramacao.split(",");
+			
+			for (String linha : tabelaProgramacaoEntrega){
+				
+				//Recupera data da programação para verificar se tem menos de 24h.
+//				ProgramacaoEntrega programacaoEntrega = 
+//				programacaoEntregaRepository.findById(Long.valueOf(idProgramacao)).get();
+				
+				//Verifica se a solicitação tem menos de 24h
+				//String tipoOperacao = null;
+				//String tipoOperacao = this.verificaProgramacaoMenos24h(programacaoEntrega.getDataProgramacao(), "E");
+				
+				//Testa o retorno da função.
+				//if (tipoOperacao == "") {
+					programacaoEntregaRepository.apagarProgEntrega(Long.valueOf(linha));
+					
+			}		
+		 
+			
 		} 
 		
 	

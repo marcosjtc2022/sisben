@@ -93,6 +93,8 @@ public interface ProgramacaoEntregaService {
             String idUsuarioLogado);
 	
 	 long pesquisarProgrEntregaUa(Long idUa);
+	 
+	 void apagarProgramacaoMesNovo(String idProgramacao);
 	
 
 }
