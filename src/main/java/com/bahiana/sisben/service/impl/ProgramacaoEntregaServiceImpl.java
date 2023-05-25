@@ -153,12 +153,35 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		 programacaoEntregaDto.setDataUltimaModificacao(dataModificacao);
 		 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
 		 //return programacaoEntregaRepository.save(programacaoEntrega);
-		  programacaoEntregaRepository.atulizaProgramacaoEntrega(programacaoEntrega.getDataEntrega(),
-				 programacaoEntrega.getUaRealizada(),
-				 programacaoEntrega.getIdUsuario(),
-				 programacaoEntrega.getIdUsuarioUltimaModificacao(),
-				 programacaoEntrega.getIdUa(),
-				 programacaoEntrega.getId());
+		 
+		//Recupera data da programação para verificar se tem menos de 24h.
+			LocalDate dataProgramacao = 
+			programacaoEntregaRepository.pesquisarDataProgramacao(programacaoEntrega.getId());
+			
+//			ProgramacaoEntrega programacaoEntregaData = 
+//					programacaoEntregaRepository.findById(programacaoEntregaDto.getId()).get();
+//			
+//			//Verifica se a programação já está em análise para inclusão ou exclusão.
+//			if ((programacaoEntrega.getTipoSolicitacao() != null)&&
+//				(programacaoEntrega.getTipoSolicitacao() != "")&&
+//				(programacaoEntrega.getTipoSolicitacao() != "I")) {
+//				
+//				throw new GlobalExceptionHandler("A Programação com data "
+//						+ programacaoEntrega.getDataProgramacao() +  " já está em análise para aprovação ! ");
+//				
+//			}
+		    
+		  //Verifica se a solicitação tem menos de 24h
+			String tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "A");
+			programacaoEntrega.setTipoSolicitacao(tipoOperacao);
+			
+			programacaoEntregaRepository.atulizaProgramacaoEntrega(programacaoEntrega.getDataEntrega(),
+						 programacaoEntrega.getUaRealizada(),
+						 programacaoEntrega.getIdUsuario(),
+						 programacaoEntrega.getIdUsuarioUltimaModificacao(),
+						 programacaoEntrega.getIdUa(),
+						 programacaoEntrega.getId(),
+						 tipoOperacao); 
 		
 	}
 
@@ -1062,7 +1085,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //					
 //				}
 				
-				programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
+				//programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
 				
 				//Verifica se a solicitação tem menos de 24h
 				//String tipoOperacao = null;
