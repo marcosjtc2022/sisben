@@ -148,81 +148,34 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	@Override
 	@Transactional
 	public void alterar(ProgramacaoEntregaDto programacaoEntregaDto) {
-		
-		 //ProgramacaoEntrega programacaoEntrega = toProgramacaoEntrega(programacaoEntregaDto);
-		 LocalDateTime dataModificacao = LocalDateTime.now();
-		 programacaoEntregaDto.setDataUltimaModificacao(dataModificacao);
-		 ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
-		 //return programacaoEntregaRepository.save(programacaoEntrega);
+			
 		 
 		//Recupera data da programação para verificar se tem menos de 24h.
-			LocalDate dataProgramacao = 
-			programacaoEntregaRepository.pesquisarDataProgramacao(programacaoEntrega.getId());
-			
-//			ProgramacaoEntrega programacaoEntregaDoBanco = 
-//					programacaoEntregaRepository.findById(programacaoEntregaDto.getId()).get();
-//			
-//			//Verifica se a programação já está em análise para inclusão ou exclusão.
-//			if ((programacaoEntrega.getTipoSolicitacao() != null)&&
-//				(programacaoEntrega.getTipoSolicitacao() != "")&&
-//				(programacaoEntrega.getTipoSolicitacao() != "I")) {
-//				
-//				throw new GlobalExceptionHandler("A Programação com data "
-//						+ programacaoEntrega.getDataProgramacao() +  " já está em análise para aprovação ! ");
-//				
-//			}
-			String tipoOperacao = "";
-            //Verifica se o local da entrega está preenchido.		  
-			//if ((programacaoEntregaDoBanco.getUaRealizada() != "")&&((programacaoEntregaDoBanco.getUaRealizada() != null))) {
-				//Verifica se a solicitação tem menos de 24h
-				tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "A");
-				programacaoEntrega.setTipoSolicitacao(tipoOperacao);
-			//}	
-			
-			Long idUaAlterar = null;
-			Long idUa = null;
-			String uaRealizada = null;
-			
-			idUa = programacaoEntrega.getIdUa();
-			uaRealizada = programacaoEntrega.getUaRealizada();
+		LocalDate dataProgramacao = 
+		programacaoEntregaRepository.pesquisarDataProgramacao(programacaoEntregaDto.getId());
+           
+		//Verifica se a solicitação tem menos de 24h
+		String tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "A");
 			
 			 
-			//Testa o retorno da função.
-//			if (tipoOperacao == "A") {
-//				idUa = programacaoEntregaDoBanco.getIdUa();
-//				uaRealizada = programacaoEntregaDoBanco.getUaRealizada();
-//				idUaAlterar = idUa;
-//			}
-//			
-	   // if (tipoOperacao == "") {	
-			programacaoEntregaRepository.atulizaProgramacaoEntrega(programacaoEntrega.getDataEntrega(),
-					 uaRealizada,
-					 programacaoEntrega.getIdUsuario(),
-					 programacaoEntrega.getIdUsuarioUltimaModificacao(),
-					 idUa,
-					 programacaoEntrega.getId(),
-					 tipoOperacao);
-//	    } else {
-//	    	programacaoEntregaRepository.atulizaProgEntParaAprovar(
-//	    			programacaoEntrega.getDataEntrega(),
-//					 programacaoEntrega.getIdUsuario(),
-//					 programacaoEntrega.getIdUsuarioUltimaModificacao(),
-//					 programacaoEntrega.getId(),
-//					 tipoOperacao,
-//					 idUaAlterar);
-//	    	
-//	    }
-			
-			
-			
-//			programacaoEntregaRepository.atulizaProgramacaoEntrega(programacaoEntrega.getDataEntrega(),
-//						 programacaoEntrega.getUaRealizada(),
-//						 programacaoEntrega.getIdUsuario(),
-//						 programacaoEntrega.getIdUsuarioUltimaModificacao(),
-//						 programacaoEntrega.getIdUa(),
-//						 programacaoEntrega.getId(),
-//						 tipoOperacao,
-//						 idUaAlterar); 
+	
+	    if (tipoOperacao == "") {	
+			programacaoEntregaRepository.atulizaProgramacaoEntrega(
+					programacaoEntregaDto.getUaRealizada(),
+					programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+					LocalDateTime.now(),
+					programacaoEntregaDto.getIdUa(),
+					programacaoEntregaDto.getId(),
+					 null);
+	    } else {
+	    	programacaoEntregaRepository.atulizaProgEntParaAprovar(
+	    			programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+	    			LocalDateTime.now(), 
+	    			programacaoEntregaDto.getId(),					
+	    			programacaoEntregaDto.getIdUa(),
+					 "A");
+	    	
+	    }
 		
 	}
 
@@ -411,6 +364,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			String tipoOperacao = this.verificaProgramacaoMenos24h(programacaoEntrega.getDataProgramacao(), "I");
 			programacaoEntrega.setTipoSolicitacao(tipoOperacao);
 			
+			//Ua realizada é igual a prevista neste momento.
+			programacaoEntrega.setUaRealizada(programacaoEntrega.getUaPrevista());
+			
 			return programacaoEntregaRepository.save(programacaoEntrega);
 		}
 		
@@ -544,9 +500,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				programacaoInput.setMatriculaColaborador(programacaoEntregaDto.getMatriculaColaborador());
 				programacaoInput.setUaPrevista(programacaoEntregaDto.getUaPrevista());
-				programacaoInput.setUaRealizada(null);
-				//programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
-				programacaoInput.setIdUa(null);
+				programacaoInput.setUaRealizada(programacaoEntregaDto.getUaPrevista());
+				programacaoInput.setIdUa(programacaoEntregaDto.getIdUa());
+				//programacaoInput.setIdUa(null);
 			    programacaoInput.setIdData(null);
 				//programacaoInput.setIdUsuario(programacaoEntregaDto.getIdUsuario());
 				programacaoInput.setIdValor(programacaoEntregaDto.getIdValor());
@@ -1102,44 +1058,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public void apagarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			String[] tabelaProgramacaoEntrega = programacaoEntregaDto.getTabelaProgramacaoEntrega().split(",");
-			LocalDate dataProgramacao = null;
 			
 			for (String idProgramacao : tabelaProgramacaoEntrega){
-				
-				//Recupera data da programação para verificar se tem menos de 24h.
-				dataProgramacao = 
-				programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
-				
-				
-				
-				//Recupera data da programação para verificar se tem menos de 24h.
-//				ProgramacaoEntrega programacaoEntrega = 
-//				programacaoEntregaRepository.findById(Long.valueOf(idProgramacao)).get();
-//				
-				//Verifica se a programação já está em análise para inclusão ou alteração.
-//				if ((programacaoEntrega.getTipoSolicitacao() != null)&&
-//					(programacaoEntrega.getTipoSolicitacao() != "")&&
-//					(programacaoEntrega.getTipoSolicitacao() != "E")) {
-//					
-//					throw new GlobalExceptionHandler("A Programação com data "
-//							+ programacaoEntrega.getDataProgramacao() +  " já está em análise para aprovação ! ");
-//					
-//				}
-				
-				//programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
-				
-				//Verifica se a solicitação tem menos de 24h
-				//String tipoOperacao = null;
-				String tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "E");
-			
-				//Testa o retorno da função.
-				if (tipoOperacao == "") {
 					programacaoEntregaRepository.apagarProgEntrega(Long.valueOf(idProgramacao));
-			    } else  {
-					//Caso seja com menos de 24h atualiza com o tipo de solicitação igual a "E"
-					programacaoEntregaRepository.atulizarProgEntregaTipoSolicitacao("E",Long.valueOf(idProgramacao));
-				}
-			    
 		   }
 	   }
 

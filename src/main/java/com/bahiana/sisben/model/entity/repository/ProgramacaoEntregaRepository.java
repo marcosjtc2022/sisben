@@ -1,6 +1,7 @@
 package com.bahiana.sisben.model.entity.repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -92,17 +93,17 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 	@Transactional
 	@Modifying
-	@Query("update ProgramacaoEntrega set dataEntrega = :dataEntrega,"
+	@Query("update ProgramacaoEntrega set "
 			+ " uaRealizada = :uaRealizada, "
-			+ " idUsuario = :idUsuario,"
 			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
+			+ " dataUltimaModificacao = :dataUltimaModificacao,"
 			+ " idUa = :idUa, "
 			+ " tipoSolicitacao = :tipoSolicitacao "
 			+ " where id = :id")
-	void atulizaProgramacaoEntrega(@Param("dataEntrega") LocalDate dataEntrega,
+	void atulizaProgramacaoEntrega(
 			@Param("uaRealizada") String uaRealizada,
-			@Param("idUsuario") Long idUsuario,
 			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("dataUltimaModificacao") LocalDateTime dataUltimaModificacao,
 			@Param("idUa") Long idUa,
 			@Param("id") Long id,
 			@Param("tipoSolicitacao") String tipoSolicitacao);
@@ -217,18 +218,18 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 	@Transactional
 	@Modifying
-	@Query("update ProgramacaoEntrega set dataEntrega = :dataEntrega,"
-			+ " idUsuario = :idUsuario,"
+	@Query("update ProgramacaoEntrega set "
 			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
+			+ " dataUltimaModificacao = :dataUltimaModificacao,"
 			+ " idUaAlterar = :idUaAlterar, "
 			+ " tipoSolicitacao = :tipoSolicitacao "
 			+ " where id = :id")
-	void atulizaProgEntParaAprovar(@Param("dataEntrega") LocalDate dataEntrega,
-			@Param("idUsuario") Long idUsuario,
+	void atulizaProgEntParaAprovar(
 			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("dataUltimaModificacao") LocalDateTime dataUltimaModificacao,
 			@Param("id") Long id,
-			@Param("tipoSolicitacao") String tipoSolicitacao,
-			@Param("idUaAlterar") Long idUaAlterar);
+			@Param("idUaAlterar") Long idUaAlterar,
+			@Param("tipoSolicitacao") String tipoSolicitacao);
 	
 	
 	
