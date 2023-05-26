@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -158,7 +159,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			LocalDate dataProgramacao = 
 			programacaoEntregaRepository.pesquisarDataProgramacao(programacaoEntrega.getId());
 			
-//			ProgramacaoEntrega programacaoEntregaData = 
+//			ProgramacaoEntrega programacaoEntregaDoBanco = 
 //					programacaoEntregaRepository.findById(programacaoEntregaDto.getId()).get();
 //			
 //			//Verifica se a programação já está em análise para inclusão ou exclusão.
@@ -170,18 +171,58 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //						+ programacaoEntrega.getDataProgramacao() +  " já está em análise para aprovação ! ");
 //				
 //			}
-		    
-		  //Verifica se a solicitação tem menos de 24h
-			String tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "A");
-			programacaoEntrega.setTipoSolicitacao(tipoOperacao);
+			String tipoOperacao = "";
+            //Verifica se o local da entrega está preenchido.		  
+			//if ((programacaoEntregaDoBanco.getUaRealizada() != "")&&((programacaoEntregaDoBanco.getUaRealizada() != null))) {
+				//Verifica se a solicitação tem menos de 24h
+				tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "A");
+				programacaoEntrega.setTipoSolicitacao(tipoOperacao);
+			//}	
 			
+			Long idUaAlterar = null;
+			Long idUa = null;
+			String uaRealizada = null;
+			
+			idUa = programacaoEntrega.getIdUa();
+			uaRealizada = programacaoEntrega.getUaRealizada();
+			
+			 
+			//Testa o retorno da função.
+//			if (tipoOperacao == "A") {
+//				idUa = programacaoEntregaDoBanco.getIdUa();
+//				uaRealizada = programacaoEntregaDoBanco.getUaRealizada();
+//				idUaAlterar = idUa;
+//			}
+//			
+	   // if (tipoOperacao == "") {	
 			programacaoEntregaRepository.atulizaProgramacaoEntrega(programacaoEntrega.getDataEntrega(),
-						 programacaoEntrega.getUaRealizada(),
-						 programacaoEntrega.getIdUsuario(),
-						 programacaoEntrega.getIdUsuarioUltimaModificacao(),
-						 programacaoEntrega.getIdUa(),
-						 programacaoEntrega.getId(),
-						 tipoOperacao); 
+					 uaRealizada,
+					 programacaoEntrega.getIdUsuario(),
+					 programacaoEntrega.getIdUsuarioUltimaModificacao(),
+					 idUa,
+					 programacaoEntrega.getId(),
+					 tipoOperacao);
+//	    } else {
+//	    	programacaoEntregaRepository.atulizaProgEntParaAprovar(
+//	    			programacaoEntrega.getDataEntrega(),
+//					 programacaoEntrega.getIdUsuario(),
+//					 programacaoEntrega.getIdUsuarioUltimaModificacao(),
+//					 programacaoEntrega.getId(),
+//					 tipoOperacao,
+//					 idUaAlterar);
+//	    	
+//	    }
+			
+			
+			
+//			programacaoEntregaRepository.atulizaProgramacaoEntrega(programacaoEntrega.getDataEntrega(),
+//						 programacaoEntrega.getUaRealizada(),
+//						 programacaoEntrega.getIdUsuario(),
+//						 programacaoEntrega.getIdUsuarioUltimaModificacao(),
+//						 programacaoEntrega.getIdUa(),
+//						 programacaoEntrega.getId(),
+//						 tipoOperacao,
+//						 idUaAlterar); 
 		
 	}
 
@@ -1668,6 +1709,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			}		
 		 
 			
+		}
+
+		@Override
+		public List<ProgramacaoEntrega> listarParaAprovacao() {
+			return null;
 		} 
 		
 	

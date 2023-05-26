@@ -212,6 +212,25 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 		    LocalDate pesquisarDataProgramacao(@Param("id") Long id);
 	
 	
+	@Query("SELECT pe FROM ProgramacaoEntrega pe")
+	List<ProgramacaoEntrega>  listarParaAprovacao();
+	
+	@Transactional
+	@Modifying
+	@Query("update ProgramacaoEntrega set dataEntrega = :dataEntrega,"
+			+ " idUsuario = :idUsuario,"
+			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
+			+ " idUaAlterar = :idUaAlterar, "
+			+ " tipoSolicitacao = :tipoSolicitacao "
+			+ " where id = :id")
+	void atulizaProgEntParaAprovar(@Param("dataEntrega") LocalDate dataEntrega,
+			@Param("idUsuario") Long idUsuario,
+			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("id") Long id,
+			@Param("tipoSolicitacao") String tipoSolicitacao,
+			@Param("idUaAlterar") Long idUaAlterar);
+	
+	
 	
 
 }
