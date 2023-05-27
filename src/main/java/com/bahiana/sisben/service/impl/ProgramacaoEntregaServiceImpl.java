@@ -1631,6 +1631,21 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			 return this.programacaoEntregaRepository.listarProgEntAprovar24h(matriculaColaborador, anoMes, codSetor, idUa);
 		}
+
+		@Override
+		public void atualizarStatusAnalise24h(ProgramacaoEntregaDto programacaoEntregaDto) {
+			
+             //Verifica se a justificativa foi preenchida em caso de reprovação.
+			 if ((!programacaoEntregaDto.getStAprov())&((programacaoEntregaDto.getJustReprovacao() == null) || (programacaoEntregaDto.getJustReprovacao().isEmpty()))) {
+				 throw new GlobalExceptionHandler(" Para reprovação informe o motivo !");
+			 }
+			
+			  this.programacaoEntregaRepository.atualizarStatusAnalise24h
+			 (programacaoEntregaDto.getStAprov(), programacaoEntregaDto.getJustReprovacao(),
+			  programacaoEntregaDto.getId(),programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+			  LocalDateTime.now());
+			
+		}
 		
 	
 }

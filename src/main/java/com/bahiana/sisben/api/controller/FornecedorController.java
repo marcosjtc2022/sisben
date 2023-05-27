@@ -163,5 +163,14 @@ public class FornecedorController {
 		    	
 	  }
 		
+	  @Transactional
+	  @PutMapping("/atualizarStatusAnalise24h/{id}")
+	  public void atualizarStatusAnalise24h(@PathVariable("id") Long id, @RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
+					
+					programacaoEntregaDto.setId(id);			
+					programacaoEntregaService.atualizarStatusAnalise24h(programacaoEntregaDto);
+				
+	 }	
+		
 
 }

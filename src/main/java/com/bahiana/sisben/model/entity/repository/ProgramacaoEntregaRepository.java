@@ -244,7 +244,19 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("codSetor") String codSetor,
 			@Param("idUa") Long idUa);
 	
-	
+	@Transactional
+	@Modifying
+	@Query("update ProgramacaoEntrega set stAprov = :stAprov, "
+			+ " justReprovacao = :justReprovacao, "
+			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
+			+ " dataUltimaModificacao = :dataUltimaModificacao "
+			+ " where id = :id")
+	void atualizarStatusAnalise24h(
+			@Param("stAprov") Boolean stAprov,
+			@Param("justReprovacao") String justReprovacao,
+			@Param("id") Long id,
+			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("dataUltimaModificacao") LocalDateTime dataUltimaModificacao);
 	
 
 }
