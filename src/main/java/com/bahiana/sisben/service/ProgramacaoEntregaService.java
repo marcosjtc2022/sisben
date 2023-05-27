@@ -94,7 +94,7 @@ public interface ProgramacaoEntregaService {
 	
 	 long pesquisarProgrEntregaUa(Long idUa);
 	 
-	 List<ProgramacaoEntrega> listarProgEntAprovar24h(String matriculaColaborador, String anoMes,
+	 List<ProgramacaoEntrega> listarProgEntAnalise24h(String matriculaColaborador, String anoMes,
              String codSetor, Long idUa);
 	 
 	 void atualizarStatusAnalise24h(ProgramacaoEntregaDto programacaoEntregaDto);

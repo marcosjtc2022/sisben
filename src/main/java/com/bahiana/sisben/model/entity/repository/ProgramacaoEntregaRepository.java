@@ -238,7 +238,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ "       (:idUa is null or pe.idUa = :idUa) and"
 			+ "     pe.tipoSolicitacao IN ('I','A','E') "
 			+ " order by pe.anoMes,pe.matriculaColaborador ")
-	List<ProgramacaoEntrega> listarProgEntAprovar24h(
+	List<ProgramacaoEntrega> listarProgEntAnalise24h(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
 			@Param("codSetor") String codSetor,
@@ -257,6 +257,27 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("id") Long id,
 			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
 			@Param("dataUltimaModificacao") LocalDateTime dataUltimaModificacao);
+	
+	@Transactional
+	@Modifying
+	@Query("update ProgramacaoEntrega set stAprov = :stAprov, "
+			+ " uaRealizada = :uaRealizada, "
+			+ " idUa = :idUa, "
+			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
+			+ " dataUltimaModificacao = :dataUltimaModificacao "
+			+ " where id = :id")
+	void atualizarStatusAnalise24hAlterarAprov(
+			@Param("stAprov") Boolean stAprov,
+			@Param("uaRealizada") String uaRealizada,
+			@Param("id") Long id,
+			@Param("idUa") Long idUa,
+			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("dataUltimaModificacao") LocalDateTime dataUltimaModificacao);
+	
+	
+	@Query("SELECT pe FROM ProgramacaoEntrega pe   "
+			+ " WHERE   pe.id = :id ")
+	ProgramacaoEntrega obterProgrEntregaPorId(@Param("id") Long id);
 	
 
 }

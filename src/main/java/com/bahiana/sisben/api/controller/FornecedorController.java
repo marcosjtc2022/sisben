@@ -145,7 +145,7 @@ public class FornecedorController {
 		}
 		
 		
-		@GetMapping(value =  "/listarProgEntAprovar24h" )
+		@GetMapping(value =  "/listarProgEntAnalise24h" )
 		@ResponseBody
 		public List<ProgramacaoEntrega> listarProgEntAprovar24h(
                   @RequestParam(required = false  ) String matriculaColaborador,
@@ -159,7 +159,7 @@ public class FornecedorController {
 				}
 				
 		    	return this.programacaoEntregaService.
-		    			listarProgEntAprovar24h(matriculaColaborador,anoMes,codSetor,idUaParam);
+		    			listarProgEntAnalise24h(matriculaColaborador,anoMes,codSetor,idUaParam);
 		    	
 	  }
 		

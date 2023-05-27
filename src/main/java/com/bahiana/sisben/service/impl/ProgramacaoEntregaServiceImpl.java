@@ -366,6 +366,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			//Ua realizada é igual a prevista neste momento.
 			programacaoEntrega.setUaRealizada(programacaoEntrega.getUaPrevista());
+			programacaoEntrega.setIdJustificativa(programacaoEntrega.getIdJustificativa());
+			
+			
 			
 			return programacaoEntregaRepository.save(programacaoEntrega);
 		}
@@ -1609,7 +1612,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
-		public List<ProgramacaoEntrega> listarProgEntAprovar24h(String matriculaColaborador, String anoMes,
+		public List<ProgramacaoEntrega> listarProgEntAnalise24h(String matriculaColaborador, String anoMes,
 				String codSetor,Long idUa) {
 			
 			 if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
@@ -1629,7 +1632,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			 }
 			
 			
-			 return this.programacaoEntregaRepository.listarProgEntAprovar24h(matriculaColaborador, anoMes, codSetor, idUa);
+			 return this.programacaoEntregaRepository.listarProgEntAnalise24h(matriculaColaborador, anoMes, codSetor, idUa);
 		}
 
 		@Override
@@ -1640,10 +1643,48 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				 throw new GlobalExceptionHandler(" Para reprovação informe o motivo !");
 			 }
 			
-			  this.programacaoEntregaRepository.atualizarStatusAnalise24h
-			 (programacaoEntregaDto.getStAprov(), programacaoEntregaDto.getJustReprovacao(),
-			  programacaoEntregaDto.getId(),programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
-			  LocalDateTime.now());
+			 if (!programacaoEntregaDto.getStAprov()){
+			
+				  this.programacaoEntregaRepository.atualizarStatusAnalise24h
+				 (programacaoEntregaDto.getStAprov(), programacaoEntregaDto.getJustReprovacao(),
+				  programacaoEntregaDto.getId(),programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+				  LocalDateTime.now());
+			  
+			 } else {
+				 
+				 ProgramacaoEntrega programacaoEntrega = programacaoEntregaRepository.obterProgrEntregaPorId(programacaoEntregaDto.getId());
+				 
+				 
+				 //Se o tipo de solicitação for alteração.
+				 if (programacaoEntrega.getTipoSolicitacao().charAt(0) == 'A' ) {
+				 
+					 String uaRealizada = "";
+					 Long idUa = programacaoEntrega.getIdUaAlterar();
+					 
+					 //Pesquisa unidade acadêmcia, a partir do id.
+					 UnidadeAcademica unidadeAcademica = unidadeAcademicaService.obterPorId(idUa).get();
+					 
+					 uaRealizada = unidadeAcademica.getDescricao();
+					 this.programacaoEntregaRepository.atualizarStatusAnalise24hAlterarAprov(programacaoEntregaDto.getStAprov(),
+								uaRealizada,
+								programacaoEntregaDto.getId(),
+								idUa,
+								programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+								LocalDateTime.now());
+				 
+				 } else {
+					 if (programacaoEntrega.getTipoSolicitacao().charAt(0) == 'I' ) {
+						 this.programacaoEntregaRepository.atualizarStatusAnalise24h
+						 (programacaoEntregaDto.getStAprov(),null,
+						  programacaoEntregaDto.getId(),programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+						  LocalDateTime.now());
+					 }
+					 
+					 
+				 }
+					
+				 
+			 }
 			
 		}
 		
