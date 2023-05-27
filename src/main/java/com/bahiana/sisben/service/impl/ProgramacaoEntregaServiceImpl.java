@@ -173,6 +173,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    			LocalDateTime.now(), 
 	    			programacaoEntregaDto.getId(),					
 	    			programacaoEntregaDto.getIdUa(),
+	    			programacaoEntregaDto.getIdJustificativa(),
 					 "A");
 	    	
 	    }
@@ -1413,7 +1414,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 		@Override
 		public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(String matriculaColaborador,
-				String anoMes,String codSetor, String idUsuarioLogado) {
+				String anoMes,String codSetor, String idUsuarioLogado, Long idUa) {
 			
 			 if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
 	    		 matriculaColaborador = null;
@@ -1426,20 +1427,17 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    	 if ((codSetor == "")||((codSetor == null))) {
 	    		 codSetor = null;
 			 }
-//	    	 
-//	    	 if ((uaRealizada == "")||((uaRealizada == null))) {
-//	    		 uaRealizada = null;
-//			 }
+	    	 
+	    	 if ((idUa == null)) {
+	    		 idUa = null;
+			 }
 	    	 
 	    	 List<String> listStrCodSetor = usuarioSetorGerenciadoService.
 	    		     concatenaSetoresLider(idUsuarioLogado);
 	    	  
 		    	 List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
-							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,listStrCodSetor);
+							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,idUa,listStrCodSetor );
 		    	 
-//		    	 List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
-//							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor);
-//		    	 
 		    	 List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList();
 		    	 
 		    	 
@@ -1454,10 +1452,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor());
 	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
 	    		 
-//	    		 VwSisbenFuncionario   funcionario = vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador()).get();
-//	    		 progEntVigenteResponse.setNomeColaborador(funcionario.getNomeFuncionario());
-//	    		 
-	    		 
                  Optional<VwSisbenFuncionario>   funcionario =  vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador());
 	    		 
 	    		 if (funcionario.isPresent() ) {
@@ -1466,20 +1460,21 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
 	    		 }
 	    		 
+	    		 UnidadeAcademica unidadeAcademica = unidadeAcademicaService.obterPorId(progEntrega.getIdUa()).get();
+	    		 
 	    		 
 	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
 	    		 progEntVigenteResponse.setCodSetor(progEntrega.getCodSetor());
 	    		 progEntVigenteResponse.setStatus("Programado");
+	    		 progEntVigenteResponse.setLocalEntrega(unidadeAcademica.getDescricao());
+	    		 progEntVigenteResponse.setId(progEntrega.getId());
 				   
 	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
 				    
 			}
 	    	
 	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramadoLiderSetor(matriculaColaborador,anoMes, codSetor, listStrCodSetor );
-	    	
-//	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramadoLiderSetor(matriculaColaborador,anoMes, codSetor );
-	    	
 	    	
 	    	for (ProgEntVigenteNpDto progEntregaNp : listarProgEntVigenteDtoNaoProg) {
 				
@@ -1492,6 +1487,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 progEntVigenteResponse.setNomeColaborador(progEntregaNp.getNomeColaborador());
 	    		 progEntVigenteResponse.setAnoMes(anoMes);
 	    		 progEntVigenteResponse.setStatus("Não Programado");
+	    		 
 				   
 	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
 				    

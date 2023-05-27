@@ -3,6 +3,8 @@ package com.bahiana.sisben.api.response;
 public class ProgEntVigenteResponse {
 	
 private String matriculaColaborador;
+
+    private Long id;
 	
 	private String anoMes;
 	
@@ -14,8 +16,24 @@ private String matriculaColaborador;
 	
 	private String status;
 	
+	private String localEntrega;
 	
-	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getLocalEntrega() {
+		return localEntrega;
+	}
+
+	public void setLocalEntrega(String localEntrega) {
+		this.localEntrega = localEntrega;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -65,12 +83,13 @@ private String matriculaColaborador;
 	}
 	
 	public ProgEntVigenteResponse(String matriculaColaborador, String anoMes, String codSetor, String descrSetor,
-			String nomeColaborador) {
+			String nomeColaborador, String localEntrega) {
 		this.matriculaColaborador = matriculaColaborador;
 		this.anoMes = anoMes;
 		this.codSetor = codSetor;
 		this.descrSetor = descrSetor;
 		this.nomeColaborador = nomeColaborador;
+		this.localEntrega = localEntrega;
 	}
 
 	public ProgEntVigenteResponse() {

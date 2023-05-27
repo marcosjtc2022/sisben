@@ -117,8 +117,8 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 		 	+ " Order by pe.matriculaColaborador, pe.dataProgramacao")
 		List<ProgramacaoEntrega> pesquisarRegistroEntregaPorUsuario(@Param("id") Long id);
 	
-	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
-			+ " pe.codSetor) "
+	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.id,pe.matriculaColaborador, pe.anoMes,"
+			+ " pe.codSetor, pe.idUa) "
 			+ " FROM ProgramacaoEntrega pe "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
@@ -147,20 +147,20 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 		 	 + " Order by pe.anoMes")
 	List<String> listarAnoMes();
 	
-	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
-			+ " pe.codSetor) "
+	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.id,pe.matriculaColaborador, pe.anoMes,"
+			+ " pe.codSetor,pe.idUa) "
 			+ " FROM ProgramacaoEntrega pe "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
 			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
-			//+ "       (:uaRealizada is null or pe.uaRealizada LIKE %:uaRealizada% ) and"
+			+ "       (:idUa is null or pe.idUa = :idUa) and"
 			+ "       pe.codSetor IN :strCodSetor "
 			+ " order by pe.anoMes,pe.matriculaColaborador   ")
 	List<ProgEntVigenteDto> listarProgramacaoEntregaVigenteLiderSetor(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
 			@Param("codSetor") String codSetor,
-		//	@Param("uaRealizada") String uaRealizada,
+			@Param("idUa") Long idUa,
 			@Param("strCodSetor") List<String> strCodSetor);
 	
 	
@@ -222,6 +222,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
 			+ " dataUltimaModificacao = :dataUltimaModificacao,"
 			+ " idUaAlterar = :idUaAlterar, "
+			+ " idJustificativa = :idJustificativa, "
 			+ " tipoSolicitacao = :tipoSolicitacao "
 			+ " where id = :id")
 	void atulizaProgEntParaAprovar(
@@ -229,6 +230,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("dataUltimaModificacao") LocalDateTime dataUltimaModificacao,
 			@Param("id") Long id,
 			@Param("idUaAlterar") Long idUaAlterar,
+			@Param("idJustificativa") Long idJustificativa,
 			@Param("tipoSolicitacao") String tipoSolicitacao);
 	
 	@Query("SELECT pe FROM ProgramacaoEntrega pe "

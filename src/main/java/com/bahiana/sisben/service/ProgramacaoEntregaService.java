@@ -81,7 +81,7 @@ public interface ProgramacaoEntregaService {
 	List<String> listarAnoMes();
 	
 	List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(String matriculaColaborador, String anoMes,
-           String codSetor, String idUsuarioLogado );
+           String codSetor, String idUsuarioLogado, Long idUa);
 	
 	long pesquisarProgrEntregaDataMatr(String dataProgramacao,String matriculaColaborador);
 	
