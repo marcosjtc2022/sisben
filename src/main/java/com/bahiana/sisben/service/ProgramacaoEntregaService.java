@@ -99,6 +99,11 @@ public interface ProgramacaoEntregaService {
 	 
 	 void atualizarStatusAnalise24h(ProgramacaoEntregaDto programacaoEntregaDto);
 	 
+	 List<ProgramacaoEntrega>  copiarProgramacaoEntregaVariasMatriculas(String dataProgramacao, 
+				String matriculaColaboradorOrigem,
+	            String matriculaColaboradoresDestino,
+	            String idUsuarioLogado);
+	 
 	 
 	
 

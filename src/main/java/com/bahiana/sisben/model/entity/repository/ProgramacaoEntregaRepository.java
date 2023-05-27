@@ -281,5 +281,11 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " WHERE   pe.id = :id ")
 	ProgramacaoEntrega obterProgrEntregaPorId(@Param("id") Long id);
 	
+	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE  Month(pe.dataProgramacao) = Month(:dataProgramacao)"
+			+ "AND Year(pe.dataProgramacao) = Year(:dataProgramacao)"
+	        + "AND pe.matriculaColaborador = :matriculaColaborador")
+	long pesquisarProgrEntregaAnoMesMatr(@Param("dataProgramacao") String dataProgramacao,
+			                              @Param("matriculaColaborador") String matriculaColaborador);
+	
 
 }

@@ -1683,6 +1683,68 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			 }
 			
 		}
+
+		@Override
+		public List<ProgramacaoEntrega> copiarProgramacaoEntregaVariasMatriculas(String dataProgramacao,
+				String matriculaColaboradorOrigem, String matriculaColaboradoresDestino, String idUsuarioLogado) {
+			
+                List<ProgramacaoEntrega> listaProgCopia = new ArrayList();
+			 
+			 
+//			 Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(matriculaDestino.trim());
+//			 
+//			 
+//			 if (!funcionario.isPresent()) {
+//				 throw new GlobalExceptionHandler("Funcionário de matrícula " + matriculaDestino +  " não existe no TOTVS !" ); 
+//			 }
+			 
+			 String[] strMatriculasDestino = matriculaColaboradoresDestino.split(",");
+			 
+	
+			 List<ProgramacaoEntrega> listaProgramacaoEntrega = this.recuperarProgrEntregaDataMatr(dataProgramacao, matriculaColaboradorOrigem);
+			 
+			 for (String matriculaDestino : strMatriculasDestino){
+				 
+				 
+				     Long countProg = this.programacaoEntregaRepository.
+				    		 pesquisarProgrEntregaAnoMesMatr(dataProgramacao,
+				    				matriculaDestino);
+					
+					if ((countProg > 0)) {
+						throw new GlobalExceptionHandler("Já existe programação para esta data e matrícula = " + matriculaDestino );
+					} 
+				 
+			 
+					 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
+						 
+						   ProgramacaoEntrega programacaoEntregaDestino = new  ProgramacaoEntrega();
+						   
+						   Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(matriculaDestino.trim());
+						   
+						   programacaoEntregaDestino.setMatriculaColaborador(matriculaDestino);
+						   programacaoEntregaDestino.setAnoMes(programacaoEntregaLinha.getAnoMes());
+						   programacaoEntregaDestino.setCodSetor(funcionario.get().getCodSecao());
+						   programacaoEntregaDestino.setDataEntrega(programacaoEntregaLinha.getDataEntrega());
+						   programacaoEntregaDestino.setDataProgramacao(programacaoEntregaLinha.getDataProgramacao());
+						   programacaoEntregaDestino.setDataSolicitacao(programacaoEntregaLinha.getDataSolicitacao());
+						   programacaoEntregaDestino.setDataUltimaModificacao(LocalDateTime.now());
+						   programacaoEntregaDestino.setDescricaoFeriado(programacaoEntregaLinha.getDescricaoFeriado());
+						   programacaoEntregaDestino.setDiaDaSemana(programacaoEntregaLinha.getDiaDaSemana());
+						   programacaoEntregaDestino.setIdUa(programacaoEntregaLinha.getIdUa());
+						   programacaoEntregaDestino.setIdUsuario(programacaoEntregaLinha.getIdUsuario());
+						   programacaoEntregaDestino.setIdUsuarioUltimaModificacao(Long.parseLong(idUsuarioLogado));
+						   programacaoEntregaDestino.setIdValor(programacaoEntregaLinha.getIdValor());
+						   programacaoEntregaDestino.setUaPrevista(programacaoEntregaLinha.getUaPrevista());
+						   
+						   listaProgCopia.add(programacaoEntregaDestino);
+						  
+						   this.programacaoEntregaRepository.save(programacaoEntregaDestino);
+					 }
+			 }
+			
+			return listaProgCopia;
+
+		}
 		
 	
 }

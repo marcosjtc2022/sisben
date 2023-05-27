@@ -506,6 +506,7 @@ public class ProgramacaoEntregaController {
 		    }
 		    
 		    @PostMapping(value =  "/copiarProgramacaoEntrega" )
+		    @Transactional
 			public List<ProgramacaoEntrega> copiarProgramacaoEntrega(
                      @RequestParam(required = true  ) String dataProgramacao, //dataProgramacao = YYYY-MM-DD
                      @RequestParam(required = true ) String matriculaOrigem,
@@ -524,6 +525,28 @@ public class ProgramacaoEntregaController {
 		    			,matriculaOrigem,matriculaDestino,idUsuarioLogado);
 		    	
 		    }
+		    
+		    @PostMapping(value =  "/copiarProgramacaoEntregaVariasMatriculas" )
+		    @Transactional
+			public List<ProgramacaoEntrega> copiarProgramacaoEntregaVariasMatriculas(
+                     @RequestParam(required = true  ) String dataProgramacao, //dataProgramacao = YYYY-MM-DD
+                     @RequestParam(required = true ) String matriculaOrigem,
+                     @RequestParam(required = true ) String matriculasDestino,
+                     @RequestParam(required = true ) String idUsuarioLogado ) {
+		    	
+//		    	Long countProg = programacaoEntregaService.
+//			    		pesquisarProgrEntregaDataMatr(dataProgramacao,
+//			    				matriculaDestino);
+//				
+//				if ((countProg > 0)) {
+//					throw new GlobalExceptionHandler("Já existe programação para esta data e matrícula = " + matriculaDestino );
+//				} 
+		    	
+		    	return this.programacaoEntregaService.copiarProgramacaoEntregaVariasMatriculas(dataProgramacao
+		    			,matriculaOrigem,matriculasDestino,idUsuarioLogado);
+		    	
+		    }
+	
 	
   
 
