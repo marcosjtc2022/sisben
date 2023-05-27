@@ -94,9 +94,10 @@ public interface ProgramacaoEntregaService {
 	
 	 long pesquisarProgrEntregaUa(Long idUa);
 	 
-	 void apagarProgramacaoMesNovo(String idProgramacao);
+	 List<ProgramacaoEntrega> listarProgEntAprovar24h(String matriculaColaborador, String anoMes,
+             String codSetor, Long idUa);
 	 
-	 List<ProgramacaoEntrega>  listarParaAprovacao();
+	 //List<ProgramacaoEntrega>  listarParaAprovacao();
 	
 
 }

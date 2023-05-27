@@ -231,6 +231,19 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("idUaAlterar") Long idUaAlterar,
 			@Param("tipoSolicitacao") String tipoSolicitacao);
 	
+	@Query("SELECT pe FROM ProgramacaoEntrega pe "
+			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
+			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
+			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
+			+ "       (:idUa is null or pe.idUa = :idUa) and"
+			+ "     pe.tipoSolicitacao IN ('I','A','E') "
+			+ " order by pe.anoMes,pe.matriculaColaborador ")
+	List<ProgramacaoEntrega> listarProgEntAprovar24h(
+			@Param("matriculaColaborador") String matriculaColaborador,
+			@Param("anoMes") String anoMes,
+			@Param("codSetor") String codSetor,
+			@Param("idUa") Long idUa);
+	
 	
 	
 

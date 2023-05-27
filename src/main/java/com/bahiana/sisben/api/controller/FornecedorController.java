@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
+import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -140,6 +143,25 @@ public class FornecedorController {
 				    return ResponseEntity.badRequest().body(e.getMessage());
 			     }
 		}
+		
+		
+		@GetMapping(value =  "/listarProgEntAprovar24h" )
+		@ResponseBody
+		public List<ProgramacaoEntrega> listarProgEntAprovar24h(
+                  @RequestParam(required = false  ) String matriculaColaborador,
+                  @RequestParam(required = false ) String anoMes,
+                  @RequestParam(required = false ) String codSetor,
+                  @RequestParam(required = false ) String idUa) {
+			
+			    Long idUaParam = null;
+				if ((idUa != "")&((idUa != null))) {
+					idUaParam = Long.valueOf(idUa);
+				}
+				
+		    	return this.programacaoEntregaService.
+		    			listarProgEntAprovar24h(matriculaColaborador,anoMes,codSetor,idUaParam);
+		    	
+	  }
 		
 
 }

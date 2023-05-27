@@ -1609,33 +1609,28 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		}
 
 		@Override
-		public void apagarProgramacaoMesNovo(String idProgramacao) {
+		public List<ProgramacaoEntrega> listarProgEntAprovar24h(String matriculaColaborador, String anoMes,
+				String codSetor,Long idUa) {
 			
-             String[] tabelaProgramacaoEntrega = idProgramacao.split(",");
+			 if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
+	    		 matriculaColaborador = null;
+			 }
+	    	 
+	    	 if ((anoMes == "")||((anoMes == null))) {
+	    		 anoMes = null;
+			 }
+	    	 
+	    	 if ((codSetor == "")||((codSetor == null))) {
+	    		 codSetor = null;
+			 }
+	    	 
+	    	 if ((idUa == null)) {
+	    		 idUa = null;
+			 }
 			
-			for (String linha : tabelaProgramacaoEntrega){
-				
-				//Recupera data da programação para verificar se tem menos de 24h.
-//				ProgramacaoEntrega programacaoEntrega = 
-//				programacaoEntregaRepository.findById(Long.valueOf(idProgramacao)).get();
-				
-				//Verifica se a solicitação tem menos de 24h
-				//String tipoOperacao = null;
-				//String tipoOperacao = this.verificaProgramacaoMenos24h(programacaoEntrega.getDataProgramacao(), "E");
-				
-				//Testa o retorno da função.
-				//if (tipoOperacao == "") {
-					programacaoEntregaRepository.apagarProgEntrega(Long.valueOf(linha));
-					
-			}		
-		 
 			
+			 return this.programacaoEntregaRepository.listarProgEntAprovar24h(matriculaColaborador, anoMes, codSetor, idUa);
 		}
-
-		@Override
-		public List<ProgramacaoEntrega> listarParaAprovacao() {
-			return null;
-		} 
 		
 	
 }
