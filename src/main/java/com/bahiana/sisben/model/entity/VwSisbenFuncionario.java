@@ -106,7 +106,7 @@ public class VwSisbenFuncionario {
 	}
 	
 //	//Mapenado classe ProgramacaoEntrega 
-//		@OneToMany(mappedBy = "funcionario", fetch = FetchType.EAGER)
+//		@OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY)
 //		Set<ProgramacaoEntrega> funcionarioProgEntregas;
 
 	public VwSisbenFuncionario(String matriculaFuncionario, Long codColigada, String codSecao, String descSecao,

@@ -71,35 +71,35 @@ public class Usuario implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 	
 	//Mapenado classe UsuarioSetor 
-	@OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "usuario",fetch = FetchType.LAZY)
 	Set<UsuarioSetor> Usuariosetores;	
 	
 	//Mapeando a classe perfil
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(updatable=false,insertable=false,name = "id_perfil")
 	Perfil perfil;	
 	
 	//Mapeando a classe fornecedor
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(updatable=false,insertable=false,name = "id_fornecedor")
 	Fornecedor fornecedor;	
 	
-	//Mapenado classe ProgramacaoEntrega 
-	@OneToMany(mappedBy = "usuarioEntrega", fetch = FetchType.EAGER)
-	Set<ProgramacaoEntrega> usuarioProgEntregas;
+//	//Mapenado classe ProgramacaoEntrega (obs) (retirado para diminuir objetos na memória)
+//	@OneToMany(mappedBy = "usuarioEntrega", fetch = FetchType.LAZY)
+//	Set<ProgramacaoEntrega> usuarioProgEntregas;
 	
 	//mapeando a classe UnidadeAcademica. **
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(updatable=false,insertable=false,name = "id_ua")
     UnidadeAcademica unidadeAcademica;
     
     
 	//Mapenado classe SetorGerenciado 
-	@OneToMany(mappedBy = "usuarioLider", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "usuarioLider", fetch = FetchType.LAZY)
 	Set<UsuarioSetorGerenciado> usuariosLideres;
     
 //	//Mapenado classe usuariosetorgerenciado
-//	@OneToMany(mappedBy = "usuarioGerente", fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "usuarioGerente", fetch = FetchType.LAZY)
 //	Set<UsuarioSetorGerenciado> usuariosLideres;
     
 	public String getCodSetor() {

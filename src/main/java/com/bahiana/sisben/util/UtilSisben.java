@@ -205,7 +205,7 @@ public class UtilSisben {
 		
 		
 		String horaAtual = formattedString;
-		String horaLimite = "20:00";
+		String horaLimite = "13:00";
 
 		String[] parts = horaAtual.split(":");
 		Calendar cal1 = Calendar.getInstance();

@@ -58,7 +58,7 @@ public class Fornecedor implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 	
 	//Mapenado classe Usuario 
-	@OneToMany(mappedBy = "fornecedor", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "fornecedor", fetch = FetchType.LAZY)
 	Set<Usuario> usuarios;
 
 	public Long getId() {

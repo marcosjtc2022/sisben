@@ -38,7 +38,7 @@ public class Funcionalidade implements Serializable {
 	private Long idUsuarioUltimaModificacao;	
 	
 	//Mapenado classe PerfilFuncionalidade 
-	@OneToMany(mappedBy = "funcionalidade", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "funcionalidade", fetch = FetchType.LAZY)
 	Set<PerfilFuncionalidade> perfis;
 
 	public Long getId() {

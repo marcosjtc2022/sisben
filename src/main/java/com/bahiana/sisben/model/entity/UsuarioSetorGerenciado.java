@@ -33,11 +33,11 @@ public class UsuarioSetorGerenciado implements Serializable {
 	private String descricao;
 	
 //	//Mapenado classe usuariosetorgerenciado
-//	@OneToMany(mappedBy = "setorGerenciado", fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "setorGerenciado", fetch = FetchType.LAZY)
 //	Set<UsuarioSetorGerenciado> setoresGerenciados;
 	
 	//mapeando a classe Usuario (Usuario da entrega).
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(updatable=false,insertable=false,name = "id_usuario")
     Usuario usuarioLider;
 

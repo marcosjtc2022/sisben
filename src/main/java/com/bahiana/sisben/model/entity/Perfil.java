@@ -141,11 +141,11 @@ public class Perfil implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 	
 //	//Mapenado classe PerfilFuncionalidade 
-//	@OneToMany(mappedBy = "perfil", fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "perfil", fetch = FetchType.LAZY)
 //	Set<PerfilFuncionalidade> perfis;	
 	
 	//Mapenado classe usuario 
-	@OneToMany(mappedBy = "perfil", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "perfil", fetch = FetchType.LAZY)
 	Set<Usuario> perflUsuarios;
 	
 	

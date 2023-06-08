@@ -117,8 +117,8 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 		 	+ " Order by pe.matriculaColaborador, pe.dataProgramacao")
 		List<ProgramacaoEntrega> pesquisarRegistroEntregaPorUsuario(@Param("id") Long id);
 	
-	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.id,pe.matriculaColaborador, pe.anoMes,"
-			+ " pe.codSetor, pe.idUa) "
+	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
+			+ " pe.codSetor) "
 			+ " FROM ProgramacaoEntrega pe "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
@@ -147,20 +147,18 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 		 	 + " Order by pe.anoMes")
 	List<String> listarAnoMes();
 	
-	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.id,pe.matriculaColaborador, pe.anoMes,"
-			+ " pe.codSetor,pe.idUa) "
+	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
+			+ " pe.codSetor) "
 			+ " FROM ProgramacaoEntrega pe "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
 			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
-			+ "       (:idUa is null or pe.idUa = :idUa) and"
 			+ "       pe.codSetor IN :strCodSetor "
 			+ " order by pe.anoMes,pe.matriculaColaborador   ")
 	List<ProgEntVigenteDto> listarProgramacaoEntregaVigenteLiderSetor(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
 			@Param("codSetor") String codSetor,
-			@Param("idUa") Long idUa,
 			@Param("strCodSetor") List<String> strCodSetor);
 	
 	

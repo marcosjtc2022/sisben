@@ -38,7 +38,7 @@ public class Calendario implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 	
 //	//Mapenado classe programacao entrega. 
-//	@OneToMany(mappedBy = "calendario", fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "calendario", fetch = FetchType.LAZY)
 //	Set<ProgramacaoEntrega> programcaoEntregas;
 
 	public Long getId() {

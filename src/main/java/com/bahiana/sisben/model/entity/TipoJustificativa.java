@@ -41,11 +41,11 @@ public class TipoJustificativa implements Serializable  {
 	private Long idUsuarioUltimaModificacao;
 	
 //	//Mapenado classe JusitificativaTipoJustificativa Antes
-//	@OneToMany(mappedBy = "tipoJustificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "tipoJustificativa",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	Set<JustificativaTipoJustificativa> tiposJustificativa;
 	
 	//Mapenado classe JusitificativaTipoJustificativa Antes
-	@OneToMany(mappedBy = "tipoJustificativa",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "tipoJustificativa",fetch = FetchType.LAZY)
 	Set<Justificativa> justificativas;
 
 	public Long getId() {

@@ -37,11 +37,11 @@ public class UnidadeAcademica implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 	
 	//Mapenado classe programacao entrega 
-	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.LAZY)
 	Set<ProgramacaoEntrega> programcaoEntregas;
 	
 	//Mapenado classe usuario ***
-	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.LAZY)
 	Set<Usuario> usuarios;
 
 	public Long getId() {

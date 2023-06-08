@@ -51,12 +51,12 @@ public class UsuarioSetor implements Serializable {
 	
 	
 	//Mapeando a classe usuario
-	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY,  cascade=CascadeType.ALL)
     @JoinColumn(updatable=false,insertable=false,name = "id_usuario")
     Usuario usuario;
  
 	//Mapeando a classe setor 
-    @ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,  cascade=CascadeType.ALL)
     @JoinColumn(updatable=false,insertable=false,name = "cod_setor")
     Setor setor;
 

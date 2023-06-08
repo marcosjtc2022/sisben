@@ -88,7 +88,7 @@ public class Justificativa implements Serializable {
 	}
 	
 //	//Mapenado classe JusitificativaTipoJustificativa Antes
-//	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	Set<JustificativaTipoJustificativa> tiposJustificativa;
 
 	public TipoJustificativa getTipoJustificativa() {
@@ -100,16 +100,16 @@ public class Justificativa implements Serializable {
 	}
 	
 	//Mapeando a classe Tipo justificativa
-	@ManyToOne(fetch = FetchType.EAGER  )
+	@ManyToOne(fetch = FetchType.LAZY  )
 	@JoinColumn(updatable=false,insertable=false,name = "id_tipo_justificativa")
 	TipoJustificativa tipoJustificativa;
 		
 //	//Mapenado classe ProgramacaoEntrega retirada do CascadeType.ALL
-//	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	Set<ProgramacaoEntrega> programacaojustificativas;
 //	
 	//Mapenado classe ProgramacaoEntrega 
-	 @OneToMany(mappedBy = "justificativa",fetch = FetchType.EAGER)
+	 @OneToMany(mappedBy = "justificativa",fetch = FetchType.LAZY)
 	 Set<ProgramacaoEntrega> programacaojustificativas;
 	
 

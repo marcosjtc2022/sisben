@@ -40,22 +40,22 @@ public class PerfilFuncionalidade implements Serializable {
 	private Long idUsuarioUltimaModificacao;
 	
 //	//mapeando a classe funcionalidade
-//    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.DETACH )
+//    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.DETACH )
 //    @JoinColumn(updatable=false,insertable=false,name = "id_funcionalidade")
 //    Funcionalidade funcionalidade;
 // 
 //    //mapeando a classe perfil 
-//    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
+//    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.DETACH)
 //    @JoinColumn(updatable=false,insertable=false,name = "id_perfil")
 //    Perfil perfil;
 	
 	//mapeando a classe funcionalidade
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(updatable=false,insertable=false,name = "id_funcionalidade")
     Funcionalidade funcionalidade;
  
     //mapeando a classe perfil 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(updatable=false,insertable=false,name = "id_perfil")
     Perfil perfil;
 

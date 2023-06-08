@@ -47,9 +47,9 @@ public class ValorMarmita implements Serializable {
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
 	
-	//Mapenado classe ProgramacaoEntrega 
-	@OneToMany(mappedBy = "valorMarmita", fetch = FetchType.EAGER)
-	Set<ProgramacaoEntrega> programacaoValores;
+	//Mapenado classe ProgramacaoEntrega (obs)
+//	@OneToMany(mappedBy = "valorMarmita", fetch = FetchType.LAZY)
+//	Set<ProgramacaoEntrega> programacaoValores;
 
 	public Long getId() {
 		return id;

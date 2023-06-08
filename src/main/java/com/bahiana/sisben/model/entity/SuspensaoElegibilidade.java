@@ -49,7 +49,7 @@ public class SuspensaoElegibilidade implements Serializable {
     //Não tem esta relação. Se estiver uma, não pode estar na outra.
     //JPA não tem relacionamento 0 x n.
 //	//Mapenado classe ProgramacaoEntrega não tem zero to many
-//	@OneToMany(mappedBy = "suspensaoEligibilidade", fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "suspensaoEligibilidade", fetch = FetchType.LAZY)
 //	private Set<ProgramacaoEntrega> programacaoElegiveis;
 	
 	public Long getId() {

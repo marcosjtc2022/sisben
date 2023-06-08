@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 
 @Entity
@@ -209,59 +211,43 @@ public class ProgramacaoEntrega implements Serializable{
 
 // JPA não aceita mapeamento 0 x N. Nem tente!!!
 //	//mapeando a classe Calendario
-//    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(updatable=false,insertable=false,name = "id_data")
 //    Calendario calendario;
 
     
 //    //mapeando a classe Elegibilidade.
-//    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(updatable=false,insertable=false,name = "matricula_colaborador")
 //    Elegibilidade elegibilidade;
     
 //    //mapeando a classe SuspensaoElegibilidade.
       //Não tem esta relação. Se estiver uma, não pode estar na outra.
       //JPA não tem relacionamento 0 x n.
-//    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(updatable=false,insertable=false, name = "matricula_colaborador" )
 //    SuspensaoEligibilidade suspensaoEligibilidade;
     
     //mapeando a classe UnidadeAcademica.
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(updatable=false,insertable=false,name = "id_ua")
     UnidadeAcademica unidadeAcademica;
     
-//    //mapeando a classe Justificativa. voltar
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(updatable=false,insertable=false,name = "id_justificativa")
-//    Justificativa justificativa;
-    
-  //mapeando a classe Justificativa.
-    @ManyToOne(fetch = FetchType.EAGER)
+    //mapeando a classe Justificativa.
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(updatable=false,insertable=false,name = "id_justificativa")
     Justificativa justificativa;
-//    
-    //mapeando a classe ValorMarmita.
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(updatable=false,insertable=false,name = "id_valor")
-    ValorMarmita valorMarmita;
+   
+//    //mapeando a classe ValorMarmita. (obs) (retirado para diminuir objetos na memória)
+//    @ManyToOne(fetch = FetchType.LAZY) @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+//    @JoinColumn(updatable=false,insertable=false,name = "id_valor")
+//    ValorMarmita valorMarmita;
     
-    //mapeando a classe Usuario (Usuario da entrega).
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(updatable=false,insertable=false,name = "id_usuario_entrega")
-    Usuario usuarioEntrega;
-    
-//  //mapeando a classe VwSisbenFuncionario.
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(updatable=false,insertable=false,name = "matricula_colaborador")
-//    VwSisbenFuncionario funcionario;
-    
-    
-    
-    
-//    //Mapenado classe CentroCusto. 
-//  	@OneToMany(mappedBy = "programacaoEntrega", fetch = FetchType.EAGER)
-//  	Set<CentroCustoPercRateio> centroCusto;
+//    //mapeando a classe Usuario (Usuario da entrega).(obs) (retirado para diminuir objetos na memória)
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(updatable=false,insertable=false,name = "id_usuario_entrega")
+//    Usuario usuarioEntrega;
+
 
 	public Long getId() {
 		return id;
@@ -391,13 +377,13 @@ public class ProgramacaoEntrega implements Serializable{
 //		this.elegibilidade = elegibilidade;
 //	}
 	
-	public Justificativa getJustificativa() {
-		return justificativa;
-	}
-
-	public void setJustificativa(Justificativa justificativa) {
-		this.justificativa = justificativa;
-	}
+//	public Justificativa getJustificativa() {
+//		return justificativa;
+//	}
+//
+//	public void setJustificativa(Justificativa justificativa) {
+//		this.justificativa = justificativa;
+//	}
 
 	public UnidadeAcademica getUnidadeAcademica() {
 		return unidadeAcademica;
@@ -407,29 +393,29 @@ public class ProgramacaoEntrega implements Serializable{
 		this.unidadeAcademica = unidadeAcademica;
 	}
 
-//	public Justificativa getJustificativa() {
-//		return justificativa;
+	public Justificativa getJustificativa() {
+		return justificativa;
+	}
+
+	public void setJustificativa(Justificativa justificativa) {
+		this.justificativa = justificativa;
+	}
+
+//	public ValorMarmita getValorMarmita() { (obs)
+//		return valorMarmita;
 //	}
 //
-//	public void setJustificativa(Justificativa justificativa) {
-//		this.justificativa = justificativa;
+//	public void setValorMarmita(ValorMarmita valorMarmita) { (obs)
+//		this.valorMarmita = valorMarmita;
 //	}
 
-	public ValorMarmita getValorMarmita() {
-		return valorMarmita;
-	}
-
-	public void setValorMarmita(ValorMarmita valorMarmita) {
-		this.valorMarmita = valorMarmita;
-	}
-
-	public Usuario getUsuarioEntrega() {
-		return usuarioEntrega;
-	}
-
-	public void setUsuarioEntrega(Usuario usuarioEntrega) {
-		this.usuarioEntrega = usuarioEntrega;
-	}
+//	public Usuario getUsuarioEntrega() { (obs) 
+//		return usuarioEntrega;
+//	}
+//
+//	public void setUsuarioEntrega(Usuario usuarioEntrega) { (obs)
+//		this.usuarioEntrega = usuarioEntrega;
+//	}
 
 //	public Set<CentroCustoPercRateio> getCentroCusto() {
 //		return centroCusto;

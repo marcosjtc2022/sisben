@@ -492,16 +492,10 @@ public class ProgramacaoEntregaController {
                      @RequestParam(required = false  ) String matriculaColaborador,
                      @RequestParam(required = false ) String anoMes,
                      @RequestParam(required = false ) String codSetor,
-                     @RequestParam(required = false ) String idUsuarioLogado,
-                     @RequestParam(required = false ) String idUa) {
-		    		
-				Long idUaParam = null;
-				if ((idUa != "")&((idUa != null))) {
-					idUaParam = Long.valueOf(idUa);
-				}
+                     @RequestParam(required = false ) String idUsuarioLogado) {
 		    	
 		    	return this.programacaoEntregaService.
-		    			listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes, codSetor,idUsuarioLogado, idUaParam );
+		    			listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes, codSetor,idUsuarioLogado );
 		    	
 		    }
 		    

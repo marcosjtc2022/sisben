@@ -1414,7 +1414,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 		@Override
 		public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(String matriculaColaborador,
-				String anoMes,String codSetor, String idUsuarioLogado, Long idUa) {
+				String anoMes,String codSetor, String idUsuarioLogado) {
 			
 			 if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
 	    		 matriculaColaborador = null;
@@ -1428,15 +1428,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 codSetor = null;
 			 }
 	    	 
-	    	 if ((idUa == null)) {
-	    		 idUa = null;
-			 }
-	    	 
 	    	 List<String> listStrCodSetor = usuarioSetorGerenciadoService.
 	    		     concatenaSetoresLider(idUsuarioLogado);
 	    	  
 		    	 List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
-							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,idUa,listStrCodSetor );
+							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,listStrCodSetor );
 		    	 
 		    	 List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList();
 		    	 
@@ -1460,15 +1456,12 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
 	    		 }
 	    		 
-	    		 UnidadeAcademica unidadeAcademica = unidadeAcademicaService.obterPorId(progEntrega.getIdUa()).get();
-	    		 
 	    		 
 	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
 	    		 progEntVigenteResponse.setCodSetor(progEntrega.getCodSetor());
 	    		 progEntVigenteResponse.setStatus("Programado");
-	    		 progEntVigenteResponse.setLocalEntrega(unidadeAcademica.getDescricao());
-	    		 progEntVigenteResponse.setId(progEntrega.getId());
+	    		
 				   
 	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
 				    
