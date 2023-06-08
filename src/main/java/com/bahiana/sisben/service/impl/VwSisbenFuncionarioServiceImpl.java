@@ -18,4 +18,9 @@ public class VwSisbenFuncionarioServiceImpl implements VwSisbenFuncionarioServic
 		return vwSisbenFuncionarioRepository.obterPorMatricula(matriculaFuncionario);
 	}
 
+	@Override
+	public String ObterNomePorMatricula(String matriculaFuncionario) {
+		return vwSisbenFuncionarioRepository.ObterNomePorMatricula(matriculaFuncionario);
+	}
+
 }

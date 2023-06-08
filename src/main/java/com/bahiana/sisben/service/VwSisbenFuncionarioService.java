@@ -9,6 +9,8 @@ public interface VwSisbenFuncionarioService {
 	
 	Optional<VwSisbenFuncionario> ObterPorMatricula(String matriculaFuncionario);
 	
+	String ObterNomePorMatricula(String matriculaFuncionario);
+	
 	//List<VwSisbenFuncionario> ObterPorMatricula(@Param("String matriculaFuncionario")  String matriculaFuncionario);
 	
 

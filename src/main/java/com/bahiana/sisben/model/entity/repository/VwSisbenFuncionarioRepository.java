@@ -15,6 +15,9 @@ public interface VwSisbenFuncionarioRepository extends JpaRepository<VwSisbenFun
 	
 	@Query("SELECT func FROM VwSisbenFuncionario func WHERE func.matriculaFuncionario=:matriculaFuncionario")
 	Optional<VwSisbenFuncionario> obterPorMatricula(@Param("matriculaFuncionario")  String matriculaFuncionario);
+
+	@Query("SELECT func.nomeFuncionario FROM VwSisbenFuncionario func WHERE func.matriculaFuncionario=:matriculaFuncionario")
+	String ObterNomePorMatricula(@Param("matriculaFuncionario")  String matriculaFuncionario);
 	
     
 ////	@Query(value = "select * from VwSisbenFuncionario", nativeQuery = true)

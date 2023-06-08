@@ -25,6 +25,9 @@ public interface VwSisbenSetorRepository extends JpaRepository<VwSisbenSetor,Str
 	
 	List<VwSisbenSetor> findByDescrSetorContainingOrderByDescrSetorDesc(String descrSetor);
 	
+	@Query("SELECT vw.descrSetor FROM VwSisbenSetor vw WHERE vw.codSetor=:codSetor")
+	String ObterDescrSetor(@Param("codSetor") String codSetor);
+	
 	
 	
 	

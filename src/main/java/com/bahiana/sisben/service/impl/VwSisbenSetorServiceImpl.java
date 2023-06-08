@@ -39,6 +39,11 @@ public class VwSisbenSetorServiceImpl implements VwSisbenSetorService {
 		return vwSisbenSetorRepository.findByDescrSetorContainingOrderByDescrSetorDesc(vwSisbenSetorDto.getDescrSetor());
 	}
 
+	@Override
+	public String ObterDescrSetor(String codSetor) {
+		return vwSisbenSetorRepository.ObterDescrSetor(codSetor);
+	}
+
 	
 
 }

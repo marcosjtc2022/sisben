@@ -1333,30 +1333,44 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			 }
 	    	 
 	    	 
-	    	 
+	    	 //Recupera a programação por anoMes, matrícula e código do setor.
 	    	 List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
 						listarProgramacaoEntregaVigente(matriculaColaborador,anoMes,codSetor);
 	    	 
 	    	 List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList(); 
 	    	 
 	    	 
+	    	String descrSetor = ""; // (obs)
+	    	String nomeFuncionario; // (obs)
 	    	 
 	    	for (ProgEntVigenteDto progEntrega : listarProgEntVigenteDto) {
 					
+	    		 nomeFuncionario = "";
 	    		 
-	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse();
+	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse(); 
 	    		 
-	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor());
-	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
+//	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor()); (obs)
+//	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor()); (obs)
+	    		
+	    		 descrSetor = vwSisbenSetorService.ObterDescrSetor(progEntrega.getCodSetor()); //(obs)
+	    		 progEntVigenteResponse.setDescrSetor(descrSetor); //(obs)
 	    		 
-	    		 Optional<VwSisbenFuncionario>   funcionario =  vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador());
+//	    		 Optional<VwSisbenFuncionario>   funcionario =  vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador());
+//	    		//(obs) 
+//	    		 if (funcionario.isPresent() ) {
+//	    			 progEntVigenteResponse.setNomeColaborador(funcionario.get().getNomeFuncionario());	 
+//	    		 } else {
+//	    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
+//	    		 }
+
 	    		 
-	    		 if (funcionario.isPresent() ) {
-	    			 progEntVigenteResponse.setNomeColaborador(funcionario.get().getNomeFuncionario());	 
-	    		 } else {
-	    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
-	    		 }
-	    		 
+	    		    nomeFuncionario =  vwSisbenFuncionarioService.ObterNomePorMatricula(progEntrega.getMatriculaColaborador());
+		    		//(obs) 
+		    		 if (nomeFuncionario != "" ) {
+		    			 progEntVigenteResponse.setNomeColaborador(nomeFuncionario);	 
+		    		 } else {
+		    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
+		    		 }
 	    		 
 	    		 
 	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
@@ -1374,7 +1388,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    	for (ProgEntVigenteNpDto progEntregaNp : listarProgEntVigenteDtoNaoProg) {
 				
 	    		 
-	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse();
+	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse(); 
 	    		 
 	    		 progEntVigenteResponse.setDescrSetor(progEntregaNp.getDescrSetor());
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntregaNp.getMatriculaColaborador());
@@ -1416,28 +1430,33 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(String matriculaColaborador,
 				String anoMes,String codSetor, String idUsuarioLogado) {
 			
-			 if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
+			if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
 	    		 matriculaColaborador = null;
-			 }
+			}
 	    	 
-	    	 if ((anoMes == "")||((anoMes == null))) {
+	    	if ((anoMes == "")||((anoMes == null))) {
 	    		 anoMes = null;
-			 }
+			}
 	    	 
-	    	 if ((codSetor == "")||((codSetor == null))) {
+	    	if ((codSetor == "")||((codSetor == null))) {
 	    		 codSetor = null;
-			 }
+			}
 	    	 
-	    	 List<String> listStrCodSetor = usuarioSetorGerenciadoService.
-	    		     concatenaSetoresLider(idUsuarioLogado);
+//	    	List<String> listStrCodSetor = usuarioSetorGerenciadoService. (obs)
+//	    		     concatenaSetoresLider(idUsuarioLogado);
 	    	  
-		    	 List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
-							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,listStrCodSetor );
+//		    List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
+//							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,listStrCodSetor );
+
+		    List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
+					listarProgramacaoEntregaVigenteLiderSetorNovo(matriculaColaborador,anoMes,codSetor,Long.parseLong(idUsuarioLogado));
+    
+		    
+		    List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList();
 		    	 
-		    	 List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList();
 		    	 
-		    	 
-		    	 
+		    String descrSetor = ""; // (obs)
+			String nomeFuncionario; // (obs)
 	    	
 	    	 
 	    	for (ProgEntVigenteDto progEntrega : listarProgEntVigenteDto) {
@@ -1445,17 +1464,29 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 
 	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse();
 	    		 
-	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor());
-	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor());
+                 nomeFuncionario = "";
+//	    		 VwSisbenSetor vwSisbenSetor = vwSisbenSetorService.ObterPorCodigo(progEntrega.getCodSetor()); (obs)
+//	    		 progEntVigenteResponse.setDescrSetor(vwSisbenSetor.getDescrSetor()); (obs)
+	    		
+	    		 descrSetor = vwSisbenSetorService.ObterDescrSetor(progEntrega.getCodSetor()); //(obs)
+	    		 progEntVigenteResponse.setDescrSetor(descrSetor); //(obs)
 	    		 
-                 Optional<VwSisbenFuncionario>   funcionario =  vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador());
+//	    		 Optional<VwSisbenFuncionario>   funcionario =  vwSisbenFuncionarioService.ObterPorMatricula(progEntrega.getMatriculaColaborador());
+//	    		//(obs) 
+//	    		 if (funcionario.isPresent() ) {
+//	    			 progEntVigenteResponse.setNomeColaborador(funcionario.get().getNomeFuncionario());	 
+//	    		 } else {
+//	    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
+//	    		 }
+
 	    		 
-	    		 if (funcionario.isPresent() ) {
-	    			 progEntVigenteResponse.setNomeColaborador(funcionario.get().getNomeFuncionario());	 
-	    		 } else {
-	    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
-	    		 }
-	    		 
+	    		 nomeFuncionario =  vwSisbenFuncionarioService.ObterNomePorMatricula(progEntrega.getMatriculaColaborador());
+		    		//(obs) 
+		    	 if (nomeFuncionario != "" ) {
+		    			 progEntVigenteResponse.setNomeColaborador(nomeFuncionario);	 
+		    	 } else {
+		    			 progEntVigenteResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
+		    	 }
 	    		 
 	    		 progEntVigenteResponse.setAnoMes(progEntrega.getAnoMes());
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
@@ -1467,7 +1498,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				    
 			}
 	    	
-	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramadoLiderSetor(matriculaColaborador,anoMes, codSetor, listStrCodSetor );
+	    	//List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramadoLiderSetor(matriculaColaborador,anoMes, codSetor, listStrCodSetor );
+	    	
+	    	List<ProgEntVigenteNpDto> listarProgEntVigenteDtoNaoProg = programacaoEntregaRepository.listarProgramacaoEntregaVigenteNaoProgramadoLiderSetorNovo(matriculaColaborador,anoMes, codSetor, Long.parseLong(idUsuarioLogado) );
 	    	
 	    	for (ProgEntVigenteNpDto progEntregaNp : listarProgEntVigenteDtoNaoProg) {
 				

@@ -15,7 +15,9 @@ public interface VwSisbenSetorService {
 	
 	List<VwSisbenSetor> pesquisarComLikePorCodSetorOrdenadoPorCodSetor(VwSisbenSetorDto vwSisbenSetorDto);
 	
-	List<VwSisbenSetor> pesquisarComLikePorDescrSetorOrdenadoPorDescrSetor(VwSisbenSetorDto vwSisbenSetorDto);	
+	List<VwSisbenSetor> pesquisarComLikePorDescrSetorOrdenadoPorDescrSetor(VwSisbenSetorDto vwSisbenSetorDto);
+	
+	String ObterDescrSetor(String codSetor);
 	
 
 }
