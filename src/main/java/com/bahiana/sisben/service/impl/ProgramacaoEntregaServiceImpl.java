@@ -1,6 +1,6 @@
 package com.bahiana.sisben.service.impl;
 
-import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -1062,10 +1062,36 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public void apagarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			String[] tabelaProgramacaoEntrega = programacaoEntregaDto.getTabelaProgramacaoEntrega().split(",");
+			LocalDate dataProgramacao = null;
 			
 			for (String idProgramacao : tabelaProgramacaoEntrega){
-					programacaoEntregaRepository.apagarProgEntrega(Long.valueOf(idProgramacao));
-		   }
+				
+				//Recupera data da programação para verificar se tem menos de 24h.
+				dataProgramacao = 
+				programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
+				
+				
+//				ProgramacaoEntrega programacaoEntrega = 
+//				programacaoEntregaRepository.obterProgrEntregaPorId(Long.valueOf(idProgramacao));
+				
+				//Verifica se a solicitação tem menos de 24h
+				String tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "E");
+				
+				  if (tipoOperacao == "") {	
+					     programacaoEntregaRepository.apagarProgEntrega(Long.valueOf(idProgramacao));
+					     //programacaoEntregaRepository.apagarProgEntrega(programacaoEntrega.getId());
+				  } else {
+				    	programacaoEntregaRepository.atulizaExcluirProgEntParaAprovar(
+				    			programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+				    			LocalDateTime.now(), 
+				    			Long.valueOf(idProgramacao),					
+				    			programacaoEntregaDto.getIdJustificativa(),
+								 "E");
+				    	
+				 }
+				
+		   } // End for
+			
 	   }
 
 		@Override

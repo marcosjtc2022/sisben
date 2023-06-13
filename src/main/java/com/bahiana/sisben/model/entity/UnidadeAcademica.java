@@ -36,9 +36,9 @@ public class UnidadeAcademica implements Serializable {
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
 	
-	//Mapenado classe programacao entrega 
-	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.LAZY)
-	Set<ProgramacaoEntrega> programcaoEntregas;
+//	//Mapenado classe programacao entrega (OBS) 13.06.2023
+//	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.LAZY)
+//	Set<ProgramacaoEntrega> programcaoEntregas;
 	
 	//Mapenado classe usuario ***
 	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.LAZY)

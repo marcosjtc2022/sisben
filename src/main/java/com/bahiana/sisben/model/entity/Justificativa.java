@@ -108,9 +108,9 @@ public class Justificativa implements Serializable {
 //	@OneToMany(mappedBy = "justificativa",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	Set<ProgramacaoEntrega> programacaojustificativas;
 //	
-	//Mapenado classe ProgramacaoEntrega 
-	 @OneToMany(mappedBy = "justificativa",fetch = FetchType.LAZY)
-	 Set<ProgramacaoEntrega> programacaojustificativas;
+//	//Mapenado classe ProgramacaoEntrega  (OBS) 13.06.2023
+//	 @OneToMany(mappedBy = "justificativa",fetch = FetchType.LAZY)
+//	 Set<ProgramacaoEntrega> programacaojustificativas;
 	
 
 	public Justificativa(Long id, String descricao, Long idTipoJustificativa, LocalDateTime dataUltimaModificacao,

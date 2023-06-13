@@ -315,5 +315,21 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("codSetor") String codSetor,
 			@Param("idUsuarioLider") Long idUsuarioLider);
 	
+	
+	@Transactional
+	@Modifying
+	@Query("update ProgramacaoEntrega set "
+			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
+			+ " dataUltimaModificacao = :dataUltimaModificacao,"
+			+ " idJustificativa = :idJustificativa, "
+			+ " tipoSolicitacao = :tipoSolicitacao "
+			+ " where id = :id")
+	void atulizaExcluirProgEntParaAprovar(
+			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("dataUltimaModificacao") LocalDateTime dataUltimaModificacao,
+			@Param("id") Long id,
+			@Param("idJustificativa") Long idJustificativa,
+			@Param("tipoSolicitacao") String tipoSolicitacao);
+	
 
 }

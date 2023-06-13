@@ -228,15 +228,15 @@ public class ProgramacaoEntrega implements Serializable{
 //    @JoinColumn(updatable=false,insertable=false, name = "matricula_colaborador" )
 //    SuspensaoEligibilidade suspensaoEligibilidade;
     
-    //mapeando a classe UnidadeAcademica.
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(updatable=false,insertable=false,name = "id_ua")
-    UnidadeAcademica unidadeAcademica;
+    //mapeando a classe UnidadeAcademica. (OBS) 13.06.2023
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(updatable=false,insertable=false,name = "id_ua")
+//    UnidadeAcademica unidadeAcademica;
     
-    //mapeando a classe Justificativa.
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(updatable=false,insertable=false,name = "id_justificativa")
-    Justificativa justificativa;
+//    //mapeando a classe Justificativa. (OBS) 13.06.2023
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(updatable=false,insertable=false,name = "id_justificativa")
+//    Justificativa justificativa;
    
 //    //mapeando a classe ValorMarmita. (obs) (retirado para diminuir objetos na memória)
 //    @ManyToOne(fetch = FetchType.LAZY) @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
@@ -385,21 +385,21 @@ public class ProgramacaoEntrega implements Serializable{
 //		this.justificativa = justificativa;
 //	}
 
-	public UnidadeAcademica getUnidadeAcademica() {
-		return unidadeAcademica;
-	}
+//	public UnidadeAcademica getUnidadeAcademica() {
+//		return unidadeAcademica;
+//	}
+//
+//	public void setUnidadeAcademica(UnidadeAcademica unidadeAcademica) {
+//		this.unidadeAcademica = unidadeAcademica;
+//	}
 
-	public void setUnidadeAcademica(UnidadeAcademica unidadeAcademica) {
-		this.unidadeAcademica = unidadeAcademica;
-	}
-
-	public Justificativa getJustificativa() {
-		return justificativa;
-	}
-
-	public void setJustificativa(Justificativa justificativa) {
-		this.justificativa = justificativa;
-	}
+//	public Justificativa getJustificativa() {
+//		return justificativa;
+//	}
+//
+//	public void setJustificativa(Justificativa justificativa) {
+//		this.justificativa = justificativa;
+//	}
 
 //	public ValorMarmita getValorMarmita() { (obs)
 //		return valorMarmita;
