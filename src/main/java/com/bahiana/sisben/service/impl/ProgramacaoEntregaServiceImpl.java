@@ -1726,6 +1726,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 						 (programacaoEntregaDto.getStAprov(),null,
 						  programacaoEntregaDto.getId(),programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
 						  LocalDateTime.now());
+					 } else {
+						 if (programacaoEntrega.getTipoSolicitacao().charAt(0) == 'E' ) {
+							 programacaoEntregaRepository.apagarProgEntrega(programacaoEntregaDto.getId());
+						 }
 					 }
 					 
 					 
