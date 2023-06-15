@@ -291,6 +291,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
 			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
+			+ "       (:idUa is null or pe.idUa = :idUa) and"
 			+ "       pe.codSetor IN (SELECT sg.codSetor FROM UsuarioSetorGerenciado sg "
 			+ "			 WHERE sg.idUsuarioLider=:idUsuarioLider ) "
 			+ " order by pe.anoMes,pe.matriculaColaborador   ")
@@ -298,7 +299,8 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
 			@Param("codSetor") String codSetor,
-			@Param("idUsuarioLider") Long idUsuarioLider);
+			@Param("idUsuarioLider") Long idUsuarioLider,
+			@Param("idUa") Long idUa);
 	
 	@Query("SELECT new com.bahiana.sisben.api.dto.ProgEntVigenteNpDto(vw.matriculaFuncionario, '',"
 			+ " vw.codSecao,vw.descSecao,vw.nomeFuncionario  ) "

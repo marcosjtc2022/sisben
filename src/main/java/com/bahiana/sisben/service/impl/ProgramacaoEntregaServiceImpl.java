@@ -1,11 +1,13 @@
 package com.bahiana.sisben.service.impl;
 
+import java.text.SimpleDateFormat;
 //import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -1454,7 +1455,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 		@Override
 		public List<ProgEntVigenteResponse> listarProgramacaoEntregaVigenteLiderSetor(String matriculaColaborador,
-				String anoMes,String codSetor, String idUsuarioLogado) {
+				String anoMes,String codSetor, String idUsuarioLogado, String idUa) {
 			
 			if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
 	    		 matriculaColaborador = null;
@@ -1467,6 +1468,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    	if ((codSetor == "")||((codSetor == null))) {
 	    		 codSetor = null;
 			}
+	    	
+	    	if ((idUa == "")||((idUa == null))) {
+	    		idUa = null;
+			}
 	    	 
 //	    	List<String> listStrCodSetor = usuarioSetorGerenciadoService. (obs)
 //	    		     concatenaSetoresLider(idUsuarioLogado);
@@ -1475,7 +1480,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,listStrCodSetor );
 
 		    List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
-					listarProgramacaoEntregaVigenteLiderSetorNovo(matriculaColaborador,anoMes,codSetor,Long.parseLong(idUsuarioLogado));
+					listarProgramacaoEntregaVigenteLiderSetorNovo(matriculaColaborador,anoMes,codSetor,Long.parseLong(idUsuarioLogado),Long.parseLong(idUa) );
     
 		    
 		    List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList();
@@ -1642,7 +1647,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			if (dataProgramacao.equals(LocalDate.now())) {
 				
 				//Verifica se a hora da programação é menor que 13:00h. 
-				if (utilSisben.verificaHoraLimiteSolicitacao()) {
+				if (utilSisben.verificaHoraLimiteSolicitacao("13:00")) {
 					tpOperacao = tipoOperacao ;
 				} else {
 					throw new GlobalExceptionHandler("Hora limite esgotada para solicitar " + descricaoTpOperacao
@@ -1686,12 +1691,34 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		@Override
 		public void atualizarStatusAnalise24h(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
-             //Verifica se a justificativa foi preenchida em caso de reprovação.
-			 if ((!programacaoEntregaDto.getStAprov())&((programacaoEntregaDto.getJustReprovacao() == null) || (programacaoEntregaDto.getJustReprovacao().isEmpty()))) {
-				 throw new GlobalExceptionHandler(" Para reprovação informe o motivo !");
-			 }
+			//Recupera data da programação.
+			LocalDate dataProgramacao = programacaoEntregaRepository.
+			pesquisarDataProgramacao(programacaoEntregaDto.getId());
+
+			//Verifica se a data de programação é anterior à data corrente.
+			if(dataProgramacao.isBefore(LocalDate.now())){
+				throw new GlobalExceptionHandler("Data de programação anterior à data corrente !");
+			}
 			
-			 if (!programacaoEntregaDto.getStAprov()){
+			 //Verifica se a data de programação é igual a data corrente.
+            if (dataProgramacao.equals(LocalDate.now())) { //obs
+            	 
+            	 UtilSisben utilSisben = new UtilSisben();
+            	 
+				//Verifica se a hora da programação é menor que 23:59h. 
+				if (!utilSisben.verificaHoraLimiteSolicitacao("23:59")) {
+					throw new GlobalExceptionHandler("Hora limite esgotada para aprovar/reprovar ! ");
+				}
+				
+			}
+			
+            //Verifica se a justificativa foi preenchida em caso de reprovação.
+			if ((!programacaoEntregaDto.getStAprov())&((programacaoEntregaDto.getJustReprovacao() == null) || (programacaoEntregaDto.getJustReprovacao().isEmpty()))) {
+				 throw new GlobalExceptionHandler(" Para reprovação informe o motivo !");
+			}
+			
+			//Reprovação.
+			if (!programacaoEntregaDto.getStAprov()){
 			
 				  this.programacaoEntregaRepository.atualizarStatusAnalise24h
 				 (programacaoEntregaDto.getStAprov(), programacaoEntregaDto.getJustReprovacao(),

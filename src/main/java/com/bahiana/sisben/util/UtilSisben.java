@@ -194,7 +194,8 @@ public class UtilSisben {
 	   
    }
    
-   public Boolean verificaHoraLimiteSolicitacao() {
+//   public Boolean verificaHoraLimiteSolicitacao() { obs
+   public Boolean verificaHoraLimiteSolicitacao(String horaLimite ) {	   
 	   
 	   
 	    boolean podeSolicitar24h = true; 
@@ -205,7 +206,7 @@ public class UtilSisben {
 		
 		
 		String horaAtual = formattedString;
-		String horaLimite = "13:00";
+		//String horaLimite = "13:00";
 
 		String[] parts = horaAtual.split(":");
 		Calendar cal1 = Calendar.getInstance();
