@@ -23,15 +23,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
+import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
+import com.bahiana.sisben.api.response.RegistroEntregaResponse;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
-import com.bahiana.sisben.util.UtilSisben;
 
 @RestController
 @RequestMapping(value = "/programacoes-entregas")
@@ -419,41 +419,13 @@ public class ProgramacaoEntregaController {
 		 
 		    @GetMapping(value =  "/listarRegistroEntrega" )
 		    @ResponseBody
-			 public List<ProgramacaoEntrega> listarRegistroEntrega(
-					                                          @RequestParam(required = false ) String uaRealizada,
-					                                          @RequestParam(required = false ) String matriculaColaborador,
-					                                          @RequestParam(required = false ) String anoMes,
-					                                          @RequestParam(required = false ) String codSetor,
-					                                          @RequestParam(required = true ) Long idUsuario) {
+		    List<RegistroEntregaResponse> listarRegistroEntrega(
+                     @RequestParam(required = false  ) String matriculaColaborador,
+                     @RequestParam(required = false ) String anoMes,
+                     @RequestParam(required = false ) String codSetor,
+                     @RequestParam(required = false ) String idUa) {
 		    	
-			 
-			  ProgramacaoEntregaSpecification programacaoEntregaSpecification = new ProgramacaoEntregaSpecification();
-			     
-              if (uaRealizada != "") {
-             	  programacaoEntregaSpecification.setUaRealizada(uaRealizada);	 
-			  }
-              
-              if (matriculaColaborador != "") {
-             	  programacaoEntregaSpecification.setMatriculaColaborador(matriculaColaborador);	 
-			  }
-              
-              if (anoMes != "") {
-             	  programacaoEntregaSpecification.setAnoMes(anoMes); 
-			  }
-              
-              if (codSetor != "") {
-         	      programacaoEntregaSpecification.setCodSetor(codSetor);
-		      }
-              
-              if (idUsuario != null) {
-       	         programacaoEntregaSpecification.setIdUsuario(idUsuario);
-		      }
-			    
-			    
-				 
-				 return this.programacaoEntregaService.listarComFiltros(programacaoEntregaSpecification);
-			
-		    	
+		    	return this.programacaoEntregaService.listarRegistroEntrega(matriculaColaborador, anoMes, codSetor,idUa);  
 		    	
 		    }
 		    

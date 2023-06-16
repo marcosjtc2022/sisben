@@ -14,6 +14,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.bahiana.sisben.api.dto.ProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgEntVigenteNpDto;
+import com.bahiana.sisben.api.dto.ProgEntVigenteResumoDto;
+import com.bahiana.sisben.api.dto.RegistroEntregaDto;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 
 public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository<ProgramacaoEntrega, Long>, JpaSpecificationExecutor<ProgramacaoEntrega> {
@@ -81,8 +83,10 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
 	@Query("SELECT pe FROM ProgramacaoEntrega pe WHERE  Month(pe.dataProgramacao) = Month(:mesAnoProgramacao)"
-			+ "AND Year(pe.dataProgramacao) = Year(:mesAnoProgramacao)"
-	        + "AND pe.matriculaColaborador = :matriculaColaborador")
+			+ " AND Year(pe.dataProgramacao) = Year(:mesAnoProgramacao)"
+	        + " AND pe.matriculaColaborador = :matriculaColaborador "
+	        + " AND (pe.stAprov is null)"
+	        + " OR  (pe.stAprov = 1) ")
 	List<ProgramacaoEntrega> listaProgramacaoEntregaAnoMesMatricula(@Param("mesAnoProgramacao") LocalDate mesAnoProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
@@ -285,17 +289,18 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	long pesquisarProgrEntregaAnoMesMatr(@Param("dataProgramacao") String dataProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
-	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteDto(pe.matriculaColaborador, pe.anoMes,"
-			+ " pe.codSetor) "
-			+ " FROM ProgramacaoEntrega pe "
+	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteResumoDto(pe.matriculaColaborador, pe.anoMes,"
+			+ " pe.codSetor, ua.descricao) "
+			+ " FROM ProgramacaoEntrega pe, UnidadeAcademica ua "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
 			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
 			+ "       (:idUa is null or pe.idUa = :idUa) and"
+			+ "       pe.idUa = ua.id and"
 			+ "       pe.codSetor IN (SELECT sg.codSetor FROM UsuarioSetorGerenciado sg "
 			+ "			 WHERE sg.idUsuarioLider=:idUsuarioLider ) "
 			+ " order by pe.anoMes,pe.matriculaColaborador   ")
-	List<ProgEntVigenteDto> listarProgramacaoEntregaVigenteLiderSetorNovo(
+	List<ProgEntVigenteResumoDto> listarProgramacaoEntregaVigenteLiderSetorNovo(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
 			@Param("codSetor") String codSetor,
@@ -332,6 +337,36 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("id") Long id,
 			@Param("idJustificativa") Long idJustificativa,
 			@Param("tipoSolicitacao") String tipoSolicitacao);
+	
+//	@Query("SELECT distinct new com.bahiana.sisben.api.dto.RegistroEntregaDto(pe.matriculaColaborador, pe.anoMes,"
+//			+ " pe.codSetor, ua.descricao, pe.solicExtra) "
+//			+ " FROM ProgramacaoEntrega pe, UnidadeAcademica ua "
+//			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
+//			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
+//			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
+//			+ "       (:idUa is null or pe.idUa = :idUa) and"
+//			+ "       pe.idUa = ua.id  "
+//			+ " order by pe.anoMes,pe.matriculaColaborador   ")
+//	List<RegistroEntregaDto> listarProgramacaoEntregaRegistroEntrega(
+//			@Param("matriculaColaborador") String matriculaColaborador,
+//			@Param("anoMes") String anoMes,
+//			@Param("codSetor") String codSetor,
+//			@Param("idUa") Long idUa);
+	
+	@Query("SELECT new com.bahiana.sisben.api.dto.RegistroEntregaDto(pe.id,pe.matriculaColaborador, pe.anoMes,"
+			+ " pe.codSetor, ua.descricao, pe.solicExtra, pe.dataProgramacao , pe.dataEntrega, pe.idJustificativa 	) "
+			+ " FROM ProgramacaoEntrega pe, UnidadeAcademica ua "
+			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
+			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
+			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
+			+ "       (:idUa is null or pe.idUa = :idUa) and"
+			+ "       pe.idUa = ua.id  "
+			+ " order by pe.anoMes,pe.matriculaColaborador   ")
+	List<RegistroEntregaDto> listarProgramacaoEntregaRegistroEntrega(
+			@Param("matriculaColaborador") String matriculaColaborador,
+			@Param("anoMes") String anoMes,
+			@Param("codSetor") String codSetor,
+			@Param("idUa") Long idUa);
 	
 
 }

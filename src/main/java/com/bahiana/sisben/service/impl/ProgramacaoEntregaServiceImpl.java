@@ -1,13 +1,11 @@
 package com.bahiana.sisben.service.impl;
 
-import java.text.SimpleDateFormat;
 //import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +24,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.bahiana.sisben.api.dto.ProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgEntVigenteNpDto;
+import com.bahiana.sisben.api.dto.ProgEntVigenteResumoDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
+import com.bahiana.sisben.api.dto.RegistroEntregaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
+import com.bahiana.sisben.api.response.RegistroEntregaResponse;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.model.entity.Calendario;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -1468,9 +1469,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    	if ((codSetor == "")||((codSetor == null))) {
 	    		 codSetor = null;
 			}
-	    	
-	    	if ((idUa == "")||((idUa == null))) {
-	    		idUa = null;
+	    	Long idUaParam = null;
+	    	if ((idUa != "")&&((idUa != null))) {
+	    		idUaParam = Long.parseLong(idUa);
 			}
 	    	 
 //	    	List<String> listStrCodSetor = usuarioSetorGerenciadoService. (obs)
@@ -1479,8 +1480,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //		    List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
 //							listarProgramacaoEntregaVigenteLiderSetor(matriculaColaborador,anoMes,codSetor,listStrCodSetor );
 
-		    List<ProgEntVigenteDto> listarProgEntVigenteDto = programacaoEntregaRepository.
-					listarProgramacaoEntregaVigenteLiderSetorNovo(matriculaColaborador,anoMes,codSetor,Long.parseLong(idUsuarioLogado),Long.parseLong(idUa) );
+		    List<ProgEntVigenteResumoDto> listarProgEntVigenteDto = programacaoEntregaRepository.
+					listarProgramacaoEntregaVigenteLiderSetorNovo(matriculaColaborador,anoMes,codSetor,Long.parseLong(idUsuarioLogado),idUaParam );
     
 		    
 		    List<ProgEntVigenteResponse> listarProgEntVigenteResponse = new ArrayList();
@@ -1490,7 +1491,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			String nomeFuncionario; // (obs)
 	    	
 	    	 
-	    	for (ProgEntVigenteDto progEntrega : listarProgEntVigenteDto) {
+	    	for (ProgEntVigenteResumoDto progEntrega : listarProgEntVigenteDto) {
 					
 	    		 
 	    		 ProgEntVigenteResponse progEntVigenteResponse = new ProgEntVigenteResponse();
@@ -1523,6 +1524,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
 	    		 progEntVigenteResponse.setCodSetor(progEntrega.getCodSetor());
 	    		 progEntVigenteResponse.setStatus("Programado");
+	    		 progEntVigenteResponse.setLocalEntrega(progEntrega.getLocalEntrega());
 	    		
 				   
 	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
@@ -1826,6 +1828,74 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			 }
 			
 			return listaProgCopia;
+
+		}
+
+		@Override
+		public List<RegistroEntregaResponse> listarRegistroEntrega(String matriculaColaborador, String anoMes,
+				String codSetor, String idUa) {
+			
+				
+				if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
+		    		 matriculaColaborador = null;
+				}
+		    	 
+		    	if ((anoMes == "")||((anoMes == null))) {
+		    		 anoMes = null;
+				}
+		    	 
+		    	if ((codSetor == "")||((codSetor == null))) {
+		    		 codSetor = null;
+				}
+		    	Long idUaParam = null;
+		    	if ((idUa != "")&&((idUa != null))) {
+		    		idUaParam = Long.parseLong(idUa);
+				}
+
+			    List<RegistroEntregaDto> listaregistroEntregaDto = programacaoEntregaRepository.
+			    		listarProgramacaoEntregaRegistroEntrega(matriculaColaborador,anoMes,codSetor,idUaParam );
+			    
+			    List<RegistroEntregaResponse> listaRegistroEntregaResponse = new ArrayList();
+		    	 
+		    	 
+			    String descrSetor = ""; 
+				String nomeFuncionario; 
+		    	
+		    	 
+		    	for (RegistroEntregaDto registroEntrega : listaregistroEntregaDto) {
+						
+		    		 
+		    		RegistroEntregaResponse registroEntregaResponse = new RegistroEntregaResponse();
+		    		 
+	                 nomeFuncionario = "";
+		    		
+		    		 descrSetor = vwSisbenSetorService.ObterDescrSetor(registroEntrega.getCodSetor()); 
+		    		 registroEntregaResponse.setDescrSetor(descrSetor); 
+		    		 
+		    		 nomeFuncionario =  vwSisbenFuncionarioService.ObterNomePorMatricula(registroEntrega.getMatriculaColaborador());
+		    		 
+			    	 if (nomeFuncionario != "" ) {
+			    		 registroEntregaResponse.setNomeColaborador(nomeFuncionario);	 
+			    	 } else {
+			    		 registroEntregaResponse.setNomeColaborador("Funcionário excluído do TOTVS!");
+			    	 }
+		    		 
+			    	 registroEntregaResponse.setAnoMes(registroEntrega.getAnoMes());
+			    	 registroEntregaResponse.setMatriculaColaborador(registroEntrega.getMatriculaColaborador());
+			    	 registroEntregaResponse.setCodSetor(registroEntrega.getCodSetor());
+			    	 registroEntregaResponse.setLocalEntrega(registroEntrega.getLocalEntrega());
+			    	 registroEntregaResponse.setDataProgramacao(registroEntrega.getDataProgramacao());
+			    	 registroEntregaResponse.setId(registroEntrega.getId());
+			    	 registroEntregaResponse.setDataEntrega(registroEntrega.getDataEntrega());
+			    	 registroEntregaResponse.setIdJustificativa(registroEntrega.getIdJustificativa());
+		    		
+					   
+		    		 listaRegistroEntregaResponse.add(registroEntregaResponse);
+					    
+				}
+			    
+			    return listaRegistroEntregaResponse;
+	    
 
 		}
 		

@@ -6,12 +6,11 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
-import com.bahiana.sisben.api.dto.ProgEntVigenteDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaAvulsaDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
+import com.bahiana.sisben.api.response.RegistroEntregaResponse;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
@@ -103,6 +102,12 @@ public interface ProgramacaoEntregaService {
 				String matriculaColaboradorOrigem,
 	            String matriculaColaboradoresDestino,
 	            String idUsuarioLogado);
+	 
+	 List<RegistroEntregaResponse> listarRegistroEntrega(
+             String matriculaColaborador,
+             String anoMes,
+             String codSetor,
+             String idUa);
 	 
 	 
 	
