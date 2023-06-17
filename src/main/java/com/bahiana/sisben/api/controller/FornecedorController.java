@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
+import com.bahiana.sisben.api.response.RegistroEntregaResponse;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -137,7 +138,7 @@ public class FornecedorController {
 			  try {
 					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
 					programacaoEntregaDto.setId(id);	
-					programacaoEntrega = programacaoEntregaService.registrarEntrega(programacaoEntregaDto);
+					programacaoEntregaService.registrarEntrega(programacaoEntregaDto);
 					return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
 			     } catch (RegraNegocioException e) {
 				    return ResponseEntity.badRequest().body(e.getMessage());
@@ -171,6 +172,18 @@ public class FornecedorController {
 					programacaoEntregaService.atualizarStatusAnalise24h(programacaoEntregaDto);
 				
 	 }	
+	  
+	  @GetMapping(value =  "/listarRegistroEntrega" )
+	    @ResponseBody
+	    List<RegistroEntregaResponse> listarRegistroEntrega(
+               @RequestParam(required = false  ) String matriculaColaborador,
+               @RequestParam(required = false ) String anoMes,
+               @RequestParam(required = false ) String codSetor,
+               @RequestParam(required = false ) String idUa) {
+	    	
+	    	return this.programacaoEntregaService.listarRegistroEntrega(matriculaColaborador, anoMes, codSetor,idUa);  
+	    	
+	    }
 		
 
 }

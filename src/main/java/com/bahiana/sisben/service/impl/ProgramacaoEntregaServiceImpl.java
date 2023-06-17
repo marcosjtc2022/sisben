@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -1097,23 +1098,18 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	   }
 
 		@Override
-		public ProgramacaoEntrega registrarEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
+		public void registrarEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
-			 validaFormRegistroEntrega(programacaoEntregaDto);
-			
-			
-			 ProgramacaoEntrega programacaoEntrega =  programacaoEntregaRepository.findById(programacaoEntregaDto.getId()).get();
-			 LocalDateTime dataModificacao = LocalDateTime.now();
-			 programacaoEntregaDto.setDataUltimaModificacao(dataModificacao);
-			 programacaoEntrega.setDataEntrega(programacaoEntregaDto.getDataEntrega());
-			 programacaoEntrega.setUaRealizada(programacaoEntregaDto.getUaRealizada());
-			 programacaoEntrega.setIdUa(programacaoEntregaDto.getIdUa());
+			// validaFormRegistroEntrega(programacaoEntregaDto);
 			 
-			 if((programacaoEntregaDto.getIdJustificativa() != null)) {
-				 programacaoEntrega.setIdJustificativa(programacaoEntregaDto.getIdJustificativa());
-			 }
+			  programacaoEntregaRepository.registrarEntrega(programacaoEntregaDto.getUaRealizada(),
+					 programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+					 LocalDateTime.now(),
+					 programacaoEntregaDto.getDataEntrega(),
+					 programacaoEntregaDto.getIdUa(),
+					 programacaoEntregaDto.getIdJustificativa(),
+					 programacaoEntregaDto.getId());
 			 
-			 return programacaoEntregaRepository.save(programacaoEntrega);
 		}
 		
         public void validaFormRegistroEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
