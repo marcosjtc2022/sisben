@@ -134,15 +134,11 @@ public class FornecedorController {
 		
 		@Transactional
 		@PutMapping("/registrarEntrega/{id}")
-		public ResponseEntity registrarEntrega(@PathVariable("id") Long id,@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
-			  try {
-					ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
+		public void registrarEntrega(@PathVariable("id") Long id,@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
+			 
 					programacaoEntregaDto.setId(id);	
 					programacaoEntregaService.registrarEntrega(programacaoEntregaDto);
-					return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
-			     } catch (RegraNegocioException e) {
-				    return ResponseEntity.badRequest().body(e.getMessage());
-			     }
+			 
 		}
 		
 		

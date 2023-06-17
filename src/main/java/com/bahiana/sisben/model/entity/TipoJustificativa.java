@@ -44,9 +44,9 @@ public class TipoJustificativa implements Serializable  {
 //	@OneToMany(mappedBy = "tipoJustificativa",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	Set<JustificativaTipoJustificativa> tiposJustificativa;
 	
-	//Mapenado classe JusitificativaTipoJustificativa Antes
-	@OneToMany(mappedBy = "tipoJustificativa",fetch = FetchType.LAZY)
-	Set<Justificativa> justificativas;
+	//Mapenado classe JusitificativaTipoJustificativa man 17.06.2023
+//	@OneToMany(mappedBy = "tipoJustificativa",fetch = FetchType.LAZY)
+//	Set<Justificativa> justificativas;
 
 	public Long getId() {
 		return id;

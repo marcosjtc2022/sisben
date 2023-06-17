@@ -40,9 +40,9 @@ public class UnidadeAcademica implements Serializable {
 //	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.LAZY)
 //	Set<ProgramacaoEntrega> programcaoEntregas;
 	
-	//Mapenado classe usuario ***
-	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.LAZY)
-	Set<Usuario> usuarios;
+//	//Mapenado classe usuario *** man 17.06.2023
+//	@OneToMany(mappedBy = "unidadeAcademica", fetch = FetchType.LAZY)
+//	Set<Usuario> usuarios;
 
 	public Long getId() {
 		return id;

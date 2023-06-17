@@ -36,10 +36,10 @@ public class UsuarioSetorGerenciado implements Serializable {
 //	@OneToMany(mappedBy = "setorGerenciado", fetch = FetchType.LAZY)
 //	Set<UsuarioSetorGerenciado> setoresGerenciados;
 	
-	//mapeando a classe Usuario (Usuario da entrega).
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(updatable=false,insertable=false,name = "id_usuario")
-    Usuario usuarioLider;
+//	//mapeando a classe Usuario (Usuario da entrega). man 17.06.2023
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(updatable=false,insertable=false,name = "id_usuario")
+//    Usuario usuarioLider;
 
 	public Long getIdUsuarioLider() {
 		return idUsuarioLider;

@@ -74,29 +74,29 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy = "usuario",fetch = FetchType.LAZY)
 	Set<UsuarioSetor> Usuariosetores;	
 	
-	//Mapeando a classe perfil
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(updatable=false,insertable=false,name = "id_perfil")
-	Perfil perfil;	
+	//Mapeando a classe perfil man 17.06.2023
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(updatable=false,insertable=false,name = "id_perfil")
+//	Perfil perfil;	
 	
-	//Mapeando a classe fornecedor
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(updatable=false,insertable=false,name = "id_fornecedor")
-	Fornecedor fornecedor;	
+//	//Mapeando a classe fornecedor man 17.06.2023
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(updatable=false,insertable=false,name = "id_fornecedor")
+//	Fornecedor fornecedor;	
 	
 //	//Mapenado classe ProgramacaoEntrega (obs) (retirado para diminuir objetos na memória)
 //	@OneToMany(mappedBy = "usuarioEntrega", fetch = FetchType.LAZY)
 //	Set<ProgramacaoEntrega> usuarioProgEntregas;
 	
-	//mapeando a classe UnidadeAcademica. **
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(updatable=false,insertable=false,name = "id_ua")
-    UnidadeAcademica unidadeAcademica;
+//	//mapeando a classe UnidadeAcademica. ** man 17.06.2023
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(updatable=false,insertable=false,name = "id_ua")
+//    UnidadeAcademica unidadeAcademica;
     
     
-	//Mapenado classe SetorGerenciado 
-	@OneToMany(mappedBy = "usuarioLider", fetch = FetchType.LAZY)
-	Set<UsuarioSetorGerenciado> usuariosLideres;
+	//Mapenado classe SetorGerenciado man 17.06.2023
+//	@OneToMany(mappedBy = "usuarioLider", fetch = FetchType.LAZY)
+//	Set<UsuarioSetorGerenciado> usuariosLideres;
     
 //	//Mapenado classe usuariosetorgerenciado
 //	@OneToMany(mappedBy = "usuarioGerente", fetch = FetchType.LAZY)
@@ -206,29 +206,29 @@ public class Usuario implements Serializable {
 		this.externo = externo;
 	}
 
-	public Perfil getPerfil() {
-		return perfil;
-	}
+//	public Perfil getPerfil() {
+//		return perfil;
+//	}
+//
+//	public void setPerfil(Perfil perfil) {
+//		this.perfil = perfil;
+//	}
 
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
-	}
+//	public Fornecedor getFornecedor() {
+//		return fornecedor;
+//	}
+//
+//	public void setFornecedor(Fornecedor fornecedor) {
+//		this.fornecedor = fornecedor;
+//	}
 
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
-	}
-
-	public UnidadeAcademica getUnidadeAcademica() {
-		return unidadeAcademica;
-	}
-
-	public void setUnidadeAcademica(UnidadeAcademica unidadeAcademica) {
-		this.unidadeAcademica = unidadeAcademica;
-	}
+//	public UnidadeAcademica getUnidadeAcademica() {
+//		return unidadeAcademica;
+//	}
+//
+//	public void setUnidadeAcademica(UnidadeAcademica unidadeAcademica) {
+//		this.unidadeAcademica = unidadeAcademica;
+//	}
 
 	public Usuario() {
 		
