@@ -145,7 +145,7 @@ public class Perfil implements Serializable {
 //	Set<PerfilFuncionalidade> perfis;	
 	
 //	//Mapenado classe usuario  man 17.06.2023
-	@OneToMany(mappedBy = "perfil", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "perfil", fetch = FetchType.LAZY)
 	Set<Usuario> perflUsuarios;
 	
 	

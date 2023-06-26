@@ -75,7 +75,7 @@ public class Usuario implements Serializable {
 	Set<UsuarioSetor> Usuariosetores;	
 	
 	//Mapeando a classe perfil 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(updatable=false,insertable=false,name = "id_perfil")
 	Perfil perfil;	
 	
