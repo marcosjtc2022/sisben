@@ -85,8 +85,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	@Query("SELECT pe FROM ProgramacaoEntrega pe WHERE  Month(pe.dataProgramacao) = Month(:mesAnoProgramacao)"
 			+ " AND Year(pe.dataProgramacao) = Year(:mesAnoProgramacao)"
 	        + " AND pe.matriculaColaborador = :matriculaColaborador "
-	        + " AND (pe.stAprov is null)"
-	        + " OR  (pe.stAprov = 1) ")
+	        + " AND ((pe.tipoSolicitacao in ('I','A','E') and pe.stAprov = 1) or (pe.stAprov is null and ( pe.tipoSolicitacao is null or pe.tipoSolicitacao = '' ))  )")
 	List<ProgramacaoEntrega> listaProgramacaoEntregaAnoMesMatricula(@Param("mesAnoProgramacao") LocalDate mesAnoProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
@@ -299,7 +298,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ "       pe.idUa = ua.id and"
 			+ "       pe.codSetor IN (SELECT sg.codSetor FROM UsuarioSetorGerenciado sg "
 			+ "			 WHERE sg.idUsuarioLider=:idUsuarioLider ) and "
-			+ " ((pe.tipoSolicitacao in ('I','A','E') and pe.stAprov = 1) or (pe.stAprov is null and  pe.tipoSolicitacao is null )  )"
+			+ " ((pe.tipoSolicitacao in ('I','A','E') and pe.stAprov = 1) or (pe.stAprov is null and ( pe.tipoSolicitacao is null or pe.tipoSolicitacao = '' ))  )"
 			+ " order by pe.anoMes,pe.matriculaColaborador   ")
 	List<ProgEntVigenteResumoDto> listarProgramacaoEntregaVigenteLiderSetorNovo(
 			@Param("matriculaColaborador") String matriculaColaborador,
@@ -342,7 +341,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ "      vw.codSecao IN (SELECT sg.codSetor FROM UsuarioSetorGerenciado sg "
 			+ "						 WHERE sg.idUsuarioLider=:idUsuarioLider ) and "
 			+ " vw.matriculaFuncionario not in (select pe.matriculaColaborador from ProgramacaoEntrega pe where pe.anoMes = :anoMes and "
-			+ "((pe.tipoSolicitacao in ('I','A','E') and pe.stAprov = 1) or (pe.stAprov is null and  pe.tipoSolicitacao is null ))  )   "
+			+ "((pe.tipoSolicitacao in ('I','A','E') and pe.stAprov = 1) or (pe.stAprov is null and  ( pe.tipoSolicitacao is null or pe.tipoSolicitacao = '' ) ))  )   "
 			+ " order by vw.nomeFuncionario,vw.codSecao, vw.matriculaFuncionario    ")
 	List<ProgEntVigenteNpDto> listarProgramacaoEntregaVigenteNaoProgramadoLiderSetorNovo(
 			@Param("matriculaColaborador") String matriculaColaborador,
