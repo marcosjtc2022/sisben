@@ -74,10 +74,10 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy = "usuario",fetch = FetchType.LAZY)
 	Set<UsuarioSetor> Usuariosetores;	
 	
-	//Mapeando a classe perfil man 17.06.2023
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(updatable=false,insertable=false,name = "id_perfil")
-//	Perfil perfil;	
+	//Mapeando a classe perfil 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(updatable=false,insertable=false,name = "id_perfil")
+	Perfil perfil;	
 	
 //	//Mapeando a classe fornecedor man 17.06.2023
 //	@ManyToOne(fetch = FetchType.LAZY)
@@ -206,13 +206,13 @@ public class Usuario implements Serializable {
 		this.externo = externo;
 	}
 
-//	public Perfil getPerfil() {
-//		return perfil;
-//	}
-//
-//	public void setPerfil(Perfil perfil) {
-//		this.perfil = perfil;
-//	}
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
 
 //	public Fornecedor getFornecedor() {
 //		return fornecedor;
