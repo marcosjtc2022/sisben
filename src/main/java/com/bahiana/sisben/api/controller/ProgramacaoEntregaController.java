@@ -515,6 +515,15 @@ public class ProgramacaoEntregaController {
 		    			,matriculaOrigem,matriculasDestino,idUsuarioLogado);
 		    	
 		    }
+		    
+		    @GetMapping("/pesquisarDataMatrRegEntr")
+			public ProgramacaoEntrega pesquisarProgrEntregaDataMatrRegistroEntrega(@RequestParam(required = true  ) String matriculaColaborador,
+			         @RequestParam(required = true ) String dataProgramacao) {
+					
+					return programacaoEntregaService.pesquisarProgrEntregaDataMatrRegistroEntrega(dataProgramacao, matriculaColaborador);
+						
+							
+			}
 	
 	
   

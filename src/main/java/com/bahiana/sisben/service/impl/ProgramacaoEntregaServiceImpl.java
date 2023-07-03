@@ -1894,6 +1894,12 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    
 
 		}
+
+		@Override
+		public ProgramacaoEntrega pesquisarProgrEntregaDataMatrRegistroEntrega(String dataProgramacao,
+				String matriculaColaborador) {
+			return this.programacaoEntregaRepository.pesquisarProgrEntregaDataMatrRegistroEntrega(dataProgramacao, matriculaColaborador);
+		}
 		
 	
 }

@@ -431,5 +431,16 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("idJustificativa") Long idJustificativa,
 			@Param("id") Long id);
 	
+	@Query("SELECT pe FROM ProgramacaoEntrega pe WHERE  Month(pe.dataProgramacao) = Month(:dataProgramacao)"
+			+ " AND Year(pe.dataProgramacao) = Year(:dataProgramacao)"
+			+ " AND Day(pe.dataProgramacao) = Day(:dataProgramacao)"
+	        + " AND pe.matriculaColaborador = :matriculaColaborador "
+	        + " AND ((pe.tipoSolicitacao in ('I','A','E') and pe.stAprov = 1) or (pe.stAprov is null and ( pe.tipoSolicitacao is null or pe.tipoSolicitacao = '' ))  )")
+	ProgramacaoEntrega pesquisarProgrEntregaDataMatrRegistroEntrega(@Param("dataProgramacao") String dataProgramacao,
+			                              @Param("matriculaColaborador") String matriculaColaborador);
+	
+	
+	
+	
 
 }
