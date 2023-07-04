@@ -110,7 +110,18 @@ public class ProgramacaoEntrega implements Serializable{
 	@Column(name = "justificativa_reprovacao")
 	private String justReprovacao;
 	
+	@Column(name = "id_just_nprogramado")
+	private Long idJustNprogramado;
 	
+	
+	public Long getIdJustNprogramado() {
+		return idJustNprogramado;
+	}
+
+	public void setIdJustNprogramado(Long idJustNprogramado) {
+		this.idJustNprogramado = idJustNprogramado;
+	}
+
 	@Transient
 	String tabelaProgramacaoEntrega;
 	
@@ -449,13 +460,14 @@ public class ProgramacaoEntrega implements Serializable{
 		this.descricaoFeriado = descricaoFeriado;
 	}
 	
+	
 	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stFerias, Boolean stAprov, Boolean exigSuspensa,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao, String diaDaSemana,
 			LocalDate dataProgramacao, String descricaoFeriado, String anoMes, String codSetor, String tipoSolicitacao,
-			Long idUaAlterar, String justReprovacao) {
-		super();
+			Long idUaAlterar, String justReprovacao, Long idJustNprogramado) {
+		
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
 		this.uaPrevista = uaPrevista;
@@ -481,6 +493,7 @@ public class ProgramacaoEntrega implements Serializable{
 		this.tipoSolicitacao = tipoSolicitacao;
 		this.idUaAlterar = idUaAlterar;
 		this.justReprovacao = justReprovacao;
+		this.idJustNprogramado = idJustNprogramado;
 	}
 
 	public ProgramacaoEntrega() {

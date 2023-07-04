@@ -404,7 +404,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
 			+ "       (:idUa is null or pe.idUa = :idUa) and"
 			+ "       pe.idUa = ua.id  "
-			+ " order by pe.anoMes,pe.matriculaColaborador   ")
+			+ " order by pe.anoMes,pe.dataProgramacao,pe.matriculaColaborador   ")
 	List<RegistroEntregaDto> listarProgramacaoEntregaRegistroEntrega(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
@@ -419,8 +419,9 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
 			+ " dataUltimaModificacao = :dataUltimaModificacao,"
 			+ " idUa = :idUa, "
-			+ " idJustificativa = :idJustificativa, "
-			+ " dataEntrega = :dataEntrega "
+			+ " idJustNprogramado = :idJustificativa, "
+			+ " dataEntrega = :dataEntrega,"
+			+ " idUsuario = :idUsuarioUltimaModificacao "
 			+ " where id = :id")
 	void registrarEntrega(
 			@Param("uaRealizada") String uaRealizada,
