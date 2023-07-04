@@ -175,9 +175,10 @@ public class FornecedorController {
                @RequestParam(required = false  ) String matriculaColaborador,
                @RequestParam(required = false ) String anoMes,
                @RequestParam(required = false ) String codSetor,
-               @RequestParam(required = false ) String idUa) {
+               @RequestParam(required = false ) String idUa,
+               @RequestParam(required = false ) String dataProgramacao) {
 	    	
-	    	return this.programacaoEntregaService.listarRegistroEntrega(matriculaColaborador, anoMes, codSetor,idUa);  
+	    	return this.programacaoEntregaService.listarRegistroEntrega(matriculaColaborador, anoMes, codSetor,idUa,dataProgramacao);  
 	    	
 	    }
 		

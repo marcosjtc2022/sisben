@@ -108,7 +108,8 @@ public interface ProgramacaoEntregaService {
              String matriculaColaborador,
              String anoMes,
              String codSetor,
-             String idUa);
+             String idUa,
+             String dataProgramacao);
 	 
 	 ProgramacaoEntrega pesquisarProgrEntregaDataMatrRegistroEntrega(String dataProgramacao,String matriculaColaborador);
 	 

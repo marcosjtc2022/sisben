@@ -1829,7 +1829,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 
 		@Override
 		public List<RegistroEntregaResponse> listarRegistroEntrega(String matriculaColaborador, String anoMes,
-				String codSetor, String idUa) {
+				String codSetor, String idUa, String dataProgramacao) {
 			
 				
 				if ((matriculaColaborador == "")||((matriculaColaborador == null))) {
@@ -1847,9 +1847,16 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		    	if ((idUa != "")&&((idUa != null))) {
 		    		idUaParam = Long.parseLong(idUa);
 				}
+		    	
+		    	LocalDate dataProgramacaoParam = null;
+		    	if ((dataProgramacao != "")&&((dataProgramacao != null))) {	
+		    		dataProgramacaoParam = LocalDate.parse(dataProgramacao);
+				}
+		    	
+		    	 
 
 			    List<RegistroEntregaDto> listaregistroEntregaDto = programacaoEntregaRepository.
-			    		listarProgramacaoEntregaRegistroEntrega(matriculaColaborador,anoMes,codSetor,idUaParam );
+			    		listarProgramacaoEntregaRegistroEntrega(matriculaColaborador,anoMes,codSetor,idUaParam, dataProgramacaoParam );
 			    
 			    List<RegistroEntregaResponse> listaRegistroEntregaResponse = new ArrayList();
 		    	 

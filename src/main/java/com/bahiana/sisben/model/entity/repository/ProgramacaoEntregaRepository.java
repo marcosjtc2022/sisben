@@ -403,13 +403,15 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"
 			+ "       (:codSetor is null or pe.codSetor = :codSetor) and"
 			+ "       (:idUa is null or pe.idUa = :idUa) and"
+			+ "       (:dataProgramacao is null or pe.dataProgramacao = :dataProgramacao) and"
 			+ "       pe.idUa = ua.id  "
 			+ " order by pe.anoMes,pe.dataProgramacao,pe.matriculaColaborador   ")
 	List<RegistroEntregaDto> listarProgramacaoEntregaRegistroEntrega(
 			@Param("matriculaColaborador") String matriculaColaborador,
 			@Param("anoMes") String anoMes,
 			@Param("codSetor") String codSetor,
-			@Param("idUa") Long idUa);
+			@Param("idUa") Long idUa,
+			@Param("dataProgramacao") LocalDate dataProgramacao);
 	
 	
 	@Transactional
