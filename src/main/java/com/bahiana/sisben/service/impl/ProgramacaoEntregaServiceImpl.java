@@ -1907,6 +1907,81 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				String matriculaColaborador) {
 			return this.programacaoEntregaRepository.pesquisarProgrEntregaDataMatrRegistroEntrega(dataProgramacao, matriculaColaborador);
 		}
+
+		@Override
+		public ProgramacaoEntrega registrarEntregaNprog(ProgramacaoEntregaDto programacaoEntregaDto) {
+			ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
+			
+			Long contFerias = 0L; 			
+			Long contSusElegibilidade = 0L;
+			
+			//Opção por este tipo de chamada para não trazer muitos objetos para a memória.
+			//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
+			contSusElegibilidade = 0L;
+			contSusElegibilidade = suspensaoElegibilidadeService.
+				pesquisarSuspensao(programacaoEntrega.getDataProgramacao(), programacaoEntrega.getMatriculaColaborador());
+			
+			//Pesquisa se existem férias.
+			contFerias = 0L;
+			contFerias = vwSisbenFeriasElegivel.pesquisarFeriasElegivel(programacaoEntrega.getDataProgramacao(), programacaoEntrega.getMatriculaColaborador());
+			
+			//Só insere se não existirem férias nem suspensão da eligibilidade.
+			if ((contSusElegibilidade > 0)||(contFerias > 0)) {
+				throw new GlobalExceptionHandler("Data com férias ou suspensão da elegibilidade!");
+			}
+			
+			//Pesquisa se existe valor marmita e recupera.
+			ValorMarmita valorMarmita = valorMarmitaService.
+					obterValorVigencia(programacaoEntrega.getDataProgramacao());
+			
+			if ( valorMarmita == null) {
+				throw new GlobalExceptionHandler("Não existe vigência de valor"
+						+ " da marmita cadastrado para a data da programação informada!");
+			}
+			
+			//Recupera e atribui o valor da marmita.
+			programacaoEntrega.setIdValor(valorMarmita.getId());
+			
+			//Recupera dia da semana
+			UtilSisben utilSisben = new UtilSisben(); 
+			programacaoEntrega.setDiaDaSemana(utilSisben.getDiaDaSemana(programacaoEntrega.getDataProgramacao()));
+			
+			//Recupera setor do usuário.
+			VwSisbenFuncionario vwSisbenFuncionario = vwSisbenFuncionarioService.
+			ObterPorMatricula(programacaoEntrega.getMatriculaColaborador()).get();
+			
+			programacaoEntrega.setCodSetor(vwSisbenFuncionario.getCodSecao());
+			
+			//Pesquisa existência de data especial.
+			Calendario calendario = new Calendario();
+			calendario = calendarioService.pesquisarPorData(programacaoEntrega.getDataProgramacao());
+			programacaoEntrega.setDescricaoFeriado(null);
+			if (calendario != null) {
+				programacaoEntrega.setDescricaoFeriado(calendario.getDescricao());
+			};
+			
+			Integer intMesRegEntr = programacaoEntrega.getDataProgramacao().getMonthValue();
+			Integer intAnoRegEntr = programacaoEntrega.getDataProgramacao().getYear();
+				
+			String strMesRegEntr = intMesRegEntr.toString();
+			if (strMesRegEntr.length()== 1) {
+				strMesRegEntr = "0" + strMesRegEntr;
+			}
+				
+			String strAnoMesRegEntr = intAnoRegEntr.toString() + strMesRegEntr; 
+				
+			programacaoEntrega.setAnoMes(strAnoMesRegEntr);
+			
+			//Ua realizada é igual a prevista neste momento.
+			programacaoEntrega.setUaRealizada(programacaoEntrega.getUaPrevista());
+			programacaoEntrega.setIdJustificativa(programacaoEntrega.getIdJustificativa());
+			
+			
+			programacaoEntrega.setDataUltimaModificacao(LocalDateTime.now());
+			
+			
+			return programacaoEntregaRepository.save(programacaoEntrega);
+		}
 		
 	
 }

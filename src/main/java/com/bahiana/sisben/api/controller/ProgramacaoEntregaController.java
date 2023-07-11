@@ -503,7 +503,7 @@ public class ProgramacaoEntregaController {
                      @RequestParam(required = true ) String matriculaOrigem,
                      @RequestParam(required = true ) String matriculasDestino,
                      @RequestParam(required = true ) String idUsuarioLogado ) {
-		    	
+//		    	
 //		    	Long countProg = programacaoEntregaService.
 //			    		pesquisarProgrEntregaDataMatr(dataProgramacao,
 //			    				matriculaDestino);

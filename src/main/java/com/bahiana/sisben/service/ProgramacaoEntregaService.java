@@ -113,6 +113,8 @@ public interface ProgramacaoEntregaService {
 	 
 	 ProgramacaoEntrega pesquisarProgrEntregaDataMatrRegistroEntrega(String dataProgramacao,String matriculaColaborador);
 	 
+	 ProgramacaoEntrega registrarEntregaNprog(ProgramacaoEntregaDto programacaoEntregaDto);
+	 
 	 
 	 
 	

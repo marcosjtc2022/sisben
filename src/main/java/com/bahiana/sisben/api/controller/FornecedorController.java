@@ -26,6 +26,7 @@ import com.bahiana.sisben.api.dto.FornecedorDto;
 import com.bahiana.sisben.api.dto.ProgramacaoEntregaDto;
 import com.bahiana.sisben.api.response.ProgEntVigenteResponse;
 import com.bahiana.sisben.api.response.RegistroEntregaResponse;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Fornecedor;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -180,6 +181,27 @@ public class FornecedorController {
 	    	
 	    	return this.programacaoEntregaService.listarRegistroEntrega(matriculaColaborador, anoMes, codSetor,idUa,dataProgramacao);  
 	    	
+	    }
+	  
+	    @PostMapping("/registrarEntregaNprog")
+		@Transactional
+		public ResponseEntity registrarEntregaNprog(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
+		  try {
+			  
+			    Long countProg = programacaoEntregaService.
+			    		pesquisarProgrEntregaDataMatr(programacaoEntregaDto.getDataProgramacao().toString(),
+			    				                      programacaoEntregaDto.getMatriculaColaborador());
+				
+				if ((countProg > 0)) {
+					throw new GlobalExceptionHandler("Já existe programação para esta data!");
+				} 
+			  
+				ProgramacaoEntrega programacaoEntrega = new ProgramacaoEntrega() ;
+				programacaoEntrega = programacaoEntregaService.registrarEntregaNprog(programacaoEntregaDto);
+				return new ResponseEntity(programacaoEntrega, HttpStatus.CREATED);
+		     } catch (RegraNegocioException e) {
+			    return ResponseEntity.badRequest().body(e.getMessage());
+		     }
 	    }
 		
 
