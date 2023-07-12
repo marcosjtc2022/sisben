@@ -1982,6 +1982,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			return programacaoEntregaRepository.save(programacaoEntrega);
 		}
+
+		@Override
+		public Long pesquisarProgrEntregaPendente(String dataProgramacao, String matriculaColaborador) {
+			return programacaoEntregaRepository.pesquisarProgrEntregaPendente(dataProgramacao, matriculaColaborador);
+		}
 		
 	
 }

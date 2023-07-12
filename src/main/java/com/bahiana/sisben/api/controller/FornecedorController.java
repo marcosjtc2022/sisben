@@ -188,6 +188,15 @@ public class FornecedorController {
 		public ResponseEntity registrarEntregaNprog(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 		  try {
 			  
+			  
+			    Long countProgPend = programacaoEntregaService.
+			    		pesquisarProgrEntregaPendente(programacaoEntregaDto.getDataProgramacao().toString(),
+			    				                      programacaoEntregaDto.getMatriculaColaborador());
+				
+				if ((countProgPend > 0)) {
+					throw new GlobalExceptionHandler("Existe uma programação pendente para esta data!");
+				}  
+			  
 			    Long countProg = programacaoEntregaService.
 			    		pesquisarProgrEntregaDataMatr(programacaoEntregaDto.getDataProgramacao().toString(),
 			    				                      programacaoEntregaDto.getMatriculaColaborador());

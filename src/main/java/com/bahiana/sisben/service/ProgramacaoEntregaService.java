@@ -115,6 +115,8 @@ public interface ProgramacaoEntregaService {
 	 
 	 ProgramacaoEntrega registrarEntregaNprog(ProgramacaoEntregaDto programacaoEntregaDto);
 	 
+	 Long pesquisarProgrEntregaPendente(String dataProgramacao,String matriculaColaborador);
+	 
 	 
 	 
 	

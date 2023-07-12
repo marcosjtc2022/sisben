@@ -175,6 +175,14 @@ public class ProgramacaoEntregaController {
 		 public ResponseEntity salvarProgramacaoAvulsa(@RequestBody ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto) {
 			  try {
 				  
+				    Long countProgPend = programacaoEntregaService.
+				    		pesquisarProgrEntregaPendente(programacaoEntregaAvulsaDto.getDataProgramacao().toString(),
+				    				                      programacaoEntregaAvulsaDto.getMatriculaColaborador());
+					
+					if ((countProgPend > 0)) {
+						throw new GlobalExceptionHandler("Existe uma programação pendente para esta data!");
+					}  
+				  
 				    Long countProg = programacaoEntregaService.
 				    		pesquisarProgrEntregaDataMatr(programacaoEntregaAvulsaDto.getDataProgramacao().toString(),
 				    				                      programacaoEntregaAvulsaDto.getMatriculaColaborador());
