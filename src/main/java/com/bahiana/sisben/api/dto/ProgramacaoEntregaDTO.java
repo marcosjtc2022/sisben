@@ -82,6 +82,16 @@ public class ProgramacaoEntregaDto {
 	
 	private String justReprovacao;
 	
+	private Boolean entrNaoProgramada;
+	
+	public Boolean getEntrNaoProgamada() {
+		return entrNaoProgramada;
+	}
+
+	public void setEntrNaoProgamada(Boolean entrNaoProgamada) {
+		this.entrNaoProgramada = entrNaoProgamada;
+	}
+
 	public String getJustReprovacao() {
 		return justReprovacao;
 	}
@@ -356,6 +366,7 @@ public class ProgramacaoEntregaDto {
 		this.descricaoFeriado = descricaoFeriado;
 	}
 	
+	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
@@ -363,7 +374,7 @@ public class ProgramacaoEntregaDto {
 			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao, String bairroSecaoElegivel,
 			Boolean exigSuspensa, Boolean stFerias, LocalDate utlimaDataMes, LocalDate primeiraDataMes, String anoMes,
 			String nomeFuncionario, String descrSetor, String tipoSolicitacao, Boolean naoGerarFDS,
-			String justReprovacao) {
+			String justReprovacao, Boolean entrNaoProgamada) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -397,6 +408,7 @@ public class ProgramacaoEntregaDto {
 		this.tipoSolicitacao = tipoSolicitacao;
 		this.naoGerarFDS = naoGerarFDS;
 		this.justReprovacao = justReprovacao;
+		this.entrNaoProgramada = entrNaoProgamada;
 	}
 
 	public ProgramacaoEntregaDto() {

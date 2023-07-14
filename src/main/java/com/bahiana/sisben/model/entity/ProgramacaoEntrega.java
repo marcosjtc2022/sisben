@@ -113,7 +113,17 @@ public class ProgramacaoEntrega implements Serializable{
 	@Column(name = "id_just_nprogramado")
 	private Long idJustNprogramado;
 	
+	@Column(name = "nao_prog", columnDefinition="BIT")
+	private Boolean entrNaoProgramada;
 	
+	public Boolean getEntrNaoProgramada() {
+		return entrNaoProgramada;
+	}
+
+	public void setEntrNaoProgramada(Boolean entrNaoProgamada) {
+		this.entrNaoProgramada = entrNaoProgamada;
+	}
+
 	public Long getIdJustNprogramado() {
 		return idJustNprogramado;
 	}
@@ -460,13 +470,12 @@ public class ProgramacaoEntrega implements Serializable{
 		this.descricaoFeriado = descricaoFeriado;
 	}
 	
-	
 	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stFerias, Boolean stAprov, Boolean exigSuspensa,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao, String diaDaSemana,
 			LocalDate dataProgramacao, String descricaoFeriado, String anoMes, String codSetor, String tipoSolicitacao,
-			Long idUaAlterar, String justReprovacao, Long idJustNprogramado) {
+			Long idUaAlterar, String justReprovacao, Long idJustNprogramado, Boolean entrNaoProgramada) {
 		
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -494,6 +503,7 @@ public class ProgramacaoEntrega implements Serializable{
 		this.idUaAlterar = idUaAlterar;
 		this.justReprovacao = justReprovacao;
 		this.idJustNprogramado = idJustNprogramado;
+		this.entrNaoProgramada = entrNaoProgramada;
 	}
 
 	public ProgramacaoEntrega() {

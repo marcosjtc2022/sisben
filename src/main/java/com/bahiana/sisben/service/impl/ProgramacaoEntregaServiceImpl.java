@@ -1912,6 +1912,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public ProgramacaoEntrega registrarEntregaNprog(ProgramacaoEntregaDto programacaoEntregaDto) {
 			ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
 			
+			programacaoEntrega.setIdUsuario(programacaoEntregaDto.getIdUsuario());
+			
 			Long contFerias = 0L; 			
 			Long contSusElegibilidade = 0L;
 			
@@ -1978,6 +1980,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			
 			programacaoEntrega.setDataUltimaModificacao(LocalDateTime.now());
+			
+			//Registro de entrega não programada.
+			programacaoEntrega.setEntrNaoProgramada(true);
 			
 			
 			return programacaoEntregaRepository.save(programacaoEntrega);
