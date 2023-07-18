@@ -467,6 +467,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			LocalDate dataProgramacao = null;
 			Long contFerias = 0L; 			
 			Long contSusElegibilidade = 0L;
+			LocalDate dataAdmissaoLocalDate = null;
+			//Gera ano e mês correntes.
+			int mesAtual = LocalDate.now().getMonthValue();
+			int anoAtual = LocalDate.now().getYear();
 			
 			
 			//Verifica variável boolean que é utilizada na classe utilsisben, no método calculaDiasMes.
@@ -490,6 +494,13 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 			//Recupera o setor do funcionário.#
 			VwSisbenFuncionario funcionario = vwSisbenFuncionarioService.ObterPorMatricula(programacaoEntregaDto.getMatriculaColaborador()).get();
+			
+			//Recupera dados dos elegíveis na visão.
+			Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
+			ObterPorMatricula(programacaoEntregaDto.getMatriculaColaborador());
+			
+			//Converte a data da admissão para localdate.
+			dataAdmissaoLocalDate =  VwSisbenElegibilidade.get().getDataAdmissao().toLocalDate();
 			
 			
 			//dataSolicitacaoDateTime = LocalDateTime.parse(programacaoEntregaDto.getDataAtual().toString());
@@ -540,6 +551,23 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					programacaoInput.setDescricaoFeriado(calendario.getDescricao());
 					incluirData = false;
 				};
+				
+				//Alteração 18.07.2023
+				
+				//Recupera o ano da admissão.
+				Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
+				//Integer mesAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getMonthValue();
+				
+				//Verifica se o ano atual é igual ao ano da admissão.
+				if (anoAdmissao == anoAtual ) {
+					//Verifica se a data da programação é menor que data da programação.
+					if(dataProgramacao.isBefore(dataAdmissaoLocalDate)) {
+						incluirData = false;
+					}
+				}
+				
+				
+				// fim alteração
 				
 				//Opção por este tipo de chamada para não trazer muitos objetos para a memória.
 				//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
@@ -753,7 +781,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			int mesProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getMonthValue();
 			int anoProgramacao = programacaoEntregaDto.getMesAnoProgramacao().getYear();
 			
-			//Verifica se ano informado é menor que ano corrente.
+//			//Verifica se ano informado é menor que ano corrente.
 			if (anoProgramacao < anoAtual ) {
 				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!");
 			}
@@ -763,7 +791,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				if (mesProgramacao < mesAtual ) {
 					throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!");
 				}
-			}
+			} 
 			
 			
 			//Recupera dados dos elegíveis na visão.
@@ -774,6 +802,28 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			if (!VwSisbenElegibilidade.isPresent()) {
 				throw new GlobalExceptionHandler("Funcionário não elegível!");
 			}
+			
+			//alteração 18.07.2023
+			//Recupera o ano e o mês da programação, e o ano e o mês da admissão.
+			
+			Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
+			Integer mesAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getMonthValue();
+			
+			
+//			//Verifica se ano informado é menor que ano corrente.
+//			if (anoProgramacao < anoAtual ) {
+//				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!");
+//			}
+			
+			if (anoAdmissao == anoAtual ) {
+				//Verifica se mês informado é menor que mês corrente.
+				if (mesProgramacao < mesAdmissao ) {
+					throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês da admissão!");
+				}
+			}
+			
+			
+			//fim alteração.
 			
 			//Verifica se para aquele mês, ano e matrícula já existe programação.
 			Long contExisteProgramacao = programacaoEntregaRepository.
