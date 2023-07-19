@@ -1975,6 +1975,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			    	 registroEntregaResponse.setId(registroEntrega.getId());
 			    	 registroEntregaResponse.setDataEntrega(registroEntrega.getDataEntrega());
 			    	 registroEntregaResponse.setIdJustificativa(registroEntrega.getIdJustificativa());
+			    	 registroEntregaResponse.setEntrNaoProgramada(registroEntrega.getEntrNaoProgramada());
 		    		
 					   
 		    		 listaRegistroEntregaResponse.add(registroEntregaResponse);

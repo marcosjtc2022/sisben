@@ -28,6 +28,16 @@ private String matriculaColaborador;
 	
 	private Long idJustificativa;
 	
+	private Boolean entrNaoProgramada;
+	
+	public Boolean getEntrNaoProgramada() {
+		return entrNaoProgramada;
+	}
+
+	public void setEntrNaoProgramada(Boolean entrNaoProgramada) {
+		this.entrNaoProgramada = entrNaoProgramada;
+	}
+
 	public LocalDate getDataEntrega() {
 		return dataEntrega;
 	}
@@ -116,12 +126,10 @@ private String matriculaColaborador;
 		this.descrSetor = descrSetor;
 	}
 	
-	
-
-	
 	public RegistroEntregaResponse(String matriculaColaborador, Long id, String anoMes, String codSetor,
 			String descrSetor, String nomeColaborador, String localEntrega, Boolean solicExtra,
-			LocalDate dataProgramacao, LocalDate dataEntrega, Long idJustificativa) {
+			LocalDate dataProgramacao, LocalDate dataEntrega, Long idJustificativa, Boolean entrNaoProgramada) {
+		super();
 		this.matriculaColaborador = matriculaColaborador;
 		this.id = id;
 		this.anoMes = anoMes;
@@ -133,6 +141,7 @@ private String matriculaColaborador;
 		this.dataProgramacao = dataProgramacao;
 		this.dataEntrega = dataEntrega;
 		this.idJustificativa = idJustificativa;
+		this.entrNaoProgramada = entrNaoProgramada;
 	}
 
 	public RegistroEntregaResponse() {
