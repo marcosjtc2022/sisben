@@ -291,6 +291,34 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		@Transactional
 		public ProgramacaoEntrega salvarProgramacaoAvulsa(ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto) {
 			
+			
+			//Recupera dados dos elegíveis na visão.
+			Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
+			ObterPorMatricula(programacaoEntregaAvulsaDto.getMatriculaColaborador());
+			
+			//Converte a data da admissão para localdate.
+			LocalDate dataAdmissaoLocalDate =  VwSisbenElegibilidade.get().getDataAdmissao().toLocalDate();
+
+            //Alteração 18.07.2023
+			
+			//int mesAtual = LocalDate.now().getMonthValue();
+			int anoAtual = LocalDate.now().getYear();
+				
+				//Recupera o ano da admissão.
+				Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
+				//Integer mesAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getMonthValue();
+				
+				//Verifica se o ano atual é igual ao ano da admissão.
+				if (anoAdmissao == anoAtual ) {
+					//Verifica se a data da programação é menor que data da programação.
+					if(programacaoEntregaAvulsaDto.getDataProgramacao().isBefore(dataAdmissaoLocalDate)) {
+						throw new GlobalExceptionHandler("Data da programação deve ser maior ou igual à data da admissão!");
+					}
+				}
+				
+				
+			// fim alteração
+			
 			Long contFerias = 0L; 			
 			Long contSusElegibilidade = 0L;
 			
@@ -469,7 +497,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			Long contSusElegibilidade = 0L;
 			LocalDate dataAdmissaoLocalDate = null;
 			//Gera ano e mês correntes.
-			int mesAtual = LocalDate.now().getMonthValue();
+			//int mesAtual = LocalDate.now().getMonthValue();
 			int anoAtual = LocalDate.now().getYear();
 			
 			
@@ -479,6 +507,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			} else {
 			   //Despreza a data corrente e a data posterior getDataAtual().plusDays(2) . 
 			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().plusDays(2).toString());
+			   //Diminui dois dias por conta do cálculo acima.
+			   diasProgramacaoMes = diasProgramacaoMes - 2;
 			}
 			
 			//Separa ano e mês da programação.
@@ -600,6 +630,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				
 				dataProgramacao = dataProgramacao.plusDays(1);
 				
+			}
+			
+			if (listaProgramacaoEntregaMes.isEmpty()){
+				throw new GlobalExceptionHandler("Atenção! Período com férias ou suspensão da elegibilidade!");
 			}
 			
 			return listaProgramacaoEntregaMes;
@@ -1963,6 +1997,35 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			ProgramacaoEntrega programacaoEntrega = ProgramacaoEntregaServiceImpl.from(programacaoEntregaDto);
 			
 			programacaoEntrega.setIdUsuario(programacaoEntregaDto.getIdUsuario());
+			
+			
+			//Recupera dados dos elegíveis na visão.
+			Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
+			ObterPorMatricula(programacaoEntrega.getMatriculaColaborador());
+			
+			//Converte a data da admissão para localdate.
+			LocalDate dataAdmissaoLocalDate =  VwSisbenElegibilidade.get().getDataAdmissao().toLocalDate();
+
+            //Alteração 18.07.2023
+			
+			//int mesAtual = LocalDate.now().getMonthValue();
+			int anoAtual = LocalDate.now().getYear();
+				
+				//Recupera o ano da admissão.
+				Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
+				//Integer mesAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getMonthValue();
+				
+				//Verifica se o ano atual é igual ao ano da admissão.
+				if (anoAdmissao == anoAtual ) {
+					//Verifica se a data da programação é menor que data da programação.
+					if(programacaoEntrega.getDataProgramacao().isBefore(dataAdmissaoLocalDate)) {
+						throw new GlobalExceptionHandler("Data da programação deve ser maior ou igual à data da admissão!");
+					}
+				}
+				
+				
+			// fim alteração
+
 			
 			Long contFerias = 0L; 			
 			Long contSusElegibilidade = 0L;
