@@ -117,6 +117,10 @@ public interface ProgramacaoEntregaService {
 	 
 	 Long pesquisarProgrEntregaPendente(String dataProgramacao,String matriculaColaborador);
 	 
+	 Long pesquisarProgrEntregaRepInc(String dataProgramacao,String matriculaColaborador);
+	 
+	 
+	 
 	 
 	 
 	

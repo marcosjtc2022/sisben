@@ -2106,6 +2106,11 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public Long pesquisarProgrEntregaPendente(String dataProgramacao, String matriculaColaborador) {
 			return programacaoEntregaRepository.pesquisarProgrEntregaPendente(dataProgramacao, matriculaColaborador);
 		}
+
+		@Override
+		public Long pesquisarProgrEntregaRepInc(String dataProgramacao, String matriculaColaborador) {
+			return programacaoEntregaRepository.pesquisarProgrEntregaRepInc(dataProgramacao, matriculaColaborador);
+		}
 		
 	
 }
