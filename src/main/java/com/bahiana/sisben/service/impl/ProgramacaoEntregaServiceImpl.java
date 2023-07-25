@@ -302,19 +302,19 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
             //Alteração 18.07.2023
 			
 			//int mesAtual = LocalDate.now().getMonthValue();
-			int anoAtual = LocalDate.now().getYear();
+			//int anoAtual = LocalDate.now().getYear();
 				
 				//Recupera o ano da admissão.
 				Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
 				//Integer mesAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getMonthValue();
 				
 				//Verifica se o ano atual é igual ao ano da admissão.
-				if (anoAdmissao == anoAtual ) {
+				//if (anoAdmissao == anoAtual ) {
 					//Verifica se a data da programação é menor que data da programação.
 					if(programacaoEntregaAvulsaDto.getDataProgramacao().isBefore(dataAdmissaoLocalDate)) {
 						throw new GlobalExceptionHandler("Data da programação deve ser maior ou igual à data da admissão!");
 					}
-				}
+				//}
 				
 				
 			// fim alteração
@@ -585,16 +585,16 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 				//Alteração 18.07.2023
 				
 				//Recupera o ano da admissão.
-				Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
+				//Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
 				//Integer mesAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getMonthValue();
 				
 				//Verifica se o ano atual é igual ao ano da admissão.
-				if (anoAdmissao == anoAtual ) {
+				//if (anoAdmissao == anoAtual ) {
 					//Verifica se a data da programação é menor que data da programação.
 					if(dataProgramacao.isBefore(dataAdmissaoLocalDate)) {
 						incluirData = false;
 					}
-				}
+				//}
 				
 				
 				// fim alteração
@@ -847,7 +847,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //			//Verifica se ano informado é menor que ano corrente.
 //			if (anoProgramacao < anoAtual ) {
 //				throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!");
-//			}
+//			} 
 			
 			if (anoAdmissao == anoAtual ) {
 				//Verifica se mês informado é menor que mês corrente.
@@ -2010,19 +2010,19 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
             //Alteração 18.07.2023
 			
 			//int mesAtual = LocalDate.now().getMonthValue();
-			int anoAtual = LocalDate.now().getYear();
+			//int anoAtual = LocalDate.now().getYear();
 				
 				//Recupera o ano da admissão.
-				Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
+				//Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
 				//Integer mesAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getMonthValue();
 				
 				//Verifica se o ano atual é igual ao ano da admissão.
-				if (anoAdmissao == anoAtual ) {
+				//if (anoAdmissao == anoAtual ) {
 					//Verifica se a data da programação é menor que data da programação.
 					if(programacaoEntrega.getDataProgramacao().isBefore(dataAdmissaoLocalDate)) {
 						throw new GlobalExceptionHandler("Data da programação deve ser maior ou igual à data da admissão!");
 					}
-				}
+				//}
 				
 				
 			// fim alteração
