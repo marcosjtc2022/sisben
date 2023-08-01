@@ -8,7 +8,7 @@ private String matriculaColaborador;
 	
 	private String codSetor;
 	
-	private String localEntrega; //obs
+	//private String localEntrega; //obs
 	
 	public String getMatriculaColaborador() {
 		return matriculaColaborador;
@@ -34,19 +34,26 @@ private String matriculaColaborador;
 		this.codSetor = codSetor;
 	}
 
-	public String getLocalEntrega() {
-		return localEntrega;
-	}
+//	public String getLocalEntrega() {
+//		return localEntrega;
+//	}
+//
+//	public void setLocalEntrega(String localEntrega) {
+//		this.localEntrega = localEntrega;
+//	}
 
-	public void setLocalEntrega(String localEntrega) {
-		this.localEntrega = localEntrega;
-	}
-
-	public ProgEntVigenteResumoDto(String matriculaColaborador, String anoMes, String codSetor, String localEntrega) {
+//	public ProgEntVigenteResumoDto(String matriculaColaborador, String anoMes, String codSetor, String localEntrega) {
+//		this.matriculaColaborador = matriculaColaborador;
+//		this.anoMes = anoMes;
+//		this.codSetor = codSetor;
+//		this.localEntrega = localEntrega;
+//		
+//	}
+	
+	public ProgEntVigenteResumoDto(String matriculaColaborador, String anoMes, String codSetor) {
 		this.matriculaColaborador = matriculaColaborador;
 		this.anoMes = anoMes;
 		this.codSetor = codSetor;
-		this.localEntrega = localEntrega;
 		
 	}
 

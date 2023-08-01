@@ -16,15 +16,15 @@ private String matriculaColaborador;
 	
 	private String status;
 	
-	private String localEntrega; //obs
-	
-	public String getLocalEntrega() {
-		return localEntrega;
-	}
-
-	public void setLocalEntrega(String localEntrega) {
-		this.localEntrega = localEntrega;
-	}
+//	private String localEntrega; //obs
+//	
+//	public String getLocalEntrega() {
+//		return localEntrega;
+//	}
+//
+//	public void setLocalEntrega(String localEntrega) {
+//		this.localEntrega = localEntrega;
+//	}
 
 	public String getStatus() {
 		return status;
@@ -76,15 +76,25 @@ private String matriculaColaborador;
 	
 	
 
+//	public ProgEntVigenteResponse(String matriculaColaborador, String anoMes, String codSetor, String descrSetor,
+//			String nomeColaborador, String status, String localEntrega) {
+//		this.matriculaColaborador = matriculaColaborador;
+//		this.anoMes = anoMes;
+//		this.codSetor = codSetor;
+//		this.descrSetor = descrSetor;
+//		this.nomeColaborador = nomeColaborador;
+//		this.status = status;
+//		this.localEntrega = localEntrega;
+//	}
+	
 	public ProgEntVigenteResponse(String matriculaColaborador, String anoMes, String codSetor, String descrSetor,
-			String nomeColaborador, String status, String localEntrega) {
+			String nomeColaborador, String status) {
 		this.matriculaColaborador = matriculaColaborador;
 		this.anoMes = anoMes;
 		this.codSetor = codSetor;
 		this.descrSetor = descrSetor;
 		this.nomeColaborador = nomeColaborador;
 		this.status = status;
-		this.localEntrega = localEntrega;
 	}
 
 	public ProgEntVigenteResponse() {

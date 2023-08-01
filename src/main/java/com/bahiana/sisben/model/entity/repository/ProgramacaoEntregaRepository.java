@@ -291,7 +291,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
 	@Query("SELECT distinct new com.bahiana.sisben.api.dto.ProgEntVigenteResumoDto(pe.matriculaColaborador, pe.anoMes,"
-			+ " pe.codSetor, ua.descricao) "
+			+ " pe.codSetor) "
 			+ " FROM ProgramacaoEntrega pe, UnidadeAcademica ua "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"

@@ -1604,7 +1604,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	    		 progEntVigenteResponse.setMatriculaColaborador(progEntrega.getMatriculaColaborador());
 	    		 progEntVigenteResponse.setCodSetor(progEntrega.getCodSetor());
 	    		 progEntVigenteResponse.setStatus("Programado");
-	    		 progEntVigenteResponse.setLocalEntrega(progEntrega.getLocalEntrega());
+	    		// progEntVigenteResponse.setLocalEntrega(progEntrega.getLocalEntrega());
 	    		
 				   
 	    		 listarProgEntVigenteResponse.add(progEntVigenteResponse);
