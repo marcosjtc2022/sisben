@@ -68,6 +68,12 @@ public class TipoJustificativaController {
 		@PutMapping("{id}")
 		public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody TipoJustificativaDto tipoJustificativaDTO) {
 		  try {
+			  
+			    Long countTipoJustificativa = justificativaService.pesquisaTipoJustificativa(id);
+				
+				if ((countTipoJustificativa > 0) && (countTipoJustificativa != null)) {
+					return new ResponseEntity("Tipo de justificativa está vinculada a uma justificativa !", HttpStatus.BAD_REQUEST);
+				}
 				TipoJustificativa tipoJustificativa = new TipoJustificativa() ;
 				tipoJustificativaDTO.setId(id);			
 				tipoJustificativa = tipoJustificativaService.alterar(tipoJustificativaDTO);
