@@ -143,6 +143,14 @@ public class FornecedorController {
 					//man 08.08.2023
 					
 				    ProgramacaoEntrega programacaoEntrega =	programacaoEntregaService.obterPorId2(id);
+				    
+				    Long countProgCanc = programacaoEntregaService.
+							pesquisarProgrEntregaRepInc(programacaoEntrega.getDataProgramacao().toString(),
+			    				                      programacaoEntrega.getMatriculaColaborador());
+				
+					if ((countProgCanc > 0)) {
+						throw new GlobalExceptionHandler("Existe uma programação de inclusão reprovada para esta data de programação!");
+					}  
 				     
 				    
 					Long countProgPend = programacaoEntregaService.
@@ -150,7 +158,7 @@ public class FornecedorController {
 						    				                      programacaoEntrega.getMatriculaColaborador());
 							
 					if ((countProgPend > 0)) {
-							throw new GlobalExceptionHandler("Existe uma programação pendente para esta data!");
+							throw new GlobalExceptionHandler("Existe uma programação pendente esta data de programação!");
 					}
 					
 				    
@@ -209,6 +217,14 @@ public class FornecedorController {
 		public ResponseEntity registrarEntregaNprog(@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 		  try {
 			  
+			  
+				Long countProgCanc = programacaoEntregaService.
+						pesquisarProgrEntregaRepInc(programacaoEntregaDto.getDataProgramacao().toString(),
+		    				                      programacaoEntregaDto.getMatriculaColaborador());
+			
+				if ((countProgCanc > 0)) {
+					throw new GlobalExceptionHandler("Existe uma programação de inclusão reprovada para esta data!");
+				}  
 			  
 			    Long countProgPend = programacaoEntregaService.
 			    		pesquisarProgrEntregaPendente(programacaoEntregaDto.getDataProgramacao().toString(),

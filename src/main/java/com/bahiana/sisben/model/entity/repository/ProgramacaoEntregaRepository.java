@@ -461,7 +461,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " AND Year(pe.dataProgramacao) = Year(:dataProgramacao)"
 			+ " AND Day(pe.dataProgramacao) = Day(:dataProgramacao)"
 	        + " AND pe.matriculaColaborador = :matriculaColaborador "
-	        + " AND ((pe.tipoSolicitacao = 'I' and pe.stAprov = 0))")
+	        + " AND (pe.tipoSolicitacao = 'I' and pe.stAprov = 0)")
 	Long pesquisarProgrEntregaRepInc(@Param("dataProgramacao") String dataProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	

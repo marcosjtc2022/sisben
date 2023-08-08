@@ -175,6 +175,22 @@ public class ProgramacaoEntregaController {
 		 public ResponseEntity salvarProgramacaoAvulsa(@RequestBody ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto) {
 			  try {
 				  
+				  
+				  
+				    //man 08.08.2023
+					
+					Long countProgCanc = programacaoEntregaService.pesquisarProgrEntregaRepInc(programacaoEntregaAvulsaDto.getDataProgramacao().toString(),
+							programacaoEntregaAvulsaDto.getMatriculaColaborador());
+				
+					if ((countProgCanc > 0)) {
+						throw new GlobalExceptionHandler("Existe uma programação de inclusão reprovada para esta data!");
+					}  
+				    
+				
+					
+					//man 08.08.2023
+				
+				  
 				    Long countProgPend = programacaoEntregaService.
 				    		pesquisarProgrEntregaPendente(programacaoEntregaAvulsaDto.getDataProgramacao().toString(),
 				    				                      programacaoEntregaAvulsaDto.getMatriculaColaborador());

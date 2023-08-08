@@ -291,24 +291,6 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		@Transactional
 		public ProgramacaoEntrega salvarProgramacaoAvulsa(ProgramacaoEntregaAvulsaDto programacaoEntregaAvulsaDto) {
 			
-			//man 08.08.2023
-		    
-			Long countProgPend = pesquisarProgrEntregaPendente(programacaoEntregaAvulsaDto.getDataProgramacao().toString(),
-					programacaoEntregaAvulsaDto.getMatriculaColaborador());
-					
-			if ((countProgPend > 0)) {
-					throw new GlobalExceptionHandler("Existe uma programação pendente para esta data e matrícuala !");
-			}
-			
-			Long countProg = pesquisarProgrEntregaDataMatr(programacaoEntregaAvulsaDto.getDataProgramacao().toString(),
-					                                       programacaoEntregaAvulsaDto.getMatriculaColaborador());
-				
-			if ((countProg > 0)) {
-					throw new GlobalExceptionHandler("Já existe programação para esta data e matríucla!");
-			} 
-			
-			//man 08.08.2023
-			
 			
 			//Recupera dados dos elegíveis na visão.
 			Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
