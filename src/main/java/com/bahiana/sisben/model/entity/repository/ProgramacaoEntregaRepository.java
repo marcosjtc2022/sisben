@@ -443,7 +443,9 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " AND Year(pe.dataProgramacao) = Year(:dataProgramacao)"
 			+ " AND Day(pe.dataProgramacao) = Day(:dataProgramacao)"
 	        + " AND pe.matriculaColaborador = :matriculaColaborador "
-	        + " AND ((pe.tipoSolicitacao in ('I','A','E') and pe.stAprov = 1) or (pe.stAprov is null and ( pe.tipoSolicitacao is null or pe.tipoSolicitacao = '' ))  )")
+	        + " AND ((pe.tipoSolicitacao in ('I','A','E') and pe.stAprov = 1) or "
+	        + "      (pe.tipoSolicitacao in ('A','E') and pe.stAprov = 0) or "
+	        + " (pe.stAprov is null and ( pe.tipoSolicitacao is null or pe.tipoSolicitacao = '' ))  )")
 	ProgramacaoEntrega pesquisarProgrEntregaDataMatrRegistroEntrega(@Param("dataProgramacao") String dataProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	

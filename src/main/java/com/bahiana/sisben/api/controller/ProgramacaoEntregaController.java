@@ -268,7 +268,8 @@ public class ProgramacaoEntregaController {
 			   Long countProgAprovada = programacaoEntregaService.pesquisaProgramacaoEntregaMenos24hAprovada(id);
 				
 				if ((countProgAprovada > 0) && (countProgAprovada != null)) {
-					return new ResponseEntity("Programação entrega com menos de 24h já aprovada!", HttpStatus.BAD_REQUEST);
+					//return new ResponseEntity("Programação entrega com menos de 24h já aprovada!", HttpStatus.BAD_REQUEST);
+					throw new GlobalExceptionHandler("Programação entrega com menos de 24h já aprovada!");
 				} 
 			
 			//entity é o que retorna de ObterPorId

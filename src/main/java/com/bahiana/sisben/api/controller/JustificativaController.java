@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.JustificativaDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
@@ -70,6 +71,15 @@ public class JustificativaController {
 	 @PutMapping("{id}")
 	 public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody JustificativaDto justificativaDTO) {
 		try {
+			
+			 Long countJustificativa = programacaoEntregaService.pesquisaJustificativa(id);
+			
+			 if ((countJustificativa > 0) && (countJustificativa != null)) {
+				//return new ResponseEntity("Justificativa está vinculada a uma programação entrega!", HttpStatus.BAD_REQUEST);
+				throw new GlobalExceptionHandler("Justificativa está vinculada a uma programação entrega!");
+				
+			 } 
+			
 			 Justificativa justificativa = new Justificativa() ;
 			 justificativaDTO.setId(id);			
 			 justificativa = justificativaService.alterar(justificativaDTO);
@@ -88,7 +98,9 @@ public class JustificativaController {
 		Long countJustificativa = programacaoEntregaService.pesquisaJustificativa(id);
 		
 		if ((countJustificativa > 0) && (countJustificativa != null)) {
-			return new ResponseEntity("Justificativa está vinculada a uma programação entrega!", HttpStatus.BAD_REQUEST);
+			//return new ResponseEntity("Justificativa está vinculada a uma programação entrega!", HttpStatus.BAD_REQUEST);
+			throw new GlobalExceptionHandler("Justificativa está vinculada a uma programação entrega!");
+			
 		}
 		
 //			Optional<Justificativa> justificativa = justificativaService.obterPorId(id);		

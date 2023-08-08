@@ -114,7 +114,8 @@ public class FornecedorController {
 			Long countFornecedor = usuarioService.pesquisaFornecedor(id);
 			
 			if ((countFornecedor > 0) && (countFornecedor != null)) {
-				return new ResponseEntity("Fornecedor está vinculado a um usuário!", HttpStatus.BAD_REQUEST);
+				//return new ResponseEntity("Fornecedor está vinculado a um usuário!", HttpStatus.BAD_REQUEST);
+				throw new GlobalExceptionHandler("Fornecedor está vinculado a um usuário!");
 			}
 			
 			//entity é o que retorna de ObterPorId
@@ -137,7 +138,27 @@ public class FornecedorController {
 		@PutMapping("/registrarEntrega/{id}")
 		public void registrarEntrega(@PathVariable("id") Long id,@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
 			 
-					programacaoEntregaDto.setId(id);	
+					programacaoEntregaDto.setId(id);
+					
+					//man 08.08.2023
+					
+				    ProgramacaoEntrega programacaoEntrega =	programacaoEntregaService.obterPorId2(id);
+				     
+				    
+					Long countProgPend = programacaoEntregaService.
+						    		pesquisarProgrEntregaPendente(programacaoEntrega.getDataProgramacao().toString(),
+						    				                      programacaoEntrega.getMatriculaColaborador());
+							
+					if ((countProgPend > 0)) {
+							throw new GlobalExceptionHandler("Existe uma programação pendente para esta data!");
+					}
+					
+				    
+					
+					//man 08.08.2023
+					
+					
+					
 					programacaoEntregaService.registrarEntrega(programacaoEntregaDto);
 			 
 		}

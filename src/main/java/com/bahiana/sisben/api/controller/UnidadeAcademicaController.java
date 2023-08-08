@@ -59,8 +59,8 @@ public class UnidadeAcademicaController {
 			    Long countUa = programacaoEntregaService.pesquisarProgrEntregaUa(id);
 				
 				if ((countUa > 0)) {
-					return new ResponseEntity("Unidade acadêmica já vinculada a uma programação!", HttpStatus.BAD_REQUEST);
-				//	throw new GlobalExceptionHandler("Unidade acadêmica já vinculada a uma programação!");
+				//	return new ResponseEntity("Unidade acadêmica já vinculada a uma programação!", HttpStatus.BAD_REQUEST);
+					throw new GlobalExceptionHandler("Unidade acadêmica já vinculada a uma programação!");
 				} 
 			  
 			  
@@ -80,8 +80,8 @@ public class UnidadeAcademicaController {
 		Long countUa = programacaoEntregaService.pesquisarProgrEntregaUa(id);
 		
 		if ((countUa > 0)) {
-			//throw new GlobalExceptionHandler("Unidade acadêmica já vinculada a uma programação!");
-			return new ResponseEntity("Unidade acadêmica já vinculada a uma programação!", HttpStatus.BAD_REQUEST);
+			throw new GlobalExceptionHandler("Unidade acadêmica já vinculada a uma programação!");
+			//return new ResponseEntity("Unidade acadêmica já vinculada a uma programação!", HttpStatus.BAD_REQUEST);
 		} 
 		
 		//entity é o que retorna de ObterPorId 

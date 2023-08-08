@@ -1729,7 +1729,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			if (dataProgramacao.equals(LocalDate.now())) {
 				
 				//Verifica se a hora da programação é menor que 13:00h. 
-				if (utilSisben.verificaHoraLimiteSolicitacao("13:00")) {
+				if (utilSisben.verificaHoraLimiteSolicitacao("23:00")) {
 					tpOperacao = tipoOperacao ;
 				} else {
 					throw new GlobalExceptionHandler("Hora limite esgotada para solicitar " + descricaoTpOperacao

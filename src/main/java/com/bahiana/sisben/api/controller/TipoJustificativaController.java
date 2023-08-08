@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.TipoJustificativaDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.TipoJustificativa;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
@@ -72,7 +73,8 @@ public class TipoJustificativaController {
 			    Long countTipoJustificativa = justificativaService.pesquisaTipoJustificativa(id);
 				
 				if ((countTipoJustificativa > 0) && (countTipoJustificativa != null)) {
-					return new ResponseEntity("Tipo de justificativa está vinculada a uma justificativa !", HttpStatus.BAD_REQUEST);
+				//	return new ResponseEntity("Tipo de justificativa está vinculada a uma justificativa !", HttpStatus.BAD_REQUEST);
+					throw new GlobalExceptionHandler("Tipo de justificativa está vinculada a uma justificativa !");
 				}
 				TipoJustificativa tipoJustificativa = new TipoJustificativa() ;
 				tipoJustificativaDTO.setId(id);			
@@ -90,7 +92,8 @@ public class TipoJustificativaController {
 			Long countTipoJustificativa = justificativaService.pesquisaTipoJustificativa(id);
 			
 			if ((countTipoJustificativa > 0) && (countTipoJustificativa != null)) {
-				return new ResponseEntity("Tipo de justificativa está vinculada a uma justificativa !", HttpStatus.BAD_REQUEST);
+				//return new ResponseEntity("Tipo de justificativa está vinculada a uma justificativa !", HttpStatus.BAD_REQUEST);
+				throw new GlobalExceptionHandler("Tipo de justificativa está vinculada a uma justificativa !");
 			}
 			
 			
