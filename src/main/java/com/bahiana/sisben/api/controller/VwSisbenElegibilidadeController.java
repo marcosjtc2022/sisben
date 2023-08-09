@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.VwSisbenElegibilidadeDto;
@@ -101,17 +102,19 @@ public class VwSisbenElegibilidadeController {
 		     }
 	}
 	
+	@GetMapping(value =  "/listarElegivelNaoProgramadoPorSetorLiderOrdenadoNome" )
+	public ResponseEntity<List<VwSisbenElegibilidade>> listarElegivelNaoProgramadoPorSetorLiderOrdenadoNome(
+            @RequestParam(required = true ) String idUsuarioLogado,
+            @RequestParam(required = true ) String anoMes) {
+		 try {
+			    Long idUsuarioLider = Long.parseLong(idUsuarioLogado);
+				return new ResponseEntity(vwSisbenElegibilidadeService.listarElegivelNProgPorLiderSetorOrdenadoNome(idUsuarioLider,anoMes),HttpStatus.CREATED );
+		     } catch (RegraNegocioException e) {
+			    return new ResponseEntity<List<VwSisbenElegibilidade>>(HttpStatus.BAD_REQUEST);
+		     }
+	}
 	
-//	@GetMapping("/obterPorMatriculaEliderSetor/{matriculaFuncionario}/{idUsuarioLogado}")
-//	public VwSisbenElegibilidade obterPorMatriculaEliderSetor(
-//			@PathVariable("matriculaFuncionario") String matriculaFuncionario,
-//			@PathVariable("idUsuarioLogado") String idUsuarioLogado) {
-//		
-//		//Optional<VwSisbenFuncionario> funcionario = new ArrayList();
-//		Optional<VwSisbenElegibilidade> elegivel = vwSisbenElegibilidadeService.obterPorMatriculaEliderSetor(matriculaFuncionario, idUsuarioLogado);
-//		return  elegivel.get();	
-//				
-//	}
+	
 
 	
 

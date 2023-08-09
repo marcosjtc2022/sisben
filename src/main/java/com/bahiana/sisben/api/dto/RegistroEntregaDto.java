@@ -24,6 +24,26 @@ public class RegistroEntregaDto {
 	
 	private Boolean entrNaoProgramada;
 	
+	private Boolean stAprov;
+	
+	private String tipoSolicitacao;
+	
+	public Boolean getStAprov() {
+		return stAprov;
+	}
+
+	public void setStAprov(Boolean stAprov) {
+		this.stAprov = stAprov;
+	}
+
+	public String getTipoSolicitacao() {
+		return tipoSolicitacao;
+	}
+
+	public void setTipoSolicitacao(String tipoSolicitacao) {
+		this.tipoSolicitacao = tipoSolicitacao;
+	}
+
 	public Boolean getEntrNaoProgramada() {
 		return entrNaoProgramada;
 	}
@@ -103,12 +123,10 @@ public class RegistroEntregaDto {
 	public void setLocalEntrega(String localEntrega) {
 		this.localEntrega = localEntrega;
 	}
-
 	
-
 	public RegistroEntregaDto(Long id, String matriculaColaborador, String anoMes, String codSetor, String localEntrega,
 			Boolean solicExtra, LocalDate dataProgramacao, LocalDate dataEntrega, Long idJustificativa,
-			Boolean entrNaoProgramada) {
+			Boolean entrNaoProgramada, Boolean stAprov, String tipoSolicitacao) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -120,6 +138,8 @@ public class RegistroEntregaDto {
 		this.dataEntrega = dataEntrega;
 		this.idJustificativa = idJustificativa;
 		this.entrNaoProgramada = entrNaoProgramada;
+		this.stAprov = stAprov;
+		this.tipoSolicitacao = tipoSolicitacao;
 	}
 
 	public RegistroEntregaDto() {

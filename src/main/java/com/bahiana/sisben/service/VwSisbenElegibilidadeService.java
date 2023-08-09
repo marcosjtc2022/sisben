@@ -26,10 +26,7 @@ public interface VwSisbenElegibilidadeService {
 	
 	List<VwSisbenElegibilidade> listarElegivelPorLiderSetorOrdenadoNome(VwSisbenElegibilidadeDto vwSisbenElegibilidadeDto);
 	
-//	Optional<VwSisbenElegibilidade> obterPorMatriculaEliderSetor(
-//			@Param("matriculaFuncionario")  String matriculaFuncionario,
-//			@Param("idUsuarioLogado") String idUsuarioLogado);
-//	
+	List<VwSisbenElegibilidade> listarElegivelNProgPorLiderSetorOrdenadoNome(Long idUsuarioLogado, String anoMes);
 	
 	
 

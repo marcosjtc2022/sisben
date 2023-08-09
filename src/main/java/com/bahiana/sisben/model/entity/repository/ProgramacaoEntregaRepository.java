@@ -402,7 +402,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	
 	@Query("SELECT new com.bahiana.sisben.api.dto.RegistroEntregaDto(pe.id,pe.matriculaColaborador, pe.anoMes,"
 			+ " pe.codSetor, ua.descricao, pe.solicExtra, pe.dataProgramacao , pe.dataEntrega,"
-			+ " pe.idJustificativa, pe.entrNaoProgramada	) "
+			+ " pe.idJustificativa, pe.entrNaoProgramada, pe.stAprov, pe.tipoSolicitacao	) "
 			+ " FROM ProgramacaoEntrega pe, UnidadeAcademica ua "
 			+ " where (:matriculaColaborador is null or pe.matriculaColaborador = :matriculaColaborador) and "
 			+ "       (:anoMes is null or pe.anoMes = :anoMes) and"

@@ -105,15 +105,15 @@ public class VwSisbenElegibilidadeServiceImpl implements VwSisbenElegibilidadeSe
 		return elegivelLista;
 	}
 
-//	@Override
-//	public Optional<VwSisbenElegibilidade> obterPorMatriculaEliderSetor(String matriculaFuncionario,
-//			String idUsuarioLogado) {
-//		
-//		 List<String> listStrCodSetor = usuarioSetorGerenciadoService.
-//			     concatenaSetoresLider(idUsuarioLogado);
-//
-//		
-//		 return vwSisbenElegibilidadeRepository.obterPorMatriculaEliderSetor(matriculaFuncionario, listStrCodSetor);
-//	}
+	@Override
+	public List<VwSisbenElegibilidade> listarElegivelNProgPorLiderSetorOrdenadoNome(
+			Long idUsuarioLogado, String anoMes) {
+		
+		List<VwSisbenElegibilidade> elegivelNpLista =  vwSisbenElegibilidadeRepository.
+				listarElegivelNProgPorLiderSetorOrdenadoNome(anoMes,idUsuarioLogado);
+		
+		return elegivelNpLista;
+	}
+
 
 }

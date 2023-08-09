@@ -45,19 +45,13 @@ public interface VwSisbenElegibilidadeRepository extends JpaRepository<VwSisbenE
 	List<VwSisbenElegibilidade> listarElegivelPorLiderSetorOrdenadoNome(
 			@Param("strCodSetor") List<String> strCodSetor);
 	
-	
-//	@Query("SELECT eleg FROM VwSisbenElegibilidade eleg "
-//			+ " WHERE eleg.matriculaFuncionario=:matriculaFuncionario and "
-//			+ " eleg.codSecao IN :strCodSetor ")
-//	Optional<VwSisbenElegibilidade> obterPorMatriculaEliderSetor(
-//			@Param("matriculaFuncionario")  String matriculaFuncionario,
-//			@Param("strCodSetor") List<String> strCodSetor);
-	
-	
-	
-	
-	
-	
-	
+	@Query("SELECT eleg FROM VwSisbenElegibilidade eleg "
+			+ "  WHERE eleg.codSecao IN (SELECT sg.codSetor FROM UsuarioSetorGerenciado sg "
+			+ "						 WHERE sg.idUsuarioLider=:idUsuarioLider )and"
+			+ " eleg.matriculaFuncionario not in (select pe.matriculaColaborador from ProgramacaoEntrega pe where pe.anoMes = :anoMes ) "
+			+ " order by eleg.nomeFuncionario, eleg.matriculaFuncionario ")
+	List<VwSisbenElegibilidade> listarElegivelNProgPorLiderSetorOrdenadoNome(
+			@Param("anoMes") String anoMes,
+			@Param("idUsuarioLider") Long idUsuarioLider);	
 
 }

@@ -545,6 +545,28 @@ public class ProgramacaoEntregaController {
 		    @GetMapping("/pesquisarDataMatrRegEntr")
 			public ProgramacaoEntrega pesquisarProgrEntregaDataMatrRegistroEntrega(@RequestParam(required = true  ) String matriculaColaborador,
 			         @RequestParam(required = true ) String dataProgramacao) {
+		    	
+		    	
+			    	//man 08.08.2023
+					
+					Long countProgCanc = programacaoEntregaService.pesquisarProgrEntregaRepInc(dataProgramacao,
+							matriculaColaborador);
+				
+					if ((countProgCanc > 0)) {
+						throw new GlobalExceptionHandler("Existe uma programação de inclusão reprovada para esta data!");
+					}
+				  
+				    Long countProgPend = programacaoEntregaService.
+				    		pesquisarProgrEntregaPendente(dataProgramacao,
+				    				matriculaColaborador);
+					
+					if ((countProgPend > 0)) {
+						throw new GlobalExceptionHandler("Existe uma programação pendente para esta data!");
+					}
+							
+					//man 08.08.2023
+			
+			  
 					
 					return programacaoEntregaService.pesquisarProgrEntregaDataMatrRegistroEntrega(dataProgramacao, matriculaColaborador);
 						
