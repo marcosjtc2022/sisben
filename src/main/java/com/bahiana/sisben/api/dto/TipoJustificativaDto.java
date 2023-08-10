@@ -13,6 +13,8 @@ public class TipoJustificativaDto {
 	private LocalDateTime dataUltimaModificacao;
 	
 	private Long idUsuarioUltimaModificacao;
+	
+	private String telaFuncao;
 
 	public Long getIdUsuarioUltimaModificacao() {
 		return idUsuarioUltimaModificacao;
@@ -46,14 +48,22 @@ public class TipoJustificativaDto {
 		this.dataUltimaModificacao = dataUltimaModificacao;
 	}
 	
-	
+	public String getTelaFuncao() {
+		return telaFuncao;
+	}
+
+	public void setTelaFuncao(String telaFuncao) {
+		this.telaFuncao = telaFuncao;
+	}
+
 	public TipoJustificativaDto(Long id, String descricao, LocalDateTime dataUltimaModificacao,
-			Long idUsuarioUltimaModificacao) {
+			Long idUsuarioUltimaModificacao, String telaFuncao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+		this.telaFuncao = telaFuncao;
 	}
 
 	public TipoJustificativaDto() {

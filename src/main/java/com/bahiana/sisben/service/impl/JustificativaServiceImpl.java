@@ -75,4 +75,9 @@ public class JustificativaServiceImpl implements JustificativaService {
 	    return  countTipoJustificativa;
 	}
 
+	@Override
+	public List<Justificativa> listarPorTelaFuncao(String telaFuncao) {
+		return this.justificativaRepository.listarPorTelaFuncao(telaFuncao);
+	}
+
 }

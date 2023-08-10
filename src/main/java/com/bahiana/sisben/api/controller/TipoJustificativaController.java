@@ -119,6 +119,11 @@ public class TipoJustificativaController {
 					
 		}
 		
+		@GetMapping(value =  "/listarTelaFuncao" )
+	    public List<String> listarTelaFuncao() {
+	    	return this.tipoJustificativaService.listarTelaFuncao();  	  
+	    }
+		
 
 
 }

@@ -15,5 +15,12 @@ public interface JustificativaRepository extends PagingAndSortingRepository<Just
 	
 	@Query("SELECT COUNT(j) FROM Justificativa j WHERE j.idTipoJustificativa=:idTipoJustificativa")
 	long pesquisaTipoJustificativa(@Param("idTipoJustificativa") Long idTipoJustificativa);
+	
+	
+	@Query("SELECT j FROM Justificativa j, TipoJustificativa tj"
+		   + " WHERE j.idTipoJustificativa = tj.id and"
+		   + "       tj.telaFuncao is not null and"
+		   + "       tj.telaFuncao like %:telaFuncao%")
+	List<Justificativa> listarPorTelaFuncao(@Param("telaFuncao") String telaFuncao);
 
 }

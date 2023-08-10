@@ -14,7 +14,7 @@ import com.bahiana.sisben.model.entity.TipoJustificativa;
 public interface JustificativaService {
 	
 	
-	 Page<Justificativa> listarPaginado(Pageable pageable);
+	    Page<Justificativa> listarPaginado(Pageable pageable);
 		
 		Page<Justificativa> listarPaginadoSimples( );
 		
@@ -29,5 +29,7 @@ public interface JustificativaService {
 		List<Justificativa> listarSimplesOrdenadoDescricao();
 		
 		long pesquisaTipoJustificativa(Long idTipoJustificativa);
+		
+		List<Justificativa> listarPorTelaFuncao(String telaFuncao);
 
 }

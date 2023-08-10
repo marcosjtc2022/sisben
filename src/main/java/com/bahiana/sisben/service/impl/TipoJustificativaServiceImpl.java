@@ -74,6 +74,11 @@ public class TipoJustificativaServiceImpl implements TipoJustificativaService {
 	public List<TipoJustificativa> listarSimplesOrdenadoDescricao() {
 		return this.tipoJustificativaRepository.findByOrderByDescricaoAsc();
 	}
+
+	@Override
+	public List<String> listarTelaFuncao() {
+		return this.tipoJustificativaRepository.listarTelaFuncao();
+	}
 	
 
 }

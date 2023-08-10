@@ -25,5 +25,7 @@ public interface TipoJustificativaService {
 		Optional<TipoJustificativa> obterPorId(Long id);
 		
 		List<TipoJustificativa> listarSimplesOrdenadoDescricao();
+		
+		List<String> listarTelaFuncao();
 
 }

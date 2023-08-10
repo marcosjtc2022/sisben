@@ -40,6 +40,9 @@ public class TipoJustificativa implements Serializable  {
 	@Column(name="id_usuario_ultima_modificacao")
 	private Long idUsuarioUltimaModificacao;
 	
+	@Column(name="tela_funcao")
+	private String telaFuncao;
+	
 //	//Mapenado classe JusitificativaTipoJustificativa Antes
 //	@OneToMany(mappedBy = "tipoJustificativa",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	Set<JustificativaTipoJustificativa> tiposJustificativa;
@@ -80,16 +83,24 @@ public class TipoJustificativa implements Serializable  {
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
 	}
 
+	public String getTelaFuncao() {
+		return telaFuncao;
+	}
+
+	public void setTelaFuncao(String telaFuncao) {
+		this.telaFuncao = telaFuncao;
+	}
+	
 	public TipoJustificativa(Long id, String descricao, LocalDateTime dataUltimaModificacao,
-			Long idUsuarioUltimaModificacao) {
+			Long idUsuarioUltimaModificacao, String telaFuncao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.dataUltimaModificacao = dataUltimaModificacao;
 		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+		this.telaFuncao = telaFuncao;
 	}
-	
-	
+
 	public TipoJustificativa() {
 		
 	}

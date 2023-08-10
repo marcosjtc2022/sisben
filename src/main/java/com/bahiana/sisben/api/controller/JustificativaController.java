@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.JustificativaDto;
@@ -134,10 +135,10 @@ public class JustificativaController {
 				
 	}
 	
-	
-	
-			
-	
+	@GetMapping("/listarPorTelaFuncao")
+	public List<Justificativa> listarPorTelaFuncao(@RequestParam(required = true  ) String telaFuncao) {
+		return  justificativaService.listarPorTelaFuncao(telaFuncao);	
+	}
 	
 
 }
