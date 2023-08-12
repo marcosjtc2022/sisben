@@ -79,6 +79,11 @@ public class TipoJustificativaServiceImpl implements TipoJustificativaService {
 	public List<String> listarTelaFuncao() {
 		return this.tipoJustificativaRepository.listarTelaFuncao();
 	}
+
+	@Override
+	public List<TipoJustificativa> listarPorTelaFuncao(String telaFuncao) {
+		return this.tipoJustificativaRepository.listarPorTelaFuncao(telaFuncao);
+	}
 	
 
 }

@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.TipoJustificativaDto;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
+import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.TipoJustificativa;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
 import com.bahiana.sisben.service.JustificativaService;
@@ -123,6 +125,11 @@ public class TipoJustificativaController {
 	    public List<String> listarTelaFuncao() {
 	    	return this.tipoJustificativaService.listarTelaFuncao();  	  
 	    }
+		
+		@GetMapping("/listarPorTelaFuncao")
+		public List<TipoJustificativa> listarPorTelaFuncao(@RequestParam(required = true  ) String telaFuncao) {
+			return  tipoJustificativaService.listarPorTelaFuncao(telaFuncao);	
+		}
 		
 
 

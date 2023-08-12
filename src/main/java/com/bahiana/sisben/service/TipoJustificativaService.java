@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.bahiana.sisben.api.dto.TipoJustificativaDto;
+import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.TipoJustificativa;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
 
@@ -27,5 +28,7 @@ public interface TipoJustificativaService {
 		List<TipoJustificativa> listarSimplesOrdenadoDescricao();
 		
 		List<String> listarTelaFuncao();
+		
+		List<TipoJustificativa> listarPorTelaFuncao(String telaFuncao);
 
 }

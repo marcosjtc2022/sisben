@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.TipoJustificativa;
 import com.bahiana.sisben.model.entity.UnidadeAcademica;
 
@@ -19,5 +20,11 @@ public interface TipoJustificativaRepository extends PagingAndSortingRepository<
 		 + " where telaFuncao is not null"
 		 + " Order by tpj.telaFuncao")
 	List<String> listarTelaFuncao();
+	
+	
+	@Query("SELECT tj from TipoJustificativa tj"
+			   + " WHERE tj.telaFuncao is not null and"
+			   + "       tj.telaFuncao like %:telaFuncao%")
+		List<TipoJustificativa> listarPorTelaFuncao(@Param("telaFuncao") String telaFuncao);
 	
 }
