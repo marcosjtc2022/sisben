@@ -20,7 +20,8 @@ public interface JustificativaRepository extends PagingAndSortingRepository<Just
 	@Query("SELECT j FROM Justificativa j, TipoJustificativa tj"
 		   + " WHERE j.idTipoJustificativa = tj.id and"
 		   + "       tj.telaFuncao is not null and"
-		   + "       tj.telaFuncao like %:telaFuncao%")
+		   + "       tj.telaFuncao like %:telaFuncao%"
+		   + " order by j.descricao")
 	List<Justificativa> listarPorTelaFuncao(@Param("telaFuncao") String telaFuncao);
 
 }
