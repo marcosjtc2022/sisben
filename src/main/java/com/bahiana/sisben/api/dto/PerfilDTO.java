@@ -117,13 +117,29 @@ public class PerfilDto {
 	private Boolean configRelatorio;
 	
 	
+	private Boolean configSuspensaoElegIEAC;
 	
 	
-
-	
-
-	
+	private Boolean configSuspensaoElegConsultar;
+		
 	//
+	
+
+	public Boolean getConfigSuspensaoElegIEAC() {
+		return configSuspensaoElegIEAC;
+	}
+
+	public Boolean getConfigSuspensaoElegConsultar() {
+		return configSuspensaoElegConsultar;
+	}
+
+	public void setConfigSuspensaoElegConsultar(Boolean configSuspensaoElegConsultar) {
+		this.configSuspensaoElegConsultar = configSuspensaoElegConsultar;
+	}
+
+	public void setConfigSuspensaoElegIEAC(Boolean configSuspensaoElegIEAC) {
+		this.configSuspensaoElegIEAC = configSuspensaoElegIEAC;
+	}
 
 	public Boolean getProgEntregaIncluir() {
 		return progEntregaIncluir;
@@ -421,6 +437,8 @@ public class PerfilDto {
 		this.funcEntrega = funcEntrega;
 	}
 	
+	
+	
 
 //	public PerfilDto(Long id, String descricao, Boolean funcEscala, Boolean funcUsuario, Boolean funcCalendario,
 //			Boolean funcCardapio, Boolean funcBeneficio, Boolean funcEntrega, LocalDateTime dataUltimaModificacao,
@@ -444,59 +462,61 @@ public class PerfilDto {
 		
 	}
 
-    public PerfilDto(Long id, String descricao, Boolean funcEscala, Boolean funcUsuario, Boolean funcCalendario,
-			Boolean funcCardapio, Boolean funcBeneficio, Boolean funcEntrega, LocalDateTime dataUltimaModificacao,
-			Long idUsuarioUltimaModificacao, Boolean progEntregaIncluir, Boolean progEntregaExcluir,
-			Boolean progEntregaAlterar, Boolean progEntregaConsultar, Boolean progEntrega24hConsultar,
-			Boolean progEntrega24hIncluir, Boolean progEntrega24hAlterar, Boolean progEntrega24hExcluir,
-			Boolean ctrlEntregaIncluir, Boolean ctrlEntregaAlterar, Boolean ctrlEntregaExcluir,
-			Boolean ctrlEntregaConsultar, Boolean ctrlEntregaAprovConsultar, Boolean ctrlEntregaAprovIncluir,
-			Boolean configPerfilUsuIEAC, Boolean configPerfilUsuConsultar, Boolean configLocalEntIEAC,
-			Boolean configLocalEntConsultar, Boolean configVlMarmitaIEAC, Boolean configVlMarmitaConsultar,
-			Boolean configJustificativaIC, Boolean configJustificativaIEAC, Boolean configJustificativaConsultar,
-			Boolean configCalendarioIEAC, Boolean configFornecedorIEAC, Boolean configFornecedorConsultar,
-			Boolean configRelatorio) {
-		super();
-		this.id = id;
-		this.descricao = descricao;
-		this.funcEscala = funcEscala;
-		this.funcUsuario = funcUsuario;
-		this.funcCalendario = funcCalendario;
-		this.funcCardapio = funcCardapio;
-		this.funcBeneficio = funcBeneficio;
-		this.funcEntrega = funcEntrega;
-		this.dataUltimaModificacao = dataUltimaModificacao;
-		this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
-		this.progEntregaIncluir = progEntregaIncluir;
-		this.progEntregaExcluir = progEntregaExcluir;
-		this.progEntregaAlterar = progEntregaAlterar;
-		this.progEntregaConsultar = progEntregaConsultar;
-		this.progEntrega24hConsultar = progEntrega24hConsultar;
-		this.progEntrega24hIncluir = progEntrega24hIncluir;
-		this.progEntrega24hAlterar = progEntrega24hAlterar;
-		this.progEntrega24hExcluir = progEntrega24hExcluir;
-		this.ctrlEntregaIncluir = ctrlEntregaIncluir;
-		this.ctrlEntregaAlterar = ctrlEntregaAlterar;
-		this.ctrlEntregaExcluir = ctrlEntregaExcluir;
-		this.ctrlEntregaConsultar = ctrlEntregaConsultar;
-		this.ctrlEntregaAprovConsultar = ctrlEntregaAprovConsultar;
-		this.ctrlEntregaAprovIncluir = ctrlEntregaAprovIncluir;
-		this.configPerfilUsuIEAC = configPerfilUsuIEAC;
-		this.configPerfilUsuConsultar = configPerfilUsuConsultar;
-		this.configLocalEntIEAC = configLocalEntIEAC;
-		this.configLocalEntConsultar = configLocalEntConsultar;
-		this.configVlMarmitaIEAC = configVlMarmitaIEAC;
-		this.configVlMarmitaConsultar = configVlMarmitaConsultar;
-		this.configJustificativaIC = configJustificativaIC;
-		this.configJustificativaIEAC = configJustificativaIEAC;
-		this.configJustificativaConsultar = configJustificativaConsultar;
-		this.configCalendarioIEAC = configCalendarioIEAC;
-		this.configFornecedorIEAC = configFornecedorIEAC;
-		this.configFornecedorConsultar = configFornecedorConsultar;
-		this.configRelatorio = configRelatorio;
-	
-  }
-	
+public PerfilDto(Long id, String descricao, Boolean funcEscala, Boolean funcUsuario, Boolean funcCalendario,
+		Boolean funcCardapio, Boolean funcBeneficio, Boolean funcEntrega, LocalDateTime dataUltimaModificacao,
+		Long idUsuarioUltimaModificacao, Boolean progEntregaIncluir, Boolean progEntregaExcluir,
+		Boolean progEntregaAlterar, Boolean progEntregaConsultar, Boolean progEntrega24hConsultar,
+		Boolean progEntrega24hIncluir, Boolean progEntrega24hAlterar, Boolean progEntrega24hExcluir,
+		Boolean ctrlEntregaIncluir, Boolean ctrlEntregaAlterar, Boolean ctrlEntregaExcluir,
+		Boolean ctrlEntregaConsultar, Boolean ctrlEntregaAprovConsultar, Boolean ctrlEntregaAprovIncluir,
+		Boolean configPerfilUsuIEAC, Boolean configPerfilUsuConsultar, Boolean configLocalEntIEAC,
+		Boolean configLocalEntConsultar, Boolean configVlMarmitaIEAC, Boolean configVlMarmitaConsultar,
+		Boolean configJustificativaIC, Boolean configJustificativaIEAC, Boolean configJustificativaConsultar,
+		Boolean configCalendarioIEAC, Boolean configFornecedorIEAC, Boolean configFornecedorConsultar,
+		Boolean configRelatorio, Boolean configSuspensaoElegIEAC, Boolean configSuspensaoElegConsultar) {
+	super();
+	this.id = id;
+	this.descricao = descricao;
+	this.funcEscala = funcEscala;
+	this.funcUsuario = funcUsuario;
+	this.funcCalendario = funcCalendario;
+	this.funcCardapio = funcCardapio;
+	this.funcBeneficio = funcBeneficio;
+	this.funcEntrega = funcEntrega;
+	this.dataUltimaModificacao = dataUltimaModificacao;
+	this.idUsuarioUltimaModificacao = idUsuarioUltimaModificacao;
+	this.progEntregaIncluir = progEntregaIncluir;
+	this.progEntregaExcluir = progEntregaExcluir;
+	this.progEntregaAlterar = progEntregaAlterar;
+	this.progEntregaConsultar = progEntregaConsultar;
+	this.progEntrega24hConsultar = progEntrega24hConsultar;
+	this.progEntrega24hIncluir = progEntrega24hIncluir;
+	this.progEntrega24hAlterar = progEntrega24hAlterar;
+	this.progEntrega24hExcluir = progEntrega24hExcluir;
+	this.ctrlEntregaIncluir = ctrlEntregaIncluir;
+	this.ctrlEntregaAlterar = ctrlEntregaAlterar;
+	this.ctrlEntregaExcluir = ctrlEntregaExcluir;
+	this.ctrlEntregaConsultar = ctrlEntregaConsultar;
+	this.ctrlEntregaAprovConsultar = ctrlEntregaAprovConsultar;
+	this.ctrlEntregaAprovIncluir = ctrlEntregaAprovIncluir;
+	this.configPerfilUsuIEAC = configPerfilUsuIEAC;
+	this.configPerfilUsuConsultar = configPerfilUsuConsultar;
+	this.configLocalEntIEAC = configLocalEntIEAC;
+	this.configLocalEntConsultar = configLocalEntConsultar;
+	this.configVlMarmitaIEAC = configVlMarmitaIEAC;
+	this.configVlMarmitaConsultar = configVlMarmitaConsultar;
+	this.configJustificativaIC = configJustificativaIC;
+	this.configJustificativaIEAC = configJustificativaIEAC;
+	this.configJustificativaConsultar = configJustificativaConsultar;
+	this.configCalendarioIEAC = configCalendarioIEAC;
+	this.configFornecedorIEAC = configFornecedorIEAC;
+	this.configFornecedorConsultar = configFornecedorConsultar;
+	this.configRelatorio = configRelatorio;
+	this.configSuspensaoElegIEAC = configSuspensaoElegIEAC;
+	this.configSuspensaoElegConsultar = configSuspensaoElegConsultar;
+}
+
+          	
 	
 	
 	
