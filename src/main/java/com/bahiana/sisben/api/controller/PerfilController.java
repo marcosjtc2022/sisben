@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bahiana.sisben.api.dto.PerfilDto;
+import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.Justificativa;
 import com.bahiana.sisben.model.entity.Perfil;
@@ -64,6 +65,15 @@ public class PerfilController {
 		@PutMapping("{id}")
 		public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PerfilDto perfilDTO) {
 		  try {
+			  
+//			    Long countPerfil = usuarioService.pesquisaPerfil(id);
+//				
+//				if ((countPerfil > 0) && (countPerfil != null)) {
+//					//return new ResponseEntity("Perfil está vinculada a um usuário!", HttpStatus.BAD_REQUEST);
+//					throw new GlobalExceptionHandler("Perfil está vinculado a um usuário!");
+//				}
+			  
+			  
 				Perfil perfil = new Perfil() ;
 				perfilDTO.setId(id);			
 				perfil = perfilService.alterar(perfilDTO);
@@ -81,7 +91,8 @@ public class PerfilController {
 			Long countPerfil = usuarioService.pesquisaPerfil(id);
 			
 			if ((countPerfil > 0) && (countPerfil != null)) {
-				return new ResponseEntity("Perfil está vinculada a um usuário!", HttpStatus.BAD_REQUEST);
+				//return new ResponseEntity("Perfil está vinculada a um usuário!", HttpStatus.BAD_REQUEST);
+				throw new GlobalExceptionHandler("Perfil está vinculado a um usuário!");
 			}
 			
 			//entity é o que retorna de ObterPorId
@@ -90,6 +101,7 @@ public class PerfilController {
 						return new ResponseEntity(HttpStatus.NO_CONTENT);
 					}).orElseGet(() -> 
 					    new ResponseEntity("Perfil não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
+					
 		}
 		
 		@GetMapping(value =  "/listarOrdenadoDescricao" )
