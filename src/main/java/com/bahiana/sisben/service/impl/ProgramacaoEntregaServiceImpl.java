@@ -154,11 +154,25 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			
 		 
 		//Recupera data da programação para verificar se tem menos de 24h.
-		LocalDate dataProgramacao = 
-		programacaoEntregaRepository.pesquisarDataProgramacao(programacaoEntregaDto.getId());
+//		LocalDate dataProgramacao = 
+//		programacaoEntregaRepository.pesquisarDataProgramacao(programacaoEntregaDto.getId());
+		
+		//Manutenção 22.08.2023
+		
+		ProgramacaoEntrega programacaoEntrega = programacaoEntregaRepository.obterProgrEntregaPorId(programacaoEntregaDto.getId());
+		
+		Long countProg24h = programacaoEntregaRepository.
+						pesquisarProgrEntregaMenos24h(programacaoEntrega.getDataProgramacao().toString(),
+								programacaoEntrega.getMatriculaColaborador());
+						
+		if ((countProg24h > 0)) {
+					throw new GlobalExceptionHandler("Já existe uma operação de programação com menos de 24h para esta data!");
+		}  
+		
+		//Manutenção 22.08.2023
            
 		//Verifica se a solicitação tem menos de 24h
-		String tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "A");
+		String tipoOperacao = this.verificaProgramacaoMenos24h(programacaoEntrega.getDataProgramacao(), "A");
 			
 			 
 	
@@ -1149,20 +1163,34 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		public void apagarProgramacaoMes(ProgramacaoEntregaDto programacaoEntregaDto) {
 			
 			String[] tabelaProgramacaoEntrega = programacaoEntregaDto.getTabelaProgramacaoEntrega().split(",");
-			LocalDate dataProgramacao = null;
+			//LocalDate dataProgramacao = null;
 			
 			for (String idProgramacao : tabelaProgramacaoEntrega){
 				
 				//Recupera data da programação para verificar se tem menos de 24h.
-				dataProgramacao = 
-				programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
+//				dataProgramacao = 
+//				programacaoEntregaRepository.pesquisarDataProgramacao(Long.valueOf(idProgramacao));
+				
+				//Manutenção 22.08.2023
+				
+				ProgramacaoEntrega programacaoEntrega = programacaoEntregaRepository.obterProgrEntregaPorId(Long.valueOf(idProgramacao));
+				
+				Long countProg24h = programacaoEntregaRepository.
+								pesquisarProgrEntregaMenos24h(programacaoEntrega.getDataProgramacao().toString(),
+										programacaoEntrega.getMatriculaColaborador());
+								
+				if ((countProg24h > 0)) {
+							throw new GlobalExceptionHandler("Já existe uma operação de programação com menos de 24h para esta data!");
+				}  
+				
+				//Manutenção 22.08.2023
 				
 				
 //				ProgramacaoEntrega programacaoEntrega = 
 //				programacaoEntregaRepository.obterProgrEntregaPorId(Long.valueOf(idProgramacao));
 				
 				//Verifica se a solicitação tem menos de 24h
-				String tipoOperacao = this.verificaProgramacaoMenos24h(dataProgramacao, "E");
+				String tipoOperacao = this.verificaProgramacaoMenos24h(programacaoEntrega.getDataProgramacao(), "E");
 				
 				  if (tipoOperacao == "") {	
 					     programacaoEntregaRepository.apagarProgEntrega(Long.valueOf(idProgramacao));

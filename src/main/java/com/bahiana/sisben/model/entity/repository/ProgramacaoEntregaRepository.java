@@ -465,6 +465,14 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	Long pesquisarProgrEntregaRepInc(@Param("dataProgramacao") String dataProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
+	@Query("SELECT COUNT(pe) FROM ProgramacaoEntrega pe WHERE  Month(pe.dataProgramacao) = Month(:dataProgramacao)"
+			+ " AND Year(pe.dataProgramacao) = Year(:dataProgramacao)"
+			+ " AND Day(pe.dataProgramacao) = Day(:dataProgramacao)"
+	        + " AND pe.matriculaColaborador = :matriculaColaborador "
+	        + " AND pe.tipoSolicitacao in ('I','A','E') ")
+	Long pesquisarProgrEntregaMenos24h(@Param("dataProgramacao") String dataProgramacao,
+			                              @Param("matriculaColaborador") String matriculaColaborador);
+	
 	
 	
 	
