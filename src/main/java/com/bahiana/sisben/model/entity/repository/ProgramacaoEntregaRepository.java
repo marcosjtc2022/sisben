@@ -473,6 +473,28 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 	Long pesquisarProgrEntregaMenos24h(@Param("dataProgramacao") String dataProgramacao,
 			                              @Param("matriculaColaborador") String matriculaColaborador);
 	
+	@Transactional
+	@Modifying
+	@Query("update ProgramacaoEntrega set "
+		//	+ " uaRealizada = :uaRealizada, "
+			+ " idUsuarioUltimaModificacao = :idUsuarioUltimaModificacao,"
+			+ " dataUltimaModificacao = :dataUltimaModificacao,"
+		//	+ " idUa = :idUa, "
+			+ " idJustNprogramado = :idJustificativa, "
+			+ " idJustificativa = :idJustificativa, "
+			+ " dataEntrega = :dataEntrega,"
+			+ " idUsuario = :idUsuario "
+			+ " where id = :id")
+	void excluirLogicaEntrega(
+		//	@Param("uaRealizada") String uaRealizada,
+			@Param("idUsuarioUltimaModificacao") Long idUsuarioUltimaModificacao,
+			@Param("idUsuario") Long idUsuario,
+			@Param("dataUltimaModificacao") LocalDateTime dataUltimaModificacao,
+			@Param("dataEntrega") LocalDate dataEntrega,
+		//	@Param("idUa") Long idUa,
+			@Param("idJustificativa") Long idJustificativa,
+			@Param("id") Long id);
+	
 	
 	
 	

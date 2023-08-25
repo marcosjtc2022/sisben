@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -2144,6 +2145,21 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 		@Override
 		public Long pesquisarProgrEntregaRepInc(String dataProgramacao, String matriculaColaborador) {
 			return programacaoEntregaRepository.pesquisarProgrEntregaRepInc(dataProgramacao, matriculaColaborador);
+		}
+
+		@Override
+		public void excluirLogicaEntrega(ProgramacaoEntregaDto programacaoEntregaDto) {
+			
+			 programacaoEntregaRepository.excluirLogicaEntrega(
+					 programacaoEntregaDto.getIdUsuarioUltimaModificacao(),
+					 null,
+					 LocalDateTime.now(),
+					 null,//programacaoEntregaDto.getDataEntrega(),
+					 null, //programacaoEntregaDto.getIdJustificativa(),
+					 programacaoEntregaDto.getId());
+			 
+			 			 
+
 		}
 		
 	

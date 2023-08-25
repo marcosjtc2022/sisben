@@ -249,6 +249,49 @@ public class FornecedorController {
 			    return ResponseEntity.badRequest().body(e.getMessage());
 		     }
 	    }
+	    
+	    
+	    @Transactional
+		@PutMapping("/excluirLogicaEntrega/{id}")
+		public void excluirLogicaEntrega(@PathVariable("id") Long id,@RequestBody ProgramacaoEntregaDto programacaoEntregaDto) {
+			 
+					programacaoEntregaDto.setId(id);
+					
+					//man 24.08.2023
+					
+				    ProgramacaoEntrega programacaoEntrega =	programacaoEntregaService.obterPorId2(id);
+				    
+				    Long countProgCanc = programacaoEntregaService.
+							pesquisarProgrEntregaRepInc(programacaoEntrega.getDataProgramacao().toString(),
+			    				                      programacaoEntrega.getMatriculaColaborador());
+				
+					if ((countProgCanc > 0)) {
+						throw new GlobalExceptionHandler("Existe uma programação de inclusão reprovada para esta data de programação!");
+					}  
+				     
+				    
+					Long countProgPend = programacaoEntregaService.
+						    		pesquisarProgrEntregaPendente(programacaoEntrega.getDataProgramacao().toString(),
+						    				                      programacaoEntrega.getMatriculaColaborador());
+							
+					if ((countProgPend > 0)) {
+							throw new GlobalExceptionHandler("Existe uma programação pendente esta data de programação!");
+					}
+					
+					if (programacaoEntrega.getDataEntrega() == null) {
+						throw new GlobalExceptionHandler("Programação ainda não foi registrada!");
+					}
+					
+				    
+					
+					//man 24.08.2023
+					
+					
+					
+					programacaoEntregaService.excluirLogicaEntrega(programacaoEntregaDto);
+			 
+		}
+		
 		
 
 }
