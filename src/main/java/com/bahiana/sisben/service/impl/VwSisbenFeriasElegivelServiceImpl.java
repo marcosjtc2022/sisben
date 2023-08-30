@@ -18,5 +18,12 @@ public class VwSisbenFeriasElegivelServiceImpl implements VwSisbenFeriasElegivel
 		return vwSisbenFeriasElegivelRepository.
 			pesquisarFeriasElegivel(dataSolicitacao, matriculaColaborador);
 	}
+
+
+	@Override
+	public Long pesquisarFeriasPorMatriculaMesAno(String dataProgramacao, String matriculaColaborador) {
+		return vwSisbenFeriasElegivelRepository.
+				pesquisarFeriasPorMatriculaMesAno(dataProgramacao, matriculaColaborador);
+	}
 ;
 }

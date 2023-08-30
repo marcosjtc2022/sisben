@@ -1900,13 +1900,21 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			 for (String matriculaDestino : strMatriculasDestino){
 				 
 				 
-				     Long countProg = this.programacaoEntregaRepository.
+				    Long countProg = this.programacaoEntregaRepository.
 				    		 pesquisarProgrEntregaAnoMesMatr(dataProgramacao,
 				    				matriculaDestino);
 					
 					if ((countProg > 0)) {
 						throw new GlobalExceptionHandler("Já existe programação para esta data e matrícula = " + matriculaDestino );
 					} 
+					
+					Long countFerias = vwSisbenFeriasElegivel.pesquisarFeriasPorMatriculaMesAno(dataProgramacao, matriculaDestino);
+					
+					if ((countFerias > 0)) {
+						throw new GlobalExceptionHandler("Existe programação de férias para este ano e mês, para a matrícula = " + matriculaDestino );
+					} 
+					
+					
 				 
 			 
 					 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
