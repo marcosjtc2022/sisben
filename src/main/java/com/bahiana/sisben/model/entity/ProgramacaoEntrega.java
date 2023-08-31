@@ -116,6 +116,17 @@ public class ProgramacaoEntrega implements Serializable{
 	@Column(name = "nao_prog", columnDefinition="BIT")
 	private Boolean entrNaoProgramada;
 	
+	@Column(name = "registro_reverso", columnDefinition="BIT")
+	private Boolean registroReverso;
+	
+	public Boolean getRegistroReverso() {
+		return registroReverso;
+	}
+
+	public void setRegistroReverso(Boolean registroReverso) {
+		this.registroReverso = registroReverso;
+	}
+
 	public Boolean getEntrNaoProgramada() {
 		return entrNaoProgramada;
 	}
@@ -470,13 +481,16 @@ public class ProgramacaoEntrega implements Serializable{
 		this.descricaoFeriado = descricaoFeriado;
 	}
 	
+	
+	
 	public ProgramacaoEntrega(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada, Long idData,
 			Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stFerias, Boolean stAprov, Boolean exigSuspensa,
 			LocalDateTime dataUltimaModificacao, Long idUsuarioUltimaModificacao, String diaDaSemana,
 			LocalDate dataProgramacao, String descricaoFeriado, String anoMes, String codSetor, String tipoSolicitacao,
-			Long idUaAlterar, String justReprovacao, Long idJustNprogramado, Boolean entrNaoProgramada) {
-		
+			Long idUaAlterar, String justReprovacao, Long idJustNprogramado, Boolean entrNaoProgramada,
+			Boolean registroReverso) {
+		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
 		this.uaPrevista = uaPrevista;
@@ -504,6 +518,7 @@ public class ProgramacaoEntrega implements Serializable{
 		this.justReprovacao = justReprovacao;
 		this.idJustNprogramado = idJustNprogramado;
 		this.entrNaoProgramada = entrNaoProgramada;
+		this.registroReverso = registroReverso;
 	}
 
 	public ProgramacaoEntrega() {

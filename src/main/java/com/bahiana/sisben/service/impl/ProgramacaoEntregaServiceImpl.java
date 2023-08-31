@@ -1221,6 +1221,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					 programacaoEntregaDto.getDataEntrega(),
 					 programacaoEntregaDto.getIdUa(),
 					 programacaoEntregaDto.getIdJustificativa(),
+					 false,
 					 programacaoEntregaDto.getId());
 			 
 		}
@@ -2164,7 +2165,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					 LocalDateTime.now(),
 					 null,//programacaoEntregaDto.getDataEntrega(),
 					 null, //programacaoEntregaDto.getIdJustificativa(),
-					 programacaoEntregaDto.getId());
+					 programacaoEntregaDto.getId(),
+					 true);
 			 
 			 			 
 

@@ -428,7 +428,8 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " idUa = :idUa, "
 			+ " idJustNprogramado = :idJustificativa, "
 			+ " dataEntrega = :dataEntrega,"
-			+ " idUsuario = :idUsuarioUltimaModificacao "
+			+ " idUsuario = :idUsuarioUltimaModificacao, "
+			+ " registroReverso = :registroReverso "
 			+ " where id = :id")
 	void registrarEntrega(
 			@Param("uaRealizada") String uaRealizada,
@@ -437,6 +438,7 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("dataEntrega") LocalDate dataEntrega,
 			@Param("idUa") Long idUa,
 			@Param("idJustificativa") Long idJustificativa,
+			@Param("registroReverso") Boolean registroReverso,
 			@Param("id") Long id);
 	
 	@Query("SELECT pe FROM ProgramacaoEntrega pe WHERE  Month(pe.dataProgramacao) = Month(:dataProgramacao)"
@@ -483,7 +485,8 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			+ " idJustNprogramado = :idJustificativa, "
 			+ " idJustificativa = :idJustificativa, "
 			+ " dataEntrega = :dataEntrega,"
-			+ " idUsuario = :idUsuario "
+			+ " idUsuario = :idUsuario, "
+			+ " registroReverso = :registroReverso "
 			+ " where id = :id")
 	void excluirLogicaEntrega(
 		//	@Param("uaRealizada") String uaRealizada,
@@ -493,7 +496,8 @@ public interface ProgramacaoEntregaRepository extends PagingAndSortingRepository
 			@Param("dataEntrega") LocalDate dataEntrega,
 		//	@Param("idUa") Long idUa,
 			@Param("idJustificativa") Long idJustificativa,
-			@Param("id") Long id);
+			@Param("id") Long id,
+			@Param("registroReverso") Boolean registroReverso);
 	
 	
 	

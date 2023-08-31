@@ -84,6 +84,16 @@ public class ProgramacaoEntregaDto {
 	
 	private Boolean entrNaoProgramada;
 	
+	private Boolean registroReverso;
+	
+	public Boolean getRegistroReverso() {
+		return registroReverso;
+	}
+
+	public void setRegistroReverso(Boolean registroReverso) {
+		this.registroReverso = registroReverso;
+	}
+
 	public Boolean getEntrNaoProgamada() {
 		return entrNaoProgramada;
 	}
@@ -367,6 +377,8 @@ public class ProgramacaoEntregaDto {
 	}
 	
 	
+	
+	
 	public ProgramacaoEntregaDto(Long id, String matriculaColaborador, String uaPrevista, String uaRealizada,
 			Long idData, Long idUa, Long idJustificativa, Long idValor, Long idUsuario, LocalDate dataEntrega,
 			LocalDate dataSolicitacao, Boolean solicExtra, Boolean stAprov, LocalDateTime dataUltimaModificacao,
@@ -374,7 +386,7 @@ public class ProgramacaoEntregaDto {
 			LocalDate dataProgramacao, String descricaoFeriado, LocalDate mesAnoProgramacao, String bairroSecaoElegivel,
 			Boolean exigSuspensa, Boolean stFerias, LocalDate utlimaDataMes, LocalDate primeiraDataMes, String anoMes,
 			String nomeFuncionario, String descrSetor, String tipoSolicitacao, Boolean naoGerarFDS,
-			String justReprovacao, Boolean entrNaoProgamada) {
+			String justReprovacao, Boolean entrNaoProgramada, Boolean registroReverso) {
 		super();
 		this.id = id;
 		this.matriculaColaborador = matriculaColaborador;
@@ -408,7 +420,8 @@ public class ProgramacaoEntregaDto {
 		this.tipoSolicitacao = tipoSolicitacao;
 		this.naoGerarFDS = naoGerarFDS;
 		this.justReprovacao = justReprovacao;
-		this.entrNaoProgramada = entrNaoProgamada;
+		this.entrNaoProgramada = entrNaoProgramada;
+		this.registroReverso = registroReverso;
 	}
 
 	public ProgramacaoEntregaDto() {
