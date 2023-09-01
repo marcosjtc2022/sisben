@@ -30,7 +30,9 @@ import com.bahiana.sisben.api.response.RegistroEntregaResponse;
 import com.bahiana.sisben.exception.GlobalExceptionHandler;
 import com.bahiana.sisben.exception.RegraNegocioException;
 import com.bahiana.sisben.model.entity.ProgramacaoEntrega;
+import com.bahiana.sisben.model.entity.VwSisbenElegibilidade;
 import com.bahiana.sisben.service.ProgramacaoEntregaService;
+import com.bahiana.sisben.service.VwSisbenElegibilidadeService;
 import com.bahiana.sisben.specification.ProgramacaoEntregaSpecification;
 
 @RestController
@@ -39,6 +41,9 @@ public class ProgramacaoEntregaController {
 	
 	@Autowired
 	private ProgramacaoEntregaService programacaoEntregaService;
+	
+	@Autowired
+	VwSisbenElegibilidadeService vwSisbenElegibilidadeService;
 	
     @GetMapping(value =  "/teste" )
     @ResponseBody
@@ -536,6 +541,34 @@ public class ProgramacaoEntregaController {
 //				if ((countProg > 0)) {
 //					throw new GlobalExceptionHandler("Já existe programação para esta data e matrícula = " + matriculaDestino );
 //				} 
+		    	
+		    	
+		    	//manutenção 31.08.2023
+		    	
+		    	//Gera ano e mês correntes.
+				int mesAtual = LocalDate.now().getMonthValue();
+				int anoAtual = LocalDate.now().getYear();
+				
+				//Recupera ano e mês informados.
+				int mesProgramacao = LocalDate.parse(dataProgramacao).getMonthValue();
+				int anoProgramacao = LocalDate.parse(dataProgramacao).getYear();
+				
+//				//Verifica se ano informado é menor que ano corrente.
+				if (anoProgramacao < anoAtual ) {
+					throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!");
+				}
+				
+				if (anoProgramacao == anoAtual ) {
+					//Verifica se mês informado é menor que mês corrente.
+					if (mesProgramacao < mesAtual ) {
+						throw new GlobalExceptionHandler("Mês da programação deve ser maior ou igual ao mês corrente!");
+					}
+				} 
+				
+						
+		    	
+		    	
+		    	//manuntenção 31.08.2023
 		    	
 		    	return this.programacaoEntregaService.copiarProgramacaoEntregaVariasMatriculas(dataProgramacao
 		    			,matriculaOrigem,matriculasDestino,idUsuarioLogado);

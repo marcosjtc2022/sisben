@@ -1920,6 +1920,9 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 	
 			 List<ProgramacaoEntrega> listaProgramacaoEntrega = this.recuperarProgrEntregaDataMatr(dataProgramacao, matriculaColaboradorOrigem);
 			 
+			
+			 UtilSisben utilSisben = new UtilSisben();
+			 
 			 for (String matriculaDestino : strMatriculasDestino){
 				 
 				 
@@ -1935,16 +1938,43 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 					
 					if ((countFerias > 0)) {
 						throw new GlobalExceptionHandler("Existe programação de férias para este ano e mês, para a matrícula = " + matriculaDestino );
-					} 
+					}
 					
+					//Verifica suspensão da elegibilidade
+					Long contSusElegibilidade = 0L;
 					
+					//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
+					contSusElegibilidade = 0L;
+					contSusElegibilidade = suspensaoElegibilidadeService.
+						pesquisarSuspensao(LocalDate.parse(dataProgramacao), matriculaDestino);
+					
+					if ((contSusElegibilidade > 0)) {
+						throw new GlobalExceptionHandler("Existe suspensão da elegibilidade para a matrícula" + matriculaDestino);
+					}
+					
+					//Recupera dados dos elegíveis na visão.
+					Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
+					ObterPorMatricula(matriculaDestino);
+					
+					//Converte a data da admissão para localdate.
+					LocalDate dataAdmissaoLocalDate =  VwSisbenElegibilidade.get().getDataAdmissao().toLocalDate();
+						
+					//Recupera o ano da admissão.
+					Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
+						
+					//Verifica se a data da programação é menor que data da admissão.
+					if(LocalDate.parse(dataProgramacao).isBefore(dataAdmissaoLocalDate)) {
+								throw new GlobalExceptionHandler("Data da programação deve ser maior ou igual à data da admissão para a matrícula " + matriculaDestino);
+					}
 				 
-			 
+					 Boolean incluirData = null;
 					 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
 						 
 						   ProgramacaoEntrega programacaoEntregaDestino = new  ProgramacaoEntrega();
 						   
 						   Optional<VwSisbenFuncionario> funcionario = vwSisbenFuncionarioService.ObterPorMatricula(matriculaDestino.trim());
+						   
+						   incluirData = true;
 						   
 						   programacaoEntregaDestino.setMatriculaColaborador(matriculaDestino);
 						   programacaoEntregaDestino.setAnoMes(programacaoEntregaLinha.getAnoMes());
@@ -1960,10 +1990,48 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 						   programacaoEntregaDestino.setIdUsuarioUltimaModificacao(Long.parseLong(idUsuarioLogado));
 						   programacaoEntregaDestino.setIdValor(programacaoEntregaLinha.getIdValor());
 						   programacaoEntregaDestino.setUaPrevista(programacaoEntregaLinha.getUaPrevista());
+						   programacaoEntregaDestino.setTipoSolicitacao(null);
+						   programacaoEntregaDestino.setSolicExtra(null);
+						   programacaoEntregaDestino.setEntrNaoProgramada(null);
+						   programacaoEntregaDestino.setExigSuspensa(null);
+						   programacaoEntregaDestino.setEntrNaoProgramada(null);
+						   programacaoEntregaDestino.setDataEntrega(null);
+						   programacaoEntregaDestino.setIdJustificativa(null);
+						   programacaoEntregaDestino.setIdJustNprogramado(null);
+						   programacaoEntregaDestino.setRegistroReverso(null);
 						   
-						   listaProgCopia.add(programacaoEntregaDestino);
-						  
-						   this.programacaoEntregaRepository.save(programacaoEntregaDestino);
+						 //Manutenção 31.08.2023
+							
+							//Verifica se a solicitação tem menos de 24h
+							//Verifica se a data de programação é igual a data corrente.
+							if (dataProgramacao.equals(LocalDate.now())) {
+								
+								//Verifica se a hora da programação é menor que 13:00h. 
+								if (utilSisben.verificaHoraLimiteSolicitacao("13:00")) {
+									programacaoEntregaDestino.setTipoSolicitacao("I");
+								} else {
+									incluirData = false;
+								}
+								
+							}
+							
+							//Verifica se a data de programação é igual a data de amanhã.
+							if (dataProgramacao.equals(LocalDate.now().plusDays(1))) {
+								programacaoEntregaDestino.setTipoSolicitacao("I");
+							}
+							
+							//Verifica se a data é anterior à data atual.
+							if(LocalDate.parse(dataProgramacao).isBefore(LocalDate.now())) {
+								incluirData = false;
+							}
+							
+						   
+						   if (incluirData) {
+						       listaProgCopia.add(programacaoEntregaDestino);
+						       this.programacaoEntregaRepository.save(programacaoEntregaDestino);
+						   } 
+						   
+						 //Manutenção 31.08.2023
 					 }
 			 }
 			
