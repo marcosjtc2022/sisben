@@ -1922,6 +1922,8 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			 
 			
 			 UtilSisben utilSisben = new UtilSisben();
+			 Long countFerias = 0L;
+			 Long contSusElegibilidade = 0L;
 			 
 			 for (String matriculaDestino : strMatriculasDestino){
 				 
@@ -1934,38 +1936,14 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 						throw new GlobalExceptionHandler("Já existe programação para esta data e matrícula = " + matriculaDestino );
 					} 
 					
-					Long countFerias = vwSisbenFeriasElegivel.pesquisarFeriasPorMatriculaMesAno(dataProgramacao, matriculaDestino);
-					
-					if ((countFerias > 0)) {
-						throw new GlobalExceptionHandler("Existe programação de férias para este ano e mês, para a matrícula = " + matriculaDestino );
-					}
-					
-					//Verifica suspensão da elegibilidade
-					Long contSusElegibilidade = 0L;
-					
-					//Pesquisa se existe suspensão da eligibilidade para o ano e mês.
-					contSusElegibilidade = 0L;
-					contSusElegibilidade = suspensaoElegibilidadeService.
-						pesquisarSuspensao(LocalDate.parse(dataProgramacao), matriculaDestino);
-					
-					if ((contSusElegibilidade > 0)) {
-						throw new GlobalExceptionHandler("Existe suspensão da elegibilidade para a matrícula" + matriculaDestino);
-					}
-					
 					//Recupera dados dos elegíveis na visão.
 					Optional<VwSisbenElegibilidade> VwSisbenElegibilidade = vwSisbenElegibilidadeService.
 					ObterPorMatricula(matriculaDestino);
 					
 					//Converte a data da admissão para localdate.
 					LocalDate dataAdmissaoLocalDate =  VwSisbenElegibilidade.get().getDataAdmissao().toLocalDate();
-						
-					//Recupera o ano da admissão.
-					Integer anoAdmissao = VwSisbenElegibilidade.get().getDataAdmissao().getYear();
-						
-					//Verifica se a data da programação é menor que data da admissão.
-					if(LocalDate.parse(dataProgramacao).isBefore(dataAdmissaoLocalDate)) {
-								throw new GlobalExceptionHandler("Data da programação deve ser maior ou igual à data da admissão para a matrícula " + matriculaDestino);
-					}
+
+
 				 
 					 Boolean incluirData = null;
 					 for (ProgramacaoEntrega programacaoEntregaLinha : listaProgramacaoEntrega) {
@@ -1979,17 +1957,19 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 						   programacaoEntregaDestino.setMatriculaColaborador(matriculaDestino);
 						   programacaoEntregaDestino.setAnoMes(programacaoEntregaLinha.getAnoMes());
 						   programacaoEntregaDestino.setCodSetor(funcionario.get().getCodSecao());
-						   programacaoEntregaDestino.setDataEntrega(programacaoEntregaLinha.getDataEntrega());
+						//   programacaoEntregaDestino.setDataEntrega(programacaoEntregaLinha.getDataEntrega());
 						   programacaoEntregaDestino.setDataProgramacao(programacaoEntregaLinha.getDataProgramacao());
-						   programacaoEntregaDestino.setDataSolicitacao(programacaoEntregaLinha.getDataSolicitacao());
+						 //  programacaoEntregaDestino.setDataSolicitacao(programacaoEntregaLinha.getDataSolicitacao());
 						   programacaoEntregaDestino.setDataUltimaModificacao(LocalDateTime.now());
 						   programacaoEntregaDestino.setDescricaoFeriado(programacaoEntregaLinha.getDescricaoFeriado());
 						   programacaoEntregaDestino.setDiaDaSemana(programacaoEntregaLinha.getDiaDaSemana());
 						   programacaoEntregaDestino.setIdUa(programacaoEntregaLinha.getIdUa());
-						   programacaoEntregaDestino.setIdUsuario(programacaoEntregaLinha.getIdUsuario());
+						  // programacaoEntregaDestino.setIdUsuario(programacaoEntregaLinha.getIdUsuario());
 						   programacaoEntregaDestino.setIdUsuarioUltimaModificacao(Long.parseLong(idUsuarioLogado));
 						   programacaoEntregaDestino.setIdValor(programacaoEntregaLinha.getIdValor());
 						   programacaoEntregaDestino.setUaPrevista(programacaoEntregaLinha.getUaPrevista());
+						   //data de solicitação será igual à data corrente.
+						   programacaoEntregaDestino.setDataSolicitacao(LocalDate.now());
 						   programacaoEntregaDestino.setTipoSolicitacao(null);
 						   programacaoEntregaDestino.setSolicExtra(null);
 						   programacaoEntregaDestino.setEntrNaoProgramada(null);
@@ -1999,12 +1979,38 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 						   programacaoEntregaDestino.setIdJustificativa(null);
 						   programacaoEntregaDestino.setIdJustNprogramado(null);
 						   programacaoEntregaDestino.setRegistroReverso(null);
+						   programacaoEntregaDestino.setIdUsuario(null);
 						   
 						 //Manutenção 31.08.2023
+						   
+						    countFerias = 0L;
+  					        countFerias = vwSisbenFeriasElegivel.
+						    		pesquisarFeriasElegivel(programacaoEntregaLinha.getDataProgramacao(), matriculaDestino);
+						    
+							
+						    //Pesquisa se existem férias.
+							if (countFerias > 0) {
+								incluirData = false;
+							}
+						   
+						   //Pesquisa se existe suspensão da eligibilidade para o ano, mês e dia.
+						    contSusElegibilidade = 0L;
+						    contSusElegibilidade = suspensaoElegibilidadeService.
+								pesquisarSuspensao(programacaoEntregaLinha.getDataProgramacao(), matriculaDestino);
+							
+						    if ((contSusElegibilidade > 0)) {
+								incluirData = false;
+						    }
+							
+						    //se a data da programação for menor que a data da admissão não inclui.
+						    if(programacaoEntregaLinha.getDataProgramacao().isBefore(dataAdmissaoLocalDate)) {
+								incluirData = false;
+						    }
+						   
 							
 							//Verifica se a solicitação tem menos de 24h
 							//Verifica se a data de programação é igual a data corrente.
-							if (dataProgramacao.equals(LocalDate.now())) {
+							if (programacaoEntregaLinha.getDataProgramacao().equals(LocalDate.now())) {
 								
 								//Verifica se a hora da programação é menor que 13:00h. 
 								if (utilSisben.verificaHoraLimiteSolicitacao("13:00")) {
@@ -2016,12 +2022,12 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 							}
 							
 							//Verifica se a data de programação é igual a data de amanhã.
-							if (dataProgramacao.equals(LocalDate.now().plusDays(1))) {
+							if (programacaoEntregaLinha.getDataProgramacao().equals(LocalDate.now().plusDays(1))) {
 								programacaoEntregaDestino.setTipoSolicitacao("I");
 							}
 							
 							//Verifica se a data é anterior à data atual.
-							if(LocalDate.parse(dataProgramacao).isBefore(LocalDate.now())) {
+							if(programacaoEntregaLinha.getDataProgramacao().isBefore(LocalDate.now())) {
 								incluirData = false;
 							}
 							

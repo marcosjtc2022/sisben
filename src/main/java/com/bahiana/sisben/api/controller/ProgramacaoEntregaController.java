@@ -553,7 +553,7 @@ public class ProgramacaoEntregaController {
 				int mesProgramacao = LocalDate.parse(dataProgramacao).getMonthValue();
 				int anoProgramacao = LocalDate.parse(dataProgramacao).getYear();
 				
-//				//Verifica se ano informado é menor que ano corrente.
+				//Verifica se ano informado é menor que ano corrente.
 				if (anoProgramacao < anoAtual ) {
 					throw new GlobalExceptionHandler("Ano da programação deve ser maior ou igual ao ano corrente!");
 				}
