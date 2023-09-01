@@ -521,9 +521,10 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getMesAnoProgramacao().toString());
 			} else {
 			   //Despreza a data corrente e a data posterior getDataAtual().plusDays(2) . 
-			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().plusDays(2).toString());
+			   //dataProgramacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().plusDays(2).toString());
+			   dataProgramacao = LocalDate.parse(programacaoEntregaDto.getDataAtual().toString());
 			   //Diminui dois dias por conta do cálculo acima.
-			   diasProgramacaoMes = diasProgramacaoMes - 2;
+			   //diasProgramacaoMes = diasProgramacaoMes - 2;
 			}
 			
 			//Separa ano e mês da programação.
@@ -635,6 +636,27 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 //					programacaoInput.setStFerias(true);
 //				}
 				
+				//Manutenção 31.08.2023
+				
+				//Verifica se a solicitação tem menos de 24h
+				//Verifica se a data de programação é igual a data corrente.
+				if (dataProgramacao.equals(LocalDate.now())) {
+					
+					//Verifica se a hora da programação é menor que 13:00h. 
+					if (utilSisben.verificaHoraLimiteSolicitacao("13:00")) {
+						programacaoInput.setTipoSolicitacao("I");
+					} else {
+						incluirData = false;
+					}
+					
+				}
+				
+				//Verifica se a data de programação é igual a data de amanhã.
+				if (dataProgramacao.equals(LocalDate.now().plusDays(1))) {
+					programacaoInput.setTipoSolicitacao("I");
+				}					
+				//Manutenção 31.08.2023
+				
 				//Só insere se não existirem férias nem suspensão da eligibilidade,
 				//ou quando for escolhido não gerar sábados,domingos e feriados.
 				if ((contSusElegibilidade == 0)&&(contFerias == 0)&&(incluirData == true)) {
@@ -648,7 +670,7 @@ public class ProgramacaoEntregaServiceImpl implements ProgramacaoEntregaService 
 			}
 			
 			if (listaProgramacaoEntregaMes.isEmpty()){
-				throw new GlobalExceptionHandler("Atenção! Período com férias ou suspensão da elegibilidade!");
+				throw new GlobalExceptionHandler("Atenção! Período com férias,suspensão da elegibilidade ou solicitação após as 13h!");
 			}
 			
 			return listaProgramacaoEntregaMes;
